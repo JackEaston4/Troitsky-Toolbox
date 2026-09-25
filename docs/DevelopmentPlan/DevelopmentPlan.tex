@@ -117,6 +117,8 @@ you will be able to overcome this risk?
 
 \section{Expected Technology}
 
+
+
 \wss{What programming language or languages do you expect to use?  What external
 libraries?  What frameworks?  What technologies.  Are there major components of
 the implementation that you expect you will implement, despite the existence of
@@ -149,6 +151,37 @@ Topics to discuss include the following:
 
 \wss{git, GitHub and GitHub projects should be part of your technology.}
 
+This project shall be accessible via browser for desktop users. Data shall be stored in a robust database.
+The back-end logic shall be rewritten a powerful and easily maintainable programming language, preferably with
+a utility which will aid front-end development. The current likely option is the .NET programming
+suite, backed by a Microsoft SQL Server database, with the back-end in C\# and the front-end utilizing
+Razor (C\# HTML) pages to facilitate rendering web pages. A great advantage of doing so is its 
+language integrated query (LINQ) suite, which transfers specialized, elegantly-written code into an efficient SQL query. 
+
+Beside standard libraries, state-of-the-art structual engineering utilities will likely be used to aid calculations,
+for implementing complex calculations is prone to error, especially for developers not well-versed in civil engineering.
+A likely option is the AutoCAD application programming interface (API) with the Inventor API of AutoDesk Inventor being 
+an alternate.
+
+Linting shall be used to ensure production code is free of errors, style issues and bad practices. 
+One option is \href{https://github.com/lucaspimentel/cslint}{CS Lint} by Lucas Pimentel, 
+freely available as it is licensed under the MIT license.
+
+A unit testing framework shall be implemented to ensure correctness, like the native MS Test, NUnit or xUnit. 
+The comprehensiveness of the unit
+tests shall be measured in part by code coverage, like the Coverlet tool of XUnit. 
+Another tactic to increase comprehensiveness could be to 
+correlate the projected frequency of execution of a path with the number of unit tests it has. Such frequency would be determined through
+consultation with this project's users.
+
+Continious integration shall be implemented through a distributed version-control system, specifically git on a GitHub-hosted repository.
+Each change to production shall be proposed by its developer through a merge request from a feature branch which is exclusively theirs
+to the production branch. Barring an extraordinary emergency, the change must be approved by another developer before merging, 
+preferably one who is working on a feature which closely interacts with the proposed change. 
+
+
+
+
 \section{Use of AI and LLMs}
 
 \wss{This section is a continuation of the previous section.  The role of LLMs
@@ -156,9 +189,20 @@ in your project as important enough to warrant their own section.
 How will your team be using LLMs for code and documentation development?  
 What tools will you be using?  How will you verify the output of your LLMs?}
 
+This project is not a machine learning project, as it will implement many determinate services for the Troitsky club.
+However, utilization of robust AI chatbots (e.g. Claude Code, ChatGPT, Copilot) to write code will increase developer efficiency by decreasing the time each
+developer needs to spend drafting and revising code. However, AI is prone to hallucinations and other vulnerabilities. Therefore, each
+developer shall throughly review all AI-generated code they generate before creating a pull request and not submit the code for a pull request
+until they completely understand the code and are convinced of its validity.
+
 \section{Coding Standard}
 
 \wss{What coding standard will you adopt?}
+
+This project shall adopt the standard .NET coding conventions, available 
+\href{https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions}{here}. 
+
+LINQ shall be utilized unless the equivalent raw SQL query provides a significant performance boost.
 
 \newpage{}
 
