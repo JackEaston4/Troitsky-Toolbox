@@ -22,8 +22,8 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
+September 24th, 2026 & Pedro & Initial draft problem statement section from discussion\\
+Septemeber 26th, 2026 & Pedro & Goals and reflection section\\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
@@ -31,69 +31,178 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Problem Statement}
 
-\wss{You should check your problem statement with the
-\href{https://smiths.github.io/capTemplate/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}}. 
-
-\wss{You can change the section headings, as long as you include the required
-information.}
-
 \subsection{Problem}
 
-\wss{What problem are you trying to solve?  Why is it important? Do not talk
-about how you will solve the problem, only what the problem is.  AI is rarely
-part of the problem.  The problem is ``what'' you want to do, not ``how'' you
-want to do it.  The problem statement should be written in a way that is
-understandable to a non-technical audience.}
+The McMaster Troitsky club is a student-run organization that registers and 
+supports 4-6 teams of students as they take on the task of modelling, analyzing 
+and manufacturing a bridge out of popsicle sticks, white glue and dental floss. 
+While the club has been successful in the past, results often vary in performance 
+both between years and teams, due to the lack of centralized information and technical 
+support for members. As teams progress through several years of competition, 
+undergoing material testing, bridge design and analysis, and even experimenting with 
+more innovative concepts, skill and knowledge within the club often consolidates within 
+more experienced members or single teams, ensuring that when those members graduate, information 
+is lost to the club. This project seeks to create a centralized information repository and
+technical support system for the McMaster Troitsky club, ensuring information transfer between years and teams, 
+and facilitating support and onboarding for new members.
 
 \subsection{Inputs and Outputs}
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+\begin{itemize}
+    \item \textbf{Inputs: } Range of McMaster Troitsky Club members' and alumni knowledge to build the repository. Past documentation of the club and team 
+    specific activities, along with their collected data, will be input into the suitable repositories within the service.
+
+    \item \textbf{Outputs: } Toolbox of services to support the McMaster Troitsky club in information centralization and technical 
+    support for members. A simplified process for searching and accessing the range of information the team 
+    has collected and will continue to collect.
+\end{itemize}
 
 \subsection{Stakeholders}
 
+\subsubsection{Primary Stakeholders}
+
+\begin{itemize}
+    \item \textbf{McMaster Troitsky Club General Members}
+    \\
+ The general members of the club are primary stakeholders as they will be the main 
+users and those that we will focus on supporting with our project. These users will be both supporting and expanding the data the
+system provides, and will be the main beneficiaries of the system.
+    \item \textbf{McMaster Troitsky Club Executive Team}
+    \\
+ The McMaster Troitsky Club Executive Team are primary stakeholders as they will benefit from 
+both the organizational support the service provides, and the alleviation of the burden of technical 
+support and information transfer that is currently placed on them. Their input will be essential
+for service design and prioritization of features.
+\end{itemize}
+
+\subsubsection{Secondary Stakeholders}
+
+\begin{itemize}
+    \item \textbf{Concordia University's Troitsky Organization}
+    \\
+ As Concordia University hosts the Troitsky competition, they establish the rules and regulations of the competition, 
+and therefore changes what is prioritized by the primary stakeholders. This would influence the design of the system, 
+and what features would benefit teams the most.
+    \item \textbf{MES - McMaster Engineering Society}
+    \\
+ The MES organizes engineering clubs and seeks to benefit from the legitimization 
+of the McMaster Troitsky Club through a centralized information platform. The MES also provides 
+funding for the McMaster Troitsky Club, so the hosting of services and associated costs may be dependent on the given budget.
+\end{itemize}
+
+\subsubsection{Tertiary Stakeholders}
+
+\begin{itemize}
+    \item \textbf{McMaster University}
+    \\
+ The university itself is a tertiary stakeholder as it benefits from the success of the McMaster Troitsky Club, 
+and the success of teams during the Troitsky competition.
+\end{itemize}
+
 \subsection{Environment}
 
-\wss{Hardware and Software Environment for the users.  The developer environment
-is summarized as part of the developer plan.}
+\subsubsection{Software Environment}
+The Troitsky Toolbox will be a web-based application, accessible through any modern web browser. A landing 
+for the club will be generally accessible, with services and stored data limited to authorized members.
 
 \section{Goals}
 
+\subsection{Information Centralization and Access}
+Create a centralized information repository, allowing users to browse past designs, material testing 
+information, and other relevant development information. Users should be able to search and filter through 
+information, locating relevant content quickly and efficiently. The system should allow for the addition of 
+new information, streamlining the process of growing the repository.
+
+\subsection{Key Model Analysis Features and Bridge Predictions}
+Provide a platform for teams to upload their bridge models through a standardized format, allowing the user to 
+view and analyze the model, highlighting key metrics and predictions about the bridge's performance. This should decrease 
+the barrier to entry to bridge analysis, allowing all members of a team to get involved in the analysis process, even without 
+formal modelling knowledge. This will be integrated with the material testing support to provide more accurate 
+bridge analysis from the stored material properties.
+
+\subsection{Material Testing Support and Facilitated Result Analysis}
+As the McMaster Troitsky club begins to standardize knowledge collection, material testing data 
+will be collected and stored in a standardized format. The service will streamline this process, allowing 
+testing results to be easily uploaded and analyzed against past results, along with collecting supplementary 
+testing information for future years.
+
+\subsection{Simplified and Comprehensive Knowledge Transfer}
+Support documentation from the McMaster Troitsky club through exit documents and other knowledge transfer 
+methods, ensuring that information and designs are consolidated and accessible to future members. 
+Specialized member roles, such as executive positions, will also be able to keep a record of their role responsibilities 
+and key factors, to further improve the club organization.
+
+\subsection{Integration of Software Development into the Club}
+The maintenance and consistent development of the Troitsky Toolbox will be integrated into the club operations, 
+creating a subteam around software operations that will recruit interested, relevant members. The operation of the system 
+rests on its ability to be maintained once the team is no longer handling anything, so this goal is fundamentally crucial 
+to the success of the project. This will be assessed through hand-off and exit documents that are left outlining what roles 
+on the subteam entail.
+
 \section{Stretch Goals}
 
-\wss{Goals you hope to get to, but not necessary.  They are also helpful if the
-scope of the original project needs to be expanded.}
+\subsection{Preparing for Future Development, Maintenance, and Expansion of Project}
+In the process of designing this toolbox, the services will be created with expansion heavily considered. While 
+during initial development of services such as the model analysis may be simpler, they will be developed with 
+room for a specialized model to be implemented in the future. The project will utilize heavily structured code 
+and design patterns, along with thorough documentation to create a solid platform for future updates.
 
 \section{Custom Documents (CDs)}
 
-\wss{For CAS 741: State whether the project is a research project. This
-designation, with the approval (or request) of the instructor, can be modified
-over the course of the term.}
+\subsection{Interviews}
+Interviews will be the first form of CD performed, used to gather a large swath of specified and verifiable valuable 
+user opinion data. With interviews, more experienced members can have the space to inform the team with as much domain knowledge 
+about what the project requires as they are able to, helping to specialize the output to true user needs.
 
-\wss{For SE Capstone: List your custom documents (CDs).  Potential CDs include
-usability testing, code walkthroughs, user documentation, formal proof,
-GenderMag personas, Design Thinking, etc.  (The full list is on the course
-outline and in Lecture 02.) Normally the number of CDs will be two (one per
-term).  Approval of the CDs will be part of the discussion with the instructor
-for approving the project. The CDs, with the approval (or request) of the
-instructor, can be modified over the course of the term.}
+\subsection{Usability Testing}
+Due to the nature of this service, the user experience will be vital to the project's success. During the second term, 
+the application should be functional and already providing some value to the users, so usability testing will provide maximal value 
+allowing the team to assess how the services come together as a whole. 
 
 \newpage{}
 
-\section*{Appendix --- Reflection}
+\section*{Appendix}
 
-\wss{Not required for CAS 741}
-
-\input{../Reflection.text}
+\subsection*{Reflection}
 
 \begin{enumerate}
     \item What went well while writing this deliverable? 
-    \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
+
+    \item What pain points did you experience during this deliverable, and how did you resolve them?
+
     \item How did you and your team adjust the scope of your goals to ensure
-    they are suitable for a Capstone project (not overly ambitious but also of
+    they are suitable for a Capstone project (not overly ambitious but also of 
     appropriate complexity for a senior design project)?
-\end{enumerate}  
+
+\end{enumerate} 
+
+\subsubsection*{Pedro Azevedo}
+
+\begin{enumerate}
+    \item During the writing process of this deliverable, I gained an understanding of the core needs of the club, 
+    and therefore the primary goals that bring value to this club. As I have been 
+    a part of the club for the last 4 years, the domain knowledge of the club operations and principal 
+    pain points was already known. The selection of primary stakeholders also went well as the team is well 
+    acquainted with clubs at the school, so understanding who would be affected was straightforward. This also simplified 
+    the first choice of CD to be interviews, as those would be easily completed as I have direct access to organizing with 
+    the club.
+
+    \item The main pain points during this deliverable came from the initial organization of the project, and 
+    the learning curve associated with the heavy use of issues, projects and milestones. Once that was set up, 
+    the distribution of work became straightforward, along with the subsequent review process that each ticket 
+    must go through. 
+    
+    \item As this project's structure is more a collection of services, the scope of the project will be more adjustable throughout the year, 
+    with certain services being prioritized and others seen more as a bonus feature. At the beginning, the team considered focusing on specialized 
+    numerical modelling for the bridge simulation, but felt that the value we could produce lay more in the variety of services described 
+    in this document.
+\end{enumerate} 
+
+\subsection*{Generative AI Use Disclosure}
+
+No AI was used in the creation of this document, except for the spell-checking and 
+grammar services built into the Visual Studio Code editor. Some common free models were 
+used to guide research into tool choice and development plan choices, specifically the 
+core libraries and frameworks adopted for the project.
 
 \end{document}
