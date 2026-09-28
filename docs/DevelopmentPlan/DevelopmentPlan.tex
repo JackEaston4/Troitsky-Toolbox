@@ -2,7 +2,9 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
-
+\usepackage{array}     
+\usepackage{booktabs}  
+\usepackage{enumitem}  
 \title{Development Plan\\\progname}
 
 \author{\authname}
@@ -136,6 +138,82 @@ The roles listed below outline the base for team meeting operations, standardizi
 \end{itemize}
 
 \section{Project Decomposition and Scheduling}
+We will be using our \href{https://github.com/users/JackEaston4/projects/3/views/2}{GitHub KanBan} to outline issues and create a roadmap of major project dates.
+\\
+\begin{table}[htbp] 
+    \centering
+    \renewcommand{\arraystretch}{1.3} 
+    \caption{A tentative list of major project dates based on the course outline}
+    \label{tab:my_table}
+    
+ 
+    \begin{tabular}{@{} m{7.5cm} c @{}}
+    \toprule
+    \textbf{Submission Items} & \textbf{Date} \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item Problem Statement
+      \item Proof of Concept Plan
+      \item Development Plan
+    \end{itemize}  &  28/09/2026  \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item Problem Statement Peer Review
+      \item Proof of Concept Plan Peer Review
+      \item Development Plan Peer Review
+    \end{itemize}  &  01/10/2026  \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item SRS
+      \item Hazard Analysis
+    \end{itemize}   & 19/10/2026  \\ 
+    \midrule
+    
+    SRS Peer Review & 22/10/2026  \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item VnV Peer Review Requests
+      \item POC Requests
+    \end{itemize} & 05/11/2026 \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item Design Doc Rev 1
+      \item Fall Custom Deliverable
+    \end{itemize} & 19/11/2026 \\ 
+    \midrule
+    
+    Module Implementation & 21/01/2027 \\ 
+    \midrule
+    
+    Exposition Registration & 27/01/2027 \\ 
+    \midrule
+    
+    Final Demo Schedule Requests & 01/03/2027 \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item VnV
+      \item Custom Deliverable Winter
+    \end{itemize} & 11/03/2027 \\ 
+    \midrule
+    
+    Team Contribution Survey & 18/03/2027 \\ 
+    \midrule
+    
+    Final Submission & 31/03/2027 \\ 
+    \midrule
+    
+    Expo & 06/04/2027 \\ 
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\end{document}
 
 \begin{itemize}
   \item How will you be using GitHub projects?
