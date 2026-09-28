@@ -129,6 +129,21 @@ The roles listed below outline the base for team meeting operations, standardizi
 
 
 \section{Workflow Plan}
+The workflow process used during the development of Troitsky's Toolbox will be centred around GitHub, and done in sprints which will begin and end at every major milestone. Issues within our KanBan will be the main feature we use to track and assign work.
+\subsection{Workflow Overview}
+\begin{enumerate}
+  \item At the beginning of a sprint all major tasks will be broken down into issues and assigned to group members based on their specialties and interests.
+  \item New branches will be made for each issue from the most recent version of the main branch, the issues will be related to their respective branches via the development feature in the issue.
+  \item If multiple team members are assign to the same issue they will create sub-issues under said issue and create new branches from the parent issues branch.
+  \item When sub-issues are completed they will be merged to the parent branch with a Pull Request (PR), and reviewed by a team member working under the same parent issue.
+  \item When issues are completed they will be merged through a PR to main and review by a group member that did not work on said issue, if possible.
+  \item When a PR is made it will be rin through the CI/CD pipeline using GitHub actions, and can only be reviewed and merged if it passes all tests.
+  \item Once a branch has been reviewed, merged, and passed the CI/CD pipeline it will be deleted.
+\end{enumerate}
+\subsection{Issue Management}
+At the beginning of each sprint, issues and their member assignments will be outlined in our weekly meeting and added to the KanBan as issues by the Current Administrator. It is up to those working on issues to outline their own sub-issues.
+Issues will be classified via the tools they relate to and if they are backend or frontend as tags (i.e, 'Rule Compliance Tester', 'Frontend').
+
 
 \begin{itemize}
 	\item How will you be using git, including branches, pull request, etc.?
