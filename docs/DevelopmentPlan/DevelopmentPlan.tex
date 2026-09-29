@@ -1,8 +1,10 @@
 \documentclass{article}
-
+\usepackage{wasysym}
 \usepackage{booktabs}
 \usepackage{tabularx}
-
+\usepackage{array}     
+\usepackage{booktabs}  
+\usepackage{enumitem}  
 \title{Development Plan\\\progname}
 
 \author{\authname}
@@ -22,74 +24,137 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+09/23/2026 & Jack, Mason, Pedro, and Michael & First draft of document created.\\
+09/27/2026 & Pedro & Team Charter finialization.\\
+09/28/2026 & Jack, Mason, Pedro, and Michael & Completed version 1 of document.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \newpage{}
-
-\wss{Put your introductory blurb here.  Often the blurb is a brief roadmap of
-what is contained in the report.}
-
-\wss{Additional information on the development plan can be found in the
-\href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/Lectures/L02b_POCAndDevPlan/POCAndDevPlan.pdf?ref_type=heads}
-{lecture slides}.}
+\section{Introduction}
+This document will outline the general development plan of the Troitsky Toolbox project. Sections 1-3 outline the project information and protection information; sections 4-8 describe team member roles, workflow plan, project decomposition and scheduling; sections 9-12 cover technical components of the development process, such as the final proof-of-concept demonstration plan, technology used, and AI use.
 
 \section{Confidential Information?}
+There is no confidental information to protect from industry.
 
-\wss{State whether your project has confidential information from industry, or
-not.  If there is confidential information, point to the agreement you have in
-place.}
-
-\wss{For most teams this section will just state that there is no confidential
-information to protect.}
 \section{IP to Protect}
-
-\wss{State whether there is IP to protect.  If there is, point to the agreement.
-All students who are working on a project that requires an IP agreement are also
-required to sign the ``Intellectual Property Guide Acknowledgement.''}
+There is no IP to protect in this project.
 
 \section{Copyright License}
+Our \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/LICENSE}{Copyright License} reserves all rights. No permission is granted to use, copy, modify, or distribute this code without prior written permission.
 
-\wss{What copyright license is your team adopting.  Point to the license in your
-repo.}
 
 \section{Team Meeting Plan}
+\subsection{Team Meet}
+Weekly Meetings will occur every Wednesday at 1:30 PM. These Meetings will either be in person or online, meetings are mandatory in person if they occur within a week of a deliverable worth 10\% of the total course grade.
 
-\wss{This section is for meetings between the team members, and meetings between 
-the team and their supervisor/advisor (as appropriate).}
 
-\wss{How often will the team meet? where? when?}
+\subsection{Supervisor Meeting}
+Meeting with our supervisor will occur once every other Wednesday during the Troitsky executive meeting.
 
-\wss{If the meeting is a physical location (not virtual), out of an abundance of
-caution for safety reasons you shouldn't put the location online}
+\subsection{Meeting Structure}
 
-\wss{To help schedule meetings, you can use the lecture/tutorial time when we do 
-not have anything else scheduled.}
+\subsubsection{Roles}
+Roles will be taken by the most relavent individual assigned to them for each meeting
+\begin{itemize}
+  \item \textbf{Chair (Mason/Michael)}: The meeting lead; takes charge of organizing the group and ensuring the meeting is on track to cover and complete the predesignated meeting topics.
+  \item \textbf{Notery (Pedro/Jack)}: The note taker; makes records of each topic discussed in a meeting summarizing the issues covered and plans to address them. 
+\end{itemize}
 
-\wss{How often will you meet with your supervisor/advisor?  when?  where?}
+\subsubsection{Agenda Structure}
 
-\wss{Will meetings be virtual?  At least some meetings should likely be
-in-person.}
-
-\wss{How will the meetings be structured?  There should be a chair for all meetings.  
-There should be an agenda for all meetings.}
+The Agenda will follow the below structure:
+\\
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Purpose of Meeting}\\
+\textit{Describe reason for meeting}\\
+\\
+\textbf{Date and Time}\\
+\textit{XX:XX DD/MM/YYYY}\\
+\\
+\textbf{Attendance}\\
+\Square Jack\\
+\Square Mason\\
+\Square Pedro\\
+\Square Micheal\\
+\\
+\textbf{Items To Address}
+\\
+\textit{List items that are relevent to the meeting and the plan to tackle them}\\
+\noindent\rule{\linewidth}{0.4pt}
 
 \section{Team Communication Plan}
+The Team Communication Plan outlines what means of communication will be used for what purpose.
+\subsection{GitHub}
+GitHub will act as our main file sharing platform, both LaTeX documents for submission like this development plan and the code used in the development of the Toolbox will be stored and edited through GitHub. 
+Additionally, all work assignments will be outlined as issues on the KanBan board along with the Meeting Agendas, Peer Reviews, and Lecture Overviews.
+\subsection{Teams}
+Microsoft Teams will act as our online meeting platform and a secondary file sharing platform, for files too large to push to GitHub or that would cause clutter inside of the GitHub.
+\subsection{Text Message Group Chat}
+The Text Message Group Chat will be used for simple updates/questions on how work is coming along, for example asking when a group member will be done reviewing an issue or for quick meeting reminders. 
 
-\wss{Issues on GitHub should be part of your communication plan.}
 
 \section{Team Member Roles}
 
-\wss{You should identify the types of roles you anticipate, like notetaker,
-leader, meeting chair, reviewer.  Assigning specific people to those roles is
-not necessary at this stage.  In a student team the role of the individuals will
-likely change throughout the year.}
+\subsection{Role Descriptions}
+
+\begin{enumerate}
+  \item \textbf{Manager:} The manager will serve as a coordinator between the other members, ensuring that communication is 
+  constant and issues are resolved in time and amicably. The manager will also serve as the standard meeting lead, with room 
+  for this to change as meeting topics become specified.
+
+  \item \textbf{Notetaker:} The notetaker will be responsible for taking meeting minutes in supervisor, TA and general team meetings, along with 
+  taking notes during lectures for the team. This role will focus on maintaining a standardized note structure and level of detail throughout sessions.
+
+  \item \textbf{Troitsky Club Communication Associate:} This role will be responsible for maintaining constant communication with the Troitsky club, scheduling 
+  interviews, user tests, and any other interaction the team will have with the club. This will become a more generalized role as the team becomes more integrated 
+  into the club.
+
+  \item \textbf{Reviewer/Administrator:} The reviewer/administrator role will be responsible for final reviews of PRs and ensuring that submissions are complete 
+  by the set deadlines. While the team as a whole should be integrated into this process, the administrator will serve as the final check and insurance that 
+  items will be complete on time.
+\end{enumerate}
+
+\subsection{Role Assignments}
+
+The assignment structure of the team will be chosen initially based on prior experience and general inclination to each role. The reassignment of these roles will be 
+completed between submissions, focusing on allowing each member to take on the given roles. In cases of changes and new information arising, the role assignments and structure 
+may be adjusted through communication with all members.
+
+The roles listed below outline the base for team meeting operations, standardizing key roles
+
+\begin{itemize}
+  \item \textbf{Manager/Team Leader}
+  The manager will be tasked with organizing the team, ensuring that cooperation as a whole is kept in check. 
+  
+  \item \textbf{Notetaker}
+  The notetaker will be responsible for taking either meeting minutes during team/supervisor meetings or, 
+  when applicable, taking lecture notes for the benefit of the team. 
+  \item \textbf{Troitsky Club Communication Organizer}
+
+  \item \textbf{Reviewer/Administrator}
+
+\end{itemize}
+
+
 
 \section{Workflow Plan}
+The workflow process used during the development of Troitsky's Toolbox will be centred around GitHub, and done in sprints which will begin and end at every major milestone. Issues within our KanBan will be the main feature we use to track and assign work.
+\subsection{Workflow Overview}
+\begin{enumerate}
+  \item At the beginning of a sprint all major tasks will be broken down into issues and assigned to group members based on their specialties and interests.
+  \item New branches will be made for each issue from the most recent version of the main branch, the issues will be related to their respective branches via the development feature in the issue.
+  \item If multiple team members are assign to the same issue they will create sub-issues under said issue and create new branches from the parent issues branch.
+  \item When sub-issues are completed they will be merged to the parent branch with a Pull Request (PR), and reviewed by a team member working under the same parent issue.
+  \item When issues are completed they will be merged through a PR to main and review by a group member that did not work on said issue, if possible.
+  \item When a PR is made it will be rin through the CI/CD pipeline using GitHub actions, and can only be reviewed and merged if it passes all tests.
+  \item Once a branch has been reviewed, merged, and passed the CI/CD pipeline it will be deleted.
+\end{enumerate}
+\subsection{Issue Management}
+At the beginning of each sprint, issues and their member assignments will be outlined in our weekly meeting and added to the KanBan as issues by the Current Administrator. It is up to those working on issues to outline their own sub-issues.
+Issues will be classified via the tools they relate to and if they are backend or frontend as tags (i.e, 'Rule Compliance Tester', 'Frontend').
+
 
 \begin{itemize}
 	\item How will you be using git, including branches, pull request, etc.?
@@ -99,58 +164,107 @@ likely change throughout the year.}
 \end{itemize}
 
 \section{Project Decomposition and Scheduling}
+We will be using our \href{https://github.com/users/JackEaston4/projects/3/views/2}{GitHub KanBan} to outline issues and create a roadmap of major project dates.
+\\
+\begin{table}[htbp] 
+    \centering
+    \renewcommand{\arraystretch}{1.3} 
+    \caption{A tentative list of major project dates based on the course outline}
+    \label{tab:my_table}
+    
+ 
+    \begin{tabular}{@{} m{7.5cm} c @{}}
+    \toprule
+    \textbf{Submission Items} & \textbf{Date} \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item Problem Statement
+      \item Proof of Concept Plan
+      \item Development Plan
+    \end{itemize}  &  28/09/2026  \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item Problem Statement Peer Review
+      \item Proof of Concept Plan Peer Review
+      \item Development Plan Peer Review
+    \end{itemize}  &  01/10/2026  \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item SRS
+      \item Hazard Analysis
+    \end{itemize}   & 19/10/2026  \\ 
+    \midrule
+    
+    SRS Peer Review & 22/10/2026  \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item VnV Peer Review Requests
+      \item POC Requests
+    \end{itemize} & 05/11/2026 \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item Design Doc Rev 1
+      \item Fall Custom Deliverable
+    \end{itemize} & 19/11/2026 \\ 
+    \midrule
+    
+    Module Implementation & 21/01/2027 \\ 
+    \midrule
+    
+    Exposition Registration & 27/01/2027 \\ 
+    \midrule
+    
+    Final Demo Schedule Requests & 01/03/2027 \\ 
+    \midrule
+    
+    \begin{itemize}[nosep, leftmargin=*]
+      \item VnV
+      \item Custom Deliverable Winter
+    \end{itemize} & 11/03/2027 \\ 
+    \midrule
+    
+    Team Contribution Survey & 18/03/2027 \\ 
+    \midrule
+    
+    Final Submission & 31/03/2027 \\ 
+    \midrule
+    
+    Expo & 06/04/2027 \\ 
+    \bottomrule
+    \end{tabular}
+\end{table}
 
-\begin{itemize}
-  \item How will you be using GitHub projects?
-  \item Include a link to your GitHub project
-\end{itemize}
-
-\wss{How will the project be scheduled?  This is the big picture schedule, not
-details. You will need to reproduce information that is in the course outline
-for deadlines.}
 
 \section{Proof of Concept Demonstration Plan}
+Due to the nature of the Toolbox providing a variety of services and features, the plan for the Proof of Concept Demonstration has a unique way it approaches the risks presented in the project.
 
-What is the main risk, or risks, for the success of your project?  What will you
-demonstrate during your proof of concept demonstration to convince yourself that
-you will be able to overcome this risk?
+\subsection{Risks}
+Since many tools operate independently from each other, or in small groups, the risks presented by a single tool's performace/attainabliity do not directly impact the attainability of another.
+
+With that being said, there is a group of tools and features that have a high level of risk associated with them due to their complexity and connectivity to each other.
+These related and complex tools would be uniquely tailored to assist the McMaster Troitsky with visualization, performance estimation, and rule compliance testing of bridge designs.
+
+Since the specific details of rule compliance and performance estimation aren't relevant for the Proof of Concept Demo, the focus will be on extracting and visualizing data from the 3D models of a given bridge design.
+The plan to demonstrate the concept of functionality is possible by loading a STEP file (.stp -- universal 3D CAD file format) and displaying a visualization or rendering of the file's contents. 
+Along with the visualization, numerical data will be extracted from the .stp file related to the bridge, which eventually will be used to support the competition rule compliance assessment tool and projected bridge performance and metrics tool.
+This is the individually most complicated feature that will be implemented in the Troitsky Toolbox, so it serves as one of the greatest risks to the project.
+
+It is also worth noting that although there are many different tools that will need to be appropriately connected within the program, it is not a large risk or feasible to demonstrate during the Proof of Concept Demo.
+
+\subsection{Risk Mitigation}
+Due to the nature of the Toolbox, risk mitigation in the specific project context is also unique.
+Since the biggest isloated risk comes from an individual tool, the biggest negative impact of that risk (if not successfully demonstrated) is that the Toolbox cannot provide that specific feature.
+For this project, a "failed" POC demo would mean that there are a few features (compared to the many planned to implement) that aren't achievable within the scope of the project.
+This failure means that the team would modify the scope of the project to include an alternate related feature that bypasses the technical limitation or refine, improve, iterate, and add to alternate functionality of the Toolbox.
+
+
 
 \section{Expected Technology}
-
-
-
-\wss{What programming language or languages do you expect to use?  What external
-libraries?  What frameworks?  What technologies.  Are there major components of
-the implementation that you expect you will implement, despite the existence of
-libraries that provide the required functionality.  For projects with machine
-learning, will you use pre-trained models, or be training your own model?  }
-
-\wss{The implementation decisions can, and likely will, change over the course
-of the project.  The initial documentation should be written in an abstract way;
-it should be agnostic of the implementation choices, unless the implementation
-choices are project constraints.  However, recording our initial thoughts on
-implementation helps understand the challenge level and feasibility of a
-project.  It may also help with early identification of areas where project
-members will need to augment their training.}
-
-Topics to discuss include the following:
-
-\begin{itemize}
-\item Specific programming language
-\item Specific libraries
-\item Pre-trained models
-\item Specific linter tool (if appropriate)
-\item Specific unit testing framework
-\item Investigation of code coverage measuring tools
-\item Specific plans for Continuous Integration (CI), or an explanation that CI
-  is not being done
-\item Specific performance measuring tools (like Valgrind), if
-  appropriate
-\item Tools you will likely be using?
-\end{itemize}
-
-\wss{git, GitHub and GitHub projects should be part of your technology.}
-
 This project shall be accessible via browser for desktop users. Data shall be stored in a robust database.
 The back-end logic shall be rewritten a powerful and easily maintainable programming language, preferably with
 a utility which will aid front-end development. The current likely option is the .NET programming
@@ -184,11 +298,6 @@ preferably one who is working on a feature which closely interacts with the prop
 
 \section{Use of AI and LLMs}
 
-\wss{This section is a continuation of the previous section.  The role of LLMs
-in your project as important enough to warrant their own section.  
-How will your team be using LLMs for code and documentation development?  
-What tools will you be using?  How will you verify the output of your LLMs?}
-
 This project is not a machine learning project, as it will implement many determinate services for the Troitsky club.
 However, utilization of robust AI chatbots (e.g. Claude Code, ChatGPT, Copilot) to write code will increase developer efficiency by decreasing the time each
 developer needs to spend drafting and revising code. However, AI is prone to hallucinations and other vulnerabilities. Therefore, each
@@ -197,7 +306,6 @@ until they completely understand the code and are convinced of its validity.
 
 \section{Coding Standard}
 
-\wss{What coding standard will you adopt?}
 
 This project shall adopt the standard .NET coding conventions, available 
 \href{https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions}{here}. 
@@ -230,6 +338,8 @@ inconsistencies.}
 \wss{You do not need to report every interaction, but you should disclose the 
 uses that materially contributed to your work}
 
+
+
 \subsection{Verification of AI-Generated Content}
 
 \wss{\begin{itemize}
@@ -246,10 +356,6 @@ whether material was generated by a human or an AI system.}
 \newpage{}
 
 \section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741}
-
-\input{../Reflection.text}
 
 \begin{enumerate}
     \item Why is it important to create a development plan prior to starting the
@@ -271,78 +377,124 @@ whether material was generated by a human or an AI system.}
     and how did you resolve them? \\
     We had some disagreements over how to manage attaching issues to branches, for this deliverable I thought it would be fine for all of us to just have our work on a singular branch each and then merge at the end, however the rest of the group argued that we should do it based on each issue and to be honest they were just right. So we went with that.
   \end{enumerate}
+
+\subsection*{Pedro Azevedo}
+
+\begin{enumerate}
+    \item The creation of the development plan prior to starting the project is key to establishing the patterns and strategies 
+ that the team will use to create clean and maintainable code. Part of the value of this project is its ability to stand without 
+ anyone from the current group being a part of it, and central to that will be having well-documented code. The development plan also 
+ made us settle on some key factors of the project that may have been decided more on a whim if it wasn't set in stone.
+
+    \item I believe the main benefit of CI/CD is the standardization of builds and submissions, ensuring that what we work on will be properly 
+ replicated when built by anyone else, including the TAs and instructors. It ensures that the main branch is always a working version of the 
+ service, one that has passed all the checks set up by the team. It brings peace of mind when the project gets busier, and development is moving quicker 
+ , ensuring no changes that break the project are made.
+
+    \item There weren't any major disagreements during this deliverable, just different suggestions for technologies for the 
+ development plan, which were all decided through some more thorough research. When certain decisions relied on 
+ some technical knowledge, the team would often turn to the member who best understood that topic.
+\end{enumerate}
+
+
 \newpage{}
 
 \section*{Appendix --- Team Charter}
 
-\wss{borrows from
-\href{https://engineering.up.edu/industry_partnerships/files/team-charter.pdf}
-{University of Portland Team Charter}}
-
 \subsection*{External Goals}
 
-\wss{What are your team's external goals for this project? These are not the
-goals related to the functionality or quality fo the project.  These are the
-goals on what the team wishes to achieve with the project.  Potential goals are
-to win a prize at the Capstone EXPO, or to have something to talk about in
-interviews, or to get an A+, etc.}
+\begin{enumerate}
+    \item The primary external goals related to the benefit and success of this product in 
+ improving McMaster's Troitsky teams; fundamentally, we want to have a positive impact on the club as a whole. 
+ This project seeks to bring some legitimacy to the club's operations, improving the general quality of life of 
+ members and hopefully attracting more interest in the club, both from normal members and, additionally 
+ interested software members.
+
+    \item Another external goal would be to have a highly organized and streamlined development process throughout 
+ the entire project. With the use of all the GitHub features, the team will lock into an iterative development 
+ where all members' input and feedback can be properly assessed and organized to further document our work. The 
+ team wants this project to showcase our abilities to collaborate and develop a large-scale project smoothly.
+
+\end{enumerate}
 
 \subsection*{Attendance}
 
+The section describes the rules and expectations outlined for team member attendance.
+
 \subsubsection*{Expectations}
 
-\wss{What are your team's expectations regarding meeting attendance (being on
-time, leaving early, missing meetings, etc.)?}
+Our team expects near-full attendance at all scheduled meetings, along with the required work for the meetings 
+done beforehand. Members should be on time to scheduled meetings, and justification for leaving early must be discussed 
+with the other members in advance. While full attendance is the standard, there will be room for members to make 
+notice that they will be absent at a future meeting, with the added task of supplying required information before the meeting and catching up on meeting notes after. 
+If a member misses 3 pre-scheduled meetings, there must be strong justification, and an additional meeting will be scheduled with the other 
+members to accommodate and discuss. Approaching deliverables, meeting attendance becomes more vital and therefore after a single missed scheduled meeting, 
+absences must be replaced with a supporting meeting or direct discussion with a member about the meeting contents. For the 
+scheduled meetings, in-person attendance is generally expected, but there will be room for virtual attendance when other 
+members are notified beforehand. 
+
 
 \subsubsection*{Acceptable Excuse}
 
-\wss{What constitutes an acceptable excuse for missing a meeting or a deadline?
-What types of excuses will not be considered acceptable?}
+For internal deadlines that the team has set, the expectation is that other members are kept on track of the progression of work and therefore 
+made aware that a deadline may be missed before it passes. This will ensure that if necessary, other members may assist in the required work or those 
+internal deadlines may be adjusted. For missing meetings or when missed deadlines must be justified, acceptable excuses will range from standard 
+academic regulations: sickness, family responsibilities, religious accommodations, and any previously communicated commitments that the team has been made aware 
+of. For real project deadlines, there will be no acceptable excuses unless any true emergencies have occurred.
 
 \subsubsection*{In Case of Emergency}
 
-\wss{What process will team members follow if they have an emergency and cannot
-attend a team meeting or complete their individual work promised for a team
-deliverable?}
+Support for emergency situations will begin with the continuous documentation of ongoing work, allowing for simplified transfer of assignment of tasks.
+If an emergency occurs and a team member either will not be able to complete their work or is even unsure of their ability to do so, they must contact and inform 
+the team as soon as possible. The rest of the team will then attempt to accommodate and support the member by redistributing their workload, 
+ensuring the completion of work that is to the team's standard.
 
 \subsection*{Accountability and Teamwork}
 
 \subsubsection*{Quality} 
 
-\wss{What are your team's expectations regarding the quality
-of team members' preparation for team meetings and the quality of the
-deliverables that members bring to the team?}
+The team will expect nothing less than the best effort of each member, seeking to create a final product 
+that everyone is proud to be a part of. Each member is looking to not only excel in the class, but also 
+function smoothly as a team in the process, so preparation for meetings will be vital. Just like the final 
+product, this preparation must be held to a high standard, ensuring that complete team progress is made 
+smoothly.
+
+Expectations of effort may be discussed on a per-meeting basis, ensuring that all members are on the same page 
+about the work required to achieve the desired final product. As the scope for this project is adjustable, this 
+communication between members will be central to keeping expectations in check.
 
 \subsubsection*{Attitude}
 
-\wss{What are your team's expectations regarding team members' ideas,
-interactions with the team, cooperation, attitudes, and anything else regarding
-team member contributions?  Do you want to introduce a code of conduct?  Do you
-want a conflict resolution plan?  Can adopt existing codes of conduct.}
+Central to the team's success will be remaining respectful, understanding and focusing on collaboration amongst 
+one another. A positive attitude is generally expected, but as with any project, members may become stressed, and in those 
+situations respect must be maintained, and discussion will be had if something breaks this expectation. 
+Each member will also be expected to contribute a fair share of the work, both within the technical development of the project 
+and the external tasks required. Conflict resolution will be done in a calm and respectful manner, focusing on maintaining an environment 
+that, even through conflict, remains in check. Meetings may be scheduled with the TA and/or professor if issues escalate beyond what is 
+feasible for the team to handle.
 
 \subsubsection*{Stay on Track}
 
-\wss{What methods will be used to keep the team on track? How will your team
-ensure that members contribute as expected to the team and that the team
-performs as expected? How will your team reward members who do well and manage
-members whose performance is below expectations?  What are the consequences for
-someone not contributing their fair share?}
-
-\wss{You may wish to use the project management metrics collected for the TA and
-instructor for this.}
-
-\wss{You can set target metrics for attendance, commits, etc.  What are the
-consequences if someone doesn't hit their targets?  Do they need to bring the
-coffee to the next team meeting?  Does the team need to make an appointment with
-their TA, or the instructor?  Are there incentives for reaching targets early?}
+Staying on track will be rooted in organization and communication among members, primarily utilizing GitHub task assignment features. Beyond 
+that, team members often attend classes together, and capstone progress is always discussed, so there is a constant general understanding of how 
+the project develops. The weekly meetings will then formalize these updates, ensuring that all progress is documented. Team and community interactions 
+are guided by the code of conduct outlined in the project folder, ensuring that a respectful and considerate environment is always maintained. 
+Expectations of members' standards as discussed above have all been a general priority of all the individual members even prior to forming this team, so adherence to these 
+expectations is rooted in the group's interest. If a member does happen to miss a meeting or an internal deadline, a coffee or treat should be bought for 
+the other members during the next meeting. For more important formal deadlines, any issues that arise from absences or missed submissions will result in 
+discussion with the TA and/or professor. 
 
 \subsubsection*{Team Building}
 
-\wss{How will you build team cohesion (fun time, group rituals, etc.)? }
+The team will build cohesion through the attendance of Troitsky events and meetings, as the team's members are introduced as formal 
+members of the club. These events will provide a more casual place to build a team bond, while also allowing everyone the opportunity to engage 
+with the eventual users of the platform, gaining a deeper understanding of the club itself.
 
 \subsubsection*{Decision Making} 
 
-\wss{How will you make decisions in your group? Consensus?  Vote? How will you
-handle disagreements? }
+Decisions in the group will be made democratically through a vote, with decisions involving several parameters allowing for a ranking of voting options. 
+All split decision handling will begin with more discussion of the topic, where those with more opinion on the subject may 
+state their reasoning and appeal to the others. In the case where it remains a tied vote, the supervisor will be consulted and will ultimately
+decide.
 
 \end{document}
