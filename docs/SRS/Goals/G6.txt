@@ -1,0 +1,2 @@
+\nsection{G.6 Limitations and exclusions}
+\comment{Aspects that the system need not address.}

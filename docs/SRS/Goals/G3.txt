@@ -1,0 +1,5 @@
+\nsection{G.3 Expected benefits}
+\comment{New processes, or improvement to existing processes, made possible by the project's results.}
+%---------------------------------
+\notEmpty{}
+%---------------------------------

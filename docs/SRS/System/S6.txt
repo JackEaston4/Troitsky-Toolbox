@@ -1,0 +1,2 @@
+\nsection{S.6 Verification and acceptance criteria}
+\comment{Specification of the conditions under which an implementation will be deemed satisfactory.}

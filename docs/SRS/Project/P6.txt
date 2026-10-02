@@ -1,0 +1,2 @@
+\nsection{P.6 Risks and mitigation analysis}
+\comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}

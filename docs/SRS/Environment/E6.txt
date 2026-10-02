@@ -1,0 +1,2 @@
+\nsection{E.6 Invariants}
+\comment{Properties of the environment that the system's operation must preserve.}

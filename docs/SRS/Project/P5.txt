@@ -1,0 +1,2 @@
+\nsection{P.5 Required technology elements}
+\comment{External systems, hardware and software, expected to be necessary for building the system.}

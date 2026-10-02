@@ -1,0 +1,14 @@
+\nsection{G.1 Context and overall objective}
+\comment{High-level view of the project: organizational context and reason for building a system.}
+%---------------------------------
+\notEmpty{}
+%---------------------------------
+
+\begin{goal}\label{goal:first}
+This is a goal example. If you need explicit (and automatic) numbering, you can use the definitions in the \texttt{.tex} template.
+Is is refined by \ref{req:memo}
+\end{goal}
+
+\begin{req}\label{req:cross}
+This is a requirement example. It illustrates how numbering is continuous and cross-types (if this is what you need).
+\end{req}

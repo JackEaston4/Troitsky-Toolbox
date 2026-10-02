@@ -1,0 +1,5 @@
+\nsection{S.2 Functionality}
+\comment{One section, S.2.n, for each of the components identified in S.2, describing the corresponding behaviors (functional and non-functional properties).}
+%---------------------------------
+\notEmpty{}
+%---------------------------------

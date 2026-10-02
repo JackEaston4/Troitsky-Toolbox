@@ -1,0 +1,5 @@
+\nsection{P.3 Schedule and milestones}
+\comment{List of tasks to be carried out and their scheduling.}
+%---------------------------------
+\notEmpty{}
+%---------------------------------

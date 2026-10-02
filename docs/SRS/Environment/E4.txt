@@ -1,0 +1,2 @@
+\nsection{E.4 Assumptions}
+\comment{Properties of the environment that may be assumed, with the goal of facilitating the project and simplifying the system.}

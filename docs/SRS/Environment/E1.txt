@@ -1,0 +1,2 @@
+\nsection{E.1 Glossary}
+\comment{Clear and precise definitions of all the vocabulary specific to the application domain, including technical terms, words from ordinary language used in a special meaning, and acronyms. This chapter should not be empty!}

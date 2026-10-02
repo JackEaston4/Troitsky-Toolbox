@@ -1,0 +1,7 @@
+\nsection{G.2 Current situation}
+\comment{Current state of processes to be addressed by the project and the resulting system.}
+
+\begin{req}\label{req:memo}
+This is a requirement example.
+It refines \ref{goal:first}
+\end{req}

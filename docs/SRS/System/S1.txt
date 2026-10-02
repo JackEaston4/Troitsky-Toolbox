@@ -1,0 +1,5 @@
+\nsection{S.1 Components}
+\comment{Overall structure expressed by the list of major software and, if applicable, hardware parts.}
+%---------------------------------
+\notEmpty{}
+%---------------------------------

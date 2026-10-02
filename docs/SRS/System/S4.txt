@@ -1,0 +1,2 @@
+\nsection{S.4 Detailed usage scenarios}
+\comment{Examples of interaction between the environment (or human users) and the system: use cases, user stories.}
