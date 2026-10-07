@@ -1,2 +1,12 @@
 \nsection{P.7 Requirements process and report}
-\comment{Initially, description of what the requirements process will be; later, report on its steps.}
+\textbf{McMaster Troitsky Executives}\\
+Both Pedro Azevedo and our supervisor Bella Vescio are Troitsky Executives, our requirements will be gathered through team meetings and supervisor meetings.\\
+Important Questions to Ask:
+\begin{itemize}
+\item What information in most important to consilidate?
+\item When taking your position, what would you have like to have seen within a transition document.
+\item How would you go about outlining the duties of a software development and support team?
+\end{itemize}
+
+The consolidation of information and ease of transition is one of the main goals in the development of this project so we would want to hear the executives opinions of this.
+Additionally the challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly.
