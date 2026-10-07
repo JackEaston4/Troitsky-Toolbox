@@ -10,3 +10,5 @@ Important Questions to Ask:
 
 The consolidation of information and ease of transition is one of the main goals in the development of this project so we would want to hear the executives opinions of this.
 Additionally the challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly.
+\\
+\textbf{}
