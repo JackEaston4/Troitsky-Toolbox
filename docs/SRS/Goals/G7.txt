@@ -1,5 +1,37 @@
-\nsection{G.7 Stakeholders and requirements sources}
-\comment{Groups of people who can affect the project or be affected by it, and other places to consider for information about the project and system.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
+\nsection{G.7 - Stakeholder and Requirements Sources}
+\begin{table}[H]
+\begin{center}
+
+\caption{Stakeholder Personas}
+\label{table}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+ Stakeholder & Persona & Category \\ \hline
+ McMaster Troitsky Executives & cell5 & Direct \\ \hline
+ General McMaster Troitsky Members &
+ \begin{tabular}{c|c}
+ Incoming Members & Personas \\ \hline
+ Returning Members & Persona \\
+ \end{tabular}
+& Direct \\ \hline
+ McMaster CAS Students & Kyle & Direct\\ \hline
+ Non-McMaster Troitsky Teams & cell & Direct \\ \hline
+ McMaster University Students & cell & Indirect\\ \hline
+\end{tabular}
+
+\end{center}
+\end{table}
+\subsection*{G.7.1 - Direct Stakeholders}
+
+\textbf{McMaster Troitsky Executives}\\ 
+This toolbox webservice was requested by Troitsky Executives; 
+they have been noticing issues will information carryover during exeecutive transitions,
+as well as information and technical skill consolidation in the most senior teams. 
+They would like a centralized applciation that can address these issues.
+\\
+\\
+\textbf{Returning Troitsky Members}
+Returning Members often have thier previous years work stored over multiple services and devices.
+Additionally, they may have had help and direction from senior teams the previous years who are no longer here. 
+To wasily preform at the level they did in previous years ease of access the thier previous work and others previous work is essential.
+
