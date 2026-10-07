@@ -1,2 +1,10 @@
 \nsection{E.6 Invariants}
 \comment{Properties of the environment that the system's operation must preserve.}
+
+\begin{itemize}
+    \item The items in the system's wealth of development knowledge shall be fully preserved.  
+    \item Previous models shall be fully preserved.
+    \item Scientific and engineering methods that power our models shall be fully preserved.
+    \item Accumulated veteran knowledge entered to the system shall be fully preseved.
+    \item The rules of the competition that are relevant to the system shall be fully preserved. 
+\end{itemize}
