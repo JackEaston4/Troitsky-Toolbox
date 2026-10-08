@@ -10,5 +10,53 @@ Important Questions to Ask:
 
 The consolidation of information and ease of transition is one of the main goals in the development of this project so we would want to hear the executives opinions of this.
 Additionally the challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly.
-\\
-\textbf{}
+\\\\
+\textbf{General McMaster Troitsky Members}\\
+A survey will be served to general troitsky members to ellicit the overall wants and needs of members.\\
+Questions in the survey will be:
+\begin{itemize}
+    \item How many years of experience do you have in Troitsky (1-5 years)
+    \item What is your current role?
+    \item What is your modelling experience?
+    \item How valuable would you rind an entry level modelling service, like implementing simple testing and weak point analysis.
+    \item Rate (1-5) how valuable you would find having this information easily acceptable regarding past McMaster Troitsky data.
+    \begin{itemize}
+        \item Bridge Modelling files
+        \item Joint Construction Data (specific model use)
+        \item Manufacturing information
+        \item Past Team Results
+        \item Past Technical Presentation Material
+    \end{itemize}
+    \item How does your team store data
+    \begin{itemize}
+        \item Microsoft teams
+        \item Google Drive
+        \item Individual people hold files
+        \item Discord
+        \item Email
+    \end{itemize}
+    \item Rate(1-5) these features on how useful you would find them.
+    \begin{itemize}
+        \item Searchable archive of past bridge design
+        \item Database of material testing results (stick strength, glue, floss, etc.)
+        \item Bridge weight estimator from a submitted model
+        \item Structural efficiency calculation
+        \item Ultimate load and failure point prediction
+        \item Upload and visualise a team's bridge model in the browser
+        \item Exit documents / role handover records for executive positions
+        \item Onboarding guide and training material for new members
+        \item Private workspace for each team's own files and data
+        \item Competition rules and regulations reference
+        \item Club announcements and general information page
+    \end{itemize}
+    \item Would you want your team files, results and progress to be available for future teams to learn from. (Yes/No/Maybe)
+    \item if you could go back to being a new member, or if you're a current a new member, what tutorials would you want access to?
+    \begin{itemize}
+        \item Modeling Software
+        \item Manufacturing
+        \item Slab Building
+        \item Team Organization
+        \item Other
+    \end{itemize}
+\end{itemize}
+\textbf{McMaster CAS Students}
