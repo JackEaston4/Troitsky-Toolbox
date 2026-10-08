@@ -2,9 +2,11 @@
 \comment{Properties of the environment that the system's operation must preserve.}
 
 \begin{itemize}
-    \item The items in the system's wealth of development knowledge shall be fully preserved.  
-    \item Previous models shall be fully preserved.
-    \item Scientific and engineering methods that power our models shall be fully preserved.
-    \item Accumulated veteran knowledge entered to the system shall be fully preseved.
-    \item The rules of the competition that are relevant to the system shall be fully preserved. 
+    \item The knowledge entered into the system, including development knowledge, scientific and engineering methods,
+    and veteran wisdom, shall be fully preserved.  
+    \item Any model entered into the system, whether developed before or after the system's released, shall be
+    fully preserved and not corrected at all to preserve development history as faithfully as possible for easy comparison.
+    \item The rules of the competition that are relevant to the system shall be fully preserved and not be mutated at all.
+    This is because modelling will be based of the rules as they are, and any deviation from the rules will result in inferior models.
+
 \end{itemize}
