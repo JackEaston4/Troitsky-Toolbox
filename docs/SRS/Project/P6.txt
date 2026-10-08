@@ -1,2 +1,14 @@
 \nsection{P.6 Risks and mitigation analysis}
 \comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}
+
+• Risk: Technical Issues with External Libraries
+– Description: Technical issues may arise with external technologies for certain tools such as the bridge modelling or rule compliance tool.
+– Mitigation: Team collaboratively addresses issues as they arise. Team members are individually responsible for thoroughly testing and validating their code before creating a pull request. At least one other team member will review and ensure this code is functional and well-written.
+
+• Risk: Unrealistic Schedule or Workload
+– Description: Tasks may take longer than expected or workload may become unbalanced among team members.
+– Mitigation: Use the GitHub Kanban board to manage tasks and coordinate milestones. As team check-in meetings happen, Notetaker keeps track of timelines. Team updates board; ensuring appropriate timeline estimates and reassignment of tasks done as a team as needed.
+
+• Risk: User Interface is Not User-Friendly
+- Description: The user interface may not be intuitive or user-friendly for members of Troitsky teams with varying levels of experience.
+– Mitigation: Conduct diverse user testing sessions, gather feedback, and make iterative improvements.
