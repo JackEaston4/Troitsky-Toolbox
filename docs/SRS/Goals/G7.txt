@@ -1,5 +1,80 @@
-\nsection{G.7 Stakeholders and requirements sources}
-\comment{Groups of people who can affect the project or be affected by it, and other places to consider for information about the project and system.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
+\nsection{G.7 - Stakeholder and Requirements Sources}
+\begin{table}[H]
+\begin{center}
+
+\caption{Stakeholder Personas}
+\label{table}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+ Stakeholder & Persona & Category \\ \hline
+ McMaster Troitsky Executives & Mohammed Lee & Direct \\ \hline
+ General McMaster Troitsky Members & Tenun Grigoryan  & Direct \\ \hline
+ Future Troitsky Members & Sui Smith& Direct \\ \hline
+ McMaster CAS Students & Kyle Levi & Direct\\ \hline
+ MES - McMaster Engineering Society & Persona & Direct \\ \hline
+ Concordia University Troitsky Organization & Persona & Indirect \\ \hline
+ McMaster University & Persons & Indirect\\ \hline
+\end{tabular}
+
+\end{center}
+\end{table}
+\subsection*{G.7.1 - Direct Stakeholders}
+\textbf{McMaster Troitsky Executives}\\ 
+This toolbox webservice was requested by Troitsky Executives; 
+they have been noticing issues will information carryover during exeecutive transitions,
+as well as information and technical skill consolidation in the most senior teams. 
+They would like a centralized applciation that can address these issues.
+\\\\
+\underline{Persona: Mohammed Lee}\\
+Mohammed is a VP on the Exec team for Troitsky, he has competed in Troisky 3 times, twice as a team member and once as a coach.
+Through his experience on the team he has developed a wealth of knowledge in both the administrative and technical sides of the club. 
+He is graduating next year, and is worried about the transition process for the new VP taking his place.
+\\\\
+\textbf{General Troitsky Members}\\
+General members will be the main users and those that we will focus on supporting with our
+project. These users will be both supporting and expanding the data the
+system provides, and will be the main beneficiaries of the system.
+\\\\
+\underline{Persona: Tenun Grigoryan}\\
+Tenun is a second year member of troisky, he has competed once on a team before, and is hoping to compete again this year.
+In his first year there was a steep learning curve in the CAD design aspect of the competition, and had to rely heavily on senior troitsky members for tutorials and help. 
+He hopes this year more resources will be provided to junior club members to decrease the barriers to compete.
+\\\\
+\textbf{Future Troitsky Members}\\
+Future Troisky Members are the students coming to McMaster who will carry the torch of the Troitsky Club.
+This tolbox will lower the barrier to entry for new teams wanting to join troitsky, 
+through both the access to previous teams work and documentation, as well as the scripted load testing and weakpoint analysis.
+\\\\
+\underline{Persona: Sui Smith}\\
+Sui is a Highschool senior who has just been accepted into the McMaster Civil Engineering Program, she is a part of student parliment at her school and competes in robotics compititions as one of her extracurriculars. 
+She would love to continue competing on a technical team that is in line with her program. It goes without saying she would prioritize join a club that provides good resources for thier introductory members.
+\\\\
+\textbf{McMaster CAS Students}\\
+Troisky will need a Software Development team to maintain and extend the toolbox. 
+This team wil provide new extracurricular activities for CAS students at McMaster, 
+allowing them to develop essential software engineering skills that will give them a leg up in school and work.
+\\\\
+\underline{Persona: Kyle Levi}\\
+Kyle is a Third Year CS student, he want to work in large system design and management when he graduates; 
+He would like to join a technical team to focuses on maintaining and expanding a software system.
+\\\\
+\textbf{MES-McMaster Engineering Society}\\
+The MES organizes engineering clubs and seeks to benefit from the legitimization of the McMaster Troitsky Club through a centralized information platform. 
+The MES also provides funding for the McMaster Troitsky Club, so the hosting of services and associated costs may be dependent on
+the given budget.
+\\\\
+\underline{Persona: Mia Tanaka}\\
+Mia is the treasurer for the MES, she would like to ensure that the club funding she is approving is coing to clubs that are investing in their long tern sustainability and development.
+
+\subsection*{G.7.2 - Indirect Stakeholders}
+\textbf{Concordia University Troitsky Organization}\\
+As Concordia University hosts the Troitsky competition, they establish
+the rules and regulations of the competition, and therefore changes what
+is prioritized by the Direct stakeholders. This would influence the design
+of the system, and what features would benefit teams the most.
+\\\\
+\textbf{McMaster University}\\
+The university itself is a Indirect stakeholder as it benefits from the success of the McMaster Troitsky Club, and the success of teams during the
+Troitsky competition, through an improved reputation as a school that produces capable students.
+
+
