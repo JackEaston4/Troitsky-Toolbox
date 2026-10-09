@@ -18,23 +18,10 @@ Questions in the survey will be:
     \item How many years of experience do you have in Troitsky (1-5 years)
     \item What is your current role?
     \item What is your modelling experience?
-    \item How valuable would you rind an entry level modelling service, like implementing simple testing and weak point analysis.
-    \item Rate (1-5) how valuable you would find having this information easily acceptable regarding past McMaster Troitsky data.
-    \begin{itemize}
-        \item Bridge Modelling files
-        \item Joint Construction Data (specific model use)
-        \item Manufacturing information
-        \item Past Team Results
-        \item Past Technical Presentation Material
-    \end{itemize}
-    \item How does your team store data
-    \begin{itemize}
-        \item Microsoft teams
-        \item Google Drive
-        \item Individual people hold files
-        \item Discord
-        \item Email
-    \end{itemize}
+    \item How valuable would you rind an entry level modelling service, like implementing simple testing and weak point analysis?
+    \item Rate (1-5) how valuable you would find having this information easily acceptable regarding past McMaster Troitsky data. 
+    \textbf{[Bridge Modelling files, Joint Construction Data (specific model use), Manufacturing information, Past Team Results, Past Technical Presentation Material]}
+    \item How does your team store data \textbf{[Microsoft Teams, Google Drive, Individuals store files, Discord, Email]}
     \item Rate(1-5) these features on how useful you would find them.
     \begin{itemize}
         \item Searchable archive of past bridge design
@@ -49,14 +36,29 @@ Questions in the survey will be:
         \item Competition rules and regulations reference
         \item Club announcements and general information page
     \end{itemize}
-    \item Would you want your team files, results and progress to be available for future teams to learn from. (Yes/No/Maybe)
+    \item Would you want your team files, results and progress to be available for future teams to learn from. \textbf{[Yes/No/Maybe]}
     \item if you could go back to being a new member, or if you're a current a new member, what tutorials would you want access to?
+    \textbf{[Modeling Software, Manufacturing, Slab Building, Team Organization, Other]}
+\end{itemize}
+\textbf{McMaster CAS Students}\\
+McMaster CAS students are needed for the Software Development Team; 
+they will maintain and expand the toolbox. To ease the burden on them we must elicit prefered code and documentation formats\\
+Some questions we would like to ask are:
+\begin{itemize}
+    \item When working with a system you did not develop yourself, rate(1-5) how helpful you find these documentation formats.
     \begin{itemize}
-        \item Modeling Software
-        \item Manufacturing
-        \item Slab Building
-        \item Team Organization
-        \item Other
+        \item  Markdown or other lightweight markup languages for README files.
+        \item Inline Documentation (Javadoc, Doxygen, XML Doc Comments, JSDoc, Docstrings)
+        \item Collabrative Wiki Formats, think online library documentation.
+        \item Modeling and Visual Formats (PlantUML, C4 Model)
+    \end{itemize}
+    \item What naming conventions do you prefer?
+    \begin{itemize}
+        \item PascalCase
+        \item IPascalCase (prefix interfaces with a capital I)
+        \item camelCase
+        \item _camelCase (prefix private and internal instances fields with an underscore)
     \end{itemize}
 \end{itemize}
-\textbf{McMaster CAS Students}
+\textbf{MES-McMaster Engineering Society}
+
