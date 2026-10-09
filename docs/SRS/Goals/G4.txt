@@ -1,2 +1,13 @@
-\nsection{G.4 Functionality overview}
-\comment{Overview of the functions (behavior) of the system. Principal properties only (details are in the System book).}
+\nsection{G.4 Functionality Overview}
+High Level functional requirements for the toolbox are defined below:
+\begin{itemize}
+    \item\textbf{Data Storage and Retrival.} 
+    Troitsky Toolbox must store past designs, materials testing informat, and relevant development information. Troitsky toolbox must be able to return relevant data quickly based on user searches. The system should allow for the addition of new information, streamilining the process of growing the repository.
+    \item\textbf{Key Model Analysis Features and Bridge Predictions}
+    Provide a platform for teams to upload their bridge models through a standardized format, allowing the user to view and analyze the model, highlighting key
+metrics and predictions about the bridge’s performance. This should decrease
+the barrier to entry to bridge analysis, allowing all members of a team to get
+involved in the analysis process, even without formal modelling knowledge. This
+will be integrated with the material testing support to provide more accurate
+bridge analysis from the stored material properties.
+\end{itemize}
