@@ -1,7 +1,8 @@
 \nsection{G.2 Current situation}
-\comment{Current state of processes to be addressed by the project and the resulting system.}
 
-\begin{req}\label{req:memo}
-This is a requirement example.
-It refines \ref{goal:first}
-\end{req}
+Currently, teams operate in a highly individualistic manner, with the greater McMaster Troitsky club covering the administrative details regarding competition registration and providing 
+guidance and feedback when possible. Teams store information through Microsoft Teams, Google Drive and emails between members, with many teams resulting in having a single member in charge 
+of different competition components. Currently, the club as a whole does not have a centralized system in place to store past designs, bridge models or technical details, only having more adiminstrative/executive 
+documents stored. Even tutorials that are consistently useful for teams do not have a consistent access point and therefore become unreliable as proper support for the club. 
+Despite these challenges, for the past 2 years the club has been pushing for more integration between all the teams, generalizing the coach positions and creating a stronger 
+administrative presence through timelines and events.
