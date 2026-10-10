@@ -2,12 +2,17 @@
 High Level functional requirements for the toolbox are defined below:
 \begin{itemize}
     \item\textbf{Data Storage and Retrival.} 
-    Troitsky Toolbox must store past designs, materials testing informat, and relevant development information. Troitsky toolbox must be able to return relevant data quickly based on user searches. The system should allow for the addition of new information, streamilining the process of growing the repository.
-    \item\textbf{Key Model Analysis Features and Bridge Predictions}
-    Provide a platform for teams to upload their bridge models through a standardized format, allowing the user to view and analyze the model, highlighting key
-metrics and predictions about the bridge’s performance. This should decrease
-the barrier to entry to bridge analysis, allowing all members of a team to get
-involved in the analysis process, even without formal modelling knowledge. This
-will be integrated with the material testing support to provide more accurate
-bridge analysis from the stored material properties.
+        Troitsky Toolbox must store past designs, materials testing informat, and relevant development information. Troitsky toolbox must be able to return relevant data quickly based on user searches. The system should allow for the addition of new information, streamilining the process of growing the repository.
+    \item\textbf{Key Model Analysis Features and Bridge Predictions.}
+        Provide a platform for teams to upload their bridge models through a standardized format, allowing the user to view and analyze the model, highlighting key
+        metrics and predictions about the bridge’s performance. This should decrease
+        the barrier to entry to bridge analysis, allowing all members of a team to get
+        involved in the analysis process, even without formal modelling knowledge. This
+        will be integrated with the material testing support to provide more accurate
+        bridge analysis from the stored material properties.
+    \item\textbf{Materials Testing Support and Facilitated Result Analysis}
+        As the McMaster Troitsky club begins to standardize knowledge collection, material testing data will be collected and stored in a standardized format. The service will streamline this process, allowing testing results to be easily uploaded and analyzed against past results, along with collecting supplementary testing information for future years.
+    \item\textbf{Simplified and Comprehensive Knowledge Transfer}
+        Support documentation from the McMaster Troitsky club through exit documents and other knowledge transfer methods, ensuring that information and designs are consolidated and accessible to future members. Specialized member roles, such as executive positions, will also be able to keep a record of their role responsibilities and key factors, to further improve the club organization.
+    \item 
 \end{itemize}
