@@ -3,6 +3,12 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{array}
+
+% Ragged-right fixed-width column for the FMEA table
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -87,6 +93,138 @@ requirements.}
 \wss{If no safety requirement can be devised, other mitigation strategies can be
 entered in the table, including strategies involving providing additional
 documentation, and/or test cases.}
+
+% Ref: H<component>-<letter>. SR: trace to SRS IDs (FR2nm/NFR2nm) or new
+% safety requirements listed in the next section.
+\begin{landscape}
+{\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.6}
+\begin{longtable}{P{0.10\linewidth}P{0.16\linewidth}P{0.15\linewidth}P{0.15\linewidth}P{0.18\linewidth}P{0.08\linewidth}P{0.05\linewidth}}
+\caption{Failure Mode and Effect Analysis (FMEA)}\label{TblFMEA}\\
+\toprule
+\textbf{Component} & \textbf{Failure Mode} & \textbf{Effects of Failure} &
+\textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} &
+\textbf{Ref.}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\textit{Table~\ref{TblFMEA} continued}}\\
+\toprule
+\textbf{Component} & \textbf{Failure Mode} & \textbf{Effects of Failure} &
+\textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} &
+\textbf{Ref.}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\textit{Continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+%======================================================================
+% 1. Access Manager
+% Covers SRS S.2.1 (FR211-FR214, NFR211-NFR212).
+% Causes to consider: insider vs outsider for each leak; role set misconfigured
+% when a new tool is added; roles not handed over at executive turnover.
+% Actions to consider: server-side role checks (deny by default), lockout after
+% failed logins, password reset (FR211-FR214 currently have none), log of who
+% changed which role.
+%======================================================================
+Access Manager & \multicolumn{6}{l}{\textit{Wrong user gets in}}\\
+ & Data leak (I/E) & & & & & H1-a\\
+\cmidrule(l){2-7}
+ & Password leak (I/E) & & & & & H1-b\\
+\cmidrule(l){2-7}
+ & Convenience leak (superior gives inferior account access without clearance) & & & & & H1-c\\
+\cmidrule(l){2-7}
+ & Role category given extra rights & & & & & H1-d\\
+\cmidrule(l){2-7}
+ & Wrong person assigned to role category & & & & & H1-e\\
+\cmidrule(l){2-7}
+ & \multicolumn{6}{l}{\textit{Right user locked out}}\\
+ & Forgot password & & & & & H1-f\\
+\cmidrule(l){2-7}
+ & Role category given less rights & & & & & H1-g\\
+\cmidrule(l){2-7}
+ & Right person not given role & & & & & H1-h\\
+\midrule
+%======================================================================
+% 2. Knowledge Repository
+% Covers SRS S.2.2 (FR221-FR225, NFR221-NFR222). No failure modes listed yet.
+% Ideas: content lost or overwritten (FR225 replace), personal info uploaded
+% and visible to all, malicious file / script in preview (FR224), members
+% relying on outdated content.
+%======================================================================
+Knowledge Repository &  & & & & & \\
+\midrule
+%======================================================================
+% 3. Knowledge Transfer Manager
+% Covers SRS S.2.7 (FR271-FR275, NFR271-NFR272). No failure modes listed yet.
+% Ideas: exit documents never submitted, draft lost, contact details in role
+% records exposed, negative remarks published automatically (FR274), role
+% records out of date.
+%======================================================================
+Knowledge Transfer Manager &  & & & & & \\
+\midrule
+%======================================================================
+% 4. Materials Testing
+% Covers SRS S.2.6 (FR261-FR265, NFR261-NFR262).
+% Input file here = CSV import (NFR262). FR262 only rejects impossible values,
+% so a plausible typo still gets into the aggregated properties.
+%======================================================================
+Materials Testing & Calculation API error & & & & & H4-a\\
+\cmidrule(l){2-7}
+ & Corruption of input file & & & & & H4-b\\
+\cmidrule(l){2-7}
+ & Output display wrong & & & & & H4-c\\
+\cmidrule(l){2-7}
+ & Output not understandable & & & & & H4-d\\
+\cmidrule(l){2-7}
+ & Timeout & & & & & H4-e\\
+\midrule
+%======================================================================
+% 5. Model Analysis
+% Combines SRS S.2.3 Model Analyzer, S.2.4 Performance Estimator and
+% S.2.5 Rule Compliance Checker. Input file here = STEP upload (FR231-FR232).
+% Worth covering under the existing rows: units in the STEP file read wrongly
+% (inches vs mm), checking against the wrong year's rule set (FR254), and
+% members treating an estimate as a guarantee (FR245).
+%======================================================================
+Model Analysis & Calculation API error & & & & & H5-a\\
+\cmidrule(l){2-7}
+ & Corruption of input file & & & & & H5-b\\
+\cmidrule(l){2-7}
+ & Misinterpretation of rules (especially with high penalty for non-compliance) & & & & & H5-c\\
+\cmidrule(l){2-7}
+ & Output display wrong & & & & & H5-d\\
+\cmidrule(l){2-7}
+ & Output not understandable & & & & & H5-e\\
+\cmidrule(l){2-7}
+ & Timeout & & & & & H5-f\\
+\midrule
+%======================================================================
+% 6. Server
+% Not in the SRS yet; covers hosting, the shared database and deployment.
+% Also worth considering: hosting/domain accounts owned by a student who
+% graduates, and data loss (NFR222 only requires backups of the Knowledge
+% Repository).
+%======================================================================
+Server & Server down & & & & & H6-a\\
+\cmidrule(l){2-7}
+ & Server externally attacked & & & & & H6-b\\
+\cmidrule(l){2-7}
+ & Server overloaded from legitimate traffic & & & & & H6-c\\
+\cmidrule(l){2-7}
+ & Upgrade causes our code to no longer compile & & & & & H6-d\\
+\cmidrule(l){2-7}
+ & Server loses connection to internet & & & & & H6-e\\
+\cmidrule(l){2-7}
+ & Server compromised & & & & & H6-f\\
+\cmidrule(l){2-7}
+ & Rogue actor gets access to change server & & & & & H6-g\\
+\cmidrule(l){2-7}
+ & Unchecked, unworking code pushed in haste & & & & & H6-h\\
+\end{longtable}}
+\end{landscape}
 
 \section{Safety and Security Requirements}
 
