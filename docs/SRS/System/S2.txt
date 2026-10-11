@@ -1,5 +1,148 @@
 \nsection{S.2 Functionality}
 \comment{One section, S.2.n, for each of the components identified in S.2, describing the corresponding behaviors (functional and non-functional properties).}
 %---------------------------------
-\notEmpty{}
-%---------------------------------
+
+This section describes the behaviour of each component identified in S.1. Functional requirements are labelled FR2$nm$ and non-functional requirements NFR2$nm$, where $n$ is the component number (S.2.$n$) and $m$ is the requirement number within that component.
+
+%=================================
+\subsection*{S.2.1 Access Manager}
+\addcontentsline{toc}{subsection}{S.2.1 Access Manager}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Authentication:} Access Manager shall allow members to log in to and out of the Toolbox Web App using their account credentials. (FR211)
+    \item \textbf{Role-based access:} Access Manager shall restrict access to each tool and to stored data according to the role assigned to the account (general member, executive, or software subteam maintainer). (FR212)
+    \item \textbf{Public landing page:} Access Manager shall allow unauthenticated visitors to view the club landing page, while preventing them from accessing any member services or stored data. (FR213)
+    \item \textbf{Member management:} Access Manager shall allow executives and maintainers to create accounts, deactivate accounts, and change the role of an account, so that membership can be updated at the start of each year and as members graduate. (FR214)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Credential security:} Access Manager shall store passwords only as salted hashes using an industry-standard algorithm, and shall never store or transmit passwords in plain text. (NFR211)
+    \item \textbf{Access revocation:} Access Manager shall ensure that a deactivated account loses access to all member services no later than its next request to the system. (NFR212)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.2 Knowledge Repository}
+\addcontentsline{toc}{subsection}{S.2.2 Knowledge Repository}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Content upload:} Knowledge Repository shall allow members to upload documents and files along with descriptive metadata, including title, category, year, team, and tags. (FR221)
+    \item \textbf{Search:} Knowledge Repository shall allow members to search stored content by keyword across titles, metadata, and, where available, document text. (FR222)
+    \item \textbf{Filtering:} Knowledge Repository shall allow members to filter content by category, year, team, and tag. (FR223)
+    \item \textbf{View and download:} Knowledge Repository shall allow members to preview supported file types in the browser and to download any stored file. (FR224)
+    \item \textbf{Content management:} Knowledge Repository shall allow the author of an item, and executives, to edit its metadata, replace its file, or archive it. Archived items shall remain retrievable but shall be excluded from default search results. (FR225)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Search responsiveness:} Knowledge Repository shall return search results within 2 seconds for a repository containing up to 10,000 items. (NFR221)
+    \item \textbf{Data durability:} Knowledge Repository shall be backed up at least weekly, so that no more than one week of contributions can be lost in the event of a failure. (NFR222)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.3 Model Analyzer}
+\addcontentsline{toc}{subsection}{S.2.3 Model Analyzer}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Model upload:} Model Analyzer shall allow members to upload bridge models in the STEP (\texttt{.stp}/\texttt{.step}) format. (FR231)
+    \item \textbf{File validation:} Model Analyzer shall reject files that are not valid STEP files, or that contain no readable geometry, and shall display an error message describing the problem. (FR232)
+    \item \textbf{3D visualization:} Model Analyzer shall render an interactive 3D view of an uploaded model that the member can rotate, zoom, and pan. (FR233)
+    \item \textbf{Data extraction:} Model Analyzer shall extract the structural data of the bridge from the model, including the number of members, the dimensions of each member, the locations of joints, and the overall span, height, and width of the bridge. (FR234)
+    \item \textbf{Model storage:} Model Analyzer shall save uploaded models and their extracted data, associated with the uploading team and design, so that they can be reopened and compared later. (FR235)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Load time:} Model Analyzer shall display the 3D visualization of a typical club bridge model within 10 seconds of upload. (NFR231)
+    \item \textbf{Extraction accuracy:} Model Analyzer shall extract dimensions that match those of the source CAD model to within 0.5 mm. (NFR232)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.4 Performance Estimator}
+\addcontentsline{toc}{subsection}{S.2.4 Performance Estimator}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Load capacity estimate:} Performance Estimator shall estimate the maximum load a bridge model can support before failure. (FR241)
+    \item \textbf{Key metrics:} Performance Estimator shall compute key metrics for a bridge model, including its estimated mass, its estimated load-to-mass ratio, and the estimated force carried by each member. (FR242)
+    \item \textbf{Material selection:} Performance Estimator shall use material properties provided by the Material Testing Manager, and shall allow the member to choose which set of material data (for example, a given year or material batch) to apply. (FR243)
+    \item \textbf{Critical member highlighting:} Performance Estimator shall highlight the members predicted to fail first on the 3D visualization of the model. (FR244)
+    \item \textbf{Assumption disclosure:} Performance Estimator shall display the assumptions and limitations of each estimate alongside its results, so that members without formal analysis experience do not mistake an estimate for a guarantee. (FR245)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Estimate accuracy:} Performance Estimator shall estimate the failure load of past club bridges, whose tested failure loads are recorded, to within 25\% of the recorded value. (NFR241)
+    \item \textbf{Computation time:} Performance Estimator shall produce results for a typical club bridge model within 30 seconds. (NFR242)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.5 Rule Compliance Checker}
+\addcontentsline{toc}{subsection}{S.2.5 Rule Compliance Checker}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Compliance check:} Rule Compliance Checker shall evaluate a bridge model against the active competition rule set and report a pass or fail result for each rule. (FR251)
+    \item \textbf{Violation details:} For each failed rule, Rule Compliance Checker shall report the rule that was violated, the measured value, the allowed value, and the location of the violation on the 3D visualization. (FR252)
+    \item \textbf{Rule set management:} Rule Compliance Checker shall allow executives and maintainers to create, edit, and delete parameterized rules, such as maximum mass or required dimensions. (FR253)
+    \item \textbf{Rule set versioning:} Rule Compliance Checker shall associate each rule set with a competition year, and shall record which rule set was used for each compliance check. (FR254)
+    \item \textbf{Manual checks:} Rule Compliance Checker shall list the rules that cannot be verified from the model, such as material usage restrictions, as manual checks for the team to confirm. (FR255)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Check correctness:} Rule Compliance Checker shall report no false passes for dimension- and mass-based rules on a test suite of models with known violations. (NFR251)
+    \item \textbf{Rule updatability:} Rule Compliance Checker shall allow an executive without programming knowledge to update the rule set for a new competition year without modifying source code. (NFR252)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.6 Material Testing Manager}
+\addcontentsline{toc}{subsection}{S.2.6 Material Testing Manager}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Result entry:} Material Testing Manager shall allow members to record material test results in a standardized format, including the test type, material, specimen dimensions, applied load, test conditions, date, and tester. (FR261)
+    \item \textbf{Input validation:} Material Testing Manager shall reject test results that are missing required fields or that contain physically impossible values, such as negative dimensions or loads. (FR262)
+    \item \textbf{Historical comparison:} Material Testing Manager shall compare new test results against results from previous years, displaying summary statistics (mean and standard deviation) and plots. (FR263)
+    \item \textbf{Material properties:} Material Testing Manager shall compute aggregated material properties, such as the strength of popsicle sticks and glued joints, from accepted test results. (FR264)
+    \item \textbf{Result review:} Material Testing Manager shall allow executives to flag test results as invalid, excluding them from aggregated material properties without deleting them. (FR265)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Traceability:} Material Testing Manager shall ensure that every aggregated material property can be traced to the individual test results it was computed from. (NFR261)
+    \item \textbf{Data import:} Material Testing Manager shall accept test results in a spreadsheet (CSV) format, so that data collected in previous years can be migrated into the system. (NFR262)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.7 Knowledge Transfer Manager}
+\addcontentsline{toc}{subsection}{S.2.7 Knowledge Transfer Manager}
+
+\subsubsection*{Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Exit document templates:} Knowledge Transfer Manager shall provide a template for exit documents for each member role, including each executive position. (FR271)
+    \item \textbf{Exit document submission:} Knowledge Transfer Manager shall allow members to complete, save as drafts, and submit exit documents. (FR272)
+    \item \textbf{Role records:} Knowledge Transfer Manager shall maintain a record for each executive role, describing its responsibilities, key contacts, and yearly timeline, which the current holder of the role can update. (FR273)
+    \item \textbf{Publication:} Knowledge Transfer Manager shall publish submitted exit documents and role records to the Knowledge Repository, where they can be searched like other content. (FR274)
+    \item \textbf{Outstanding documents:} Knowledge Transfer Manager shall allow executives to view which members have not yet submitted their exit documents. (FR275)
+\end{enumerate}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Findability:} Knowledge Transfer Manager shall allow a new member to locate the role record for a given executive position within 2 minutes, as measured in usability testing. (NFR271)
+    \item \textbf{Longevity:} Knowledge Transfer Manager shall allow exit documents and role records to be exported to a non-proprietary format, such as PDF, so that they remain accessible independently of the system. (NFR272)
+\end{enumerate}
+
+%=================================
+\subsection*{S.2.8 System-Wide Requirements}
+\addcontentsline{toc}{subsection}{S.2.8 System-Wide Requirements}
+
+\subsubsection*{Non-Functional Requirements}
+\begin{enumerate}
+    \item \textbf{Browser support:} The Toolbox Web App shall be fully functional on the current versions of Google Chrome, Mozilla Firefox, Microsoft Edge, and Safari on desktop. (NFR281)
+    \item \textbf{Maintainability:} The system shall be documented well enough that a new software subteam member, with experience in C\# and web development, can set up a local development environment and deploy a change within one week. (NFR282)
+    \item \textbf{Tool independence:} The failure of any single tool (S.2.2--S.2.7) shall not prevent members from using the remaining tools. (NFR283)
+\end{enumerate}
