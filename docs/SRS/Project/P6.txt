@@ -1,14 +1,39 @@
 \nsection{P.6 Risks and mitigation analysis}
 \comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}
 
-• Risk: Technical Issues with External Libraries
-– Description: Technical issues may arise with external technologies for certain tools such as the bridge modelling or rule compliance tool.
-– Mitigation: Team collaboratively addresses issues as they arise. Team members are individually responsible for thoroughly testing and validating their code before creating a pull request. At least one other team member will review and ensure this code is functional and well-written.
+\begin{itemize}
+  \item \textbf{Risk: 3D Model Import and Analysis is Infeasible}
+  \begin{itemize}
+    \item \textbf{Description:} Parsing STEP (.stp) files, rendering them, and extracting member geometry for the rule compliance and performance prediction tools is the most technically complex feature of the Toolbox. Available libraries may not support the required data extraction, or may not run in a web environment.
+    \item \textbf{Mitigation:} Prove the import and visualization pipeline in the Proof of Concept demonstration before dependent tools are built. Use an established geometry library rather than a custom parser, and agree on a standard CAD export template with the club to limit the variety of input files.
+    \item \textbf{Contingency:} Fall back to manual or spreadsheet entry of member geometry so the rule compliance and prediction tools remain usable without 3D import.
+  \end{itemize}
 
-• Risk: Unrealistic Schedule or Workload
-– Description: Tasks may take longer than expected or workload may become unbalanced among team members.
-– Mitigation: Use the GitHub Kanban board to manage tasks and coordinate milestones. As team check-in meetings happen, Notetaker keeps track of timelines. Team updates board; ensuring appropriate timeline estimates and reassignment of tasks done as a team as needed.
+  \item \textbf{Risk: Insufficient Legacy Club Data}
+  \begin{itemize}
+    \item \textbf{Description:} Past designs, material testing results and documentation are scattered across members and inconsistent in format, so the information repository may launch with little useful content.
+    \item \textbf{Mitigation:} Collect existing documents with the club executives early in the project and define standard upload templates for designs and material tests.
+    \item \textbf{Contingency:} Launch with the current season's data only, and plan for the repository to be populated over time through the upload tools.
+  \end{itemize}
 
-• Risk: User Interface is Not User-Friendly
-- Description: The user interface may not be intuitive or user-friendly for members of Troitsky teams with varying levels of experience.
-– Mitigation: Conduct diverse user testing sessions, gather feedback, and make iterative improvements.
+  \item \textbf{Risk: Technical Issues with External Libraries}
+  \begin{itemize}
+    \item \textbf{Description:} Technical issues may arise with external technologies used by tools such as bridge modelling and rule compliance, including licensing or deployment limits (for example, Autodesk APIs requiring a desktop installation).
+    \item \textbf{Mitigation:} Confirm licensing and deployment constraints of each library before adopting it. Team members test and validate their code before opening a pull request, and at least one other member reviews it.
+    \item \textbf{Contingency:} Replace the library with an open-source alternative, or reduce the affected tool's scope.
+  \end{itemize}
+
+  \item \textbf{Risk: Unrealistic Schedule or Workload}
+  \begin{itemize}
+    \item \textbf{Description:} Tasks may take longer than expected or workload may become unbalanced among team members.
+    \item \textbf{Mitigation:} Track tasks and milestones on the GitHub Kanban board. The Notetaker records timelines at check-in meetings, and the team revises estimates and reassigns tasks as needed.
+    \item \textbf{Contingency:} Because tools are largely independent, defer lower-priority tools to the software subteam's backlog rather than delaying core features.
+  \end{itemize}
+
+  \item \textbf{Risk: User Interface is Not User-Friendly}
+  \begin{itemize}
+    \item \textbf{Description:} The interface may not be intuitive for Troitsky members with varying levels of technical and modelling experience.
+    \item \textbf{Mitigation:} Run usability testing sessions with both new and experienced members (see the Usability Testing CD), gather feedback, and make iterative improvements.
+    \item \textbf{Contingency:} Prioritize fixes to the most-used workflows and add in-app guidance for complex tools.
+  \end{itemize}
+\end{itemize}
