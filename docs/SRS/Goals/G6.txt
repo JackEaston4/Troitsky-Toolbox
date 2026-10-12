@@ -3,9 +3,11 @@ Below is a list of limitations for the system, items that are currently out of s
 
 \begin{itemize}
     \item The system is not looking to replace the more complex modelling capabilities of external/industry standard
-    modelling software. Unlike the currently apps being used by teams, such as AutoCAD Inventor, SAP2000 and solidworks, the 
+    modelling software. Unlike the current apps being used by teams, such as AutoCAD Inventor, SAP2000 and SolidWorks, the 
     modelling component within Troitsky Toolbox will be intentionally simplified, which will leave many of the more advanced 
     features out of scope.
 
-    \item The system will not 
+    \item The system will not replace all forms of communication between members. Given the accepted use of other platforms for communication 
+    and the ease of use in utilizing an existing app for communication, peer-to-peer or individual team channels will not be supported in the 
+    toolbox.
 \end{itemize}
