@@ -1,5 +1,12 @@
 \nsection{E.3 Constraints}
-\comment{Obligations and limits imposed on the project and system by the environment.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
+
+\begin{itemize}
+
+\item \textbf{Competition Rules:} The model compliance checker and other support services within Troitsky Toolbox will be dependent on the rules set out for the competition. Outdated guides may be outside the bounds of current competition rules. 
+
+\item \textbf{Budget:} The budget set out by the MES yearly will constrain the services and upkeep of the product. Troitsky Toolbox must operate within its share of the overall club funds, dictating the storage capabilities and API usage of the service.
+
+\item \textbf{Member Data and Privacy:} As the service seeks to compile team and member information, member privacy and data-sharing accessibility will dictate what can be collected. This will determine whether sharing of team progress and 
+design will occur during the ongoing competition year.
+
+\end{itemize}
