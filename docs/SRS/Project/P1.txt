@@ -1,2 +1,29 @@
 \nsection{P.1 Roles and personnel}
-\comment{Main responsibilities in the project; required project staff and their needed qualifications.}
+
+\subsection*{P.1.1 Project Supervisor - Mason}
+\addcontentsline{toc}{subsection}{P.1.1 Project Supervisor}
+The project supervisor will be responsible for coordinating internal deadlines, meetings and development 
+timelines. The supervisor will serve as the main point of contact with administration, the supervisor and the TA, and serve as the default 
+team lead.
+
+\subsection*{P.1.2 Troitsky Club Communication Associate - Pedro}
+\addcontentsline{toc}{subsection}{P.1.2 Toritsky Club Communication Associate}
+The Troitsky Club Communication Associate will be responsible for the majority of the coordination with the club 
+organization and executive members. Surveys and interviews will be organized, distributed, and run by this member.
+
+\subsection*{P.1.3 Front-end / UI Developer - Pedro, Michael}
+\addcontentsline{toc}{subsection}{P.1.3 Front-end / UI Developer}
+This role will be responsible for the UI of the product, both in technical displays of data and in more 
+theme/design heavy components. They will build the web app's interface, so experience in web frameworks would be 
+beneficial. They will be the ones primarily responsible for the usability testing in the Winter term's CD.
+
+\subsection*{P.1.4 Back-end/data developer - Jack, Mason}
+\addcontentsline{toc}{subsection}{P.1.4 Back-end / data developer}
+This role will be responsible for the design of the data storage within the app. This will cover both the files and 
+data the club stores (bridge files, tutorials), but also RBAC information and user/club site preferences.
+
+\subsection*{P.1.5 Quality Assurance / Tester - Michael}
+\addcontentsline{toc}{subsection}{P.1.5 Quality Assurance / Tester}
+The Quality Assurance / Tester will be responsible for maintaining a standard of quality in both code and 
+documentation of the web app. This will involve a review of final product content and the overall design of the 
+testing within the system.
