@@ -1,2 +1,25 @@
 \nsection{P.2 Imposed technical choices}
-\comment{Any a priori choices binding the project to specific tools, hardware, languages or other technical parameters.}
+
+\begin{itemize}
+
+\item \textbf{Programming languages:}
+
+\item \textbf{Database:}
+
+\item \textbf{Front End:}
+
+\item \textbf{CAD/ Structural Library:}
+
+\item \textbf{File Formats:}
+
+\item \textbf{Version control/ CD:}
+
+\item \textbf{Testing:}
+
+\item \textbf{Linting/ coding standard:}
+
+\item \textbf{Hosting/ Deployment:}
+
+\item \textbf{Authentification (RBAC):}
+
+\end{itemize}
