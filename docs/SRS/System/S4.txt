@@ -1,2 +1,135 @@
 \nsection{S.4 Detailed usage scenarios}
-\comment{Examples of interaction between the environment (or human users) and the system: use cases, user stories.}
+\subsection*{S.4.1 -- Knowledge Repository Information Viewing}
+\textbf{Use Case Name:} Knowledge Repository Information Viewing
+\\
+\textbf{Primary Actor:} General user
+\\
+\textbf{Precondition:}
+
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with general member permissions
+\end{itemize}
+\textbf{Trigger:} A Troitsky member would like to view some data stored in the Knowledge Repository.
+\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests to open the Knowledge Repository via the Toolbox Broker.
+    \item User requests information they are interested in within the Knowledge Repository via the Toolbox Broker.
+    \item Toolbox Broker returns the requested information.
+    \item User views and potentially downloads information.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System Fails Verification.
+    \begin{enumerate}
+        \item User is unable to log into web application
+    \end{enumerate}
+    \item Toolbox Broker Fails at Some Point.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Request to open Knowledge Repository Fails.
+        \item Search request in Knowledge Repository Fails.
+        \item Toolbox Broker fails to return requested information.
+    \end{enumerate}
+    \item Information is Corrupted.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item user cannot view information.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} User was able to find and access the information they were searching for.
+\\
+\textbf{Justification:}
+This scenario describes a users ability to read from the Knowledge Repository, directly aligning with FR222 and FR224.
+
+\subsection*{S.4.2 -- Knowledge Repository Information Addition}
+\textbf{Use Case Name:} Knowledge Repository Information Addition
+\\
+\textbf{Primary Actor:} General user
+\\
+\textbf{Precondition:}
+
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with general member permissions
+\end{itemize}
+\textbf{Trigger:} A Troitsky member would like to add some relevant data to the Knowledge Repository.
+\\
+\textbf{Main Success Scenario}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests to open the Knowledge Repository via the Toolbox Broker.
+    \item User request to upload information to the Knowledge Repository via the Toolbox Broker.
+    \item User specifies data type for information and uploads it to the Knowledge Repository.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System Fails Verification.
+    \begin{enumerate}
+        \item User is unable to log into web application
+    \end{enumerate}
+    \item Toolbox Broker Fails at Some Point
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Request to open Knowledge Repository Fails
+        \item Upload request in Knowledge Repository Fails
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} Information the user wants to be stored is successfully uploaded into the Knowledge Repository.\\
+\textbf{Justification:} This scenario describes a users ability to write to the Knowledge Repository, directly aligning with FR211.
+
+\subsection*{S.4.3 -- Transition Information Addition}
+\textbf{Use Case Name:} Transition Information Addition
+\\
+\textbf{Primary Actor:} Troitsky Executives
+\\
+\textbf{Precondition:}
+\begin{itemize}
+    \item User has Executive Access to the Troitsky Toolbox Web Application.
+\end{itemize}
+\textbf{Trigger:} Troitsky Executive wants to add to their transition documents.\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests to open the Knowledge Transition Manager.
+    \item Toolbox Broker confirms with the Access Control System that the user has the authority to access the Knowledge Transition Manager.
+    \item Toolbox Broker directs user to Knowledge Transition Manager.
+    \item User selects documents they would like to fill out/edit.
+    \item User fills out/edit documentation and saves it.
+    \item Toolbox Broker saves the transition documentation to the Knowledge Repository.
+
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System Fails Verification.
+    \begin{enumerate}
+        \item User is unable to log into web application.
+        \stepcounter{enumi}
+        \item User is not granted access to Knowledge Transition Manager.
+    \end{enumerate}
+    \item Toolbox Broker Fails.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Request to open Knowledge Transition Manager fails.
+        \item User is not directed to Knowledge Transition Manager.
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item Upload request to Knowledge Repository fails.
+    \end{enumerate}
+    \item User does not have Executive permissions
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Access Controls System denies access to Knowledge Transition Manager.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} User is able to add to and edit their transition documents and those documents are saved within the Knowledge Repository.
+\\
+\textbf{Justification:} This describes the general flow of how transition documents will be written, updated, and saved, directly aligning with FR272 and FR274
+
+
+
+
