@@ -1,2 +1,11 @@
 \nsection{G.5 High-level usage scenarios}
 \comment{Fundamental usage paths through the system.}
+\begin{itemize}
+    \item \textbf{Scenario 1: Repository Information Viewing} --- User logs into web app and opens the knowledge repository, search for their desired information, open and view it.
+    \item \textbf{Scenario 2: Knowledge Repository Addition} --- User logs into web app and opens the knowledge repository and add the appropriate information to the repository.
+    \item \textbf{Scenario 3: Transition Documentation Viewing} ---  After logging into web app and being authenticated with the authority to view knowledge transfer documents, they open previous documentation to view practices of previous executives.
+    \item \textbf{Scenario 3: Transition Documentation Addition} ---  After logging into web app and being authenticated with the authority to edit knowledge transfer documents, the user opens and fill out their assigned transfer documents to be read by future executives.
+    \item \textbf{Scenario 4: Performance Analysis} --- User logs into web app and opens a STEP file either stored in the knowledge repository or that they just uploaded to the performance analysis system, then an analysis of their models load capacity and weak points is returned.
+    \item \textbf{Scenario 5: Rule Compliance Verification} --- User logs into web app and opens a STEP file either stored in the knowledge repository or that they just uploaded to the Rule Compliance system, then a overview of their compliance to the current years competition rules is returned.
+    \item \textbf{Scenario 6: Materials Data Publication} --- User logs into web app, after being authenticated as part of the materials testing team, they publish gathered materials data into the knowledge repository via the materials testing manager.
+\end{itemize}
