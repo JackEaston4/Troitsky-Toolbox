@@ -14,5 +14,4 @@ High Level functional requirements for the toolbox are defined below:
         As the McMaster Troitsky club begins to standardize knowledge collection, material testing data will be collected and stored in a standardized format. The service will streamline this process, allowing testing results to be easily uploaded and analyzed against past results, along with collecting supplementary testing information for future years.
     \item\textbf{Simplified and Comprehensive Knowledge Transfer}
         Support documentation from the McMaster Troitsky club through exit documents and other knowledge transfer methods, ensuring that information and designs are consolidated and accessible to future members. Specialized member roles, such as executive positions, will also be able to keep a record of their role responsibilities and key factors, to further improve the club organization.
-    \item 
 \end{itemize}
