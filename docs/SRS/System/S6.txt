@@ -1,4 +1,15 @@
 \nsection{S.6 Verification and acceptance criteria}
 \comment{Specification of the conditions under which an implementation will be deemed satisfactory.}
 
-Several tests will be required 
+Just an outline although here are some ideas
+
+\begin{itemize}
+    \item Log in
+    \item File access granted to permitted user on request
+    \item File access not granted to prohibited user despite request
+    \item Model analysis sucessful
+    \item Material testing sucessful, without model analysis being sucessful
+    \item Raw file can be added
+    \item For each form, guided input is coherent and works
+    \item Files (along with dependencies) can be deleted with right access and warning
+\end{itemize}
