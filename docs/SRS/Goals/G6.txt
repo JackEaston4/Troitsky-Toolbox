@@ -7,7 +7,16 @@ Below is a list of limitations for the system, items that are currently out of s
     modelling component within Troitsky Toolbox will be intentionally simplified, which will leave many of the more advanced 
     features out of scope.
 
+    \item The system will not support user access for past members. The service will only be accessible by current members, with only 
+    the public-facing landing page and gallery available to others.
+
     \item The system will not replace all forms of communication between members. Given the accepted use of other platforms for communication 
     and the ease of use in utilizing an existing app for communication, peer-to-peer or individual team channels will not be supported in the 
     toolbox.
+
+    \item The system will not replace registration into the club; initial applications into specific roles will remain external. 
+    Payment support will be excluded and done externally from the service with registration.
+
+    
+    
 \end{itemize}
