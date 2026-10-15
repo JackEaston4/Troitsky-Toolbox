@@ -1,2 +1,34 @@
 \nsection{E.4 Assumptions}
-\comment{Properties of the environment that may be assumed, with the goal of facilitating the project and simplifying the system.}
+
+The following properties of the environment are assumed.
+
+\begin{itemize}
+
+\item \textbf{Competition Format Stability:} Despite the product being adaptable to changes within rules and smaller operational changes, 
+the overall format of the Troitsky competition is assumed to remain stable across years. While some forms of bridges, materials or scoring 
+are revised, the product serves the standard competition format of popsicle stick, white glue and floss bridges tested for ultimate 
+point load at the centre. The rule set may change across years, but competition rulebooks are assumed to be published at the start of each 
+competition year, allowing for integration into the rule compliance checker once yearly, with only minor modifications necessary.
+
+\item \textbf{User Access and Device Availability:} As the product will be available through a website, there is an assumption that members 
+will both have access to a suitable device (desktop or laptop) and a standard internet browser. There is also an assumption that all users will 
+have a working internet connection when accessing the service.
+
+\item \textbf{McMaster Troitsky Club Organizational Structure:} The role-based access control of the system will be designed around the 
+current club structure, specifically around the roles in the organizational body of the club (general members, team captains, coaches, executives). 
+It is assumed that this structure will not change frequently and that the access of each role will remain constant across competition years.
+
+\item \textbf{Continued Club Operation:} There is an assumption that the Troitsky competition, both as a whole and as McMaster's individual 
+club, will continue to operate. This includes the assumption that teams will continue to register and that the software subteam will continue to have registered 
+members.
+
+\item \textbf{Model File Conventions:} Bridge models are assumed to be exported in the STEP file format. This export will be in line with a standard 
+export format outlined by the club, allowing for some consistency in how bridge members and units are represented across files. In line with P.6, these 
+file conventions are linked to the most complex and high-risk component of the product, so an agreed-upon standard simplifies the scope of the service, 
+serving as a mitigation strategy for the risk.
+
+\item \textbf{Material Behaviour:} There is an assumption of some consistency in material properties while the club purchases materials from the 
+same supplier. As the model analysis predictions may rely on the measured material properties of popsicle stick and glue slabs, constant material 
+properties are a required assumption to create any form of performance prediction.
+
+\end{itemize}
