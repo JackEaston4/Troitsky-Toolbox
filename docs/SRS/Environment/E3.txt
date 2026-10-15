@@ -13,6 +13,11 @@ sharing permissions dictate what can be collected. During the current competitio
 separate, with only executives and coaches being able to view all files. After the competition is complete, exit documentation 
 collected will determine what individuals wish to have stored for future years.
 
+\item \textf{Club Data Format Compatibility :} The system must accommodate the file formats that the club utilizes, being 
+constrained to a generalized file format when multiple are available. In the case of modelling files, STEP (.stp) files must be used 
+as input as they are available across utilized services. The material testing data collection must accept .csv files, working with 
+the data exporting the club utilizes.
+
 \end{itemize}
 
 \subsubsection*{Operational Constraints}
