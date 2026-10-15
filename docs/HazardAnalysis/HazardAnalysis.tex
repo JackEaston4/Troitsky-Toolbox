@@ -101,7 +101,7 @@ documentation, and/or test cases.}
 {\small
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.5}
-\begin{longtable}{P{0.18\linewidth}P{0.165\linewidth}P{0.17\linewidth}>{\centering\arraybackslash}p{0.04\linewidth}>{\centering\arraybackslash}p{0.04\linewidth}P{0.20\linewidth}P{0.07\linewidth}P{0.04\linewidth}}
+\begin{longtable}{P{0.18\linewidth}P{0.165\linewidth}P{0.17\linewidth}>{\centering\arraybackslash}p{0.04\linewidth}>{\centering\arraybackslash}p{0.04\linewidth}P{0.185\linewidth}P{0.07\linewidth}P{0.055\linewidth}}
 \caption{Failure Mode and Effect Analysis (FMEA)}\label{TblFMEA}\\
 \toprule
 \textbf{Failure Mode} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \multicolumn{2}{c}{\textbf{Risk (H/M/L)}} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.}\\
@@ -121,68 +121,78 @@ documentation, and/or test cases.}
 \endfoot
 \bottomrule
 \endlastfoot
-\rowcolor{gray!20}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{H1: Access Manager}}\\*
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Web Server (WS)} --- SRS S.2.1}\\*
+Server down & & & & & & & H-WS-1\\
+\cmidrule(l){1-8}
+Server externally attacked & & & & & & & H-WS-2\\
+\cmidrule(l){1-8}
+Server overloaded from legitimate traffic & & & & & & & H-WS-3\\
+\cmidrule(l){1-8}
+Server loses connection to internet & & & & & & & H-WS-4\\
+\cmidrule(l){1-8}
+Server compromised & & & & & & & H-WS-5\\
+\cmidrule(l){1-8}
+Rogue actor gets access to change server & & & & & & & H-WS-6\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Access Control System (AC)} --- SRS S.2.2}\\*
 \multicolumn{8}{l}{\textit{Wrong user gets in}}\\*
 \cmidrule(l){1-8}
-Data leak (I/E) & & & & & & & H1-a\\
+Data leak (I/E) & & & & & & & H-AC-1\\
 \cmidrule(l){1-8}
-Password leak (I/E) & & & & & & & H1-b\\
+Password leak (I/E) & & & & & & & H-AC-2\\
 \cmidrule(l){1-8}
-Convenience leak (superior gives inferior account access without clearance) & & & & & & & H1-c\\
+Convenience leak (superior gives inferior account access without clearance) & & & & & & & H-AC-3\\
 \cmidrule(l){1-8}
-Role category given extra rights & & & & & & & H1-d\\
+Role category given extra rights & & & & & & & H-AC-4\\
 \cmidrule(l){1-8}
-Wrong person assigned to role category & & & & & & & H1-e\\
+Wrong person assigned to role category & & & & & & & H-AC-5\\
 \cmidrule(l){1-8}
 \multicolumn{8}{l}{\textit{Right user locked out}}\\*
 \cmidrule(l){1-8}
-Forgot password & & & & & & & H1-f\\
+Forgot password & & & & & & & H-AC-6\\
 \cmidrule(l){1-8}
-Role category given less rights & & & & & & & H1-g\\
+Role category given less rights & & & & & & & H-AC-7\\
 \cmidrule(l){1-8}
-Right person not given role & & & & & & & H1-h\\
-\rowcolor{gray!20}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{H2: Knowledge Repository}}\\*
+Right person not given role & & & & & & & H-AC-8\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Toolbox Broker (BR)} --- SRS S.2.3}\\*
  & & & & & & & \\
-\rowcolor{gray!20}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{H3: Knowledge Transfer Manager}}\\*
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Repository (KR)} --- SRS S.2.4}\\*
  & & & & & & & \\
-\rowcolor{gray!20}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{H4: Materials Testing}}\\*
-Calculation API error & & & & & & & H4-a\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Model Analysis System (MA)} --- SRS S.2.5}\\*
+Corruption of input file & & & & & & & H-MA-1\\
 \cmidrule(l){1-8}
-Corruption of input file & & & & & & & H4-b\\
+Output display wrong (3D view) & & & & & & & H-MA-2\\
 \cmidrule(l){1-8}
-Output display wrong & & & & & & & H4-c\\
+Timeout & & & & & & & H-MA-3\\
+\rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Performance Analysis System (PA)} --- SRS S.2.5.1}\\*
+Calculation API error & & & & & & & H-PA-1\\
 \cmidrule(l){1-8}
-Output not understandable & & & & & & & H4-d\\
+Output display wrong (estimates) & & & & & & & H-PA-2\\
 \cmidrule(l){1-8}
-Timeout & & & & & & & H4-e\\
-\rowcolor{gray!20}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{H5: Model Analysis (Model Analyzer, Performance Estimator, Rule Compliance Checker)}}\\*
-Calculation API error & & & & & & & H5-a\\
+Output not understandable & & & & & & & H-PA-3\\
 \cmidrule(l){1-8}
-Corruption of input file & & & & & & & H5-b\\
+Timeout & & & & & & & H-PA-4\\
+\rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Rule Compliance System (RC)} --- SRS S.2.5.2}\\*
+Misinterpretation of rules (especially with high penalty for non-compliance) & & & & & & & H-RC-1\\
 \cmidrule(l){1-8}
-Misinterpretation of rules (especially with high penalty for non-compliance) & & & & & & & H5-c\\
+Output display wrong (compliance report) & & & & & & & H-RC-2\\
 \cmidrule(l){1-8}
-Output display wrong & & & & & & & H5-d\\
+Output not understandable & & & & & & & H-RC-3\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Material Testing Manager (MT)} --- SRS S.2.6}\\*
+Calculation API error & & & & & & & H-MT-1\\
 \cmidrule(l){1-8}
-Output not understandable & & & & & & & H5-e\\
+Corruption of input file & & & & & & & H-MT-2\\
 \cmidrule(l){1-8}
-Timeout & & & & & & & H5-f\\
-\rowcolor{gray!20}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{H6: Server}}\\*
-Server down & & & & & & & H6-a\\
+Output display wrong & & & & & & & H-MT-3\\
 \cmidrule(l){1-8}
-Server externally attacked & & & & & & & H6-b\\
+Output not understandable & & & & & & & H-MT-4\\
 \cmidrule(l){1-8}
-Server overloaded from legitimate traffic & & & & & & & H6-c\\
+Timeout & & & & & & & H-MT-5\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Transfer Manager (KT)} --- SRS S.2.7}\\*
+ & & & & & & & \\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{System-Wide (SYS)} --- SRS S.2.8}\\*
+Upgrade causes our code to no longer compile & & & & & & & H-SYS-1\\
 \cmidrule(l){1-8}
-Upgrade causes our code to no longer compile & & & & & & & H6-d\\
-\cmidrule(l){1-8}
-Server loses connection to internet & & & & & & & H6-e\\
-\cmidrule(l){1-8}
-Server compromised & & & & & & & H6-f\\
-\cmidrule(l){1-8}
-Rogue actor gets access to change server & & & & & & & H6-g\\
-\cmidrule(l){1-8}
-Unchecked, unworking code pushed in haste & & & & & & & H6-h\\
+Unchecked, unworking code pushed in haste & & & & & & & H-SYS-2\\
 \end{longtable}}
 \end{landscape}
 \restoregeometry
