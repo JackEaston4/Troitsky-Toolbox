@@ -4,10 +4,14 @@
 
 \begin{itemize}
 
-\item \textbf{Competition Rules:} The model compliance checker and other support services within Troitsky Toolbox must comply with the rules set out for the competition. Outdated guides must be labelled to ensure users understand they do not fit with current competition rules.
+\item \textbf{Competition Rules:} The model compliance checker and other support services within Troitsky Toolbox must 
+comply with the rules set out for the competition. Outdated guides must be labelled to ensure users understand they do 
+not fit with current competition rules.
 
-\item \textbf{Member Data and Privacy:} As the service seeks to compile team and member information, member privacy and sharing permissions dictate what can be collected. During the current competition year, individual team files must be left 
-separate, with only executives and coaches being able to view all files. After the competition is complete, exit documentation collected will determine what individuals wish to have stored for future years.
+\item \textbf{Member Data and Privacy:} As the service seeks to compile team and member information, member privacy and 
+sharing permissions dictate what can be collected. During the current competition year, individual team files must be left 
+separate, with only executives and coaches being able to view all files. After the competition is complete, exit documentation 
+collected will determine what individuals wish to have stored for future years.
 
 \end{itemize}
 
@@ -15,9 +19,12 @@ separate, with only executives and coaches being able to view all files. After t
 
 \begin{itemize}
 
-\item \textbf{Budget:} The budget set out by the MES yearly will constrain the services and upkeep of the product. Troitsky Toolbox must operate within its share of the overall club funds, dictating the storage capabilities and API usage of the service.
+\item \textbf{Budget:} The funding set out by the MES, along with the yearly club sponsorships, will determine the budget and 
+therefore constrain the services and upkeep of the product. Troitsky Toolbox must operate within its share of the overall club 
+funds, dictating the storage capabilities and API usage of the service.
 
-\item \textbf{Troitsky Software Subteam:} Maintenance year to year after this year will be limited by the number of software subteam members the club recruits. As the subteam is made up of student volunteers, the experience and drive of the members 
+\item \textbf{Troitsky Software Subteam:} Maintenance year to year after this year will be limited by the number of software 
+subteam members the club recruits. As the subteam is made up of student volunteers, the experience and drive of the members 
 will also determine the level of development of the system.
 
 \end{itemize}
