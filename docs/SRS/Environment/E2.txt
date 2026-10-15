@@ -19,7 +19,7 @@ repository of information, uploaded files and backups will be stored.
 \item \textbf{Materials Testing Department Setup:} As the product seeks to support the material testing department, the app will need to work around the data formats 
 and the processing the team prefers.
 
-\item \textbf{McMaster Engineering Society (MES):} The MES dictates the funding that the club receives yearly. This funding may dictate the future upkeep of the 
+\item \textbf{Club Sponsors and University Funding:} The MES and external sponsors dictate the funding that the club receives yearly. This funding may dictate the future upkeep of the 
 product, being required for the hosting and data storage platform and potentially the external modelling API usage.
 
 \end{itemize}
