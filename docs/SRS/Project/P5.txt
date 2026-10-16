@@ -1,19 +1,19 @@
 \nsection{P.5 Required technology elements}
-\comment{External systems, hardware and software, expected to be necessary for building the system.}
+\comment{External systems, hardware and software expected to be necessary for building the system.}
 
 \begin{itemize}
  
 \item \textbf{Database server:} Microsoft SQL Server.
 
-\item \textbf{Hosting/ Deployment:} Azure App service, if university server is accessible that would be preferred. Docker 
-may be used ot containerize service in app development and deployment.
+\item \textbf{Hosting/ Deployment:} Azure App Service; if the university server is accessible, that would be preferred. Docker 
+may be used ot containerize the service in app development and deployment.
 
-\item \textbf{Version control/ CD:} Github and its extensive features will be used, utilizing milestones, labels, releases, kanban boards 
+\item \textbf{Version control/ CD:} GitHub and its extensive features will be used, utilizing milestones, labels, releases, Kanban boards 
 and extensive issues linked to development branches to keep track of ongoing work. Required approval on all PRs by other developers, 
-focusing on individuals who are closely linked to the given ticket. There are Github Actions set for CI.
+focusing on individuals who are closely linked to the given ticket. There are GitHub Actions set for CI.
  
 \item \textbf{Platform/ delivery:} Web app for desktop browsers. Accessoble through traditional browsers 
-such as google, firefox, edge and safari.
+such as Google Chrome, Firefox, Edge, and Safari.
  
 \item \textbf{File Formats:} STEP (.stp) files for loading and submitting models. Standardized format among possible 
 external modelling software teams use.
