@@ -12,10 +12,4 @@ may be used ot containerize the service in app development and deployment.
 and extensive issues linked to development branches to keep track of ongoing work. Required approval on all PRs by other developers, 
 focusing on individuals who are closely linked to the given ticket. There are GitHub Actions set for CI.
  
-\item \textbf{Platform/ delivery:} Web app for desktop browsers. Accessoble through traditional browsers 
-such as Google Chrome, Firefox, Edge, and Safari.
- 
-\item \textbf{File Formats:} STEP (.stp) files for loading and submitting models. Standardized format among possible 
-external modelling software teams use.
- 
 \end{itemize}
