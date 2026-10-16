@@ -1,15 +1,21 @@
 \nsection{P.5 Required technology elements}
-\comment{External systems, hardware and software expected to be necessary for building the system.}
 
 \begin{itemize}
  
 \item \textbf{Database server:} Microsoft SQL Server.
+\\ \textbf {Rationale: } Used to store the shared repository and uploaded models. Pairs with C\# and LINQ. Azure for students can be used to access SQL Server Development Edition fee (testing only).
 
-\item \textbf{Hosting/ Deployment:} Azure App Service; if the university server is accessible, that would be preferred. Docker 
-may be used ot containerize the service in app development and deployment.
+\item \textbf{Hosting/Deployment:} Azure App Service; if the university server is accessible, that would be preferred. Docker 
+will be used to containerize the service in app development and deployment.
+\\ \textbf {Rationale:} Azure for student also provides limited access to hosting, which is why the university servers are preferred. Docker allows for standardization between development and delployment.
 
-\item \textbf{Version control/ CD:} GitHub and its extensive features will be used, utilizing milestones, labels, releases, Kanban boards 
-and extensive issues linked to development branches to keep track of ongoing work. Required approval on all PRs by other developers, 
-focusing on individuals who are closely linked to the given ticket. There are GitHub Actions set for CI.
++\item \textbf{Version control and CI:} A GitHub repository with GitHub Actions.
+\\ \textbf {Rationale:} Given by course. Runs with xUnit/Coverlet and \texttt{dotnet format}.
  
+\item \textbf{Model Analysis API/Library:} Pynite (Python)
+\\ \textbf {Rationale:} Tested, open-source, MIT license finite element solvers, Pynite is easier and used in a python service within the Troitsky Toolbox.
+
+\item \textbf{STEP Parsing Library:} Open CASCADE, through its Python bindings (CadQuery or pythonocc).
+\\ \textbf {Rationale:} Allows for STEP file input and visualization through a browser viewer SDK. Runs with python like the reset of this component.
+
 \end{itemize}
