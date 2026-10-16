@@ -9,10 +9,6 @@
 \item \textbf{File Formats:} STEP (.stp) files for loading and submitting models. Standardized format among possible 
 external modelling software teams use.
 
-\item \textbf{Version control/ CD:} Github and its extensive features will be used, utilizing milestones, labels, releases, kanban boards 
-and extensive issues linked to development branches to keep track of ongoing work. Required approval on all PRs by other developers, 
-focusing on individuals who are closely linked to the given ticket. There are Github Actions set for CI.
-
 \item \textbf{Testing:} MSTest, NUnit/XUnit, Coverlet for coverage
 
 \item \textbf{Linting/ coding standard:} CS Lint, Standard .NET coding conventions
