@@ -12,7 +12,6 @@
 \usepackage{minitoc}	% For table of content in chapters
 \usepackage{listings}
 \usepackage{graphicx}
-\setcounter{tocdepth}{3}     % list sub-subsections (e.g. S.2.5.1) in the TOC
 \usepackage{underscore}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
@@ -125,11 +124,6 @@ This document follows the requirements documentation structure presented in the 
 
 %===============================================================
 \dominitoc% Initialization
-% List sub-subsections (e.g. S.2.5.1) in each book's mini-TOC too. Guarded so
-% the build cannot fail if minitoc does not define this counter.
-\makeatletter
-\@ifundefined{c@minitocdepth}{}{\setcounter{minitocdepth}{3}}
-\makeatother
 \tableofcontents
 \adjustmtc
 %===============================================================
