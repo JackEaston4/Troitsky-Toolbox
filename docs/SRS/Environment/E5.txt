@@ -1,2 +1,16 @@
 \nsection{E.5 Effects}
 \comment{Elements and properties of the environment that the system will affect.}
+
+\begin{itemize}
+    \item Centralization of development information - the wealth of development information (e.g. past designs, material testing information)
+     will be in one central location for future members to access, which will facilitate onboarding.
+    \item Model analysis - team members will be able to submit their models and recieve key metrics and predictions regarding
+    that model through an automatic analysis.
+    \item Facilitated comparison - team members will be able to easily compare modelling results for different models. This will
+    facilitate development because team members will be able to start from the best and abandon changes that caused the model to degrade.
+    \item Simplified knowledge transfer - veteran team members will be able to share their vast knowledge with new members more easily.
+    This is critical, especially for outgoing team members.
+    \item Creation of a permanant software sub-team - this project will be the genesis of a permanant sofware subteam of the club.
+    Furthermore, brief but top-tier resources alongside the software suitewill be developed to smooth the onboarding 
+    of new software subteam members.
+\end{itemize}
