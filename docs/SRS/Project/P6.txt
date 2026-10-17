@@ -1,6 +1,9 @@
 \nsection{P.6 Risks and mitigation analysis}
 \comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}
 
+\subsection*{P.6.1 Risk Analysis}
+\addcontentsline{toc}{subsection}{P.6.1 Risk Analysis}
+
 \begin{itemize}
   \item \textbf{Risk: 3D Model Import and Analysis is Infeasible}
   \begin{itemize}
