@@ -203,7 +203,7 @@ The non-functional requirements above refer to the symbolic constants listed in 
 \hline
 \textbf{Constant} & \textbf{Value} & \textbf{Used in} & \textbf{Rationale / Reference} \\
 \hline
-\const{MAX_BROKER_OVERHEAD} & \valMaxBrokerOverhead & NFR-BR-2 & Response times of up to 1~s keep a user's flow of thought uninterrupted (Nielsen, \textit{Usability Engineering}, 1993, ch.~5). \\
+\const{MAX_BROKER_OVERHEAD} & \valMaxBrokerOverhead & NFR-BR-2 & Total response times of up to 1~s keep a user's flow of thought uninterrupted (Nielsen, \textit{Usability Engineering}, 1993, ch.~5), so broker response is limited to only account for a portion. \\
 \hline
 \const{SESSION_TIMEOUT} & \valSessionTimeout & NFR-WS-2 & OWASP Session Management Cheat Sheet: idle timeouts of 15--30 minutes are common for low-risk applications. \\
 \hline
