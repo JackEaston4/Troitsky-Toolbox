@@ -52,6 +52,23 @@
 \DeclareCoupledCountersGroup{theorems}
 \DeclareCoupledCounters[name=theorems]{req,constraint,goal}
 \setcounter{goal}{0}
+%--------------------- Symbolic constants ---------------
+% Values used by the requirements in S.2. Change a value here and it is
+% updated everywhere it is used. Rationale for each value is given in the
+% Symbolic Constants table at the end of S.2.
+\newcommand{\const}[1]{\textsc{#1}}                % typesets a constant's name
+\newcommand{\valMaxBrokerOverhead}{1000~ms}
+\newcommand{\valSessionTimeout}{30~minutes}
+\newcommand{\valMaxSearchTime}{2~seconds}
+\newcommand{\valMaxRepositoryItems}{10,000~items}
+\newcommand{\valBackupInterval}{7~days}
+\newcommand{\valMaxModelLoadTime}{30~seconds}
+\newcommand{\valDimensionTolerance}{0.5~mm}
+\newcommand{\valFailureLoadTolerance}{25\%}
+\newcommand{\valMaxAnalysisTime}{30~seconds}
+\newcommand{\valMaxRoleSearchTime}{2~minutes}
+\newcommand{\valMinConcurrentUsers}{50~members}
+\newcommand{\valMaxOnboardingTime}{1~week}
 %--------------------- Comments ---------------
 \newcommand{\mynote}[3][black]{\textcolor{#1}{\fbox{\bfseries\sffamily\scriptsize{#2}}
 {\small\textsf{\emph{#3}}}}}

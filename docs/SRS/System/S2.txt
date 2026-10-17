@@ -19,7 +19,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Encrypted communication:} Web Server shall only communicate with browsers over an encrypted connection (HTTPS). (NFR-WS-1)
-    \item \textbf{Session expiry:} Web Server shall end a member's session after a period of inactivity, so that an unattended browser does not leave club data accessible. (NFR-WS-2)
+    \item \textbf{Session expiry:} Web Server shall end a member's session after \const{SESSION_TIMEOUT} (\valSessionTimeout) of inactivity, so that an unattended browser does not leave club data accessible. (NFR-WS-2)
 \end{enumerate}
 
 %=================================
@@ -30,8 +30,10 @@ This section describes the behaviour of each component identified in S.1. Each s
 \begin{enumerate}
     \item \textbf{Authentication:} Access Control System shall verify the credentials submitted by a member, and shall reject login attempts with invalid credentials or for deactivated accounts. (FR-AC-1)
     \item \textbf{Roles:} Access Control System shall assign each account exactly one role: general member, team member, team captain, club executive, or software subteam maintainer. (FR-AC-2)
-    \item \textbf{Authorization:} Access Control System shall determine, for each request it is asked to verify, whether the role of the requesting member permits the requested operation. (FR-AC-3)
+    \item \textbf{Authorization:} Access Control System shall determine, for each request it is asked to verify, whether the role and team of the requesting member permit the requested operation. (FR-AC-3)
     \item \textbf{Member management:} Access Control System shall allow executives and maintainers to create accounts, deactivate accounts, and change the role of an account, so that membership can be updated at the start of each year and as members graduate. (FR-AC-4)
+    \item \textbf{Team membership:} Access Control System shall allow executives and maintainers to assign each account to at most one team for the current competition year, and to change or remove that assignment. (FR-AC-5)
+    \item \textbf{Team data isolation:} Access Control System shall deny any member who is not on a team access to that team's current bridge models and analysis results. (FR-AC-6)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
@@ -56,7 +58,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Extensibility:} Toolbox Broker shall allow a new service to be added to the system by registering it, without modifying the source code of the broker or of any existing service. (NFR-BR-1)
-    \item \textbf{Routing overhead:} Toolbox Broker shall add no more than 1000 ms to the response time of any request it routes. (NFR-BR-2)
+    \item \textbf{Routing overhead:} Toolbox Broker shall add no more than \const{MAX_BROKER_OVERHEAD} (\valMaxBrokerOverhead) to the response time of any request it routes. (NFR-BR-2)
 \end{enumerate}
 
 %=================================
@@ -74,8 +76,8 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Search responsiveness:} Knowledge Repository shall return search results within 2 seconds for a repository containing up to 10,000 items. (NFR-KR-1)
-    \item \textbf{Data durability:} Knowledge Repository shall be backed up at least weekly, so that no more than one week of stored data can be lost in the event of a failure. (NFR-KR-2)
+    \item \textbf{Search responsiveness:} Knowledge Repository shall return search results within \const{MAX_SEARCH_TIME} (\valMaxSearchTime) for a repository containing up to \const{MAX_REPOSITORY_ITEMS} (\valMaxRepositoryItems). (NFR-KR-1)
+    \item \textbf{Data durability:} Knowledge Repository shall be backed up at least every \const{BACKUP_INTERVAL} (\valBackupInterval), so that no more than \const{BACKUP_INTERVAL} of stored data can be lost in the event of a failure. (NFR-KR-2)
 \end{enumerate}
 
 %=================================
@@ -88,13 +90,15 @@ This section describes the behaviour of each component identified in S.1. Each s
     \item \textbf{File validation:} Model Analysis System shall reject files that are not valid STEP files, or that contain no readable geometry, and shall display an error message describing the problem. (FR-MA-2)
     \item \textbf{3D visualization:} Model Analysis System shall render an interactive 3D view of an uploaded model, which the member can rotate, zoom, and pan. (FR-MA-3)
     \item \textbf{Data extraction:} Model Analysis System shall extract from each uploaded model the geometric and physical properties of the bridge required by its analysis subsystems, such as its dimensions and mass. (FR-MA-4)
-    \item \textbf{Model storage:} Model Analysis System shall store each uploaded model and its extracted data in the Knowledge Repository, associated with the uploading team, so that it can be reopened and analyzed later. (FR-MA-5)
+    \item \textbf{Current model storage:} Model Analysis System shall store each uploaded model and its extracted data in the Knowledge Repository as a current model of the uploading member's team, accessible only to members of that team, so that it can be reopened and analyzed later. (FR-MA-5)
+    \item \textbf{Past design viewing:} Model Analysis System shall allow any member to browse past designs, filtered by year and team, and to load any past design into the model viewer and its analysis subsystems for inspection, without being able to modify it. (FR-MA-6)
+    \item \textbf{Archiving current models:} Model Analysis System shall allow executives to convert all current team models into past designs at the end of a competition season, recording the competition year and team of each. (FR-MA-7)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Load time:} Model Analysis System shall display the 3D visualization of a typical club bridge model within 30 seconds of upload. (NFR-MA-1)
-    \item \textbf{Extraction accuracy:} Model Analysis System shall extract dimensions that match those of the source model to within 0.5 mm. (NFR-MA-2)
+    \item \textbf{Load time:} Model Analysis System shall display the 3D visualization of a typical club bridge model within \const{MAX_MODEL_LOAD_TIME} (\valMaxModelLoadTime) of upload or of being selected. (NFR-MA-1)
+    \item \textbf{Extraction accuracy:} Model Analysis System shall extract dimensions that match those of the source model to within \const{DIMENSION_TOLERANCE} (\valDimensionTolerance). (NFR-MA-2)
 \end{enumerate}
 
 %---------------------------------
@@ -111,8 +115,8 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \paragraph{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Estimate accuracy:} For past club bridges whose tested failure loads are recorded, Performance Analysis System shall estimate the failure load to within 25\% of the recorded value in competition. (NFR-PA-1)
-    \item \textbf{Computation time:} Performance Analysis System shall produce results for a typical club bridge model within 30 seconds. (NFR-PA-2)
+    \item \textbf{Estimate accuracy:} For past club bridges whose tested failure loads are recorded, Performance Analysis System shall estimate the failure load to within \const{FAILURE_LOAD_TOLERANCE} (\valFailureLoadTolerance) of the recorded value in competition. (NFR-PA-1)
+    \item \textbf{Computation time:} Performance Analysis System shall produce results for a typical club bridge model within \const{MAX_ANALYSIS_TIME} (\valMaxAnalysisTime). (NFR-PA-2)
     \item \textbf{Extensibility:} Performance Analysis System shall be structured so that additional performance metrics can be added in the future without modifying the computation of existing metrics. (NFR-PA-3)
 \end{enumerate}
 
@@ -170,7 +174,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Findability:} Knowledge Transfer Manager shall allow a new member to locate the role record for a given executive position within 2 minutes, as measured in usability testing. (NFR-KT-1)
+    \item \textbf{Findability:} Knowledge Transfer Manager shall allow a new member to locate the role record for a given executive position within \const{MAX_ROLE_SEARCH_TIME} (\valMaxRoleSearchTime), as measured in usability testing. (NFR-KT-1)
     \item \textbf{Longevity:} Knowledge Transfer Manager shall allow exit documents and role records to be exported to PDF, so that they remain accessible independently of the system. (NFR-KT-2)
 \end{enumerate}
 
@@ -181,7 +185,49 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Browser support:} The Toolbox Web App shall be fully functional on the current versions of Google Chrome, Mozilla Firefox, Microsoft Edge, and Safari on desktop. (NFR-SYS-1)
-    \item \textbf{Capacity:} The system shall support at least 50 members using it concurrently without exceeding the response times specified in this section. (NFR-SYS-2)
+    \item \textbf{Capacity:} The system shall support at least \const{MIN_CONCURRENT_USERS} (\valMinConcurrentUsers) using it concurrently without exceeding the response times specified in this section. (NFR-SYS-2)
     \item \textbf{Service independence:} The failure of any single service shall not prevent members from using the remaining services. (NFR-SYS-3)
-    \item \textbf{Maintainability:} The system shall be documented well enough that a new software subteam member, with experience in C\# and web development, can set up a local development environment and deploy a change within one week. (NFR-SYS-4)
+    \item \textbf{Maintainability:} The system shall be documented well enough that a new software subteam member, with experience in C\# and web development, can set up a local development environment and deploy a change within \const{MAX_ONBOARDING_TIME} (\valMaxOnboardingTime). (NFR-SYS-4)
 \end{enumerate}
+
+%=================================
+\subsection*{S.2.9 Symbolic Constants}
+\addcontentsline{toc}{subsection}{S.2.9 Symbolic Constants}
+
+The non-functional requirements above refer to the symbolic constants listed in Table~\ref{tab:constants}, rather than to fixed values, so that a value can be revised in one place as the project progresses. Each constant is given with its current value and the rationale or reference for that value. Values marked as team estimates are based on the team's judgement of the club's needs, and will be revisited once the Proof of Concept and usability testing provide measured data.
+
+\begin{table}[htbp]
+\centering
+\caption{Symbolic constants used in the non-functional requirements}
+\label{tab:constants}
+\small
+\begin{tabular}{|p{3.6cm}|p{2cm}|p{1.7cm}|p{6.2cm}|}
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Used in} & \textbf{Rationale / Reference} \\
+\hline
+\const{MAX_BROKER_OVERHEAD} & \valMaxBrokerOverhead & NFR-BR-2 & Response times of up to 1~s keep a user's flow of thought uninterrupted (Nielsen, \textit{Usability Engineering}, 1993, ch.~5). \\
+\hline
+\const{SESSION_TIMEOUT} & \valSessionTimeout & NFR-WS-2 & OWASP Session Management Cheat Sheet: idle timeouts of 15--30 minutes are common for low-risk applications. \\
+\hline
+\const{MAX_SEARCH_TIME} & \valMaxSearchTime & NFR-KR-1 & Delays between 1~s and 10~s are noticed but keep the user's attention on the task (Nielsen, 1993). \\
+\hline
+\const{MAX_REPOSITORY_ITEMS} & \valMaxRepositoryItems & NFR-KR-1 & Team estimate: an upper bound on the documents, models, and test records the club could accumulate over many years. \\
+\hline
+\const{BACKUP_INTERVAL} & \valBackupInterval & NFR-KR-2 & Team estimate: limits the loss to one week of contributions, which members could reasonably re-upload. \\
+\hline
+\const{MAX_MODEL_LOAD_TIME} & \valMaxModelLoadTime & NFR-MA-1 & Team estimate: STEP parsing and rendering is computationally expensive. This exceeds the 10~s limit for holding attention (Nielsen, 1993), so progress must be shown while loading. To be refined using Proof of Concept measurements. \\
+\hline
+\const{DIMENSION_TOLERANCE} & \valDimensionTolerance & NFR-MA-2 & Team estimate: small relative to the thickness of a popsicle stick, so that extraction errors do not affect rule compliance results. \\
+\hline
+\const{FAILURE_LOAD_TOLERANCE} & \valFailureLoadTolerance & NFR-PA-1 & Team estimate: the variability of hand-built popsicle stick bridges makes tighter predictions unrealistic for an initial model. \\
+\hline
+\const{MAX_ANALYSIS_TIME} & \valMaxAnalysisTime & NFR-PA-2 & Team estimate: analysis is requested occasionally rather than interactively, so a longer wait with a progress indicator is acceptable. \\
+\hline
+\const{MAX_ROLE_SEARCH_TIME} & \valMaxRoleSearchTime & NFR-KT-1 & Team estimate: a new executive should be able to find their role record without assistance. \\
+\hline
+\const{MIN_CONCURRENT_USERS} & \valMinConcurrentUsers & NFR-SYS-2 & Club size: 4--6 registered teams plus executives and general members (Problem Statement). \\
+\hline
+\const{MAX_ONBOARDING_TIME} & \valMaxOnboardingTime & NFR-SYS-4 & Team estimate: allows a new software subteam member to contribute within their first week. \\
+\hline
+\end{tabular}
+\end{table}
