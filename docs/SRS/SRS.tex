@@ -7,12 +7,10 @@
 %Also based on the template of Karl E. Wiegers
 %http://www.se.rit.edu/~emad/teaching/slides/srs_template_sep14.pdf
 %http://karlwiegers.com
-\documentclass{scrreprt}
+\documentclass{article}
 \usepackage{method}		% Specific command from Handbook
-\usepackage{minitoc}	% For table of content in chapters
 \usepackage{listings}
 \usepackage{underscore}
-\usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{float}
@@ -56,67 +54,37 @@
 {\small\textsf{\emph{#3}}}}}
 \newcommand{\comment}[1]{\mynote[red]{Comment:}{#1}}
 %\newcommand{\comment}[1]{}
-\newcommand{\notEmpty}{\comment{This chapter should not be empty!}}
+\newcommand{\notEmpty}{\comment{This section should not be empty!}}
 
 \begin{document}
 
-\begin{flushright}
-    \rule{16cm}{5pt}\vskip1cm
-    \begin{bfseries}
-        \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
-        \vspace{1.9cm}
-        for\\
-        \vspace{1.9cm}
-        $<$Project$>$\\
-        \vspace{1.9cm}
-        \LARGE{Version \myversion approved}\\
-        \vspace{1.9cm}
-        Prepared by $<$author$>$\\
-        \vspace{1.9cm}
-        $<$Organization$>$\\
-        \vspace{1.9cm}
-        \today\\
-    \end{bfseries}
-\end{flushright}
+\maketitle
 
-%===============================================================
-\chapter*{Revision History}
-%===============================================================
-
-\begin{center}
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-	    Name        & Date          & Reason For Changes & Version\\
-        \hline
-        \hline
-	    J.-M. Bruel & 2021-01-22    & First Draft & 1.0\\
-        \hline
-	    J.-M. Bruel & 2023-01-28    & Check after publication of the Handbook & 1.23\\
-        \hline
-	    J.-M. Bruel & 2023-06-12    & Add reqs automated numbering & 1.23.1 \\
-        \hline
-	    J.-M. Bruel & 2023-08-25    & Add Minimum Requirements Outcome Principle & 1.23.8 \\
-        \hline
-	    J.-M. Bruel & 2023-12-22    & Remove section numbers & 1.23.12 \\
-        \hline
-	    J.-M. Bruel & 2024-08-01    & Add warning about non empty chapters  & \myversion \\
-        \hline
-    \end{tabular}
-\end{center}
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+10/02/2026 & Pedro & SRS template (Meyer) adopted; section files created.\\
+10/07/2026 & Pedro & G.1 drafted from problem statement.\\
+10/08/2026 & Jack & P.6 risks and mitigation analysis added.\\
+10/11/2026 & Jack & P.6 expanded.\\
+10/13/2026 & Pedro & Formatting aligned with other team documents.\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer.
 
 %===============================================================
-\dominitoc% Initialization
+\newpage{}
 \tableofcontents
-\adjustmtc
+\newpage{}
 %===============================================================
 
 %===============================================================
-\addcontentsline{toc}{chapter}{Goals book}
-\chapter*{Goals}
-
-\minitoc% Creating an actual minitoc
+\book{G}{Goals}
 %===============================================================
 
 \comment{Goals are "needs of the target organization, which the system will address". While the development team is the principal user of the other books, the Goals book addresses a wider audience: essentially, all stakeholders.}
@@ -130,9 +98,7 @@ This document follows the requirements documentation structure presented in the 
 \input{Goals/G7.txt}
 
 %===============================================================
-\chapter*{Environment}
-\addcontentsline{toc}{chapter}{Environment book}
-\minitoc% Creating an actual minitoc
+\book{E}{Environment}
 %===============================================================
 
 \comment{The Environment book describes the application domain and external context, physical or virtual (or a mix), in which the system will operate.}
@@ -145,9 +111,7 @@ This document follows the requirements documentation structure presented in the 
 \input{Environment/E6.txt}
 
 %===============================================================
-\chapter*{System}
-\addcontentsline{toc}{chapter}{System book}
-\minitoc% Creating an actual minitoc
+\book{S}{System}
 %===============================================================
 
 \comment{The System book refines the Goal one by focusing on more detailed requirements about the system under development, mainly its constituents, behaviors and properties.}
@@ -160,9 +124,7 @@ This document follows the requirements documentation structure presented in the 
 \input{System/S6.txt}
 
 %===============================================================
-\chapter*{Project}
-\addcontentsline{toc}{chapter}{Project book}
-\minitoc% Creating an actual minitoc
+\book{P}{Project}
 %===============================================================
 
 \comment{The Project book describes all the constraints and expectations not about the system itself, but about how to develop and produce it.}
