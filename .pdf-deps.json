@@ -93,6 +93,8 @@
     "docs/SRS/SRS-FAQ.tex"
   ],
   "docs/SRS/SRS.tex": [
+    "docs/Comments.text",
+    "docs/Common.text",
     "docs/SRS/Environment/E1.txt",
     "docs/SRS/Environment/E2.txt",
     "docs/SRS/Environment/E3.txt",
@@ -113,9 +115,6 @@
     "docs/SRS/Project/P5.txt",
     "docs/SRS/Project/P6.txt",
     "docs/SRS/Project/P7.txt",
-    "docs/SRS/SRS.mtc",
-    "docs/SRS/SRS.mtc0",
-    "docs/SRS/SRS.mtc1",
     "docs/SRS/SRS.tex",
     "docs/SRS/System/S1.txt",
     "docs/SRS/System/S2.txt",

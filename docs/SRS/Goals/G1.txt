@@ -1,14 +1,17 @@
 \nsection{G.1 Context and overall objective}
 \comment{High-level view of the project: organizational context and reason for building a system.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
 
-\begin{goal}\label{goal:first}
-This is a goal example. If you need explicit (and automatic) numbering, you can use the definitions in the \texttt{.tex} template.
-Is is refined by \ref{req:memo}
-\end{goal}
-
-\begin{req}\label{req:cross}
-This is a requirement example. It illustrates how numbering is continuous and cross-types (if this is what you need).
-\end{req}
+The McMaster Troitsky club is a student-run organization that registers and
+supports 4-6 teams of students as they take on the task of modelling, ana-
+lyzing and manufacturing a bridge out of popsicle sticks, white glue and dental
+floss. While the club has been successful in the past, results often vary in perfor-
+mance both between years and teams, due to the lack of centralized information
+and technical support for members. As teams progress through several years
+of competition, undergoing material testing, bridge design and analysis, and
+even experimenting with more innovative concepts, skill and knowledge within
+the club often consolidates within more experienced members or single teams,
+ensuring that when those members graduate, information is lost to the club.
+This project seeks to create a centralized information repository and technical
+support system for the McMaster Troitsky club, ensuring information trans-
+fer between years and teams, and facilitating support and onboarding for new
+members.
