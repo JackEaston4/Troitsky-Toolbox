@@ -33,7 +33,7 @@ This section describes the behaviour of each component identified in S.1. Each s
     \item \textbf{Authorization:} Access Control System shall determine, for each request it is asked to verify, whether the role and team of the requesting member permit the requested operation. (FR-AC-3)
     \item \textbf{Member management:} Access Control System shall allow executives and maintainers to create accounts, deactivate accounts, and change the role of an account, so that membership can be updated at the start of each year and as members graduate. (FR-AC-4)
     \item \textbf{Team membership:} Access Control System shall allow executives and maintainers to assign each account to at most one team for the current competition year, and to change or remove that assignment. (FR-AC-5)
-    \item \textbf{Team data isolation:} Access Control System shall deny any member who is not on a team access to that team's current bridge models and analysis results. (FR-AC-6)
+    \item \textbf{Team data isolation:} Access Control System shall deny any member who is not on that team access to that team's current bridge models and analysis results. (FR-AC-6)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
