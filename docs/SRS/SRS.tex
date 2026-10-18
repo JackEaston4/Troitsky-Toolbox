@@ -20,6 +20,7 @@
 \usepackage{xltabular}
 \usepackage{float}
 \usepackage{enumitem}
+\usepackage{hyperref}
 \hypersetup{
     bookmarks=false,
     pdftitle={Software Requirement Specification},
@@ -39,17 +40,14 @@
 \title{Software Requirements Specification\\\progname}
 \author{\authname}
 \date{}
-
 \input{../Comments.text}
 \input{../Common.text}
+
+
 
 %--------------------- Headings ---------------
 % Same look as the numbered headings in the Development Plan, but with the
 % Meyer book letters (G, E, S, P) in place of section numbers.
-% \book{G}{Goals}                 -> like "1  Introduction"
-% \nsection{G.1 Context ...}      -> like "1.1  Team Meet"
-% \subsection* in a section file  -> like "4.3.2  Agenda Structure"
-% \subsubsection* in a section file -> bold paragraph heading
 \makeatletter
 \let\srs@section\section
 \let\srs@subsection\subsection
