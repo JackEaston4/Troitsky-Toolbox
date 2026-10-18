@@ -1,0 +1,16 @@
+\nsection{A.1 Generative AI Use Disclosure}
+
+\subsection*{A.1.1 AI Tools Used}
+\addcontentsline{toc}{subsection}{A.1.1 AI Tools Used}
+
+\notEmpty
+
+\subsection*{A.1.2 How and Where Used}
+\addcontentsline{toc}{subsection}{A.1.2 How and Where Used}
+
+\notEmpty
+
+\subsection*{A.1.3 Verification of AI-Generated Content}
+\addcontentsline{toc}{subsection}{A.1.3 Verification of AI-Generated Content}
+
+\notEmpty
