@@ -1,5 +1,43 @@
 \nsection{S.1 Components}
 \comment{Overall structure expressed by the list of major software and, if applicable, hardware parts.}
 %---------------------------------
-\notEmpty{}
-%---------------------------------
+
+The Troitsky Toolbox is a web-based application structured around a central broker. Each tool, as well as the shared data storage, is a service that registers with the broker. All communication between the user interface and the services, and between the services themselves, passes through the broker, so that no service depends directly on another. The system relies on the following software components:
+
+\begin{itemize}
+    \item \textbf{Web Server:} The component in charge of hosting the Toolbox Web App and serving it to members' browsers. It receives all incoming requests (\texttt{Handle Request}), authenticates members at login through the Access Control System, and forwards requests for club services to the Toolbox Broker. It also serves the public club landing page, which requires no authentication.
+
+    \item \textbf{Access Control System:} The component in charge of managing member accounts and their roles (\texttt{Manage Members}), such as general member, executive, and software subteam maintainer. It also records which team, if any, each member belongs to. It authenticates users (\texttt{Authenticate}) and decides which services and data each member may access based on their role and team (\texttt{Authorize}), ensuring that club services and stored data are limited to authorized members, and that a team's in-progress work is limited to that team.
+
+    \item \textbf{Toolbox Broker:} The component in charge of coordinating all communication within the system. Services register with the broker (\texttt{Register Service}), advertising the operations they provide. The broker receives each request (\texttt{Route Request}), verifies it with the Access Control System (\texttt{Authorize}), and forwards it to the service that provides the requested operation. New tools can be added to the Toolbox by registering them with the broker, without modifying the broker or any existing service.
+
+    \item \textbf{Knowledge Repository:} The service in charge of the centralized, persistent store of all club information (\texttt{Manage Data}), including documents, current and past bridge models, material test results, competition rules, and handoff documents. Other services store and retrieve their data by sending requests through the broker, which allows information produced by one tool to be found and reused by members and by other tools. It also allows members to search, filter, and contribute content (\texttt{Search Content}).
+
+    \item \textbf{Model Analysis System:} The service in charge of importing bridge models in a standardized 3D format (\texttt{Upload Model}), rendering an interactive visualization of the model, and extracting the geometric and structural data of the bridge (\texttt{Model Data}). It works with two kinds of bridge models, both stored in the Knowledge Repository:
+    \begin{itemize}
+        \item \textbf{Current team models:} The models a team is developing for the upcoming competition. These are accessible only to the members of that team, so that teams can work on their designs independently.
+        \item \textbf{Past designs:} Models of bridges from previous years, which any member can load into the model viewer to inspect and learn from, but cannot modify. At the end of each competition season, a team's current models become past designs.
+    \end{itemize}
+    Its analysis capabilities are provided by two subsystems, which extend its functionality while remaining separate from it and from each other:
+    \begin{itemize}
+        \item \textbf{Performance Analysis System:} Computes key metrics and predictions about a bridge's expected performance (\texttt{Analyze Performance}), using the extracted model data and the material properties provided by the Material Testing Manager, both requested through the broker.
+        \item \textbf{Rule Compliance System:} Assesses a bridge model against the current Troitsky competition rules (\texttt{Check Compliance}), using the extracted model data requested through the broker. It maintains the set of rules being checked (\texttt{Manage Rules}) so that they can be updated as the competition rules change from year to year.
+    \end{itemize}
+
+    \item \textbf{Material Testing Manager:} The service in charge of facilitating the storage and access of material testing results in a standardized format (\texttt{Manage Test Results}), and analyzing new results against those collected in previous years. This service also derives material-specific data from accepted test results (\texttt{Material Properties}), which is provided to the Performance Analysis System through the broker.
+
+    \item \textbf{Knowledge Transfer Manager:} The service in charge of collecting and organizing exit documents, role records, and onboarding material (\texttt{Manage Handoff Documents}), so that the knowledge held by graduating members and executive positions is preserved for future members.
+\end{itemize}
+
+In addition to these components, the system will interact with external components, such as a CAD/geometry library used by the Model Analysis System to read STEP files (see E.2 for details).
+
+Club members interact with the system through the \textbf{Toolbox Web App}, a browser-based interface served by the Web Server, which presents each of the tools above. Through it, members can browse and contribute to the repository, upload and analyze bridge models, record material tests, and complete handoff documents. Members of the software subteam use the same interface, with elevated privileges granted by the Access Control System, to maintain accounts, competition rules, and stored content.
+
+Figure~\ref{fig:component-diagram} shows the components of the system and the interfaces through which they interact.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{System/s1component-dark.png}
+    \caption{Component diagram of the Troitsky Toolbox. All communication between services passes through the Toolbox Broker.}
+    \label{fig:component-diagram}
+\end{figure}
