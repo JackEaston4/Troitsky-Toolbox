@@ -10,33 +10,58 @@
 \documentclass{article}
 \usepackage{method}		% Specific command from Handbook
 \usepackage{listings}
+\usepackage{graphicx}
 \usepackage{underscore}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xltabular}
 \usepackage{float}
-\hypersetup{
-    bookmarks=false,    % show bookmarks bar?
-    pdftitle={Software Requirement Specification},    % title
-    pdfauthor={Jean-Philippe Eisenbarth},                     % author
-    pdfsubject={TeX and LaTeX},                        % subject of the document
-    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=blue,       % color of internal links
-    citecolor=black,       % color of links to bibliography
-    filecolor=black,        % color of file links
-    urlcolor=purple,        % color of external links
-    linktoc=page            % only page is linked
-}%
-\def\myversion{1.24.8 }
-\date{}
-%\title{%
-
-%}
+\usepackage{enumitem}
 \usepackage{hyperref}
-\newcommand*{\nsection}[1]{
-    \section*{#1}
-    \addcontentsline{toc}{section}{#1}
+\hypersetup{
+    bookmarks=false,
+    pdftitle={Software Requirement Specification},
+    pdfauthor={Jean-Philippe Eisenbarth},
+    pdfsubject={TeX and LaTeX},
+    pdfkeywords={TeX, LaTeX, graphics, images},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=purple,
+    linktoc=page
 }
+\def\myversion{1.24.8 }
+\setlist[itemize]{label=\textbullet}
+
+\title{Software Requirements Specification\\\progname}
+\author{\authname}
+\date{}
+\input{../Comments.text}
+\input{../Common.text}
+
+
+
+%--------------------- Headings ---------------
+% Same look as the numbered headings in the Development Plan, but with the
+% Meyer book letters (G, E, S, P) in place of section numbers.
+\makeatletter
+\let\srs@section\section
+\let\srs@subsection\subsection
+\newcommand*{\book}[2]{%
+    \srs@section*{#1\quad #2}%
+    \addcontentsline{toc}{section}{\protect\numberline{#1}#2}}
+\newcommand*{\nsection}[1]{\srs@nsplit#1 \@nil}
+\def\srs@nsplit#1 #2\@nil{%
+    \srs@subsection*{#1\quad #2}%
+    \addcontentsline{toc}{subsection}{\protect\numberline{#1}#2}}
+\let\subsection\subsubsection
+\renewcommand\subsubsection{\@startsection{paragraph}{4}{\z@}%
+    {3.25ex \@plus1ex \@minus.2ex}{0.5ex}{\normalfont\normalsize\bfseries}}
+\makeatother
+\setcounter{tocdepth}{2}
 
 %--------------------- Numbering ---------------
 \usepackage{amsthm}
