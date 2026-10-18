@@ -7,9 +7,9 @@ such as Google Chrome, Firefox, Edge, and Safari. Requires a working internet co
 \\ \textbf {Rationale:} Ensures that the service is accessible by all club members. Also allows the Troitsky toolbox to act as a 
 landing page for the McMaster club.
 
-\item \textbf{File Formats:} STEP (.stp) files for loading and submitting models.
+\item \textbf{File Formats:} STEP (.stp/.step) files for loading and submitting models. CSV and Excel data formats (.csv/.xlsx) for material testing data storing.
 \\ \textbf {Rationale:} Standardized format among possible external modelling software teams use. Ensures compatibility 
-with current and future model files.
+with current and future model files. CSV and Excel data files are both tabular and work with current material testing data.
 
 \item \textbf{Back-end Programming languages:} C\# on .NET, Python for subservices
 \\ \textbf {Rationale:} LINQ availability and ease of use, and the ease of maintainability by future software subteam members; Python for
