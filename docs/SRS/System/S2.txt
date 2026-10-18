@@ -194,15 +194,20 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 The non-functional requirements above refer to the symbolic constants listed in Table~\ref{tab:constants}, rather than to fixed values, so that a value can be revised in one place as the project progresses. Each constant is given with its current value and the rationale or reference for that value. Values marked as team estimates are based on the team's judgement of the club's needs, and will be revisited once the Proof of Concept and usability testing provide measured data.
 
-\begin{table}[htbp]
-\centering
-\caption{Symbolic constants used in the non-functional requirements}
-\label{tab:constants}
+% xltabular = tabularx that can break across pages (same column spec as before)
+\begingroup
 \small
-\begin{tabularx}{\textwidth}{|p{3.4cm}|p{1.6cm}|p{1.6cm}|X|}
+\begin{xltabular}{\textwidth}{|p{3.4cm}|p{1.6cm}|p{1.6cm}|X|}
+\caption{Symbolic constants used in the non-functional requirements}
+\label{tab:constants} \\
 \hline
 \textbf{Constant} & \textbf{Value} & \textbf{Used in} & \textbf{Rationale / Reference} \\
 \hline
+\endfirsthead
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Used in} & \textbf{Rationale / Reference} \\
+\hline
+\endhead
 \const{MAX_BROKER_OVERHEAD} & \valMaxBrokerOverhead & NFR-BR-2 & Total response times of up to 1~s keep a user's flow of thought uninterrupted (Nielsen, \textit{Usability Engineering}, 1993, ch.~5), so broker response is limited to only account for a portion. \\
 \hline
 \const{SESSION_TIMEOUT} & \valSessionTimeout & NFR-WS-2 & OWASP Session Management Cheat Sheet: idle timeouts of 15--30 minutes are common for low-risk applications. \\
@@ -227,5 +232,5 @@ The non-functional requirements above refer to the symbolic constants listed in 
 \hline
 \const{MAX_ONBOARDING_TIME} & \valMaxOnboardingTime & NFR-SYS-4 & Team estimate: allows a new software subteam member to contribute within their first week. \\
 \hline
-\end{tabularx}
-\end{table}
+\end{xltabular}
+\endgroup
