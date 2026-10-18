@@ -76,10 +76,10 @@
     \item \textbf{Description:} Club records stored in the Knowledge Repository could be lost, either maliciously or unintentionally. Loss could come from a failure of the hosting and data storage platform (E.2), a faulty 
     update, or a member overwriting or removing content by mistake.
     
-    \item \textbf{Mitigation:} The repository is backed up at least weekly. \comment{TODO: use \textbackslash const\{BACKUP_INTERVAL\} once S.2 is in main.} Items are archived rather than 
+    \item \textbf{Mitigation:} The repository is backed up at least every \const{BACKUP_INTERVAL} (\valBackupInterval). Items are archived rather than 
     deleted, and the failure of one service does not affect the others.
     
-    \item \textbf{Contingency:} Restore lost data from the most recent backup, losing at most one week of contributions. \comment{TODO: use \textbackslash const\{BACKUP_INTERVAL\} once S.2 is in main.} 
+    \item \textbf{Contingency:} Restore lost data from the most recent backup, losing at most \const{BACKUP_INTERVAL} (\valBackupInterval) of contributions. 
     Test results and handoff documents can also be exported outside the system. 
   \end{itemize}
 \end{itemize}
