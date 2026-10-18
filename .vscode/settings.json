@@ -13,6 +13,10 @@
         "**/DevelopmentPlan.aux": true,
         "**/DevelopmentPlan.log": true,
         "**/DevelopmentPlan.gz": true,
-        "**/DevelopmentPlan.out": true
+        "**/DevelopmentPlan.out": true,
+        "**/SRS.aux": true,
+        "**/SRS.log": true,
+        "**/SRS.gz": true,
+        "**/SRS.out": true
     }
 }

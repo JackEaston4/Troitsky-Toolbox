@@ -1,2 +1,281 @@
 \nsection{S.6 Verification and acceptance criteria}
 \comment{Specification of the conditions under which an implementation will be deemed satisfactory.}
+
+\textbf{Use Case Name:} Log-in and Log-out
+\textbf{Primary Actor:} The user
+\textbf{Stakeholders and Interests:}
+
+\begin{itemize}
+    \item User: Wants to access the toolbox through logging in, and wants to prevent unauthorized access through logging out.
+    \item Developer: Wants to verify the log in and log out system is secure
+    \item Troitsky Club: Wants a central secure portal for club matters accessible to current members and closed to outsiders.
+\end{itemize}
+
+\textbf{Preconditions:}
+\begin{itemize}
+    \item The user is on the public landing page
+\end{itemize}
+
+\textbf{Postconditions (Success Guarantees):}
+\begin{itemize}
+    \item The user is authenticated by the system and is logged in (i.e. may access actions their role permits)
+    \item The user recieves a confirmation message they have been logged out (i.e. may not access actions their role permits)
+\end{itemize}
+
+\textbf{Postconditions (Failure Guarantees):}
+\begin{itemize}
+    \item If the credentials are invalid, whether through incorrect entry or the user having no valid credentials, the
+    user shall recieve an error message on the log in screen. The system shall not log the user in.
+    \item If the system fails to log a user out, the system shall display an error message to the user, inviting them to try 
+    to log out again.
+\end{itemize}
+
+\textbf{Main Success Scenario (Basic Flow):}
+\begin{itemize}
+    \item The user enters their username into the username fields, and their password into a text-masking password field
+    \item The user hits a login button, which requests the system authenticates their credentials
+    \item The system verifies that the username and an encrypted version of the password are in the system
+    \item The server displays to the user their home page, determined by their role, confirming they have logged in
+    \item The user presses a log out button, requesting that the system log them out
+    \item The system displays a log out message, and may optionally display the log in page as well
+\end{itemize}
+
+\textbf{Justification:}
+This scenario is the backbone behind a secure web-based application, which enables a browser-based service accessible
+to anyone with an internet connection to only be utilized by approved members, keeping outsiders from accessing 
+confidentional information or tampering with the system.
+
+
+
+\textbf{Use Case Name:} File Upload
+\textbf{Primary Actor:} The user
+\textbf{Stakeholders and Interests:}
+
+\begin{itemize}
+    \item User: Wants to upload a file to the knowledge repository
+    \item Developer: Wants to verify files can be upload
+    \item Troitsky Club: Wants files, both technical and non-technical in their database
+\end{itemize}
+
+\textbf{Preconditions:}
+\begin{itemize}
+    \item The user is on their user home page
+\end{itemize}
+
+\textbf{Postconditions (Success Guarantees):}
+\begin{itemize}
+    \item The file is uploaded to the system
+    \item The user recieves a message that the file has been sucessfully uploaded
+\end{itemize}
+
+\textbf{Postconditions (Failure Guarantees):}
+\begin{itemize}
+    \item If the file is not supported due to type, contents, or length, the user shall recieve a specific not supported error message
+    \item If the server times out due to a server issue, the user shall recieve a server error
+    \item If the server times out due to a user's poor connection, the user shall be informed of their poor connection
+    \item If the user's role does not permit them to upload a file, they shall recieve a role-based error message.
+\end{itemize}
+
+\textbf{Main Success Scenario (Basic Flow):}
+\begin{itemize}
+    \item The user submits a request from their user home page to go to the file upload page
+    \item The Toolbox Broker takes the user there, assuming their role permits them
+    \item The user hits a "Select" button to select files from their machine
+    \item The user selects their desired files from their machine, and submits them to the system
+    \item The system uploads the files to the knowledge repository. Metadata, minimally including the upload date and the user, is uploaded with the document.
+    \item The system adds the files to its repository.
+    \item The user recieves a confirmation message that files have been uploaded sucessfully.
+\end{itemize}
+
+\textbf{Justification:}
+McMaster's Troitsky Club generates many files in its operation, and requires a central repository to store them.
+Such files include bridge models, material testing information, competition rules, testing and analysis results, and handoff documents.
+If a files cannot be uploaded, the knowledge repository will quickly become useless.
+
+\textbf{Use Case Name:} File Access
+\textbf{Primary Actor:} The user
+\textbf{Stakeholders and Interests:}
+
+\begin{itemize}
+    \item User: Wants to access a file in the knowledge repository
+    \item Developer: Wants to verify files can be accessed
+    \item Troitsky Club: Wants members to access files in its repository
+\end{itemize}
+
+\textbf{Preconditions:}
+\begin{itemize}
+    \item The user is on their user home page
+\end{itemize}
+
+\textbf{Postconditions (Success Guarantees):}
+\begin{itemize}
+    \item The user has viewed the file, and has additionally downloaded it if they wished
+\end{itemize}
+
+\textbf{Postconditions (Failure Guarantees):}
+\begin{itemize}
+    \item If no accessible files match the query, the results page shall inform the user of the situation.
+    \item If the file is not in the system or no longer available, the system shall inform the user.
+    \item If the file cannot be previewed, the user shall recieve basic file information and the option to download
+    \item If the user cannot access a file due to their role, the system shall inform the user the file cannot be found. For security reasons,
+    the system may not tell the user the file exists but is inaccessible to them due to their role.
+\end{itemize}
+
+\textbf{Main Success Scenario (Basic Flow):}
+\begin{itemize}
+    \item The user submits a request from their user home page to go to the knowledge repository search page
+    \item The Toolbox Broker takes the user there
+    \item The user writes a search query and submits it to the system
+    \item The system displays all the files that match the query that the user can access, ordered from most matching to least matching. 
+    \item The user selects a file from the search results.
+    \item The system displays a preview of the file on the user's screen and a button the user can press if they wish to download the file.
+    \item If the user presses the download button, the file is downloaded onto their machine.
+\end{itemize}
+
+\textbf{Justification:}
+McMaster's Troitsky Club generates many files in its operation, and requires a central repository to store them.
+Such files include bridge models, material testing information, competition rules, testing and analysis results, and handoff documents.
+If a files cannot be downloaded or viewed, the repository becomes useless. If files cannot be previewed, users will be highly 
+inconvienced from the need to download every file. If files cannot be downloaded, users cannot back up files or view large files
+or other files that cannot be previewed.
+
+\textbf{Use Case Name:} Knowledge Transfer Wizard
+\textbf{Primary Actor:} The exiting member (hereinafter the user)
+\textbf{Stakeholders and Interests:}
+
+\begin{itemize}
+    \item User: Wants to document their role to their sucessor, because they will leave their position soon
+    \item Developer: Wants to verify knowledge transfer can be easily facilitated through the system
+    \item Troitsky Club: Wants new officeholders to benefit from guidance of their predecessors, in the form of exit documents
+\end{itemize}
+
+\textbf{Preconditions:}
+\begin{itemize}
+    \item The user is on their user home page
+\end{itemize}
+
+\textbf{Postconditions (Success Guarantees):}
+\begin{itemize}
+    \item The exit document is on the system
+    \item The user recieves a confirmation message that their exit document is complete and on the system
+\end{itemize}
+
+\textbf{Postconditions (Failure Guarantees):}
+\begin{itemize}
+    \item If the user cannot complete an exit doucment due to temporal or role-based reasons, the user should output the corresponding error
+    \item If a field is incomplete or completed incorrectly, the system shall prompt the user to complete the field correctly and resubmit.
+\end{itemize}
+
+\textbf{Main Success Scenario (Basic Flow):}
+\begin{itemize}
+    \item If the systems deems that the user must urgently complete and submit their exit document, the user shall see a corresponding alert on their user home page.
+    \item The user submits a request from their user home page to go to the exit document form page
+    \item The Toolbox Broker takes the user there, assuming their role and temporal constraints permits them
+    \item The user fully fills out the form, satisfying the form's requirements and constraints
+    \item The user submits the form.
+    \item The system adds the form to the knowledge repository, including metadata (minimally user and timestamp) regarding the form.
+    \item The user recieves a confirmation message that they have sucessfully completed and submitted their exit document.
+\end{itemize}
+
+\textbf{Justification:}
+McMaster's Troitsky Club is an undergraudate university club, which means old members leave or get promoted frequently,
+requiring others to take their steads. Having an exit document detailing the wisdom a predecessor gained throughout
+their tenure readily available to the new officeholder, will greatly facilitate the new officeholder's onboarding into their
+new role.
+
+\textbf{Use Case Name:} Materials Testing
+\textbf{Primary Actor:} The user
+\textbf{Stakeholders and Interests:}
+
+\begin{itemize}
+    \item User: Wants to obtain results about materials without needing to test the entire bridge model
+    \item Developer: Wants to verify materials testing can be done by users
+    \item Troitsky Club: Materials testing is an integral aid in developing a bridge for competition, and having 
+        it automated would increase the effiency of the bridge development process.
+\end{itemize}
+
+\textbf{Preconditions:}
+\begin{itemize}
+    \item The user is on their user home page
+\end{itemize}
+
+\textbf{Postconditions (Success Guarantees):}
+\begin{itemize}
+    \item The user recieves valid results regarding the materials test, based on the inputted materials testing file.
+    \item The materials test input and results are stored in the knowledge repository
+\end{itemize}
+
+\textbf{Postconditions (Failure Guarantees):}
+\begin{itemize}
+    \item If the file is invalid, the system shall inform the user that the file is invalid.
+    \item If the user cannot perform a materials test due to their role, they should be informed of that by the system.
+    \item If the test fails due to a server-side issue, the user shall recieve a helpful error message that they can pass onto the developers.
+    \item If the results cannot be displayed due to a poor connection user-side, the system shall still store the results server-side in the knowledge repository if possible.
+    \item If the knowledge repository is full, the system shall still display the results to the user if possible.
+\end{itemize}
+
+\textbf{Main Success Scenario (Basic Flow):}
+\begin{itemize}
+    \item The user submits a request from their user home page to go to the materials testing
+    \item The Toolbox Broker takes the user there, assuming their role permits them
+    \item The user hits a "Select" button to select the file from their machine
+    \item The user selects the desired file from their machine, and submits it to the system
+    \item The system runs analysis on the file and compares it to previous materials testing files, obtaining results.
+    \item The rule compliance determines whether the input files is rules compliant. If not, the failure is recorded in the test results.
+    \item The system adds the input file and the materials testing results to the knowledge repository.
+    \item The user recieves the tests results on the webpage. 
+\end{itemize}
+
+\textbf{Justification:}
+McMaster's Troitsky Club primary purpose is to design and fabricate a bridge for the national intercollegiate Troitsky competition.
+Materials testing is an integral part of the process and its automation will be of great assistance to the club. Furthermore,
+non-compliance with the rules makes the selected materials invalid for the competition, by extension making the whole 
+bridge invalid for the competition.
+
+\textbf{Use Case Name:} Model Analysis
+\textbf{Primary Actor:} The user
+\textbf{Stakeholders and Interests:}
+
+\begin{itemize}
+    \item User: Wants to obtain results their bridge model
+    \item Developer: Wants to verify bridge modelling analysis can be done by users
+    \item Troitsky Club: Analysis of a bridge model is critical for the competition, which is primarily about
+    determining the strongest bridge to fit the constraints set out by the competition rules.
+\end{itemize}
+
+\textbf{Preconditions:}
+\begin{itemize}
+    \item The user is on their user home page
+\end{itemize}
+
+\textbf{Postconditions (Success Guarantees):}
+\begin{itemize}
+    \item The user recieves valid results regarding the materials test, based on the inputted materials testing file.
+    \item The model analysis input and results are stored in the knowledge repository
+\end{itemize}
+
+\textbf{Postconditions (Failure Guarantees):}
+\begin{itemize}
+    \item If the file is invalid, the system shall inform the user that the file is invalid.
+    \item If the user cannot perform a model analysis due to their role, they should be informed of that by the system.
+    \item If the analysis fails due to a server-side issue, the user shall recieve a helpful error message that they can pass onto the developers.
+    \item If the results cannot be displayed due to a poor connection user-side, the system shall still store the results server-side in the knowledge repository if possible.
+    \item If the knowledge repository is full, the system shall still display the results to the user if possible.
+\end{itemize}
+
+\textbf{Main Success Scenario (Basic Flow):}
+\begin{itemize}
+    \item The user submits a request from their user home page to go to the model analysis page
+    \item The Toolbox Broker takes the user there, assuming their role permits them
+    \item The user hits a "Select" button to select the file from their machine
+    \item The user selects the desired file from their machine, and submits it to the system
+    \item The system runs analysis on the file and compares it to previous model analyses, obtaining results.
+    \item The rule compliance determines whether the model is rules compliant. If not, the failure is recorded in the analysis results.
+    \item The system adds the input file and the analsyis results to the knowledge repository.
+    \item The user recieves the analysis results on the webpage. 
+\end{itemize}
+
+\textbf{Justification:}
+McMaster's Troitsky Club primary purpose is to design and fabricate a bridge for the national intercollegiate Troitsky competition.
+The bridge is modelled in industry-standard modelling software and automated analysis would greatly benefit the bridge's
+designers and fabricators. Additionally, non-compliance with the rules makes the bridge invalid for the competition.
