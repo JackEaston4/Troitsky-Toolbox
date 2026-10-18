@@ -1,2 +1,58 @@
-\nsection{E.1 Glossary}
-\comment{Clear and precise definitions of all the vocabulary specific to the application domain, including technical terms, words from ordinary language used in a special meaning, and acronyms. This chapter should not be empty!}
+% E.1 Glossary — moved to start of document per Meyer Level 4 (Becca_SRS style):
+% terms/acronyms defined before first use; one definition location; footnote refs.
+
+\section{E.1 Glossary}
+
+\begin{itemize}
+
+\item \textbf{Troitsky / Troitsky Club}
+The McMaster University student-run engineering club that registers and supports 4--6 teams per year to design, model, analyze, and manufacture a bridge from popsicle sticks, white glue, and dental floss [1, G.1]. Named for the Russian structural engineer whose principles inform bridge design; here denotes the student organization, not the person.
+
+\item \textbf{Troitsky Toolbox}
+The web-based repository-and-support system built for the Troitsky club: a broker-mediated architecture storing past designs, material-testing data, rule-compliance results, and role documentation, with quick search and standardized upload [2, G.4; 3, S.1].
+
+\item \textbf{Toolbox Broker (Broker)}
+Central mediator in the Troitsky Toolbox architecture. Every service (UI, repository, model loader, compliance checker) and the shared data store registers with the broker; all inter-service and user-to-service communication passes through it, so no service depends directly on another [3, S.1; 4, S.2]. Symbolic overhead: \textsc{valMaxBrokerOverhead}=100~ms.
+
+\item \textbf{Repository / Tool Repository}
+The shared data storage service within the Toolbox, holding past bridge designs, material-testing records, compliance results, role-responsibility notes, and exit/knowledge-transfer documents [2, G.4; 5, E.2]. Max capacity: \textsc{valMaxRepositoryItems}=10{,}000 items.
+
+\item \textbf{Session}
+A logged user interaction period with the Toolbox web server. Times out at \textsc{valSessionTimeout}=30 minutes [6, E.3].
+
+\item \textbf{Model / Model Load}
+A bridge-design model (geometry, materials, loading) registered in the repository. Load-time target: \textsc{valMaxModelLoadTime}=30~s [7, S.2.1].
+
+\item \textbf{Overhead (Broker Overhead)}
+Latency added by routing every message through the Toolbox Broker rather than direct service-to-service calls. Budget: \textsc{valMaxBrokerOverhead}=100~ms [4, S.1].
+
+\item \textbf{Search / Role Search}
+Repository query for past designs, tests, or role documentation. Search-time targets: \textsc{valMaxSearchTime}=2~s (general); \textsc{valMaxRoleSearchTime}=2~min (executive/role lookup) [8, S.2.2].
+
+\item \textbf{Dimension / Dimension Tolerance}
+Geometric measurement of bridge members; acceptable deviation \textsc{valDimensionTolerance}=0.5~mm [9, E.3].
+
+\item \textbf{Tolerance / Failure Load Tolerance}
+Margin on predicted structural failure load; allowed deviation \textsc{valFailureLoadTolerance}=25\% [10, E.3].
+
+\item \textbf{Rule Compliance System}
+Toolbox service that checks an uploaded model against current Troitsky competition rules (updated yearly), using model data fetched through the broker; maintains its own rule set via \texttt{Manage Rules} [3, S.1].
+
+\item \textbf{Curriculum Learning (CL)}
+ML training strategy used in the modeling component: ordered phases of increasing complexity (e.g. lower victory-point thresholds initially, progressing to full rules) [11, G.6; 12, refs].
+
+\item \textbf{CV — Computer Vision}
+Area of AI for interpreting visual information; deferred module that would process camera input of a physical board (not active in v1) [13, E.2].
+
+\item \textbf{LLM — Large Language Model}
+Text-trained generative model used (optional) for natural-language explanations of broker-routed actions or design recommendations; integrated via external API [14, E.2].
+
+\item \textbf{AI — Artificial Intelligence}
+Field of computer science focused on systems performing tasks that normally require human intelligence; here covers RL modeling and LLM explanation services [15, refs].
+
+\end{itemize}
+
+% Footnote refs (link to first use / source):
+% [1] G.1 Context; [2] G.4 Functionality Overview; [3] S.1 Components / component diagram;
+% [4] S.1 Broker description; [5] E.2 Environment Components; [6,8,9,10] E.3 Constraints (symbolic constants);
+% [7] S.2.1; [11,12] G.6 + refs; [13,14,15] E.2 / refs.
