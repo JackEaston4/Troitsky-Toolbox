@@ -1,2 +1,261 @@
 \nsection{S.4 Detailed usage scenarios}
-\comment{Examples of interaction between the environment (or human users) and the system: use cases, user stories.}
+\subsection*{S.4.1 -- Knowledge Repository Information Viewing}
+\textbf{Use Case Name:} Knowledge Repository Information Viewing
+\\
+\textbf{Primary Actor:} User
+\\
+\textbf{Precondition:}
+
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with general member permissions.
+\end{itemize}
+\textbf{Trigger:} A Troitsky member would like to view data stored in the Knowledge Repository.
+\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests to open the Knowledge Repository via the Toolbox Broker.
+    \item User requests the information they are interested in from the Knowledge Repository via the Toolbox Broker.
+    \item Toolbox Broker returns the requested information.
+    \item User views, and optionally downloads, the information.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System fails verification.
+    \begin{enumerate}
+        \item User is unable to log into the web application.
+    \end{enumerate}
+    \item Toolbox Broker fails at some point.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Request to open the Knowledge Repository fails.
+        \item Search request in the Knowledge Repository fails.
+        \item Toolbox Broker fails to return the requested information.
+    \end{enumerate}
+    \item Information is corrupted.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item User cannot view the information.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} User was able to find and access the information they were searching for.
+\\\\
+\textbf{Justification:}
+This scenario describes a user's ability to read from the Knowledge Repository, directly aligning with FR-KR-1 and FR-KR-3.
+
+\subsection*{S.4.2 -- Knowledge Repository Information Addition}
+\textbf{Use Case Name:} Knowledge Repository Information Addition
+\\
+\textbf{Primary Actor:} User
+\\
+\textbf{Precondition:}
+
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with general member permissions.
+\end{itemize}
+\textbf{Trigger:} A Troitsky member would like to add relevant data to the Knowledge Repository.
+\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests to open the Knowledge Repository via the Toolbox Broker.
+    \item User requests to upload information to the Knowledge Repository via the Toolbox Broker.
+    \item User specifies the data type of the information and uploads it to the Knowledge Repository.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System fails verification.
+    \begin{enumerate}
+        \item User is unable to log into the web application.
+    \end{enumerate}
+    \item Toolbox Broker fails at some point.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Request to open the Knowledge Repository fails.
+        \item Upload request to the Knowledge Repository fails.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} The information the user wants to store is successfully uploaded to the Knowledge Repository.\\\\
+\textbf{Justification:} This scenario describes a user's ability to write to the Knowledge Repository, directly aligning with FR-KR-2.
+
+\subsection*{S.4.3 -- Transition Information Addition}
+\textbf{Use Case Name:} Transition Information Addition
+\\
+\textbf{Primary Actor:} Troitsky Executives
+\\
+\textbf{Precondition:}
+\begin{itemize}
+    \item User has executive access to the Troitsky Toolbox web application.
+\end{itemize}
+\textbf{Trigger:} A Troitsky executive wants to add to their transition documents.\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests to open the Knowledge Transfer Manager.
+    \item Toolbox Broker confirms with the Access Control System that the user has the authority to access the Knowledge Transfer Manager.
+    \item Toolbox Broker directs the user to the Knowledge Transfer Manager.
+    \item User selects the documents they would like to fill out or edit.
+    \item User fills out or edits the documents and saves them.
+    \item Toolbox Broker saves the transition documents to the Knowledge Repository.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System fails verification.
+    \begin{enumerate}
+        \item User is unable to log into the web application.
+        \stepcounter{enumi}
+        \item User is not granted access to the Knowledge Transfer Manager.
+    \end{enumerate}
+    \item Toolbox Broker fails.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Request to open the Knowledge Transfer Manager fails.
+        \item User is not directed to the Knowledge Transfer Manager.
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item Upload request to the Knowledge Repository fails.
+    \end{enumerate}
+    \item User does not have executive permissions.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item Access Control System denies access to the Knowledge Transfer Manager.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} User is able to add to and edit their transition documents, and those documents are saved in the Knowledge Repository.
+\\\\
+\textbf{Justification:} This scenario describes the general flow of how transition documents are written, updated, and saved, directly aligning with FR-KT-1, FR-KT-2, FR-KT-3, and FR-KT-4.
+
+\subsection*{S.4.4 -- Performance Analysis}
+\textbf{Use Case Name:} Performance Analysis
+\\
+\textbf{Primary Actor:} User
+\\
+\textbf{Precondition:}
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with general member permissions.
+\end{itemize}
+\textbf{Trigger:} A Troitsky member would like to perform a performance analysis on a STEP file.
+\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests access to the Performance Analysis System from the Toolbox Broker.
+    \item Toolbox Broker directs the user to the Performance Analysis System.
+    \item User inputs a STEP file, either newly uploaded or selected from the Knowledge Repository, into the Performance Analysis System.
+    \item Performance Analysis System calls an external API to estimate the load capacity and potential weak points of the bridge, and returns them as outputs.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System fails verification.
+    \begin{enumerate}
+        \item User is unable to log into the web application.
+    \end{enumerate}
+    \item Toolbox Broker fails.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item User is not redirected to the Performance Analysis System.
+        \stepcounter{enumi}
+        \item Because the Toolbox Broker facilitates the transfer of data from the Knowledge Repository to the Performance Analysis System, the Performance Analysis System fails to retrieve the STEP file.
+    \end{enumerate}
+    \item External API calls fail.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item Performance Analysis System fails to return the load capacity and potential weak points.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} User receives an estimated load capacity and the potential weak points for their STEP file.
+\\\\
+\textbf{Justification:} This is the general path that use of the Performance Analysis System will follow, and it aligns with FR-MA-1, FR-MA-4, FR-MA-5, FR-PA-1, and FR-PA-2.
+
+\subsection*{S.4.5 -- Rule Compliance Verification}
+\textbf{Use Case Name:} Rule Compliance Verification
+\\
+\textbf{Primary Actor:} User
+\\
+\textbf{Precondition:}
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with general member permissions.
+\end{itemize}
+\textbf{Trigger:} A Troitsky member would like to analyze their model's compliance with the competition rules.
+\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests access to the Rule Compliance System from the Toolbox Broker.
+    \item Toolbox Broker directs the user to the Rule Compliance System.
+    \item User inputs a STEP file, either newly uploaded or selected from the Knowledge Repository, into the Rule Compliance System.
+    \item Rule Compliance System calls an external API to calculate the size, weight, and other metrics of the bridge, and returns which of them fall within the competition's constraints, along with the assumptions and limitations of each estimate.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System fails verification.
+    \begin{enumerate}
+        \item User is unable to log into the web application.
+    \end{enumerate}
+    \item Toolbox Broker fails.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item User is not redirected to the Rule Compliance System.
+        \stepcounter{enumi}
+        \item Because the Toolbox Broker facilitates the transfer of data from the Knowledge Repository to the Rule Compliance System, the Rule Compliance System fails to retrieve the STEP file.
+    \end{enumerate}
+    \item External API calls fail.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item Rule Compliance System fails to return the compliance results.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} User learns whether their model complies with the current competition rules.
+\\\\
+\textbf{Justification:} This is the general path that use of the Rule Compliance System will follow, and it aligns with FR-MA-1, FR-MA-4, FR-MA-5, FR-RC-1, and FR-RC-3.
+
+\subsection*{S.4.6 -- Materials Data Publication}
+\textbf{Use Case Name:} Materials Data Publication
+\\
+\textbf{Primary Actor:} User
+\\
+\textbf{Precondition:}
+\begin{itemize}
+    \item User has an account on the Troitsky Toolbox web application with Materials Team permissions.
+\end{itemize}
+\textbf{Trigger:} A Troitsky Materials Team member would like to add or update materials data.
+\\
+\textbf{Main Success Scenario:}
+\begin{enumerate}
+    \item User logs into the web application and is successfully authorized by the Access Control System.
+    \item User requests access to the Material Testing Manager from the Toolbox Broker.
+    \item Toolbox Broker confirms with the Access Control System that the user has the authority to access the Material Testing Manager.
+    \item User is directed to the Material Testing Manager.
+    \item User inputs and saves the appropriate material property data.
+    \item Toolbox Broker saves the material property data to the Knowledge Repository.
+\end{enumerate}
+\textbf{Secondary Scenarios:}
+\begin{itemize}
+    \item Access Control System fails verification.
+    \begin{enumerate}
+        \item User is unable to log into the web application.
+        \item Toolbox Broker is unable to confirm the user's permissions, and cannot redirect the user to the Material Testing Manager.
+    \end{enumerate}
+    \item Toolbox Broker fails.
+    \begin{enumerate}
+        \stepcounter{enumi}
+        \item User permissions cannot be confirmed, and the user is not redirected to the Material Testing Manager.
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \stepcounter{enumi}
+        \item Toolbox Broker cannot save the material property data to the Knowledge Repository.
+    \end{enumerate}
+\end{itemize}
+\textbf{Success Postcondition:} Material property data is saved to the Knowledge Repository.
+\\\\
+\textbf{Justification:} This scenario describes the general process the materials testing team follows to save their data, and directly corresponds with FR-MT-2.

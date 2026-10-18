@@ -14,17 +14,30 @@
 \usepackage{underscore}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{xltabular}
 \usepackage{float}
 \usepackage{enumitem}
-\setlist[itemize]{label=\textbullet}  % dots at every list level
+\hypersetup{
+    bookmarks=false,
+    pdftitle={Software Requirement Specification},
+    pdfauthor={Jean-Philippe Eisenbarth},
+    pdfsubject={TeX and LaTeX},
+    pdfkeywords={TeX, LaTeX, graphics, images},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=purple,
+    linktoc=page
+}
+\def\myversion{1.24.8 }
+\setlist[itemize]{label=\textbullet}
 
 \title{Software Requirements Specification\\\progname}
-
 \author{\authname}
-
 \date{}
 
 \input{../Comments.text}
