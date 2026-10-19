@@ -5,7 +5,7 @@
 \begin{itemize}
 
 \item \textbf{Competition Rules:} The model compliance checker and other support services within Troitsky Toolbox must 
-comply with the rules set out for the competition. Outdated guides must be labelled to ensure users understand they do 
+comply with the rules set out for the competition \cite{TroitskyRulebook2026}. Outdated guides must be labelled to ensure users understand they do 
 not fit with current competition rules.
 
 \item \textbf{Member Data and Privacy:} As the service seeks to compile team and member information, member privacy and 
@@ -26,7 +26,7 @@ the data exporting the club utilizes.
 
 \item \textbf{Budget:} The funding set out by the MES, along with the yearly club sponsorships, will determine the budget and 
 therefore constrain the services and upkeep of the product. Troitsky Toolbox must operate within its share of the overall club 
-funds, dictating the storage capabilities and API usage of the service.
+funds, dictating the hosting and storage capabilities of the service.
 
 \item \textbf{Troitsky Software Subteam:} Maintenance year to year after this year will be limited by the number of software 
 subteam members the club recruits. As the subteam is made up of student volunteers, the experience and drive of the members 

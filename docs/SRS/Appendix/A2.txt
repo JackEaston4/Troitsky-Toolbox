@@ -1,6 +1,6 @@
 \nsection{A.2 Changes from Template}
 
-Table~\ref{tab:template-changes} lists the changes made to the structure of the Meyer template and the reason for each.
+Table~\ref{tab:template-changes} lists the changes made to the structure of the Meyer template \cite{Meyer2022} and the reason for each.
 
 \begin{table}[H]
 \centering

@@ -12,9 +12,8 @@ material testing results.
 \\ \textbf {Rationale:} Standardized format among possible external modelling software that teams currently use. Ensures compatibility 
 with current and future model files (E.4). CSV and Excel data files are both tabular and work with current material testing data (E.2).
 
-\item \textbf{Back-end Programming languages:} C\# on .NET, Python for subservices
-\\ \textbf {Rationale:} LINQ availability and ease of use, and the ease of maintainability by future software subteam members; Python for
-accessibility to beneficial open-source libraries.
+\item \textbf{Back-end Programming language:} C\# on .NET.
+\\ \textbf {Rationale:} LINQ availability and ease of use, and the ease of maintainability by future software subteam members.
 
 \item \textbf{Testing, Linting and Coding Standard:} xUnit/bUnit + Coverlet for coverage, \texttt{dotnet format}, Standard .NET coding conventions
 \\ \textbf {Rationale:} xUnit and Coverlet are widely documented; bUnit, running on top of xUnit, supports the 
