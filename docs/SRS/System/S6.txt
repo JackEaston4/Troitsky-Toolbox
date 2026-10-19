@@ -14,8 +14,7 @@ develops, and complexity will be iteratively increased after a lower tranche of 
 Key Stakeholders include the Troitsky club, from its president, the rest of its executive team, the bridge and materials
 developers and other members, because every member will interact with this system once it is complete.
 
-\textbf{Unit Testing:}
-
+\textbf{Unit Testing:}\\
 Unit tests will be extensively performed to verify the correctness of individual systems, including
 \begin{itemize}
     \item The role-based access system;
@@ -27,15 +26,14 @@ Unit tests will be extensively performed to verify the correctness of individual
 By isolating components, errors can be isolated and caught early. These tests will point developers to areas
 that require fixing to make the system work correctly so the system will correctly function without a Herculean effort
 in the end to fix a great multiplicity of errors.
-
-\textbf{Cross-Platform Environment Compatibility:}
-
+\\\\
+\textbf{Cross-Platform Environment Compatibility:}\\
 The system shall be tested on Windows, Macintosh and Linux personal computers. Furthermore it shall be tested
 on the common browsers including Chrome, Edge, Firefox and Safari to ensure compatibility. This is necessary because
 users shall be able to access this application on the device and browser of their choice, assuming the device or browser type
 is sufficiently common.
-
-\textbf{Real-Time Decision Making}
+\\\\
+\textbf{Real-Time Decision Making}\\
 To validate real-time decision making abilities of the system:
 
 \begin{itemize}
@@ -45,7 +43,7 @@ To validate real-time decision making abilities of the system:
      frequently expected ones like rule changes and role changes, do not negatively impact the response time
 \end{itemize}
 
-\textbf{Data Privacy and Ethical Compliance}
+\textbf{Data Privacy and Ethical Compliance:}\\
 While private user data is not used directly by the system, the system may access it. Therefore, no private data
 will be stored without the user's consent. However, this system takes no responsibility regarding the content of
 data inputted to the knowledge repositiory, whether through uploading a document or content submitted through a knowledge
@@ -53,13 +51,13 @@ transfer form.
 
 It shall be explicitly stated that this system will store a user's full name, the roles they hold or held within the club,
 and the dates when they started and ended to hold each role. 
-
-\textbf{Accuracy}
+\\\\
+\textbf{Accuracy:}\\
 The accuracy of the engineering calculations calculated by external APIs is out of scope for this project. However,
 all external API calls and internal calculations shall be verified by a person knowledgeable within the domain.
 Formalizing weighting algorithms will be a big asset in verifying accuracy of these deeply technical calculations.
-
-\textbf{Scalability}
+\\\\
+\textbf{Scalability:}\\
 To test the system ability to scale,
 
 \begin{itemize}
