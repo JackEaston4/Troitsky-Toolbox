@@ -1,2 +1,16 @@
 \nsection{P.5 Required technology elements}
 \comment{External systems, hardware and software, expected to be necessary for building the system.}
+
+\begin{itemize}
+
+\item \textbf{Database server:} Microsoft SQL Server.
+
+\item \textbf{Hosting/ Deployment:} Azure App Service; Docker for containerization.
+
+\item \textbf{Version control service:} GitHub (repositories, PRs, Actions CI).
+
+\item \textbf{Delivery platform:} Desktop web browsers (Chrome, Firefox, Edge, Safari).
+
+\item \textbf{External file spec:} STEP (.stp) file format specification and compatible external modeling software.
+
+\end{itemize}

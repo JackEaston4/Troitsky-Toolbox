@@ -1,0 +1,44 @@
+\nsection{A.1 Symbolic Constants}
+
+The non-functional requirements in S.2 refer to the symbolic constants listed in Table~\ref{tab:constants}, rather than to fixed values, so that a value can be revised in one place as the project progresses. Each constant is given with its current value and the rationale or reference for that value. Values marked as team estimates are based on the team's judgement of the club's needs, and will be revisited once the Proof of Concept and usability testing provide measured data.
+
+% xltabular = tabularx that can break across pages (same column spec as before)
+\begingroup
+\small
+\begin{xltabular}{\textwidth}{|p{3.4cm}|p{1.6cm}|p{1.6cm}|X|}
+\caption{Symbolic constants used in the non-functional requirements}
+\label{tab:constants} \\
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Used in} & \textbf{Rationale / Reference} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Used in} & \textbf{Rationale / Reference} \\
+\hline
+\endhead
+\const{MAX_BROKER_OVERHEAD} & \valMaxBrokerOverhead & NFR-BR-2 & Total response times of up to 1~s keep a user's flow of thought uninterrupted (Nielsen, \textit{Usability Engineering}, 1993, ch.~5), so broker response is limited to only account for a portion. \\
+\hline
+\const{SESSION_TIMEOUT} & \valSessionTimeout & NFR-WS-2 & OWASP Session Management Cheat Sheet: idle timeouts of 15--30 minutes are common for low-risk applications. \\
+\hline
+\const{MAX_SEARCH_TIME} & \valMaxSearchTime & NFR-KR-1 & Delays between 1~s and 10~s are noticed but keep the user's attention on the task (Nielsen, 1993). \\
+\hline
+\const{MAX_REPOSITORY_ITEMS} & \valMaxRepositoryItems & NFR-KR-1 & Team estimate: an upper bound on the documents, models, and test records the club could accumulate over many years. \\
+\hline
+\const{BACKUP_INTERVAL} & \valBackupInterval & NFR-KR-2 & Team estimate: limits the loss to one week of contributions, which members could reasonably re-upload. \\
+\hline
+\const{MAX_MODEL_LOAD_TIME} & \valMaxModelLoadTime & NFR-MA-1 & Team estimate: STEP parsing and rendering is computationally expensive. This exceeds the 10~s limit for holding attention (Nielsen, 1993), so progress must be shown while loading. To be refined using Proof of Concept measurements. \\
+\hline
+\const{DIMENSION_TOLERANCE} & \valDimensionTolerance & NFR-MA-2 & Team estimate: small relative to the thickness of a popsicle stick, so that extraction errors do not affect rule compliance results. \\
+\hline
+\const{FAILURE_LOAD_TOLERANCE} & \valFailureLoadTolerance & NFR-PA-1 & Team estimate: the variability of hand-built popsicle stick bridges makes tighter predictions unrealistic for an initial model. \\
+\hline
+\const{MAX_ANALYSIS_TIME} & \valMaxAnalysisTime & NFR-PA-2 & Team estimate: analysis is requested occasionally rather than interactively, so a longer wait with a progress indicator is acceptable. \\
+\hline
+\const{MAX_ROLE_SEARCH_TIME} & \valMaxRoleSearchTime & NFR-KT-1 & Team estimate: a new executive should be able to find their role record without assistance. \\
+\hline
+\const{MIN_CONCURRENT_USERS} & \valMinConcurrentUsers & NFR-SYS-2 & Club size: 4--6 registered teams plus executives and general members (Problem Statement). \\
+\hline
+\const{MAX_ONBOARDING_TIME} & \valMaxOnboardingTime & NFR-SYS-4 & Team estimate: allows a new software subteam member to contribute within their first week. \\
+\hline
+\end{xltabular}
+\endgroup
