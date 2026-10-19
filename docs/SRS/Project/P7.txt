@@ -1,6 +1,104 @@
 \nsection{P.7 Requirements process and report}
-\textbf{McMaster Troitsky Executives}\\
-Both Pedro Azevedo and our supervisor Bella Vescio are Troitsky Executives; our requirements will be gathered through team meetings and supervisor meetings.\\
+
+\subsection*{P.7.1 Requirements Survey Report}
+\addcontentsline{toc}{subsection}{P.7.1 Requirements Survey Report}
+
+\subsubsection*{McMaster Troitsky Members}
+A survey was sent to Troitsky members through the club's communication channels to elicit the overall wants and needs of members.
+The questions, as administered, are listed below and in the \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/SurveyDesign.md}{survey design record}, and the responses are available as \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/Troitsky%20Toolbox%20%E2%80%94%20Member%20Needs%20%26%20Service%20Priority%20Survey.csv}{raw data}.
+\begin{enumerate}
+    \item How many years of experience do you have in Troitsky? \textbf{[0--5]}
+    \item What is your current role(s)? \textbf{[Team/General Member, Team Captain, Coach, Executive Member]}
+    \item What is your modelling experience? \textbf{[None, Through some courses, Experience modelling in and out of class]}
+    \item How valuable would you find an entry-level modelling service, implementing simple load testing and weak point analysis? \textbf{[1--5]}
+    \item Rate (1--5) how valuable you would find having this information easily accessible, regarding past McMaster Troitsky data.
+    \textbf{[Bridge modelling file, Joint construction data (specific model use), Manufacturing information, Past team results, Past technical presentation material]}
+    \item How does your team store data? \textbf{[Microsoft Teams, Google Drive, Individual people hold files, Discord, Email, Other]}
+    \item What has been one of the most frustrating parts of your time in the club, outside of actually building the bridge? \textbf{[Paragraph]}
+    \item Rate these features on how useful you would find them. \textbf{[Would not use, Slightly useful, Useful, Very useful, Club needs this]}
+    \begin{enumerate}[label=\Alph*.]
+        \item Searchable archive of past bridge designs
+        \item Database of material testing results (stick strength, glue, floss, etc.)
+        \item Bridge weight estimator from a submitted model
+        \item Structural efficiency calculation
+        \item Ultimate load and failure point prediction
+        \item Upload and visualise a team's bridge model in the browser
+        \item Exit documents / role handover records for executive positions
+        \item Onboarding guide and training material for new members
+        \item Private workspace for each team's own files and data
+        \item Competition rules and regulations reference
+        \item Club announcements and general information page
+    \end{enumerate}
+    \item If we could deliver only 3 of these, which would you choose? \textbf{[A--K, up to 3]}
+    \item Would you want your team files, results and progress to be available for future teams to learn from? \textbf{[Yes, No, Maybe]}
+    \item If you could go back to being a new member, or if you're currently a new member, what tutorials would you want access to? \textbf{[Modelling software, Manufacturing, Slab building, Team organization, Other; select 2]}
+\end{enumerate}
+
+\subsubsection*{Survey Results}
+
+\paragraph*{Respondents}
+
+\begin{itemize}
+
+    \item \textbf{Number of responses} n = 20.
+    \item \textbf{Collection Timeline:} Collected responses between October 7th and 15th.
+    \item \textbf{Roles:} 10 general members, 6 captains, 5 executives, 2 coaches, 1 alumnus.
+    \item \textbf{Experience:} 13 of 20 have 2 years or less in the club. All 20 have some CAD experience; 9 only through courses.
+    
+\end{itemize}
+
+\paragraph*{Feature Ratings and Priorities}
+Table~\ref{tab:survey-features} summarizes the ratings and top-3 choices for each feature, with the requirements that address it.
+
+\begin{table}[H]
+\centering
+\caption{Member survey: feature ratings and priorities ($n = 20$)}
+\label{tab:survey-features}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xccc>{\raggedright\arraybackslash}p{3.2cm}}
+\toprule
+\textbf{Feature} & \textbf{Mean (1--5)} & \textbf{High\textsuperscript{a}} & \textbf{Top-3\textsuperscript{b}} & \textbf{Requirements} \\
+\midrule
+E. Failure load prediction        & 4.35 & 18 & 12 & FR-PA-1 \\
+A. Archive of past designs        & 4.35 & 17 & 11 & FR-MA-6, FR-KR-3 \\
+D. Structural efficiency          & 4.25 & 17 & 10 & FR-PA-2 \\
+C. Weight estimator               & 4.10 & 15 &  8 & FR-MA-4 \\
+B. Material test database         & 4.45 & 18 &  6 & S.2.6 \\
+J. Rules reference                & 4.00 & 14 &  5 & FR-KR-1 \\
+H. Onboarding material            & 4.00 & 14 &  3 & --- \\
+G. Exit / handover documents      & 4.00 & 15 &  2 & S.2.7 \\
+I. Private team workspace         & 3.55 & 11 &  2 & FR-AC-6, FR-MA-5 \\
+K. Announcements page             & 3.85 & 14 &  1 & FR-WS-2 \\
+F. 3D model viewer                & 3.55 & 12 &  0 & FR-MA-3 \\
+\bottomrule
+\end{tabularx}
+
+\raggedright\footnotesize
+\textsuperscript{a} Respondents rating the feature ``Very useful'' or ``Club needs this''. Mean maps the scale ``Would not use'' to ``Club needs this'' onto 1--5.\\
+\textsuperscript{b} Respondents choosing the feature among the three they would keep if only three could be delivered.
+\end{table}
+
+\paragraph*{Other Findings}
+\begin{itemize}
+
+    \item \textbf{}
+    \item \textbf{}
+    \item \textbf{}
+    
+\end{itemize}
+
+\paragraph*{Use of Results}
+\notEmpty
+
+\paragraph*{Limitations}
+\notEmpty
+
+\subsection*{P.7.2 Ongoing and Future Processes}
+\addcontentsline{toc}{subsection}{P.7.2 Ongoing and Future Processes}
+
+\subsubsection*{McMaster Troitsky Executives}
+Both Pedro Azevedo and our supervisor Bella Vescio are Troitsky Executives; our requirements are gathered through team meetings and supervisor meetings.
+The consolidation of information and ease of transition is one of the main goals in the development of this project, so we would want to hear the executives' opinions on this.
 Important Questions to Ask:
 \begin{itemize}
 \item What information is most important to consolidate?
@@ -8,41 +106,9 @@ Important Questions to Ask:
 \item How would you go about outlining the duties of a software development and support team?
 \end{itemize}
 
-The consolidation of information and ease of transition is one of the main goals in the development of this project, so we would want to hear the executives' opinions on this.
-Additionally, the challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly.
-\\\\
-\textbf{General McMaster Troitsky Members}\\
-A survey will be sent to general Troitsky members to elicit the overall wants and needs of members.\\
-Questions in the survey will be:
-\begin{itemize}
-    \item How many years of experience do you have in Troitsky (1-5 years)
-    \item What is your current role?
-    \item What is your modelling experience?
-    \item How valuable would you find an entry-level modelling service, like implementing simple testing and weak point analysis?
-    \item Rate (1-5) how valuable you would find having this information easily accessible regarding past McMaster Troitsky data. 
-    \textbf{[Bridge Modelling files, Joint Construction Data (specific model use), Manufacturing information, Past Team Results, Past Technical Presentation Material]}
-    \item How does your team store data \textbf{[Microsoft Teams, Google Drive, Individuals store files, Discord, Email]}
-    \item Rate(1-5) these features on how useful you would find them.
-    \begin{itemize}
-        \item Searchable archive of past bridge designs
-        \item Database of material testing results (stick strength, glue, floss, etc.)
-        \item Bridge weight estimator from a submitted model
-        \item Structural efficiency calculation
-        \item Ultimate load and failure point prediction
-        \item Upload and visualize a team's bridge model in the browser
-        \item Exit documents/role handover records for executive positions
-        \item Onboarding guide and training material for new members
-        \item Private workspace for each team's own files and data
-        \item Competition rules and regulations reference
-        \item Club announcements and general information page
-    \end{itemize}
-    \item Would you want your team files, results and progress to be available for future teams to learn from? \textbf{[Yes/No/Maybe]}
-    \item If you could go back to being a new member, or if you're currently a new member, what tutorials would you want access to?
-    \textbf{[Modeling Software, Manufacturing, Slab Building, Team Organization, Other]}
-\end{itemize}
-\textbf{McMaster CAS Students}\\
+\subsubsection*{McMaster CAS Students}
 McMaster CAS students are needed for the Software Development Team; 
-they will maintain and expand the toolbox. To ease the burden on them, we must elicit preferred code and documentation formats\\
+they will maintain and expand the toolbox. The challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly. To ease the burden on them, we must elicit preferred documentation formats.
 Some questions we would like to ask are:
 \begin{itemize}
     \item When working with a system you did not develop yourself, rate(1-5) how helpful you find these documentation formats.
@@ -52,13 +118,4 @@ Some questions we would like to ask are:
         \item Collaborative Wiki Formats, think online library documentation.
         \item Modelling and Visual Formats (PlantUML, C4 Model)
     \end{itemize}
-    \item What naming conventions do you prefer?
-    \begin{itemize}
-        \item PascalCase
-        \item IPascalCase (prefix interfaces with a capital I)
-        \item camelCase
-        \item _camelCase (prefix private and internal instance fields with an underscore)
-    \end{itemize}
 \end{itemize}
-
-
