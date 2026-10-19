@@ -1,87 +1,20 @@
-\nsection{A.2 Reflection}
+\nsection{A.2 Changes from Template}
 
-\begin{enumerate}
-  \item What went well while writing this deliverable?
-  \item What pain points did you experience during this deliverable, and how did
-  you resolve them?
-  \item How many of your requirements were inspired by speaking to your
-  client(s) or their proxies (e.g. your peers, stakeholders, potential users)?
-  \item Which of the courses you have taken, or are currently taking, will help
-  your team to be successful with your capstone project.
-  \item What knowledge and skills will the team collectively need to acquire to
-  successfully complete this capstone project?  Examples of possible knowledge
-  to acquire include domain specific knowledge from the domain of your
-  application, or software engineering knowledge, mechatronics knowledge or
-  computer science knowledge.  Skills may be related to technology, or writing,
-  or presentation, or team management, etc.  You should look to identify at
-  least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
-\end{enumerate}
+Table~\ref{tab:template-changes} lists the changes made to the structure of the Meyer template and the reason for each.
 
-%=================================
-\subsection*{A.2.1 Team}
-\addcontentsline{toc}{subsection}{A.2.1 Team}
-
-\notEmpty
-
-Questions 3 & 5 answered as a team:
-
-\begin{enumerate}
-  \item 
-  \item 
-\end{enumerate}
-
-%=================================
-\subsection*{A.2.2 Pedro Azevedo}
-\addcontentsline{toc}{subsection}{A.2.1 Pedro Azevedo}
-
-\notEmpty
-
-\begin{enumerate}
-  \item
-  \item
-  \item
-  \item
-\end{enumerate}
-
-%=================================
-\subsection*{A.2.3 Mason Azzopardi}
-\addcontentsline{toc}{subsection}{A.2.2 Mason Azzopardi}
-
-\notEmpty
-
-\begin{enumerate}
-  \item
-  \item
-  \item
-  \item
-\end{enumerate}
-
-%=================================
-\subsection*{A.2.4 Michael Roberts}
-\addcontentsline{toc}{subsection}{A.2.3 Michael Roberts}
-
-\notEmpty
-
-\begin{enumerate}
-  \item
-  \item
-  \item
-  \item
-\end{enumerate}
-
-%=================================
-\subsection*{A.2.5 Jack Easton}
-\addcontentsline{toc}{subsection}{A.2.4 Jack Easton}
-
-\notEmpty
-
-\begin{enumerate}
-  \item
-  \item
-  \item
-  \item
-\end{enumerate}
+\begin{table}[H]
+\centering
+\caption{Changes from the Meyer template}
+\label{tab:template-changes}
+\begin{tabularx}{\textwidth}{p{4.5cm}X}
+\toprule
+\textbf{Change} & \textbf{Reason} \\
+\midrule
+Added the Appendix book (A) after the Project book. & The Meyer template has only the Goals, Environment, System and Project books. The course rubric and SRS checklist require content that belongs in none of them (A.1, A.3, A.4). \\
+Added A.1 Symbolic Constants. & The SRS checklist requires the values of symbolic constants to be given in a table in the Appendix. \\
+Added A.2 Changes from Template. & The SRS checklist requires changes made to the template to be described in the document. \\
+Added A.3 Generative AI Use Disclosure. & Required by the course rubric. \\
+Added A.4 Reflection. & Required by the course rubric, using the questions from the course's SRS reflection template. \\
+\bottomrule
+\end{tabularx}
+\end{table}
