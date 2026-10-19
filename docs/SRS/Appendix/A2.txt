@@ -1,0 +1,21 @@
+\nsection{A.2 Changes from Template}
+
+Table~\ref{tab:template-changes} lists the changes made to the structure of the Meyer template and the reason for each.
+
+\begin{table}[H]
+\centering
+\caption{Changes from the Meyer template}
+\label{tab:template-changes}
+\begin{tabularx}{\textwidth}{p{4.5cm}X}
+\toprule
+\textbf{Change} & \textbf{Reason} \\
+\midrule
+Added the Appendix book (A) after the Project book. & The Meyer template has only the Goals, Environment, System and Project books. The course rubric and SRS checklist require content that belongs in none of them (A.1, A.3, A.4). \\
+Added a References section after the Project book. & The Meyer template has no references section. It lists the sources cited in the document, such as those for the values in A.1. \\
+Added A.1 Symbolic Constants. & The SRS checklist requires the values of symbolic constants to be given in a table in the Appendix. \\
+Added A.2 Changes from Template. & The SRS checklist requires changes made to the template to be described in the document. \\
+Added A.3 Generative AI Use Disclosure. & Required by the course rubric. \\
+Added A.4 Reflection. & Required by the course rubric, using the questions from the course's SRS reflection template. \\
+\bottomrule
+\end{tabularx}
+\end{table}

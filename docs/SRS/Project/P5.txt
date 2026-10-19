@@ -1,2 +1,25 @@
 \nsection{P.5 Required technology elements}
-\comment{External systems, hardware and software, expected to be necessary for building the system.}
+
+\begin{itemize}
+ 
+\item \textbf{Database server:} Microsoft SQL Server.
+\\ \textbf {Rationale: } Used to store the shared repository and uploaded models. Pairs with C\# and LINQ. Azure for students can be used to 
+access SQL Server Development Edition free (testing only).
+
+\item \textbf{Hosting/Deployment:} Azure App Service; if the university server is accessible, that would be preferred. Docker 
+will be used to containerize the service in app development and deployment.
+\\ \textbf {Rationale:} Azure for students also provides limited access to hosting, which is why the university servers are preferred. 
+Docker allows for standardization between development and deployment.
+
++\item \textbf{Version control and CI:} A GitHub repository with GitHub Actions.
+\\ \textbf {Rationale:} Given by course. Runs with xUnit/Coverlet and \texttt{dotnet format}.
+ 
+\item \textbf{Model Analysis API/Library:} Pynite (Python)
+\\ \textbf {Rationale:} Tested, open-source, MIT-licensed finite element solvers; Pynite is easier and used in a Python service within 
+the Troitsky Toolbox.
+
+\item \textbf{STEP Parsing Library:} Open CASCADE, through its Python bindings (CadQuery or pythonocc).
+\\ \textbf {Rationale:} Allows for STEP file input and visualization through a browser viewer SDK. Runs with Python like the 
+rest of the modelling component.
+
+\end{itemize}
