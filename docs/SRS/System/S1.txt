@@ -1,7 +1,5 @@
 \nsection{S.1 Components}
-\comment{Overall structure expressed by the list of major software and, if applicable, hardware parts.}
-%---------------------------------
-
+\subsection*{S.1.1 Component Descriptions}
 The Troitsky Toolbox is a web-based application structured around a central broker. Each tool, as well as the shared data storage, is a service that registers with the broker. All communication between the user interface and the services, and between the services themselves, passes through the broker, so that no service depends directly on another. The system relies on the following software components:
 
 \begin{itemize}
@@ -41,3 +39,74 @@ Figure~\ref{fig:component-diagram} shows the components of the system and the in
     \caption{Component diagram of the Troitsky Toolbox. All communication between services passes through the Toolbox Broker.}
     \label{fig:component-diagram}
 \end{figure}
+
+\subsection*{S.1.2 Component Inputs and Outputs}
+\begin{table}[]
+\centering
+\begin{tabular}{p{2cm} | p{4cm} | p{4cm}}
+\hline
+\textbf{Component} & \textbf{Inputs} & \textbf{Outputs} \\ \hline
+Webserver & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+
+Access Control System & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+
+Toolbox Broker & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+
+Knowledge Repository & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+
+Model Analysis System & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+
+Material Testing Manager & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+
+Knowledge Transfer Manager & 
+\begin{itemize}
+    \item 
+\end{itemize} & 
+\begin{itemize}
+    \item 
+\end{itemize}
+\\ \hline
+\end{tabular}
+\end{table}
