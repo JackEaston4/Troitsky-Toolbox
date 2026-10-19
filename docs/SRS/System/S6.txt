@@ -1,5 +1,4 @@
 \nsection{S.6 Verification and acceptance criteria}
-\comment{Specification of the conditions under which an implementation will be deemed satisfactory.}
 
 \textbf{Validation overview:}
 
@@ -72,3 +71,4 @@ To test the system ability to scale,
     \item Verify the system can handle many different types of inputs
     \item Distributive testing, ensuring each member of the club can concurrently use the system without system failure
 \end{itemize}
+
