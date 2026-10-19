@@ -169,38 +169,49 @@ Calculation API error & & & & & & & H-PA-1\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Rule Compliance System (RC)} --- SRS S.2.5.2}\\*
 Misinterpretation of rules (especially with high penalty for non-compliance) & & & & & & & H-RC-1\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Material Testing Manager (MT)} --- SRS S.2.6}\\*
-Input File Corruption & Failed or incorrect structural calculations& Information gets corrupted or dropped by the broker during upload & H & L & Given materials inputs, output values like stress or strain must fall within a range that is realistic for material type.& & H-MT-1\\
+Input File Corruption & Failed or incorrect structural calculations& Information gets corrupted or dropped by the broker during upload & H & L & Given materials inputs, output values like stress or strain must fall within a range that is realistic for material type.& SR-MT-3 & H-MT-1\\
 \cmidrule(l){1-8}
-Unit Mismatch & Incorrect Calculations during FEA, and incorrect display of materials properties & Uploaded data is in alternative units to what is used by the Model Analysis API& H & M & Have users select unit of their data during uploads and convert to appropriate units before application in API & & H-MT-2\\
+Unit Mismatch & Incorrect Calculations during FEA, and incorrect display of materials properties & Uploaded data is in alternative units to what is used by the Model Analysis API& H & M & Have users select unit of their data during uploads and convert to appropriate units before application in API &  SR-MT-1 & H-MT-2\\
 \cmidrule(l){1-8}
-Grain Direction Neglection & The Performance Analysis System assumes incorrect material behaviour, predicting joints and other bridge pieces having much higher stress/strain tolerances than in reality & Wood has different meterial properties along the grain and perpendicular to the grain  & H & L & Include a directional property for materials data that is saved as wood. & & H-MT-3\\
+Grain Direction Neglection & The Performance Analysis System assumes incorrect material behaviour, predicting joints and other bridge pieces having much higher stress/strain tolerances than in reality & Wood has different material properties along the grain and perpendicular to the grain  & H & L & Include a directional property for materials data that is saved as wood. & ST-MT-2& H-MT-3\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Transfer Manager (KT)} --- SRS S.2.7}\\*
-Incomplete/Hollow Handoffs&Transition documentation contains broad details that future executives have little use for. & Executives treat transition documents as a "checkbox" to mark off and submit empty or vague transition documentation to complete the requirement.& L & M & Integrate the work documentation process as part of an executives week to week work, so when it come time to fill out transition documentation they will have a trove of data to pull from.& & H-KT-1 \\
+Incomplete/Hollow Handoffs&Transition documentation contains broad details that future executives have little use for. & Executives treat transition documents as a "checkbox" to mark off and submit empty or vague transition documentation to complete the requirement.& L & M & Integrate the work documentation process as part of an executives week to week work, so when it come time to fill out transition documentation they will have a trove of data to pull from.& SR-KT-1 SR-KT-4 & H-KT-1 \\
 \cmidrule(l){1-8}
-Dangling \& Broken References& Instructions reference external links that lead to 404 errors or missing technical context. & Documentation references external links or repository IDs that are later moved, renamed, or deleted in the Knowledge Repository.& M & L & References link to a look-up table that dynamically updates links to all documentation& & H-KT-2 \\
+Dangling \& Broken References& Instructions reference external links that lead to 404 errors or missing technical context. & Documentation references external links or repository IDs that are later moved, renamed, or deleted in the Knowledge Repository.& M & L & References link to a look-up table that dynamically updates links to all documentation& SR-KT-2 & H-KT-2 \\
 \cmidrule(l){1-8}
-Knowledge Staleness&  Members build bridges or perform testing using obsolete/disallowed specifications & Transition documents contain information that is only applicable to previous years rules or outdated tools& L & H & When opening old documentation, have a tab you can open that references the old rules and tools used compared to the current ones.& & H-KT-3 \\
+Knowledge Staleness&  Members build bridges or perform testing using obsolete/disallowed specifications & Transition documents contain information that is only applicable to previous years rules or outdated tools& L & H & When opening old documentation, have a tab you can open that references the old rules and tools used compared to the current ones.& SR-KT-4 & H-KT-3 \\
 \cmidrule(l){1-8}
-Lack of Role Succession Continuity& New executives cannot locate their predecessor's records & An executive role is modified, split, or renamed between years, causing previous role records and onboarding material to become unassigned or orphaned. & H & L & Create Built in role modification, splitting, and inheritence so that records can be carried over to new or alternative roles &  & H-KT-4 \\
+Lack of Role Succession Continuity& New executives cannot locate their predecessor's records & An executive role is modified, split, or renamed between years, causing previous role records and onboarding material to become unassigned or orphaned. & H & L & Create Built in role modification, splitting, and inheritence so that records can be carried over to new or alternative roles & SR-KT-3 & H-KT-4 \\
 \cmidrule(l){1-8}
-Exposure of Sensitive Club Information& If stored as plain-text onboarding docs without field-level masking or strict role-based access, sensitive operational keys or personal data may leak & Handoff notes can contain sensitive credentials (e.g., third-party software licenses, passwords, personal phone numbers, sponsor contact details). & H & L & The Knowledge Transfer Manager must strictly forbid storing credentials as plain text in the KR & & H-KT-5 \\
+Exposure of Sensitive Club Information& If stored as plain-text onboarding docs without field-level masking or strict role-based access, sensitive operational keys or personal data may leak & Handoff notes can contain sensitive credentials (e.g., third-party software licenses, passwords, personal phone numbers, sponsor contact details). & H & L & The Knowledge Transfer Manager must strictly forbid storing credentials as plain text in the KR & SR-KT-4 & H-KT-5 \\
 \cmidrule(l){1-8}
-Partial Transaction/Distributed State Failure & KT states that documentation exist within the KR when in fact it doesn't & When a transition document is completed the KT registers the completion but the handoff to the KR fails. & H & L & Have the KR send an acknowledgement  & & H-KT-6 \\
+Partial Transaction/Distributed State Failure & KT states that documentation exist within the KR when in fact it doesn't & When a transition document is completed the KT registers the completion but the handoff to the KR fails. & H & L & Have the KR send an acknowledgement  & SR-KT-5 & H-KT-6 \\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{System-Wide (SYS)} --- SRS S.2.8}\\*
-Compilation Error Due to Dependency Update & Project does not compile & A third part dependency updates and functions within that dependency that are used become degraded & H& L& Research and review dependencies Troitsky Toolbox will rely on and confirm that they are receiving quality updates and core functionalities Troitsky Toolbox depends on will continue to be functional.& & H-SYS-1\\
+Compilation Error Due to Dependency Update & Project does not compile & A third part dependency updates and functions within that dependency that are used become degraded & H & L & Research and review dependencies Troitsky Toolbox will rely on and confirm that they are receiving quality updates and core functionalities Troitsky Toolbox depends on will continue to be functional.& SR-SYS-1 & H-SYS-1\\
 \cmidrule(l){1-8}
-Code Deployed Without Testing or Review & Faults and Errors within the pushed product & Lack of testing and review & H & M & A CI/CD pipeline can help with some standardized testing along with a procedure outline for code reviews to alleviate some of the overhead in the reviews. & & H-SYS-2\\
+Code Deployed Without Testing or Review & Faults and Errors within the pushed product & Lack of testing and review & H & M & A CI/CD pipeline can help with some standardized testing along with a procedure outline for code reviews to alleviate some of the overhead in the reviews. & SR-SYS-2 & H-SYS-2\\
 \cmidrule(l){1-8}
-Software Abandonment & Toolbox becomes unusable after initial capstone team leaves.& Initial capstone team leaves a project that is too difficult to maintain for the leftover software team.& H & M & Document every part of the development process, have multiple pieces of documentation for all critical system components, and train replacements before initial capstone team graduates. & &  H-SYS-3\\
+Software Abandonment & Toolbox becomes unusable after initial capstone team leaves.& Initial capstone team leaves a project that is too difficult to maintain for the leftover software team.& H & M & Document every part of the development process, have multiple pieces of documentation for all critical system components, and train replacements before initial capstone team graduates. & SR-SYS-3 &  H-SYS-3\\
 \end{longtable}}
 \end{landscape}
 \restoregeometry
 
 \section{Safety and Security Requirements}
-
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
-
+\subsection{Functional Requirements}
+\begin{itemize}
+    \item \textbf{SR-KT-1:} The KT shall enforce schema-level validation on all handoff submissions, rejecting any submission that leaves mandatory operational fields blank or below a minimum character threshold
+    \item \textbf{SR-KT-2:} The KT shall verify that all cross-referenced bridge models, test result IDs, and rule versions stored in the Knowledge Repository exist and are valid before a handoff document is accepted.
+    \item \textbf{SR-KT-3:} The KT shall track role succession states and block the archival of an outgoing lead's account until a designated successor or faculty advisor has been assigned to inherit the role records.
+    \item \textbf{SR-KT-4:} The KT shall enforce a two stage publishing lifecycle. (Draft \(\rightarrow\) Review \(\rightarrow\) Publishing).
+    \item \textbf{SR-KT-5:} The KT shall verify an acknowledgement is sent from the KR when publishing documents to show confirmation of documentation being saved.
+    \item \textbf{SR-MT-1:} The MT shall automatically parse, validate, and convert all uploaded data into base standardized Units, rejecting datasets lacking unit metadata.
+    \item \textbf{SR-MT-2:} The MT shall mandate the inclusion of grain orientation data on any wooden material test.
+    \item \textbf{SR-MT-3:} The MT shall preform automated sanity checks to ensure all submitted data is within acceptable boundaries.
+    \item \textbf{SR-SYS-1:} The project build system shall strictly enforce deterministic dependency resolution by pinning all direct and transitive third-party dependencies to immutable versions using lockfiles.
+    \item \textbf{SR-SYS-2:} The deployment Pipeline shall enforce mandatory branch protection rules that block deployment to production environments; All automated unit tests execute and pass the CI/CD pipeline and any code changes must receive ibe documented.
+    \item \textbf{SR-SYS-3:} The system shall provide fully containerized, reproducible deployment configurations (e.g., Dockerfile and docker-compose.yml) alongside automated setup scripts, standardized API documentation (e.g., OpenAPI/Swagger), and a maintainer onboarding guide that allows a new developer to build, deploy, and verify the full system locally within a single documented procedure.
+\end{itemize}
+\subsection{Non-Functional Requirements}
 \section{Roadmap}
 
 \wss{Which safety requirements will be implemented as part of the capstone timeline?
