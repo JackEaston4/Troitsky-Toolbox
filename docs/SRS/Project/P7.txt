@@ -81,17 +81,24 @@ F. 3D model viewer                & 3.55 & 12 &  0 & FR-MA-3 \\
 \paragraph*{Other Findings}
 \begin{itemize}
 
-    \item \textbf{}
-    \item \textbf{}
-    \item \textbf{}
+    \item \textbf{Knowledge Repository Data Prioritization:} When considering what data from past teams and competition years current members wish to have, 
+    joint design and construction data was the most prioritized. 
+    \item \textbf{Current Team Data Storage Solutions:} Most teams (13/20) utilize Microsoft Teams, with the rest spread between other common services.
+    \item \textbf{Data Sharing Preference:} 17/20 teams have stated that they wish to have results, designs and work preserved and shared within the app.
+    \item \textbf{Desired Tutorial Types:} For tutorials kept within the knowledge repository, there was a clear split, with more experienced members stating that 
+    they wish to have manufacturing-focused tutorials, while newer, less experienced members pushed for modelling software tutorials. Results: Manufacturing 15, 
+    modelling software 9, slab building 9, team organization 4; 1 person wrote in joint method selection
+    \item \textbf{Major General Frustrations:} Access to past designs, reference work for guidance and orientation for new 
+    members, inspiration for designs, specific joint construction and design information.
     
 \end{itemize}
 
 \paragraph*{Use of Results}
-\notEmpty
 
-\paragraph*{Limitations}
-\notEmpty
+Primarily utilized during the requirement specification and modification through the SRS development (S1 & S2). The user base's 
+evaluation of service value helped to determine the prioritization (S.5) for the project. User characteristics were also determined 
+and expanded upon from the survey, especially considering the experience of the current members within the club.
+The survey also outlines the gaps in the srs, and past misconceptions the team had about the user base. 
 
 \subsection*{P.7.2 Ongoing and Future Processes}
 \addcontentsline{toc}{subsection}{P.7.2 Ongoing and Future Processes}
