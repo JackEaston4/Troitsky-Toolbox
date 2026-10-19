@@ -220,7 +220,7 @@ control:
     files but does not control how they are created.
     \item \textbf{CAD/geometry library:} The external library used by the Model
     Analysis System to read STEP files.
-    \item \textbf{Static model analysis APIs:} The external APIs used to perform
+    \item \textbf{Static model analysis services:} The external libraries/API used to perform
     the static model analysis of bridge model STEP files (SRS E.2).
     \item \textbf{Material test data files:} The CSV and Excel files produced by
     members during material testing, whose content depends on how the tests
@@ -370,7 +370,7 @@ Output display wrong, model analysis display not clear & Member misses a design 
 \cmidrule(l){1-8}
 Timeout & Member gets no response, either retries or gives up & Large model files, heavy load & M & M & Stop processing after MA\_TIMEOUT and show error message & NFR-MA-1, SR-MA-3 & H-MA-3\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Performance Analysis System (PA)} --- SRS S.2.5.1}\\*
-Calculation API error & No estimate, or a wrong ultimate load prediction & External analysis API unavailable, changed, or returning invalid values & H & M & Show an error instead of an estimate when the API fails or returns an invalid value; have test models to check new API calls against & NFR-PA-1, SR-PA-1 & H-PA-1\\
+Calculation error & No estimate, or a wrong ultimate load prediction & External analysis service unavailable, changed, or returning invalid values & H & M & Show an error instead of an estimate when calculations fail or return an invalid value; have test models to check new calculations against & NFR-PA-1, SR-PA-1 & H-PA-1\\
 \cmidrule(l){1-8}
 Output confidence not understood & Estimate is misread or treated as a guaranteed result & Assumptions and limitations hidden, misunderstanding of service & M & L & Show the assumptions and limitations next to each estimate; check usability of the interface in the Winter CD --- Usability Report & FR-PA-4, Winter CD usability test & H-PA-2\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Rule Compliance System (RC)} --- SRS S.2.5.2}\\*
@@ -378,7 +378,7 @@ Misinterpretation of rules (risk high for high penalty rules) & A non-compliant 
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Material Testing Manager (MT)} --- SRS S.2.6}\\*
 Input File Corruption & Failed or incorrect structural calculations& Information gets corrupted or dropped by the broker during upload & H & L & Given materials inputs, output values like stress or strain must fall within a range that is realistic for material type.& SR-MT-3 & H-MT-1\\
 \cmidrule(l){1-8}
-Unit Mismatch & Incorrect Calculations during FEA, and incorrect display of materials properties & Uploaded data is in alternative units to what is used by the Model Analysis API& H & M & Have users select unit of their data during uploads and convert to appropriate units before application in API &  SR-MT-1 & H-MT-2\\
+Unit Mismatch & Incorrect Calculations during FEA, and incorrect display of materials properties & Uploaded data is in alternative units to what is used by the Model Analysis & H & M & Have users select unit of their data during uploads and convert to appropriate units before application in Model Analysis service &  SR-MT-1 & H-MT-2\\
 \cmidrule(l){1-8}
 Grain Direction Neglection & The Performance Analysis System assumes incorrect material behaviour, predicting joints and other bridge pieces having much higher stress/strain tolerances than in reality & Wood has different material properties along the grain and perpendicular to the grain  & H & L & Include a directional property for materials data that is saved as wood. & ST-MT-2& H-MT-3\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Transfer Manager (KT)} --- SRS S.2.7}\\*
@@ -428,7 +428,7 @@ rationale design process how and why to fake it.)}
     model that has not finished within MA\_TIMEOUT, and shall tell the member why
     processing stopped. [H-MA-3]
     \item \textbf{SR-PA-1:} The Performance Analysis System shall display an
-    error message whenever the API fails, does not respond, or returns an inappropriate 
+    error message whenever the calculation service fails, does not respond, or returns an inappropriate 
     value. [H-PA-1]
     \item \textbf{SR-RC-1:} The Rule Compliance System shall display the competition year 
     of the active rules with each result, and shall indicate when 
