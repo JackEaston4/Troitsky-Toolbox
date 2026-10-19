@@ -1,13 +1,10 @@
 \nsection{A.4 Reflection}
 
+\subsubsection*{Team}
+
 \begin{enumerate}
-  \item What went well while writing this deliverable?
-  \item What pain points did you experience during this deliverable, and how did
-  you resolve them?
   \item How many of your requirements were inspired by speaking to your
   client(s) or their proxies (e.g. your peers, stakeholders, potential users)?
-  \item Which of the courses you have taken, or are currently taking, will help
-  your team to be successful with your capstone project.
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete this capstone project?  Examples of possible knowledge
   to acquire include domain specific knowledge from the domain of your
@@ -21,30 +18,46 @@
   member pursue, and why did they make this choice?
 \end{enumerate}
 
+\subsubsection*{Individual}
+
+\begin{enumerate}
+  \item What went well while writing this deliverable?
+  \item What pain points did you experience during this deliverable, and how did
+  you resolve them?
+  \item Which of the courses you have taken, or are currently taking, will help
+  your team to be successful with your capstone project.
+\end{enumerate}
+
 %=================================
 \subsection*{A.4.1 Team}
 \addcontentsline{toc}{subsection}{A.4.1 Team}
 
-\notEmpty
-
-Questions 3 \& 5 answered as a team:
-
 \begin{enumerate}
   \item 
-  \item 
+  \item
+  \item
 \end{enumerate}
 
 %=================================
 \subsection*{A.4.2 Pedro Azevedo}
 \addcontentsline{toc}{subsection}{A.4.2 Pedro Azevedo}
 
-\notEmpty
-
 \begin{enumerate}
-  \item
-  \item
-  \item
-  \item
+
+  \item In writing this deliverable, the utilization of GitHub features, such as kanbans, issues, comments, PRs, milestones, tags and even kanban custom views, 
+  facilitated development and allocation of work among the team. As the SRS is such a large document, utilizing these features allowed confidence in limited 
+  conflicts appearing. The utilization of a LaTeX template with component text documents that are loaded in allowed branches to isolate their 
+  features to single documents.
+
+  \item The primary pain points came from determining what is expected within this deliverable and working with that in our project 
+  domain. As many of the examples given for the SRS are varied, there was a lack of clarity in the necessary depth for certain sections. It 
+  was also difficult working around the hyperlinking and interconnection within the document, as updates to sections would have to be reflected in several components.
+
+  \item The primary course that has helped so far is 3RA3, as that covered the development of a requirements document and the necessary domain 
+  knowledge around requirements development. My software architecture course also was and will be applicable, as it helped to understand better and design the 
+  format of the system. Choosing between different architecture styles was a lot more straightforward due to this. Due to the nature of the project 
+  4HC3 will be highly applicable as development begins, especially when it comes to usability testing.
+
 \end{enumerate}
 
 %=================================

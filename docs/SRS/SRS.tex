@@ -118,7 +118,7 @@
 \end{tabularx}
 \end{table}
 
-This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
+This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer \cite{Meyer2022}. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
 \newpage{}
 %===============================================================
 \tableofcontents
@@ -178,6 +178,15 @@ This document follows the requirements documentation structure presented in the 
 \input{Project/P5.txt}
 \input{Project/P6.txt}
 \input{Project/P7.txt}
+
+\newpage{}
+%===============================================================
+% References: shared refs/References.bib (same setup as the HA). IEEEtran
+% prints only the entries this document cites.
+\phantomsection
+\addcontentsline{toc}{section}{\protect\numberline{}References}
+\bibliographystyle{IEEEtran}
+\bibliography{../../refs/References}
 
 \newpage{}
 %===============================================================
