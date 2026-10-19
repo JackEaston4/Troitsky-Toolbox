@@ -95,7 +95,7 @@ F. 3D model viewer                & 3.55 & 12 &  0 & FR-MA-3 \\
 
 \paragraph*{Use of Results}
 
-Primarily utilized during the requirement specification and modification through the SRS development (S1 & S2). The user base's 
+Primarily utilized during the requirement specification and modification through the SRS development (S1 \& S2). The user base's 
 evaluation of service value helped to determine the prioritization (S.5) for the project. User characteristics were also determined 
 and expanded upon from the survey, especially considering the experience of the current members within the club.
 The survey also outlines the gaps in the srs, and past misconceptions the team had about the user base. 
