@@ -3,7 +3,7 @@
 \textbf{Validation overview:}
 
 To validate the system, extensive consultation with McMaster's Troitsky club will be done. Each part
-will be shown to the club multiple times over an interative process to tailor the project to their unique needs.
+will be shown to the club multiple times over an iterative process to tailor the project to their unique needs.
 The parts demonstrated will be the role-based access system, the knowledge transfer, document upload and
  knowledge repository retrieval systems, 
 the materials testing system and the model analysis system. While most components are auxiliary and relatively
@@ -12,8 +12,7 @@ and extensive consultation and testing will be required. Early testing will use 
 materials data and bridge models which are far less complex than actual bridge models and materials inputs the club
 develops, and complexity will be iteratively increased after a lower tranche of complexity is deemed satisfactory.
 Key Stakeholders include the Troitsky club, from its president, the rest of its executive team, the bridge and materials
-developers and other members, because every member will interact with this system once it is complete.
-
+developers and other members, because every member will interact with this system once it is complete.\\\\
 \textbf{Unit Testing:}\\
 Unit tests will be extensively performed to verify the correctness of individual systems, including
 \begin{itemize}
@@ -42,11 +41,10 @@ To validate real-time decision making abilities of the system:
     \item Continious integration (CI) pipelines shall be implemented to ensure changes to any component, especially
      frequently expected ones like rule changes and role changes, do not negatively impact the response time
 \end{itemize}
-
 \textbf{Data Privacy and Ethical Compliance:}\\
 While private user data is not used directly by the system, the system may access it. Therefore, no private data
 will be stored without the user's consent. However, this system takes no responsibility regarding the content of
-data inputted to the knowledge repositiory, whether through uploading a document or content submitted through a knowledge
+data inputted to the knowledge repository, whether through uploading a document or content submitted through a knowledge
 transfer form. 
 
 It shall be explicitly stated that this system will store a user's full name, the roles they hold or held within the club,
