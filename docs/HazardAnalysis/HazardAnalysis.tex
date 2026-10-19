@@ -51,6 +51,11 @@ Date2 & Name(s) & Description of changes\\
 \end{tabularx}
 \end{table}
 
+This document follows the
+\href{https://github.com/smiths/capTemplate/tree/main/docs/HazardAnalysis}{capstone
+Hazard Analysis template}. Changes made to the template are listed in
+Table~\ref{TblTemplateChanges} (Section~\ref{SecTemplateChanges}).
+
 ~\newpage
 
 \tableofcontents
@@ -62,8 +67,6 @@ Date2 & Name(s) & Description of changes\\
 \wss{You are free to modify this template.}
 
 \section{Introduction}
-
-\wss{You can include your definition of what a hazard is here.}
 
 \subsection{Background}
 
@@ -80,9 +83,9 @@ Software Requirements Specification (SRS).
 
 \subsection{Hazard Definition}
 
-Following Leveson, a hazard is defined as a system state or set of conditions
-that, together with a particular set of worst-case environmental conditions,
-will lead to a loss. For the Troitsky Toolbox, a hazard is therefore any
+A hazard is defined as ``a system state or set of conditions that, together
+with a particular set of worst-case environmental conditions, will lead to a
+loss'' \cite[p.~17]{LevesonAndThomas2018}. For the Troitsky Toolbox, a hazard is therefore any
 condition of the system that, combined with how members use it, could lead to
 the loss of club knowledge, the disclosure or corruption of club data, the
 disruption of club activities, or members acting on incorrect information.
@@ -91,20 +94,20 @@ The Toolbox does not control any physical equipment, so the hazards it presents
 are primarily to the club's data and decisions rather than to people. The one
 exception is indirect: the Performance Analysis System produces estimates of a
 bridge's failure load, and a team that trusts an incorrect estimate may build or
-load test a bridge on that basis. This document identifies these hazards, the
+load test a bridge on that basis. This harm would be seen primarily in competition results, 
+depending on the accuracy of the estimates. This document identifies these hazards, the
 failure modes that cause them, and the safety and security requirements that
 mitigate them.
 
 \section{Scope and Purpose of Hazard Analysis}
 
-\wss{You should say what \textbf{loss} could be incurred because of the
-hazards.}
-
 The purpose of this hazard analysis is to identify the ways in which the
 Troitsky Toolbox could fail or be misused, assess their effects on the club and
 its members, and derive requirements that prevent or mitigate them. The
-resulting safety and security requirements are added to the SRS, so that they
-are designed, implemented, and verified alongside the rest of the system.
+resulting safety and security requirements are outlined in
+Section~\ref{SecSafetyReqs}, and Section~\ref{SecRoadmap} states which of them
+will be implemented during the capstone, so that they are designed, implemented, 
+and verified alongside the rest of the system.
 
 The losses that could result from the hazards identified in this document are:
 
@@ -134,8 +137,9 @@ The losses that could result from the hazards identified in this document are:
 
 The analysis covers every software component of the Toolbox listed in
 Section~\ref{SecBoundaries}, and the interfaces between the Toolbox and the
-external components it depends on. The following are outside the scope of this
-analysis:
+external components it depends on, and the processes used to develop, deploy,
+and maintain the Toolbox, including its handover to future software subteam
+members. The following are outside the scope of this analysis:
 
 \begin{itemize}
     \item The physical construction and load testing of bridges, including the
@@ -148,12 +152,6 @@ analysis:
 \end{itemize}
 
 \section{System Boundaries and Components} \label{SecBoundaries}
-
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
 
 The Troitsky Toolbox is structured around a central broker: each tool, as well
 as the shared data storage, is a service that registers with the broker, and all
@@ -188,7 +186,7 @@ control and responsibility:
     the broker, a failure of the broker affects every tool.
     \item \textbf{Knowledge Repository (KR):} Stores all club information,
     including documents, bridge models, material test results, competition
-    rules, and handoff documents, and allows members to search it.
+    rules, and handoff documents, and allows members to search and contribute to it.
     \item \textbf{Model Analysis System (MA):} Imports bridge models in the STEP
     format, renders them in 3D, and extracts the bridge properties needed for
     analysis, such as its dimensions and mass.
@@ -222,6 +220,8 @@ control:
     files but does not control how they are created.
     \item \textbf{CAD/geometry library:} The external library used by the Model
     Analysis System to read STEP files.
+    \item \textbf{Static model analysis APIs:} The external APIs used to perform
+    the static model analysis of bridge model STEP files (SRS E.2).
     \item \textbf{Material test data files:} The CSV and Excel files produced by
     members during material testing, whose content depends on how the tests
     were performed and recorded.
@@ -235,11 +235,6 @@ control:
 \end{itemize}
 
 \section{Critical Assumptions}
-
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
 
 The following assumptions are made about the system and its environment. Each
 assumption states the class of hazards it removes from the scope of this
@@ -392,15 +387,49 @@ Unchecked, unworking code pushed in haste & & & & & & & H-SYS-2\\
 \end{landscape}
 \restoregeometry
 
-\section{Safety and Security Requirements}
+\section{Safety and Security Requirements} \label{SecSafetyReqs}
 
 \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
 rationale design process how and why to fake it.)}
 
-\section{Roadmap}
+\section{Roadmap} \label{SecRoadmap}
 
 \wss{Which safety requirements will be implemented as part of the capstone timeline?
 Which requirements will be implemented in the future?}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../../refs/References}
+
+\newpage{}
+
+\section{Appendix --- Changes from Template} \label{SecTemplateChanges}
+
+Table~\ref{TblTemplateChanges} lists the changes made to the structure of the
+capstone Hazard Analysis template and the reason for each.
+
+\begin{table}[h]
+\centering
+\caption{Changes from the capstone Hazard Analysis template}
+\label{TblTemplateChanges}
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\toprule
+\textbf{Change} & \textbf{Reason} \\
+\midrule
+Divided the Introduction into Background and Hazard Definition. & Separates the
+description of the project from the definition of a hazard that the rest of the
+document relies on. \\
+Divided System Boundaries and Components into Inside and Outside the System
+Boundary. & Separates the components the team controls from the external
+entities whose failures the system can only detect or mitigate. \\
+Listed new safety and security requirements only in this document, with the
+prefix SR. & Keeps each new requirement next to the hazards it mitigates; the
+FMEA table traces existing SRS requirements by their SRS IDs. \\
+Added a References section. & Gives the source of the hazard definition. \\
+Added Appendix --- Changes from Template. & The HA checklist requires changes
+made to the template to be described in the document. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \newpage{}
 
