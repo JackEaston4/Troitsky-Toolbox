@@ -4,6 +4,8 @@
 
 This section describes the behaviour of each component identified in S.1. Each subsection lists the functional and non-functional requirements of one component. Requirements are labelled with a prefix identifying their component, followed by a number: for example, FR-BR-1 is the first functional requirement of the Toolbox Broker, and NFR-BR-1 its first non-functional requirement. The prefixes are WS (Web Server), AC (Access Control System), BR (Toolbox Broker), KR (Knowledge Repository), MA (Model Analysis System), PA (Performance Analysis System), RC (Rule Compliance System), MT (Material Testing Manager), KT (Knowledge Transfer Manager), and SYS (system-wide requirements). The symbolic constants used by the non-functional requirements are defined in Table~\ref{tab:constants} (Appendix A.1).
 
+Requirements whose reason is not obvious are followed by a rationale. Rationales refer to the two sources of requirements described in P.7: the member survey (P.7.1, $n = 20$), whose feature ratings are summarized in Table~\ref{tab:survey-features}, and discussions with the Troitsky executives involved in the project (P.7.2). The rationale for each numeric value is given with its constant in Appendix A.1.
+
 %=================================
 \subsection*{S.2.1 Web Server}
 \addcontentsline{toc}{subsection}{S.2.1 Web Server}
@@ -11,14 +13,17 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
     \item \textbf{Public landing page:} Web Server shall serve a public club landing page to any visitor, without requiring authentication. (FR-WS-1)
+    \\ \textbf{Rationale:} Club announcements and general information (survey feature K) were rated useful or better by most respondents (mean 3.85, 14 of 20 rating it ``Very useful'' or higher). Leaving the page public also lets prospective members learn about the club before they have an account.
     \item \textbf{Login and logout:} Web Server shall allow members to log in by submitting their credentials to the Access Control System, and to log out, ending their session. (FR-WS-2)
     \item \textbf{Request forwarding:} Web Server shall forward every request for a club service from an authenticated member to the Toolbox Broker, along with the identity of the member making the request. (FR-WS-3)
+    \\ \textbf{Rationale:} The broker architecture (S.1) gives every service a single entry point, so no service is reachable from the browser without passing access control. The member's identity is forwarded because authorization depends on the member's role and team (FR-AC-3).
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Serve web app:} Web Server shall serve the Toolbox Web App to members' browsers. (NFR-WS-1)    
+    \item \textbf{Serve web app:} Web Server shall serve the Toolbox Web App to members' browsers. (NFR-WS-1)
     \item \textbf{Encrypted communication:} Web Server shall only communicate with browsers over an encrypted connection (HTTPS). (NFR-WS-2)
+    \\ \textbf{Rationale:} Members' passwords and unreleased team designs are transmitted between the browser and the server. Without encryption, they could be read by anyone on a shared network, such as campus Wi-Fi.
     \item \textbf{Session expiry:} Web Server shall end a member's session after \const{SESSION_TIMEOUT} (\valSessionTimeout) of inactivity, so that an unattended browser does not leave club data accessible. (NFR-WS-3)
 \end{enumerate}
 
@@ -30,16 +35,21 @@ This section describes the behaviour of each component identified in S.1. Each s
 \begin{enumerate}
     \item \textbf{Authentication:} Access Control System shall verify the credentials submitted by a member, and shall reject login attempts with invalid credentials or for deactivated accounts. (FR-AC-1)
     \item \textbf{Roles:} Access Control System shall assign each account exactly one role: general member, team member, team captain, club executive, or software subteam maintainer. (FR-AC-2)
+    \\ \textbf{Rationale:} The roles follow the club's structure, as described by the Troitsky executives (P.7.2) and confirmed by the roles reported in the member survey (P.7.1). Each role needs a different set of permissions: captains manage their own team's data, executives manage the club and its rules, and maintainers administer the system. Assigning exactly one role keeps the permission check unambiguous.
     \item \textbf{Authorization:} Access Control System shall determine, for each request it is asked to verify, whether the current role and team of the requesting member permit the requested operation. (FR-AC-3)
     \item \textbf{Member management:} Access Control System shall allow executives and maintainers to create accounts, deactivate accounts, and change the role of an account, so that membership can be updated as members join, are promoted or demoted, graduate, or otherwise leave. (FR-AC-4)
     \item \textbf{Team membership:} Access Control System shall allow executives and maintainers to assign each account to at most one team for the current competition year, and to change or remove that assignment. (FR-AC-5)
+    \\ \textbf{Rationale:} Teams within the club compete against each other, so a member belonging to two teams could see a rival team's design. Allowing the assignment to change supports members switching teams, or teams reforming, during the year.
     \item \textbf{Team data isolation:} Access Control System shall deny any member who is not on that team, including former members, access to that team's current bridge models and analysis results. (FR-AC-6)
+    \\ \textbf{Rationale:} A private workspace for each team (survey feature I) was rated ``Very useful'' or higher by 11 of 20 respondents. Because teams compete, a current design must stay private until the season ends, when it becomes a past design visible to all members (FR-MA-6). Former members are included so that a member who changes teams cannot take access to their old team's design with them.
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Credential security:} Access Control System shall store passwords only as salted hashes produced by an industry-standard algorithm, and shall never store passwords in plain text. (NFR-AC-1)
+    \\ \textbf{Rationale:} Students commonly reuse passwords across services, including their university accounts. Hashing ensures that a leak of the Toolbox database does not expose members' passwords, as recommended by the OWASP Password Storage Cheat Sheet.
     \item \textbf{Effective role alterations:} Access Control System shall ensure that if a user's role is altered, the change shall be effective by the user's next request to the system. (NFR-AC-2)
+    \\ \textbf{Rationale:} When a member is demoted, deactivated, or moved to another team, a delay before the change takes effect would let them keep accessing data they are no longer permitted to see, which would break team data isolation (FR-AC-6).
 \end{enumerate}
 
 %=================================
@@ -49,16 +59,22 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
     \item \textbf{Service registration:} Toolbox Broker shall allow services to register at system startup, recording the operations that each registered service provides. (FR-BR-1)
+    \\ \textbf{Rationale:} Registration lets the broker discover services instead of having them hard-coded. This is what makes the extensibility requirement NFR-BR-1 achievable.
     \item \textbf{Request authorization:} Toolbox Broker shall verify every request with the Access Control System before forwarding it, and shall reject requests that are not authorized. (FR-BR-2)
+    \\ \textbf{Rationale:} Checking authorization once, in the broker, means each service does not have to implement its own access control, and a new service is protected as soon as it is registered.
     \item \textbf{Request routing:} Toolbox Broker shall forward each authorized request to the registered service that provides the requested operation, and shall return that service's response to the requester. (FR-BR-3)
     \item \textbf{Unavailable services:} Toolbox Broker shall return an error message to the requester when the requested operation is not provided by any registered service, or when the service providing it does not respond. (FR-BR-4)
+    \\ \textbf{Rationale:} An explicit error lets the member know a feature is temporarily unavailable, instead of the page hanging. It also lets the rest of the system keep working (NFR-SYS-3).
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Extensibility:} Toolbox Broker shall allow a new service to be added to the system by registering it, without modifying the source code of the broker or of any existing service. (NFR-BR-1)
+    \\ \textbf{Rationale:} The Toolbox will be maintained and expanded by a club software subteam whose members change every year (P.7.2). Adding a feature, such as onboarding material (survey feature H), which is not part of the initial scope, should not require future developers to understand or risk breaking the existing services.
     \item \textbf{Routing overhead:} Toolbox Broker shall add no more than \const{MAX_BROKER_OVERHEAD} (\valMaxBrokerOverhead) to the response time of any request it routes. (NFR-BR-2)
+    \\ \textbf{Rationale:} Every request passes through the broker, so its overhead is added to every response time in this section.
     \item \textbf{Request logging:} Toolbox Broker shall log each request it handles, including the requesting member, the requested operation, the time, and whether the request succeeded. (NFR-BR-3)
+    \\ \textbf{Rationale:} Future maintainers will not have the original developers to ask, so logs are their main tool for diagnosing problems. Logs also let executives check who accessed a team's data if a privacy concern is raised.
 \end{enumerate}
 
 %=================================
@@ -68,16 +84,21 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
     \item \textbf{Data storage:} Knowledge Repository shall store and return the data of every other service, including documents, bridge models, material test results, competition rules, and handoff documents. (FR-KR-1)
+    \\ \textbf{Rationale:} The survey found the club's data spread across Microsoft Teams (13 of 20), Google Drive, Discord, email, and individual members' devices (P.7.1). Lack of access to past designs and reference work was the most common frustration reported. One shared store is what allows knowledge to outlast the members who created it.
     \item \textbf{Content upload:} Knowledge Repository shall allow members to upload files of any common type, along with descriptive metadata including title, category, year, team, and tags. (FR-KR-2)
+    \\ \textbf{Rationale:} Club material comes in many formats, including CAD models, spreadsheets, slides, and photos of joints, so the repository does not limit file types. The metadata fields are the ones members need to filter by (FR-KR-3). Without them, uploaded files would be as hard to find as they are in the current shared drives.
     \item \textbf{Search and filter:} Knowledge Repository shall allow members to search stored content by keyword across titles and metadata, and to filter results by category, year, team, and tag. (FR-KR-3)
+    \\ \textbf{Rationale:} A searchable archive of past designs (survey feature A) had a mean rating of 4.35 and was chosen in the top 3 by 11 of 20 respondents, the second-highest priority. Joint construction data was the most valued type of past information (P.7.1).
     \item \textbf{View and download:} Knowledge Repository shall allow members to preview supported file types in the browser, and to download any stored file. (FR-KR-4)
     \item \textbf{Content management:} Knowledge Repository shall allow the uploader of an item, and executives, to edit its metadata or archive it. Archived items shall remain retrievable, but shall be excluded from default search results. (FR-KR-5)
+    \\ \textbf{Rationale:} 17 of 20 respondents want their team's work preserved for future teams (P.7.1). Archiving instead of deleting keeps outdated material out of the way without permanently losing it. Editing is limited to the uploader and executives so that one member cannot alter another's contribution.
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Search responsiveness:} Knowledge Repository shall return search results within \const{MAX_SEARCH_TIME} (\valMaxSearchTime) for a repository containing up to \const{MAX_REPOSITORY_ITEMS} (\valMaxRepositoryItems). (NFR-KR-1)
     \item \textbf{Data durability:} Knowledge Repository shall be backed up at least every \const{BACKUP_INTERVAL} (\valBackupInterval), so that no more than \const{BACKUP_INTERVAL} of stored data can be lost in the event of a failure. (NFR-KR-2)
+    \\ \textbf{Rationale:} Once the repository replaces the club's scattered storage, it becomes the only copy of much of the club's history, so a single failure must not be able to erase it.
 \end{enumerate}
 
 %=================================
@@ -87,18 +108,26 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
     \item \textbf{File validation:} Model Analysis System shall reject files that are not valid STEP files, or that contain no readable geometry, and shall display an error message describing the problem. (FR-MA-1)
+    \\ \textbf{Rationale:} Analysing an invalid or empty model would produce meaningless estimates and compliance results that members might act on. Rejecting the file with a clear reason lets the member fix and re-export it.
     \item \textbf{3D visualization:} Model Analysis System shall render an interactive 3D view of an uploaded model, which the member can rotate, zoom, and pan. (FR-MA-2)
+    \\ \textbf{Rationale:} The model viewer (survey feature F) was the lowest-priority feature on its own (mean 3.55, no top-3 picks). It is kept because members need it to confirm that the system read their model correctly before trusting its analysis, and to inspect past designs (FR-MA-5), which is a top priority.
     \item \textbf{Data extraction:} Model Analysis System shall extract from each uploaded model the geometric and physical properties of the bridge required by its analysis subsystems, such as its dimensions and mass. (FR-MA-3)
+    \\ \textbf{Rationale:} A bridge weight estimator (survey feature C) had a mean rating of 4.10 and was chosen in the top 3 by 8 respondents. Extracting the data once, in one place, gives the performance and rule compliance subsystems consistent inputs.
     \item \textbf{Current model storage:} Model Analysis System shall store each uploaded model and its extracted data in the Knowledge Repository as a current model of the uploading member's team, accessible only to members of that team, so that it can be reopened and analyzed later. (FR-MA-4)
+    \\ \textbf{Rationale:} Members reported difficulty collaborating on a shared CAD model (P.7.1). Storing current models with the team lets every team member reach the latest version, while team data isolation (FR-AC-6) keeps it from rival teams.
     \item \textbf{Past design viewing:} Model Analysis System shall allow any member to browse past designs, filtered by year and team, and to load any past design into the model viewer and its analysis subsystems for inspection, without being able to modify it. (FR-MA-5)
+    \\ \textbf{Rationale:} Access to past designs was the most common frustration in the survey, and the archive of past designs (feature A) is the second-highest priority. Past designs are read-only so that the historical record, and its link to recorded competition results, cannot be changed.
     \item \textbf{Archiving current models:} Model Analysis System shall allow executives to convert all current team models into past designs at the end of a competition season, recording the competition year and team of each. (FR-MA-6)
+    \\ \textbf{Rationale:} Designs only need to be private while teams are competing. Converting them at the end of the season, as a single executive action, ensures that every team's work enters the archive, which 17 of 20 respondents want, without relying on each team to remember to share it.
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Model upload:} Model Analysis System shall allow members to upload bridge models in the STEP (\texttt{.stp}/\texttt{.step}) format, which is the only model format accepted by the system. (NFR-MA-1)
+    \\ \textbf{Rationale:} STEP is an open ISO standard (ISO 10303) that the CAD tools members use can export, so a single format supports every team regardless of their software. All 20 survey respondents have CAD experience (P.7.1). Accepting one format also means only one parser has to be maintained (P.5, Open CASCADE).
     \item \textbf{Load time:} Model Analysis System shall display the 3D visualization of a typical club bridge model within \const{MAX_MODEL_LOAD_TIME} (\valMaxModelLoadTime) of upload or of being selected. (NFR-MA-2)
     \item \textbf{Extraction accuracy:} Model Analysis System shall extract dimensions that match those of the source model to within \const{DIMENSION_TOLERANCE} (\valDimensionTolerance). (NFR-MA-3)
+    \\ \textbf{Rationale:} Extracted dimensions feed rule compliance checks and mass estimates. An inaccurate extraction could pass a bridge that violates a size rule.
 \end{enumerate}
 
 %---------------------------------
@@ -107,16 +136,22 @@ This section describes the behaviour of each component identified in S.1. Each s
 \paragraph{Functional Requirements}
 \begin{enumerate}
     \item \textbf{Failure load estimate:} Performance Analysis System shall estimate the failure load of a bridge model, being the maximum load the bridge can support before failure. (FR-PA-1)
+    \\ \textbf{Rationale:} Failure load prediction (survey feature E) is the highest-priority feature in the survey: mean 4.35, 18 of 20 rating it ``Very useful'' or higher, and 12 top-3 picks. Members reported that they ``don't know what works until we build it and it fails at competition'' (P.7.1).
     \item \textbf{Load-to-mass ratio:} Performance Analysis System shall compute the estimated load-to-mass ratio of a bridge model, from its estimated failure load and its extracted mass. (FR-PA-2)
+    \\ \textbf{Rationale:} Structural efficiency (survey feature D) is the third-highest priority (mean 4.25, 10 top-3 picks). Load-to-mass ratio lets teams compare designs of different sizes, not just the strongest.
     \item \textbf{Material selection:} Performance Analysis System shall use the material properties provided by the Material Testing Manager, and shall allow the member to choose which set of material data, such as a given year or material batch, to apply. (FR-PA-3)
+    \\ \textbf{Rationale:} The strength of popsicle sticks, glue, and floss varies between suppliers and years. Using the club's own measured data (S.2.6), for the batch actually being built with, gives more realistic estimates than generic textbook values.
     \item \textbf{Assumption disclosure:} Performance Analysis System shall display the assumptions and limitations of each estimate alongside its results, so that members do not mistake an estimate for a guaranteed result. (FR-PA-4)
+    \\ \textbf{Rationale:} 13 of 20 respondents have two years or less in the club, and 9 have CAD experience only from courses (P.7.1). Less experienced members are the most likely to treat a number from the system as exact. Showing the limitations (NFR-PA-1) reduces the risk of a team building an unsafe design because of an over-trusted estimate.
 \end{enumerate}
 
 \paragraph{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Estimate accuracy:} For past club bridges whose tested failure loads are recorded, Performance Analysis System shall estimate the failure load to within \const{FAILURE_LOAD_TOLERANCE} (\valFailureLoadTolerance) of the recorded value in competition. (NFR-PA-1)
+    \\ \textbf{Rationale:} Recorded competition results of past club bridges are the only real failure data available, so accuracy is measured against them.
     \item \textbf{Computation time:} Performance Analysis System shall produce results for a typical club bridge model within \const{MAX_ANALYSIS_TIME} (\valMaxAnalysisTime). (NFR-PA-2)
     \item \textbf{Extensibility:} Performance Analysis System shall be structured so that additional performance metrics can be added in the future without modifying the computation of existing metrics. (NFR-PA-3)
+    \\ \textbf{Rationale:} The initial metrics cover the highest-priority survey features (D and E). Members also reported running ``all the different structural analysis tests'' as a frustration (P.7.1), so future software subteams are expected to add further analyses, such as weak point identification, without the risk of changing validated results.
 \end{enumerate}
 
 %---------------------------------
@@ -125,16 +160,23 @@ This section describes the behaviour of each component identified in S.1. Each s
 \paragraph{Functional Requirements}
 \begin{enumerate}
     \item \textbf{Rule import:} Rule Compliance System shall allow executives and maintainers to import a set of competition rules for a given competition year. (FR-RC-1)
+    \\ \textbf{Rationale:} The Troitsky competition rules are revised every year, so the rule set cannot be fixed in the system. Storing rules by year also allows past designs to be checked against the rules they were built for.
     \item \textbf{Rule configuration:} Rule Compliance System shall allow executives and maintainers to create, edit, and remove individual rules, each defined by the property it constrains, such as a dimension or mass, and its allowed value or range. (FR-RC-2)
+    \\ \textbf{Rationale:} Most measurable competition rules are limits on a single property. Representing them in this form lets them be checked automatically, and changed one at a time when the rules are revised.
     \item \textbf{Compliance check:} Rule Compliance System shall evaluate a bridge model against the active rule set, using the data extracted by the Model Analysis System, and shall report a pass or fail result for each rule. (FR-RC-3)
+    \\ \textbf{Rationale:} A competition rules reference (survey feature J) had a mean rating of 4.00 and 5 top-3 picks. Checking the model against the rules before construction catches violations while they are still cheap to fix (G.3).
     \item \textbf{Violation details:} For each failed rule, Rule Compliance System shall report the violated rule, the measured value, and the allowed value or range. (FR-RC-4)
+    \\ \textbf{Rationale:} A bare ``fail'' does not tell the team how much to change the design. Showing the measured and allowed values tells them the size of the correction needed.
     \item \textbf{Manual checks:} Rule Compliance System shall list the rules that cannot be verified from the model, such as restrictions on materials or construction methods, as manual checks for the team to confirm. (FR-RC-5)
+    \\ \textbf{Rationale:} A STEP model contains geometry, not information about how the bridge was built. Listing these rules explicitly prevents a team from reading an all-pass result as full compliance.
 \end{enumerate}
 
 \paragraph{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Check correctness:} Rule Compliance System shall report no false passes on a test suite of models with known rule violations. (NFR-RC-1)
+    \\ \textbf{Rationale:} A false pass and a false fail have very different costs. A false fail costs the team a manual double-check, while a false pass can lead to a bridge being built and then disqualified at competition. False passes are therefore not tolerated.
     \item \textbf{Rule updatability:} Rule Compliance System shall allow an executive without programming knowledge to configure the rule set for a new competition year without modifying source code. (NFR-RC-2)
+    \\ \textbf{Rationale:} Rules change every year, but the software subteam may not be available when they are released. Executives come from many engineering disciplines and, as discussed with the Troitsky executives (P.7.2), cannot be assumed to know how to program.
 \end{enumerate}
 
 %=================================
@@ -143,19 +185,26 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
-   
+
     \item \textbf{Result entry:} Material Testing Manager shall allow members to record individual test results through a form, including the test type, material, specimen dimensions, applied load, date, and tester. (FR-MT-1)
+    \\ \textbf{Rationale:} A database of material test results (survey feature B) has the highest mean rating of any feature (4.45, with 18 of 20 rating it ``Very useful'' or higher). Recording the specimen dimensions, date, and tester with each result makes results comparable across years and lets questionable results be traced back to how they were produced.
     \item \textbf{Input validation:} Material Testing Manager shall reject test results that are missing required fields, or that contain physically impossible values such as negative dimensions or loads, and shall identify the invalid rows or fields. (FR-MT-2)
+    \\ \textbf{Rationale:} Accepted results feed the material properties used in failure load estimates (FR-MT-4, FR-PA-3), so a single typing error could distort every estimate that uses them.
     \item \textbf{Historical comparison:} Material Testing Manager shall compare new test results against results from previous years, displaying summary statistics (mean and standard deviation) and plots. (FR-MT-3)
+    \\ \textbf{Rationale:} Comparing a new batch against previous years shows whether this year's materials are weaker or stronger than usual, and highlights results far from the norm that may come from a testing error.
     \item \textbf{Material properties:} Material Testing Manager shall compute aggregated material properties from accepted test results, and shall provide them to the Performance Analysis System. (FR-MT-4)
     \item \textbf{Result review:} Material Testing Manager shall allow executives to flag test results as invalid, excluding them from aggregated material properties without deleting them. (FR-MT-5)
+    \\ \textbf{Rationale:} Some errors, such as a badly prepared specimen, pass input validation. Flagging instead of deleting keeps a record of what was excluded and why, which traceability (NFR-MT-2) requires.
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
  \item \textbf{Result import:} Material Testing Manager shall allow members to import material test results from CSV and Excel (\texttt{.xlsx}) files that follow a standardized template. (NFR-MT-1)
+    \\ \textbf{Rationale:} Testing is done in batches, and results are typically recorded in spreadsheets during testing. Most teams already work in the Microsoft 365 suite (13 of 20 use Microsoft Teams, P.7.1), so importing their existing spreadsheets avoids typing results in again. A standard template allows the import to be validated.
     \item \textbf{Traceability:} Material Testing Manager shall ensure that every aggregated material property can be traced to the individual test results it was computed from. (NFR-MT-2)
+    \\ \textbf{Rationale:} When an estimate disagrees with a real test, members need to be able to check whether the material data behind it was sound.
     \item \textbf{Export:} Material Testing Manager shall allow stored test results to be exported in CSV format, so that the data remains usable outside the system. (NFR-MT-3)
+    \\ \textbf{Rationale:} Members may want to analyse the data with their own tools, and the club's data should not be locked into the Toolbox if the system is ever replaced.
 \end{enumerate}
 
 %=================================
@@ -165,16 +214,22 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
     \item \textbf{Exit document templates:} Knowledge Transfer Manager shall provide an exit document template for each executive position and for team leads. (FR-KT-1)
+    \\ \textbf{Rationale:} Exit and handover documents (survey feature G) were rated ``Very useful'' or higher by 15 of 20 respondents. Ease of transition between executives is a main goal identified with the Troitsky executives (P.7.2). A template for each position prompts the outgoing member for the information their successor will need, instead of leaving them to decide what to write.
     \item \textbf{Exit document submission:} Knowledge Transfer Manager shall allow members to complete, save as drafts, and submit exit documents. (FR-KT-2)
+    \\ \textbf{Rationale:} Exit documents are written near the end of the year, at the same time as exams, so members need to be able to write them over several sessions.
     \item \textbf{Role records:} Knowledge Transfer Manager shall maintain a record for each executive position, describing its responsibilities, key contacts, and yearly timeline, which the current holder of the position can update. (FR-KT-3)
+    \\ \textbf{Rationale:} An exit document records one year. A role record is kept up to date across years, so the incoming executive receives a current description of the role, not only their predecessor's account.
     \item \textbf{Publication:} Knowledge Transfer Manager shall store submitted exit documents and role records in the Knowledge Repository, where they can be searched like other content. (FR-KT-4)
     \item \textbf{Outstanding documents:} Knowledge Transfer Manager shall allow executives to view which executives and team leads have not yet submitted their exit documents. (FR-KT-5)
+    \\ \textbf{Rationale:} Exit documents are only useful if they are written before the member leaves the club. Tracking which are outstanding lets executives follow up while the outgoing member is still available.
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Findability:} Knowledge Transfer Manager shall allow a new member to locate the role record for a given executive position within \const{MAX_ROLE_SEARCH_TIME} (\valMaxRoleSearchTime), as measured in usability testing. (NFR-KT-1)
+    \\ \textbf{Rationale:} Role records only reduce the support burden on previous executives (G.3) if a new executive can find them without help.
     \item \textbf{Longevity:} Knowledge Transfer Manager shall allow exit documents and role records to be exported to PDF, so that they remain accessible independently of the system. (NFR-KT-2)
+    \\ \textbf{Rationale:} Handover records are meant to last many years, possibly longer than the Toolbox itself or its hosting. PDF is a widely supported format that executives can also share with people who do not have accounts.
 \end{enumerate}
 
 %=================================
@@ -184,7 +239,10 @@ This section describes the behaviour of each component identified in S.1. Each s
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Browser support:} The Toolbox Web App shall be fully functional on the current versions of Google Chrome, Mozilla Firefox, Microsoft Edge, and Safari on Windows, Macintosh, or Linux personal computers. (NFR-SYS-1)
+    \\ \textbf{Rationale:} These four browsers cover the computers members use. Mobile devices are excluded because the main tasks, such as uploading CAD models, 3D viewing, and entering test data, are done at a computer where the CAD files are stored.
     \item \textbf{Capacity:} The system shall support at least \const{MIN_CONCURRENT_USERS} (\valMinConcurrentUsers) using it concurrently without exceeding the response times specified in this section. (NFR-SYS-2)
     \item \textbf{Service independence:} The failure of any single service shall not prevent members from using the remaining services. (NFR-SYS-3)
+    \\ \textbf{Rationale:} The services are independent in purpose: a member searching the archive does not need the performance analysis to be running. The analysis services are also the most complex and the most likely to fail, so isolating them protects the services every member relies on.
     \item \textbf{Maintainability:} The system shall be documented well enough that a new software subteam member, with experience in C\# and web development, can set up a local development environment and deploy a change within \const{MAX_ONBOARDING_TIME} (\valMaxOnboardingTime). (NFR-SYS-4)
+    \\ \textbf{Rationale:} Maintainability and expandability by future software subteams is the main long-term challenge of the project (P.7.2). Once the original developers graduate, the documentation is the only handover the next subteam receives.
 \end{enumerate}
