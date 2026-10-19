@@ -13,7 +13,7 @@ materials data and bridge models which are far less complex than actual bridge m
 develops, and complexity will be iteratively increased after a lower tranche of complexity is deemed satisfactory.
 Key Stakeholders include the Troitsky club, from its president, the rest of its executive team, the bridge and materials
 developers and other members, because every member will interact with this system once it is complete.
-
+\\
 \textbf{Unit Testing:}\\
 Unit tests will be extensively performed to verify the correctness of individual systems, including
 \begin{itemize}
@@ -42,7 +42,7 @@ To validate real-time decision making abilities of the system:
     \item Continious integration (CI) pipelines shall be implemented to ensure changes to any component, especially
      frequently expected ones like rule changes and role changes, do not negatively impact the response time
 \end{itemize}
-
+\\
 \textbf{Data Privacy and Ethical Compliance:}\\
 While private user data is not used directly by the system, the system may access it. Therefore, no private data
 will be stored without the user's consent. However, this system takes no responsibility regarding the content of
