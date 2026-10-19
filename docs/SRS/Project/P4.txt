@@ -1,14 +1,17 @@
 \nsection{P.4 Tasks and deliverables}
-\begin{table}[htbp] 
-    \centering
+\begingroup
     \renewcommand{\arraystretch}{1.3} 
+    \begin{longtable}{@{} >{\raggedright\arraybackslash}p{0.19\textwidth} >{\raggedright\arraybackslash}p{0.34\textwidth} >{\raggedright\arraybackslash}p{0.22\textwidth} c @{}}
     \caption{Tasks and Deliverables}
-    \label{tab:my_table}
-    
-    \begin{tabular}{  p{0.22\textwidth} p{0.38\textwidth} p{0.25\textwidth} c  }
+    \label{tab:tasks-deliverables} \\
     \toprule
     \textbf{Task} & \textbf{Description} & \textbf{Deliverable} &\textbf{Date} \\ 
     \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Task} & \textbf{Description} & \textbf{Deliverable} &\textbf{Date} \\ 
+    \midrule
+    \endhead
     
     Requirements Peer Review & Peer reviewing another group's Software Requirements Specification. & SRS Peer Review & 22/10/2026 \\ 
     \midrule
@@ -39,6 +42,5 @@
 
     Project Presentation & Showcase the completed Troitsky Toolbox to the department, public, and stakeholders. & EXPO Demonstration & 06/04/2027 \\ 
     \bottomrule
-    \end{tabular}
-\end{table}
-\clearpage
+    \end{longtable}
+\endgroup
