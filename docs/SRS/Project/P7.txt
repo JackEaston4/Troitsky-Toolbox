@@ -1,2 +1,64 @@
 \nsection{P.7 Requirements process and report}
-\comment{Initially, description of what the requirements process will be; later, report on its steps.}
+\textbf{McMaster Troitsky Executives}\\
+Both Pedro Azevedo and our supervisor Bella Vescio are Troitsky Executives; our requirements will be gathered through team meetings and supervisor meetings.\\
+Important Questions to Ask:
+\begin{itemize}
+\item What information is most important to consolidate?
+\item When taking your position, what would you have liked to have seen within a transition document?
+\item How would you go about outlining the duties of a software development and support team?
+\end{itemize}
+
+The consolidation of information and ease of transition is one of the main goals in the development of this project, so we would want to hear the executives' opinions on this.
+Additionally, the challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly.
+\\\\
+\textbf{General McMaster Troitsky Members}\\
+A survey will be sent to general Troitsky members to elicit the overall wants and needs of members.\\
+Questions in the survey will be:
+\begin{itemize}
+    \item How many years of experience do you have in Troitsky (1-5 years)
+    \item What is your current role?
+    \item What is your modelling experience?
+    \item How valuable would you find an entry-level modelling service, like implementing simple testing and weak point analysis?
+    \item Rate (1-5) how valuable you would find having this information easily accessible regarding past McMaster Troitsky data. 
+    \textbf{[Bridge Modelling files, Joint Construction Data (specific model use), Manufacturing information, Past Team Results, Past Technical Presentation Material]}
+    \item How does your team store data \textbf{[Microsoft Teams, Google Drive, Individuals store files, Discord, Email]}
+    \item Rate(1-5) these features on how useful you would find them.
+    \begin{itemize}
+        \item Searchable archive of past bridge designs
+        \item Database of material testing results (stick strength, glue, floss, etc.)
+        \item Bridge weight estimator from a submitted model
+        \item Structural efficiency calculation
+        \item Ultimate load and failure point prediction
+        \item Upload and visualize a team's bridge model in the browser
+        \item Exit documents/role handover records for executive positions
+        \item Onboarding guide and training material for new members
+        \item Private workspace for each team's own files and data
+        \item Competition rules and regulations reference
+        \item Club announcements and general information page
+    \end{itemize}
+    \item Would you want your team files, results and progress to be available for future teams to learn from? \textbf{[Yes/No/Maybe]}
+    \item If you could go back to being a new member, or if you're currently a new member, what tutorials would you want access to?
+    \textbf{[Modeling Software, Manufacturing, Slab Building, Team Organization, Other]}
+\end{itemize}
+\textbf{McMaster CAS Students}\\
+McMaster CAS students are needed for the Software Development Team; 
+they will maintain and expand the toolbox. To ease the burden on them, we must elicit preferred code and documentation formats\\
+Some questions we would like to ask are:
+\begin{itemize}
+    \item When working with a system you did not develop yourself, rate(1-5) how helpful you find these documentation formats.
+    \begin{itemize}
+        \item  Markdown or other lightweight markup languages for README files.
+        \item Inline Documentation (Javadoc, Doxygen, XML Doc Comments, JSDoc, Docstrings)
+        \item Collaborative Wiki Formats, think online library documentation.
+        \item Modelling and Visual Formats (PlantUML, C4 Model)
+    \end{itemize}
+    \item What naming conventions do you prefer?
+    \begin{itemize}
+        \item PascalCase
+        \item IPascalCase (prefix interfaces with a capital I)
+        \item camelCase
+        \item _camelCase (prefix private and internal instance fields with an underscore)
+    \end{itemize}
+\end{itemize}
+
+

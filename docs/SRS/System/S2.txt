@@ -2,7 +2,7 @@
 \comment{One section, S.2.n, for each of the components identified in S.2, describing the corresponding behaviors (functional and non-functional properties).}
 %---------------------------------
 
-This section describes the behaviour of each component identified in S.1. Each subsection lists the functional and non-functional requirements of one component. Requirements are labelled with a prefix identifying their component, followed by a number: for example, FR-BR-1 is the first functional requirement of the Toolbox Broker, and NFR-BR-1 its first non-functional requirement. The prefixes are WS (Web Server), AC (Access Control System), BR (Toolbox Broker), KR (Knowledge Repository), MA (Model Analysis System), PA (Performance Analysis System), RC (Rule Compliance System), MT (Material Testing Manager), KT (Knowledge Transfer Manager), and SYS (system-wide requirements).
+This section describes the behaviour of each component identified in S.1. Each subsection lists the functional and non-functional requirements of one component. Requirements are labelled with a prefix identifying their component, followed by a number: for example, FR-BR-1 is the first functional requirement of the Toolbox Broker, and NFR-BR-1 its first non-functional requirement. The prefixes are WS (Web Server), AC (Access Control System), BR (Toolbox Broker), KR (Knowledge Repository), MA (Model Analysis System), PA (Performance Analysis System), RC (Rule Compliance System), MT (Material Testing Manager), KT (Knowledge Transfer Manager), and SYS (system-wide requirements). The symbolic constants used by the non-functional requirements are defined in Table~\ref{tab:constants} (Appendix A.1).
 
 %=================================
 \subsection*{S.2.1 Web Server}
@@ -10,16 +10,16 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Serve web app:} Web Server shall serve the Toolbox Web App to members' browsers. (FR-WS-1)
-    \item \textbf{Public landing page:} Web Server shall serve a public club landing page to any visitor, without requiring authentication. (FR-WS-2)
-    \item \textbf{Login and logout:} Web Server shall allow members to log in by submitting their credentials to the Access Control System, and to log out, ending their session. (FR-WS-3)
-    \item \textbf{Request forwarding:} Web Server shall forward every request for a club service from an authenticated member to the Toolbox Broker, along with the identity of the member making the request. (FR-WS-4)
+    \item \textbf{Public landing page:} Web Server shall serve a public club landing page to any visitor, without requiring authentication. (FR-WS-1)
+    \item \textbf{Login and logout:} Web Server shall allow members to log in by submitting their credentials to the Access Control System, and to log out, ending their session. (FR-WS-2)
+    \item \textbf{Request forwarding:} Web Server shall forward every request for a club service from an authenticated member to the Toolbox Broker, along with the identity of the member making the request. (FR-WS-3)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Encrypted communication:} Web Server shall only communicate with browsers over an encrypted connection (HTTPS). (NFR-WS-1)
-    \item \textbf{Session expiry:} Web Server shall end a member's session after a period of inactivity, so that an unattended browser does not leave club data accessible. (NFR-WS-2)
+    \item \textbf{Serve web app:} Web Server shall serve the Toolbox Web App to members' browsers. (NFR-WS-1)    
+    \item \textbf{Encrypted communication:} Web Server shall only communicate with browsers over an encrypted connection (HTTPS). (NFR-WS-2)
+    \item \textbf{Session expiry:} Web Server shall end a member's session after \const{SESSION_TIMEOUT} (\valSessionTimeout) of inactivity, so that an unattended browser does not leave club data accessible. (NFR-WS-3)
 \end{enumerate}
 
 %=================================
@@ -30,14 +30,16 @@ This section describes the behaviour of each component identified in S.1. Each s
 \begin{enumerate}
     \item \textbf{Authentication:} Access Control System shall verify the credentials submitted by a member, and shall reject login attempts with invalid credentials or for deactivated accounts. (FR-AC-1)
     \item \textbf{Roles:} Access Control System shall assign each account exactly one role: general member, team member, team captain, club executive, or software subteam maintainer. (FR-AC-2)
-    \item \textbf{Authorization:} Access Control System shall determine, for each request it is asked to verify, whether the role of the requesting member permits the requested operation. (FR-AC-3)
-    \item \textbf{Member management:} Access Control System shall allow executives and maintainers to create accounts, deactivate accounts, and change the role of an account, so that membership can be updated at the start of each year and as members graduate. (FR-AC-4)
+    \item \textbf{Authorization:} Access Control System shall determine, for each request it is asked to verify, whether the current role and team of the requesting member permit the requested operation. (FR-AC-3)
+    \item \textbf{Member management:} Access Control System shall allow executives and maintainers to create accounts, deactivate accounts, and change the role of an account, so that membership can be updated as members join, are promoted or demoted, graduate, or otherwise leave. (FR-AC-4)
+    \item \textbf{Team membership:} Access Control System shall allow executives and maintainers to assign each account to at most one team for the current competition year, and to change or remove that assignment. (FR-AC-5)
+    \item \textbf{Team data isolation:} Access Control System shall deny any member who is not on that team, including former members, access to that team's current bridge models and analysis results. (FR-AC-6)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Credential security:} Access Control System shall store passwords only as salted hashes produced by an industry-standard algorithm, and shall never store passwords in plain text. (NFR-AC-1)
-    \item \textbf{Access revocation:} Access Control System shall ensure that a deactivated account is denied access to all club services no later than its next request to the system. (NFR-AC-2)
+    \item \textbf{Effective role alterations:} Access Control System shall ensure that if a user's role is altered, the change shall be effective by the user's next request to the system. (NFR-AC-2)
 \end{enumerate}
 
 %=================================
@@ -50,13 +52,13 @@ This section describes the behaviour of each component identified in S.1. Each s
     \item \textbf{Request authorization:} Toolbox Broker shall verify every request with the Access Control System before forwarding it, and shall reject requests that are not authorized. (FR-BR-2)
     \item \textbf{Request routing:} Toolbox Broker shall forward each authorized request to the registered service that provides the requested operation, and shall return that service's response to the requester. (FR-BR-3)
     \item \textbf{Unavailable services:} Toolbox Broker shall return an error message to the requester when the requested operation is not provided by any registered service, or when the service providing it does not respond. (FR-BR-4)
-    \item \textbf{Request logging:} Toolbox Broker shall log each request it handles, including the requesting member, the requested operation, the time, and whether the request succeeded. (FR-BR-5)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
     \item \textbf{Extensibility:} Toolbox Broker shall allow a new service to be added to the system by registering it, without modifying the source code of the broker or of any existing service. (NFR-BR-1)
-    \item \textbf{Routing overhead:} Toolbox Broker shall add no more than 1000 ms to the response time of any request it routes. (NFR-BR-2)
+    \item \textbf{Routing overhead:} Toolbox Broker shall add no more than \const{MAX_BROKER_OVERHEAD} (\valMaxBrokerOverhead) to the response time of any request it routes. (NFR-BR-2)
+    \item \textbf{Request logging:} Toolbox Broker shall log each request it handles, including the requesting member, the requested operation, the time, and whether the request succeeded. (NFR-BR-3)
 \end{enumerate}
 
 %=================================
@@ -74,8 +76,8 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Search responsiveness:} Knowledge Repository shall return search results within 2 seconds for a repository containing up to 10,000 items. (NFR-KR-1)
-    \item \textbf{Data durability:} Knowledge Repository shall be backed up at least weekly, so that no more than one week of stored data can be lost in the event of a failure. (NFR-KR-2)
+    \item \textbf{Search responsiveness:} Knowledge Repository shall return search results within \const{MAX_SEARCH_TIME} (\valMaxSearchTime) for a repository containing up to \const{MAX_REPOSITORY_ITEMS} (\valMaxRepositoryItems). (NFR-KR-1)
+    \item \textbf{Data durability:} Knowledge Repository shall be backed up at least every \const{BACKUP_INTERVAL} (\valBackupInterval), so that no more than \const{BACKUP_INTERVAL} of stored data can be lost in the event of a failure. (NFR-KR-2)
 \end{enumerate}
 
 %=================================
@@ -84,22 +86,23 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Model upload:} Model Analysis System shall allow members to upload bridge models in the STEP (\texttt{.stp}/\texttt{.step}) format, which is the only model format accepted by the system. (FR-MA-1)
-    \item \textbf{File validation:} Model Analysis System shall reject files that are not valid STEP files, or that contain no readable geometry, and shall display an error message describing the problem. (FR-MA-2)
-    \item \textbf{3D visualization:} Model Analysis System shall render an interactive 3D view of an uploaded model, which the member can rotate, zoom, and pan. (FR-MA-3)
-    \item \textbf{Data extraction:} Model Analysis System shall extract from each uploaded model the geometric and physical properties of the bridge required by its analysis subsystems, such as its dimensions and mass. (FR-MA-4)
-    \item \textbf{Model storage:} Model Analysis System shall store each uploaded model and its extracted data in the Knowledge Repository, associated with the uploading team, so that it can be reopened and analyzed later. (FR-MA-5)
+    \item \textbf{File validation:} Model Analysis System shall reject files that are not valid STEP files, or that contain no readable geometry, and shall display an error message describing the problem. (FR-MA-1)
+    \item \textbf{3D visualization:} Model Analysis System shall render an interactive 3D view of an uploaded model, which the member can rotate, zoom, and pan. (FR-MA-2)
+    \item \textbf{Data extraction:} Model Analysis System shall extract from each uploaded model the geometric and physical properties of the bridge required by its analysis subsystems, such as its dimensions and mass. (FR-MA-3)
+    \item \textbf{Current model storage:} Model Analysis System shall store each uploaded model and its extracted data in the Knowledge Repository as a current model of the uploading member's team, accessible only to members of that team, so that it can be reopened and analyzed later. (FR-MA-4)
+    \item \textbf{Past design viewing:} Model Analysis System shall allow any member to browse past designs, filtered by year and team, and to load any past design into the model viewer and its analysis subsystems for inspection, without being able to modify it. (FR-MA-5)
+    \item \textbf{Archiving current models:} Model Analysis System shall allow executives to convert all current team models into past designs at the end of a competition season, recording the competition year and team of each. (FR-MA-6)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Load time:} Model Analysis System shall display the 3D visualization of a typical club bridge model within 30 seconds of upload. (NFR-MA-1)
-    \item \textbf{Extraction accuracy:} Model Analysis System shall extract dimensions that match those of the source model to within 0.5 mm. (NFR-MA-2)
+    \item \textbf{Model upload:} Model Analysis System shall allow members to upload bridge models in the STEP (\texttt{.stp}/\texttt{.step}) format, which is the only model format accepted by the system. (NFR-MA-1)
+    \item \textbf{Load time:} Model Analysis System shall display the 3D visualization of a typical club bridge model within \const{MAX_MODEL_LOAD_TIME} (\valMaxModelLoadTime) of upload or of being selected. (NFR-MA-2)
+    \item \textbf{Extraction accuracy:} Model Analysis System shall extract dimensions that match those of the source model to within \const{DIMENSION_TOLERANCE} (\valDimensionTolerance). (NFR-MA-3)
 \end{enumerate}
 
 %---------------------------------
 \subsubsection*{S.2.5.1 Performance Analysis System}
-\addcontentsline{toc}{subsubsection}{S.2.5.1 Performance Analysis System}
 
 \paragraph{Functional Requirements}
 \begin{enumerate}
@@ -111,14 +114,13 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \paragraph{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Estimate accuracy:} For past club bridges whose tested failure loads are recorded, Performance Analysis System shall estimate the failure load to within 25\% of the recorded value in competition. (NFR-PA-1)
-    \item \textbf{Computation time:} Performance Analysis System shall produce results for a typical club bridge model within 30 seconds. (NFR-PA-2)
+    \item \textbf{Estimate accuracy:} For past club bridges whose tested failure loads are recorded, Performance Analysis System shall estimate the failure load to within \const{FAILURE_LOAD_TOLERANCE} (\valFailureLoadTolerance) of the recorded value in competition. (NFR-PA-1)
+    \item \textbf{Computation time:} Performance Analysis System shall produce results for a typical club bridge model within \const{MAX_ANALYSIS_TIME} (\valMaxAnalysisTime). (NFR-PA-2)
     \item \textbf{Extensibility:} Performance Analysis System shall be structured so that additional performance metrics can be added in the future without modifying the computation of existing metrics. (NFR-PA-3)
 \end{enumerate}
 
 %---------------------------------
 \subsubsection*{S.2.5.2 Rule Compliance System}
-\addcontentsline{toc}{subsubsection}{S.2.5.2 Rule Compliance System}
 
 \paragraph{Functional Requirements}
 \begin{enumerate}
@@ -141,18 +143,19 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Result import:} Material Testing Manager shall allow members to import material test results from CSV and Excel (\texttt{.xlsx}) files that follow a standardized template. (FR-MT-1)
-    \item \textbf{Result entry:} Material Testing Manager shall allow members to record individual test results through a form, including the test type, material, specimen dimensions, applied load, date, and tester. (FR-MT-2)
-    \item \textbf{Input validation:} Material Testing Manager shall reject test results that are missing required fields, or that contain physically impossible values such as negative dimensions or loads, and shall identify the invalid rows or fields. (FR-MT-3)
-    \item \textbf{Historical comparison:} Material Testing Manager shall compare new test results against results from previous years, displaying summary statistics (mean and standard deviation) and plots. (FR-MT-4)
-    \item \textbf{Material properties:} Material Testing Manager shall compute aggregated material properties from accepted test results, and shall provide them to the Performance Analysis System. (FR-MT-5)
-    \item \textbf{Result review:} Material Testing Manager shall allow executives to flag test results as invalid, excluding them from aggregated material properties without deleting them. (FR-MT-6)
+   
+    \item \textbf{Result entry:} Material Testing Manager shall allow members to record individual test results through a form, including the test type, material, specimen dimensions, applied load, date, and tester. (FR-MT-1)
+    \item \textbf{Input validation:} Material Testing Manager shall reject test results that are missing required fields, or that contain physically impossible values such as negative dimensions or loads, and shall identify the invalid rows or fields. (FR-MT-2)
+    \item \textbf{Historical comparison:} Material Testing Manager shall compare new test results against results from previous years, displaying summary statistics (mean and standard deviation) and plots. (FR-MT-3)
+    \item \textbf{Material properties:} Material Testing Manager shall compute aggregated material properties from accepted test results, and shall provide them to the Performance Analysis System. (FR-MT-4)
+    \item \textbf{Result review:} Material Testing Manager shall allow executives to flag test results as invalid, excluding them from aggregated material properties without deleting them. (FR-MT-5)
 \end{enumerate}
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Traceability:} Material Testing Manager shall ensure that every aggregated material property can be traced to the individual test results it was computed from. (NFR-MT-1)
-    \item \textbf{Export:} Material Testing Manager shall allow stored test results to be exported in CSV format, so that the data remains usable outside the system. (NFR-MT-2)
+ \item \textbf{Result import:} Material Testing Manager shall allow members to import material test results from CSV and Excel (\texttt{.xlsx}) files that follow a standardized template. (NFR-MT-1)
+    \item \textbf{Traceability:} Material Testing Manager shall ensure that every aggregated material property can be traced to the individual test results it was computed from. (NFR-MT-2)
+    \item \textbf{Export:} Material Testing Manager shall allow stored test results to be exported in CSV format, so that the data remains usable outside the system. (NFR-MT-3)
 \end{enumerate}
 
 %=================================
@@ -170,7 +173,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Findability:} Knowledge Transfer Manager shall allow a new member to locate the role record for a given executive position within 2 minutes, as measured in usability testing. (NFR-KT-1)
+    \item \textbf{Findability:} Knowledge Transfer Manager shall allow a new member to locate the role record for a given executive position within \const{MAX_ROLE_SEARCH_TIME} (\valMaxRoleSearchTime), as measured in usability testing. (NFR-KT-1)
     \item \textbf{Longevity:} Knowledge Transfer Manager shall allow exit documents and role records to be exported to PDF, so that they remain accessible independently of the system. (NFR-KT-2)
 \end{enumerate}
 
@@ -180,8 +183,8 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Browser support:} The Toolbox Web App shall be fully functional on the current versions of Google Chrome, Mozilla Firefox, Microsoft Edge, and Safari on desktop. (NFR-SYS-1)
-    \item \textbf{Capacity:} The system shall support at least 50 members using it concurrently without exceeding the response times specified in this section. (NFR-SYS-2)
+    \item \textbf{Browser support:} The Toolbox Web App shall be fully functional on the current versions of Google Chrome, Mozilla Firefox, Microsoft Edge, and Safari on Windows, Macintosh, or Linux personal computers. (NFR-SYS-1)
+    \item \textbf{Capacity:} The system shall support at least \const{MIN_CONCURRENT_USERS} (\valMinConcurrentUsers) using it concurrently without exceeding the response times specified in this section. (NFR-SYS-2)
     \item \textbf{Service independence:} The failure of any single service shall not prevent members from using the remaining services. (NFR-SYS-3)
-    \item \textbf{Maintainability:} The system shall be documented well enough that a new software subteam member, with experience in C\# and web development, can set up a local development environment and deploy a change within one week. (NFR-SYS-4)
+    \item \textbf{Maintainability:} The system shall be documented well enough that a new software subteam member, with experience in C\# and web development, can set up a local development environment and deploy a change within \const{MAX_ONBOARDING_TIME} (\valMaxOnboardingTime). (NFR-SYS-4)
 \end{enumerate}

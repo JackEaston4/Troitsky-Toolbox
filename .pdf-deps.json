@@ -1,4 +1,7 @@
 {
+  "docs/CDs/Interviews/SurveyDesign.md": [
+    "docs/CDs/Interviews/SurveyDesign.md"
+  ],
   "docs/CDs/MLReport/main.tex": [
     "docs/CDs/MLReport/acl.sty",
     "docs/CDs/MLReport/custom.bib",
@@ -82,17 +85,16 @@
     "docs/Common.text",
     "docs/ReflectAndTrace/ReflectAndTrace.tex"
   ],
-  "docs/SRS-Volere/SRS.tex": [
-    "docs/Comments.text",
-    "docs/Common.text",
-    "docs/Reflection.text",
-    "docs/SRS-Volere/SRS.tex",
-    "docs/SRS_Reflection.text"
-  ],
   "docs/SRS/SRS-FAQ.tex": [
     "docs/SRS/SRS-FAQ.tex"
   ],
   "docs/SRS/SRS.tex": [
+    "docs/Comments.text",
+    "docs/Common.text",
+    "docs/SRS/Appendix/A1.txt",
+    "docs/SRS/Appendix/A2.txt",
+    "docs/SRS/Appendix/A3.txt",
+    "docs/SRS/Appendix/A4.txt",
     "docs/SRS/Environment/E1.txt",
     "docs/SRS/Environment/E2.txt",
     "docs/SRS/Environment/E3.txt",
@@ -113,16 +115,14 @@
     "docs/SRS/Project/P5.txt",
     "docs/SRS/Project/P6.txt",
     "docs/SRS/Project/P7.txt",
-    "docs/SRS/SRS.mtc",
-    "docs/SRS/SRS.mtc0",
-    "docs/SRS/SRS.mtc1",
     "docs/SRS/SRS.tex",
     "docs/SRS/System/S1.txt",
     "docs/SRS/System/S2.txt",
     "docs/SRS/System/S3.txt",
     "docs/SRS/System/S4.txt",
     "docs/SRS/System/S5.txt",
-    "docs/SRS/System/S6.txt"
+    "docs/SRS/System/S6.txt",
+    "docs/SRS/System/s1component-dark.png"
   ],
   "docs/UserGuide/UserGuide.tex": [
     "docs/Comments.text",

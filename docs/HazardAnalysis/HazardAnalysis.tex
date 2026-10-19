@@ -4,6 +4,13 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage[pass]{geometry}
+
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -291,6 +298,99 @@ requirements.}
 \wss{If no safety requirement can be devised, other mitigation strategies can be
 entered in the table, including strategies involving providing additional
 documentation, and/or test cases.}
+
+\newgeometry{margin=0.5in}
+\newgeometry{margin=0.5in}
+\begin{landscape}
+{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.5}
+\begin{longtable}{P{0.18\linewidth}P{0.165\linewidth}P{0.17\linewidth}>{\centering\arraybackslash}p{0.04\linewidth}>{\centering\arraybackslash}p{0.04\linewidth}P{0.185\linewidth}P{0.07\linewidth}P{0.055\linewidth}}
+\caption{Failure Mode and Effect Analysis (FMEA)}\label{TblFMEA}\\
+\toprule
+\textbf{Failure Mode} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \multicolumn{2}{c}{\textbf{Risk (H/M/L)}} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.}\\
+\cmidrule(lr){4-5}
+ & & & \textbf{Sev.} & \textbf{Occ.} & & & \\
+\midrule
+\endfirsthead
+\multicolumn{8}{l}{\textit{Table~\ref{TblFMEA} continued}}\\
+\toprule
+\textbf{Failure Mode} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \multicolumn{2}{c}{\textbf{Risk (H/M/L)}} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.}\\
+\cmidrule(lr){4-5}
+ & & & \textbf{Sev.} & \textbf{Occ.} & & & \\
+\midrule
+\endhead
+\multicolumn{8}{r}{\textit{Continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Web Server (WS)} --- SRS S.2.1}\\*
+Server down & & & & & & & H-WS-1\\
+\cmidrule(l){1-8}
+Server externally attacked & & & & & & & H-WS-2\\
+\cmidrule(l){1-8}
+Server overloaded from legitimate traffic & & & & & & & H-WS-3\\
+\cmidrule(l){1-8}
+Server loses connection to internet & & & & & & & H-WS-4\\
+\cmidrule(l){1-8}
+Server compromised & & & & & & & H-WS-5\\
+\cmidrule(l){1-8}
+Rogue actor gets access to change server & & & & & & & H-WS-6\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Access Control System (AC)} --- SRS S.2.2}\\*
+\multicolumn{8}{l}{\textit{Wrong user gets in}}\\*
+\cmidrule(l){1-8}
+Data leak (I/E) & & & & & & & H-AC-1\\
+\cmidrule(l){1-8}
+Password leak (I/E) & & & & & & & H-AC-2\\
+\cmidrule(l){1-8}
+Convenience leak (Superior gives inferior account access without clearance) & & & & & & & H-AC-3\\
+\cmidrule(l){1-8}
+Role category given extra rights & & & & & & & H-AC-4\\
+\cmidrule(l){1-8}
+Wrong person assigned to role category & & & & & & & H-AC-5\\
+\cmidrule(l){1-8}
+\multicolumn{8}{l}{\textit{Right user locked out}}\\*
+\cmidrule(l){1-8}
+Forgot password & & & & & & & H-AC-6\\
+\cmidrule(l){1-8}
+Role category given less rights & & & & & & & H-AC-7\\
+\cmidrule(l){1-8}
+Right person not given role & & & & & & & H-AC-8\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Toolbox Broker (BR)} --- SRS S.2.3}\\*
+ & & & & & & & \\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Repository (KR)} --- SRS S.2.4}\\*
+ & & & & & & & \\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Model Analysis System (MA)} --- SRS S.2.5}\\*
+Corruption of input file & & & & & & & H-MA-1\\
+\cmidrule(l){1-8}
+Output display wrong & & & & & & & H-MA-2\\
+\cmidrule(l){1-8}
+Output not understandable & & & & & & & H-MA-3\\
+\cmidrule(l){1-8}
+Timeout & & & & & & & H-MA-4\\
+\rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Performance Analysis System (PA)} --- SRS S.2.5.1}\\*
+Calculation API error & & & & & & & H-PA-1\\
+\rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Rule Compliance System (RC)} --- SRS S.2.5.2}\\*
+Misinterpretation of rules (especially with high penalty for non-compliance) & & & & & & & H-RC-1\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Material Testing Manager (MT)} --- SRS S.2.6}\\*
+Calculation API error & & & & & & & H-MT-1\\
+\cmidrule(l){1-8}
+Corruption of input file & & & & & & & H-MT-2\\
+\cmidrule(l){1-8}
+Output display wrong & & & & & & & H-MT-3\\
+\cmidrule(l){1-8}
+Output not understandable & & & & & & & H-MT-4\\
+\cmidrule(l){1-8}
+Timeout & & & & & & & H-MT-5\\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Transfer Manager (KT)} --- SRS S.2.7}\\*
+ & & & & & & & \\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{System-Wide (SYS)} --- SRS S.2.8}\\*
+Upgrade causes our code to no longer compile & & & & & & & H-SYS-1\\
+\cmidrule(l){1-8}
+Unchecked, unworking code pushed in haste & & & & & & & H-SYS-2\\
+\end{longtable}}
+\end{landscape}
+\restoregeometry
 
 \section{Safety and Security Requirements}
 

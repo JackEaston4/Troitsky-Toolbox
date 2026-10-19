@@ -7,40 +7,63 @@
 %Also based on the template of Karl E. Wiegers
 %http://www.se.rit.edu/~emad/teaching/slides/srs_template_sep14.pdf
 %http://karlwiegers.com
-\documentclass{scrreprt}
+\documentclass{article}
 \usepackage{method}		% Specific command from Handbook
-\usepackage{minitoc}	% For table of content in chapters
 \usepackage{listings}
 \usepackage{graphicx}
-\setcounter{tocdepth}{3}     % list sub-subsections (e.g. S.2.5.1) in the TOC
-\setcounter{minitocdepth}{3} % ...and in each book's mini-TOC
 \usepackage{underscore}
-\usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\hypersetup{
-    bookmarks=false,    % show bookmarks bar?
-    pdftitle={Software Requirement Specification},    % title
-    pdfauthor={Jean-Philippe Eisenbarth},                     % author
-    pdfsubject={TeX and LaTeX},                        % subject of the document
-    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=blue,       % color of internal links
-    citecolor=black,       % color of links to bibliography
-    filecolor=black,        % color of file links
-    urlcolor=purple,        % color of external links
-    linktoc=page            % only page is linked
-}%
-\def\myversion{1.24.8 }
-\date{}
-%\title{%
-
-%}
 \usepackage{hyperref}
-\newcommand*{\nsection}[1]{
-    \section*{#1}
-    \addcontentsline{toc}{section}{#1}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=false,
+    pdftitle={Software Requirement Specification},
+    pdfauthor={Jean-Philippe Eisenbarth},
+    pdfsubject={TeX and LaTeX},
+    pdfkeywords={TeX, LaTeX, graphics, images},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=purple,
+    linktoc=page
 }
+\def\myversion{1.24.8 }
+\setlist[itemize]{label=\textbullet}
+
+\title{Software Requirements Specification\\\progname}
+\author{\authname}
+\date{}
+\input{../Comments.text}
+\input{../Common.text}
+
+
+
+%--------------------- Headings ---------------
+% Same look as the numbered headings in the Development Plan, but with the
+% Meyer book letters (G, E, S, P) in place of section numbers.
+\makeatletter
+\let\srs@section\section
+\let\srs@subsection\subsection
+\newcommand*{\book}[2]{%
+    \srs@section*{#1\quad #2}%
+    \addcontentsline{toc}{section}{\protect\numberline{#1}#2}}
+\newcommand*{\nsection}[1]{\srs@nsplit#1 \@nil}
+\def\srs@nsplit#1 #2\@nil{%
+    \srs@subsection*{#1\quad #2}%
+    \addcontentsline{toc}{subsection}{\protect\numberline{#1}#2}}
+\let\subsection\subsubsection
+\renewcommand\subsubsection{\@startsection{paragraph}{4}{\z@}%
+    {3.25ex \@plus1ex \@minus.2ex}{0.5ex}{\normalfont\normalsize\bfseries}}
+\makeatother
+\setcounter{tocdepth}{2}
+
 %--------------------- Numbering ---------------
 \usepackage{amsthm}
 \usepackage{xassoccnt}
@@ -52,72 +75,58 @@
 \DeclareCoupledCountersGroup{theorems}
 \DeclareCoupledCounters[name=theorems]{req,constraint,goal}
 \setcounter{goal}{0}
+%--------------------- Symbolic constants ---------------
+% Values used by the requirements in S.2. Change a value here and it is
+% updated everywhere it is used. Rationale for each value is given in the
+% Symbolic Constants table in Appendix A.1.
+\newcommand{\const}[1]{\textsc{#1}}                % typesets a constant's name
+\newcommand{\valMaxBrokerOverhead}{100~ms}
+\newcommand{\valSessionTimeout}{30~minutes}
+\newcommand{\valMaxSearchTime}{2~seconds}
+\newcommand{\valMaxRepositoryItems}{10,000~items}
+\newcommand{\valBackupInterval}{7~days}
+\newcommand{\valMaxModelLoadTime}{30~seconds}
+\newcommand{\valDimensionTolerance}{0.5~mm}
+\newcommand{\valFailureLoadTolerance}{25\%}
+\newcommand{\valMaxAnalysisTime}{30~seconds}
+\newcommand{\valMaxRoleSearchTime}{2~minutes}
+\newcommand{\valMinConcurrentUsers}{50~members}
+\newcommand{\valMaxOnboardingTime}{1~week}
 %--------------------- Comments ---------------
 \newcommand{\mynote}[3][black]{\textcolor{#1}{\fbox{\bfseries\sffamily\scriptsize{#2}}
 {\small\textsf{\emph{#3}}}}}
 \newcommand{\comment}[1]{\mynote[red]{Comment:}{#1}}
 %\newcommand{\comment}[1]{}
-\newcommand{\notEmpty}{\comment{This chapter should not be empty!}}
+\newcommand{\notEmpty}{\comment{This section should not be empty!}}
 
 \begin{document}
 
-\begin{flushright}
-    \rule{16cm}{5pt}\vskip1cm
-    \begin{bfseries}
-        \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
-        \vspace{1.9cm}
-        for\\
-        \vspace{1.9cm}
-        $<$Project$>$\\
-        \vspace{1.9cm}
-        \LARGE{Version \myversion approved}\\
-        \vspace{1.9cm}
-        Prepared by $<$author$>$\\
-        \vspace{1.9cm}
-        $<$Organization$>$\\
-        \vspace{1.9cm}
-        \today\\
-    \end{bfseries}
-\end{flushright}
+\maketitle
 
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+10/02/2026 & Pedro & SRS template (Meyer) adopted; section files created.\\
+10/07/2026 & Pedro & G.1 drafted from problem statement.\\
+10/08/2026 & Jack & P.6 risks and mitigation analysis added.\\
+10/11/2026 & Jack & P.6 expanded.\\
+10/13/2026 & Pedro & Formatting aligned with other team documents.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
+\newpage{}
 %===============================================================
-\chapter*{Revision History}
-%===============================================================
-
-\begin{center}
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-	    Name        & Date          & Reason For Changes & Version\\
-        \hline
-        \hline
-	    J.-M. Bruel & 2021-01-22    & First Draft & 1.0\\
-        \hline
-	    J.-M. Bruel & 2023-01-28    & Check after publication of the Handbook & 1.23\\
-        \hline
-	    J.-M. Bruel & 2023-06-12    & Add reqs automated numbering & 1.23.1 \\
-        \hline
-	    J.-M. Bruel & 2023-08-25    & Add Minimum Requirements Outcome Principle & 1.23.8 \\
-        \hline
-	    J.-M. Bruel & 2023-12-22    & Remove section numbers & 1.23.12 \\
-        \hline
-	    J.-M. Bruel & 2024-08-01    & Add warning about non empty chapters  & \myversion \\
-        \hline
-    \end{tabular}
-\end{center}
-
-This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer.
-
-%===============================================================
-\dominitoc% Initialization
 \tableofcontents
-\adjustmtc
+\newpage{}
 %===============================================================
 
 %===============================================================
-\addcontentsline{toc}{chapter}{Goals book}
-\chapter*{Goals}
-
-\minitoc% Creating an actual minitoc
+\book{G}{Goals}
 %===============================================================
 
 \comment{Goals are "needs of the target organization, which the system will address". While the development team is the principal user of the other books, the Goals book addresses a wider audience: essentially, all stakeholders.}
@@ -131,9 +140,7 @@ This document follows the requirements documentation structure presented in the 
 \input{Goals/G7.txt}
 
 %===============================================================
-\chapter*{Environment}
-\addcontentsline{toc}{chapter}{Environment book}
-\minitoc% Creating an actual minitoc
+\book{E}{Environment}
 %===============================================================
 
 \comment{The Environment book describes the application domain and external context, physical or virtual (or a mix), in which the system will operate.}
@@ -146,9 +153,7 @@ This document follows the requirements documentation structure presented in the 
 \input{Environment/E6.txt}
 
 %===============================================================
-\chapter*{System}
-\addcontentsline{toc}{chapter}{System book}
-\minitoc% Creating an actual minitoc
+\book{S}{System}
 %===============================================================
 
 \comment{The System book refines the Goal one by focusing on more detailed requirements about the system under development, mainly its constituents, behaviors and properties.}
@@ -161,9 +166,7 @@ This document follows the requirements documentation structure presented in the 
 \input{System/S6.txt}
 
 %===============================================================
-\chapter*{Project}
-\addcontentsline{toc}{chapter}{Project book}
-\minitoc% Creating an actual minitoc
+\book{P}{Project}
 %===============================================================
 
 \comment{The Project book describes all the constraints and expectations not about the system itself, but about how to develop and produce it.}
@@ -176,6 +179,15 @@ This document follows the requirements documentation structure presented in the 
 \input{Project/P6.txt}
 \input{Project/P7.txt}
 
+\newpage{}
+%===============================================================
+\book{A}{Appendix}
+%===============================================================
+
+\input{Appendix/A1.txt}
+\input{Appendix/A2.txt}
+\input{Appendix/A3.txt}
+\input{Appendix/A4.txt}
 
 %===============================================================
 \end{document}

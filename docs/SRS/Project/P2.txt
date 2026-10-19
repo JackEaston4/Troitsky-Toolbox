@@ -1,2 +1,26 @@
 \nsection{P.2 Imposed technical choices}
-\comment{Any a priori choices binding the project to specific tools, hardware, languages or other technical parameters.}
+
+\begin{itemize}
+
+\item \textbf{Platform/delivery:} Web app for desktop browsers. Accessible through traditional browsers 
+such as Google Chrome, Firefox, Edge, and Safari. Requires a working internet connection to utilize the service.
+\\ \textbf {Rationale:} Ensures that the service is accessible by all club members. Also allows the Troitsky toolbox to act as a 
+landing page for the McMaster club.
+
+\item \textbf{File Formats:} STEP (.stp/.step) files for loading and submitting models. CSV and Excel data formats (.csv/.xlsx) for importing
+material testing results.
+\\ \textbf {Rationale:} Standardized format among possible external modelling software that teams currently use. Ensures compatibility 
+with current and future model files (E.4). CSV and Excel data files are both tabular and work with current material testing data (E.2).
+
+\item \textbf{Back-end Programming languages:} C\# on .NET, Python for subservices
+\\ \textbf {Rationale:} LINQ availability and ease of use, and the ease of maintainability by future software subteam members; Python for
+accessibility to beneficial open-source libraries.
+
+\item \textbf{Testing, Linting and Coding Standard:} xUnit/bUnit + Coverlet for coverage, \texttt{dotnet format}, Standard .NET coding conventions
+\\ \textbf {Rationale:} xUnit and Coverlet are widely documented; bUnit, running on top of xUnit, supports the 
+testing of Blazor components. \texttt{dotnet format} ships with the .NET SDK and can work with config files to integrate with the .NET compiler.
+
+\item \textbf{Authentication (RBAC):} ASP.NET Core Identity.
+\\ \textbf {Rationale:} RBAC matches the club structure, and Identity is built into the ASP.NET Core stack.
+
+\end{itemize}
