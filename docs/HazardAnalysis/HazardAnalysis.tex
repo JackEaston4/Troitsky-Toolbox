@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{pdflscape}
 \usepackage{array}
@@ -50,6 +51,11 @@ Date2 & Name(s) & Description of changes\\
 \end{tabularx}
 \end{table}
 
+This document follows the
+\href{https://github.com/smiths/capTemplate/tree/main/docs/HazardAnalysis}{capstone
+Hazard Analysis template}. Changes made to the template are listed in
+Table~\ref{TblTemplateChanges} (Section~\ref{SecTemplateChanges}).
+
 ~\newpage
 
 \tableofcontents
@@ -62,27 +68,220 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Introduction}
 
-\wss{You can include your definition of what a hazard is here.}
+\subsection{Background}
+
+The Troitsky Toolbox is a web-based application that supports the McMaster
+Troitsky club, a student organization whose teams design, analyze, and build
+bridges out of popsicle sticks, white glue, and dental floss for the annual
+Troitsky Bridge Building Competition. The Toolbox centralizes the club's
+knowledge, including past designs, material testing data, and exit documents,
+and provides technical tools that allow teams to visualize their bridge models,
+estimate their performance, and check them against the competition rules. The
+problem and goals of the project are described in more detail in the Problem
+Statement and Goals document, and the system itself is specified in the
+Software Requirements Specification (SRS).
+
+\subsection{Hazard Definition}
+
+A hazard is defined as ``a system state or set of conditions that, together
+with a particular set of worst-case environmental conditions, will lead to a
+loss'' \cite[p.~17]{LevesonAndThomas2018}. For the Troitsky Toolbox, a hazard is therefore any
+condition of the system that, combined with how members use it, could lead to
+the loss of club knowledge, the disclosure or corruption of club data, the
+disruption of club activities, or members acting on incorrect information.
+
+The Toolbox does not control any physical equipment, so the hazards it presents
+are primarily to the club's data and decisions rather than to people. The one
+exception is indirect: the Performance Analysis System produces estimates of a
+bridge's failure load, and a team that trusts an incorrect estimate may build or
+load test a bridge on that basis. This harm would be seen primarily in competition results, 
+depending on the accuracy of the estimates. This document identifies these hazards, the
+failure modes that cause them, and the safety and security requirements that
+mitigate them.
 
 \section{Scope and Purpose of Hazard Analysis}
 
-\wss{You should say what \textbf{loss} could be incurred because of the
-hazards.}
+The purpose of this hazard analysis is to identify the ways in which the
+Troitsky Toolbox could fail or be misused, assess their effects on the club and
+its members, and derive requirements that prevent or mitigate them. The
+resulting safety and security requirements are outlined in
+Section~\ref{SecSafetyReqs}, and Section~\ref{SecRoadmap} states which of them
+will be implemented during the capstone, so that they are designed, implemented, 
+and verified alongside the rest of the system.
 
-\section{System Boundaries and Components}
+The losses that could result from the hazards identified in this document are:
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+\begin{itemize}
+    \item \textbf{Loss of club knowledge:} Designs, test data, or exit documents
+    are deleted, corrupted, or never captured, so that the knowledge the Toolbox
+    exists to preserve is lost when members graduate. As the Toolbox becomes the
+    club's central repository, a single failure can affect several years of
+    accumulated information.
+    \item \textbf{Loss of data integrity:} Stored data, such as material test
+    results or competition rules, is incorrect or inconsistent, so that the
+    results of the analysis tools are wrong.
+    \item \textbf{Misleading analysis results:} A team relies on an incorrect
+    performance estimate or compliance result, leading to a weaker bridge, a
+    bridge that is disqualified for violating a competition rule, or wasted
+    build time and materials.
+    \item \textbf{Loss of confidentiality:} Members' personal information or the
+    club's unpublished designs are disclosed to unauthorized users, including
+    other competing universities.
+    \item \textbf{Loss of availability:} The Toolbox, or one of its tools, is
+    unavailable when members need it, such as in the weeks leading up to the
+    competition.
+    \item \textbf{Loss of trust:} Repeated failures lead members to stop using
+    the Toolbox and return to scattered, undocumented information sharing,
+    defeating the purpose of the project.
+\end{itemize}
+
+The analysis covers every software component of the Toolbox listed in
+Section~\ref{SecBoundaries}, and the interfaces between the Toolbox and the
+external components it depends on, and the processes used to develop, deploy,
+and maintain the Toolbox, including its handover to future software subteam
+members. The following are outside the scope of this analysis:
+
+\begin{itemize}
+    \item The physical construction and load testing of bridges, including the
+    safety procedures followed by the club during testing.
+    \item The CAD software that teams use to create their bridge models.
+    \item The Troitsky Bridge Building Competition itself, including its rules
+    and judging.
+    \item Failures of the hosting infrastructure's physical hardware, beyond
+    their effect on the availability and durability of the Toolbox's data.
+\end{itemize}
+
+\section{System Boundaries and Components} \label{SecBoundaries}
+
+The Troitsky Toolbox is structured around a central broker: each tool, as well
+as the shared data storage, is a service that registers with the broker, and all
+communication between services passes through it. The components below are
+those described in Section S.1 of the SRS, and are shown in
+Figure~\ref{FigComponents}. The requirements each component is responsible for
+are listed in Section S.2 of the SRS, using the prefixes given below.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{../SRS/System/s1component-dark.png}
+    \caption{Components of the Troitsky Toolbox and the interfaces through which
+    they interact.}
+    \label{FigComponents}
+\end{figure}
+
+\subsection{Inside the System Boundary}
+
+The following components are developed by the team and are within the system's
+control and responsibility:
+
+\begin{itemize}
+    \item \textbf{Web Server (WS):} Serves the Toolbox Web App and the public
+    landing page, handles member login, and forwards requests for club services
+    to the Toolbox Broker.
+    \item \textbf{Access Control System (AC):} Manages member accounts and
+    roles, authenticates members, and decides which services and data each role
+    may access.
+    \item \textbf{Toolbox Broker (BR):} Registers services, verifies every
+    request with the Access Control System, and routes it to the service that
+    provides the requested operation. Because all communication passes through
+    the broker, a failure of the broker affects every tool.
+    \item \textbf{Knowledge Repository (KR):} Stores all club information,
+    including documents, bridge models, material test results, competition
+    rules, and handoff documents, and allows members to search and contribute to it.
+    \item \textbf{Model Analysis System (MA):} Imports bridge models in the STEP
+    format, renders them in 3D, and extracts the bridge properties needed for
+    analysis, such as its dimensions and mass.
+    \begin{itemize}
+        \item \textbf{Performance Analysis System (PA):} Estimates the failure
+        load and load-to-mass ratio of a bridge model, using the extracted model
+        data and the material properties provided by the Material Testing
+        Manager.
+        \item \textbf{Rule Compliance System (RC):} Checks a bridge model against
+        the competition rules configured by club members.
+    \end{itemize}
+    \item \textbf{Material Testing Manager (MT):} Imports and stores material
+    test results from CSV and Excel files, compares them against previous years,
+    and derives the material properties used by the Performance Analysis System.
+    \item \textbf{Knowledge Transfer Manager (KT):} Collects exit documents and
+    role records from executives and team leads, and stores them in the
+    Knowledge Repository.
+\end{itemize}
+
+\subsection{Outside the System Boundary}
+
+The following entities interact with the system, but are not under its direct
+control:
+
+\begin{itemize}
+    \item \textbf{Club members:} The general members, executives, and software
+    subteam maintainers who use the Toolbox. Their decisions, including how they
+    act on the results of the analysis tools, are outside the system's control.
+    \item \textbf{CAD software and STEP files:} The software teams use to design
+    their bridges, and the STEP files it exports. The Toolbox receives these
+    files but does not control how they are created.
+    \item \textbf{CAD/geometry library:} The external library used by the Model
+    Analysis System to read STEP files.
+    \item \textbf{Static model analysis APIs:} The external APIs used to perform
+    the static model analysis of bridge model STEP files (SRS E.2).
+    \item \textbf{Material test data files:} The CSV and Excel files produced by
+    members during material testing, whose content depends on how the tests
+    were performed and recorded.
+    \item \textbf{Competition rules:} The official rules published by the
+    competition organizers, which change from year to year and must be
+    configured into the Rule Compliance System by members.
+    \item \textbf{Hosting infrastructure:} The server, operating system, database
+    server, and network on which the Toolbox is deployed.
+    \item \textbf{Web browsers:} The browsers through which members access the
+    Toolbox Web App.
+\end{itemize}
 
 \section{Critical Assumptions}
 
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+The following assumptions are made about the system and its environment. Each
+assumption states the class of hazards it removes from the scope of this
+analysis. Assumptions have been kept to a minimum, and failures that the system
+can reasonably detect or mitigate, such as invalid input files, service
+outages, and data entry errors, remain within the scope of the analysis.
+
+\begin{enumerate}
+    \item \textbf{Analysis results are advisory:} Members treat the results of
+    the Performance Analysis and Rule Compliance Systems as guidance, and the
+    club verifies the final design against the official competition rules and
+    follows its own safety procedures when load testing bridges. This assumption
+    removes physical injury during bridge testing from the scope of this
+    analysis. Hazards caused by incorrect or misleading results, and by results
+    being presented in a way that encourages over-reliance, remain in scope.
+
+    \item \textbf{Members act in good faith:} Authenticated members do not
+    intentionally misuse their access, for example by deliberately deleting or
+    falsifying club data. This assumption removes deliberate insider sabotage
+    from the scope of this analysis. Accidental misuse by members, and attacks
+    by people outside the club, remain in scope.
+
+    \item \textbf{STEP files reflect the intended design:} The STEP files that
+    teams upload accurately represent the bridge they intend to build. This
+    assumption removes differences between a team's CAD model and its physical
+    bridge from the scope of this analysis. Files that are invalid, corrupted, or
+    that cannot be read remain in scope.
+
+    \item \textbf{The CAD/geometry library is correct:} The external library used
+    by the Model Analysis System correctly reads the geometry of valid STEP
+    files. This assumption removes defects within the library itself from the
+    scope of this analysis. Errors in how the Toolbox uses the library's output
+    remain in scope.
+
+    \item \textbf{Test data reflects the tests performed:} The material test
+    results that members import were measured using the club's testing
+    procedure. This assumption removes errors in the physical testing process
+    from the scope of this analysis. Data entry errors, malformed files, and
+    physically impossible values remain in scope.
+
+    \item \textbf{Hosting infrastructure is maintained:} The server, operating
+    system, and database server on which the Toolbox is deployed are kept
+    updated and secured by whoever hosts them. This assumption removes
+    vulnerabilities within the hosting platform itself from the scope of this
+    analysis. Outages of the hosting infrastructure, and their effect on the
+    availability and durability of the Toolbox's data, remain in scope.
+\end{enumerate}
 
 \section{Failure Mode and Effect Analysis}
 
@@ -196,7 +395,7 @@ Unchecked, unworking code pushed in haste & & & & & & & H-SYS-2\\
 \end{landscape}
 \restoregeometry
 
-\section{Safety and Security Requirements}
+\section{Safety and Security Requirements} \label{SecSafetyReqs}
 
 \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
 rationale design process how and why to fake it.)}
@@ -234,10 +433,44 @@ rationale design process how and why to fake it.)}
     \item \textbf{SR-KR-1:} Backups of the Knowledge Repository shall be stored on an external platform. [H-KR-1]
 \end{itemize}
 
-\section{Roadmap}
+\section{Roadmap} \label{SecRoadmap}
 
 \wss{Which safety requirements will be implemented as part of the capstone timeline?
 Which requirements will be implemented in the future?}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../../refs/References}
+
+\newpage{}
+
+\section{Appendix --- Changes from Template} \label{SecTemplateChanges}
+
+Table~\ref{TblTemplateChanges} lists the changes made to the structure of the
+capstone Hazard Analysis template and the reason for each.
+
+\begin{table}[h]
+\centering
+\caption{Changes from the capstone Hazard Analysis template}
+\label{TblTemplateChanges}
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\toprule
+\textbf{Change} & \textbf{Reason} \\
+\midrule
+Divided the Introduction into Background and Hazard Definition. & Separates the
+description of the project from the definition of a hazard that the rest of the
+document relies on. \\
+Divided System Boundaries and Components into Inside and Outside the System
+Boundary. & Separates the components the team controls from the external
+entities whose failures the system can only detect or mitigate. \\
+Listed new safety and security requirements only in this document, with the
+prefix SR. & Keeps each new requirement next to the hazards it mitigates; the
+FMEA table traces existing SRS requirements by their SRS IDs. \\
+Added a References section. & Gives the source of the hazard definition. \\
+Added Appendix --- Changes from Template. & The HA checklist requires changes
+made to the template to be described in the document. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \newpage{}
 
