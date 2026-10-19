@@ -354,19 +354,27 @@ Right person not given role & & & & & & & H-AC-8\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Toolbox Broker (BR)} --- SRS S.2.3}\\*
  & & & & & & & \\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Repository (KR)} --- SRS S.2.4}\\*
- & & & & & & & \\
+Stored data lost or corrupted & Club data stored since the last backup is lost & Host or server failure, backup failure & H & L & Store backup of system (KR) off the server, on another platform & NFR-KR-2, SR-KR-1 & H-KR-1\\
+\cmidrule(l){1-8}
+Item overwritten or deleted by mistake & A design or document is lost & Member error & M & M & Create confirmation prompts for deletions and modifications (e.g. replacing a file if uploading a copy), Access control protects file modification and deletion from all members & FR-KR-5, SR-KR-2 & H-KR-2\\
+\cmidrule(l){1-8}
+Team's files visible to another team during the competition year & A team's unreleased design is exposed, contrary to SRS E.3 & Access is checked by role only, not by which team owns the file & M & H & During the competition year, individual team files are marked as active and made available only to the owning team and executives & SR-KR-3 & H-KR-3\\
+\cmidrule(l){1-8}
+Content cannot be found & Knowledge is lost in practice; work is duplicated & Missing or inconsistent tags, incorrect metadata & M & H & Require a title, a category from a fixed list, and a year on upload & FR-KR-3, SR-KR-4 & H-KR-4\\
+\cmidrule(l){1-8}
+Repository unavailable & No saving or loading of stored data & Outage, storage capacity full & H & L & Tell the member when data was not saved & FR-BR-4, SR-KR-5 & H-KR-5\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Model Analysis System (MA)} --- SRS S.2.5}\\*
-Corruption of input file & & & & & & & H-MA-1\\
+Corruption of input file & A partly read or corrupted model returns wrong analysis results & Bad or interrupted CAD export & H & L & Show an import summary for the member to confirm before analysis or further processing & FR-MA-2, SR-MA-1 & H-MA-1\\
 \cmidrule(l){1-8}
-Output display wrong & & & & & & & H-MA-2\\
+Output display wrong, model analysis display not clear & Member misses a design flaw, bridge state misassessed & Wrong units or scale, errors in PA & M & M & Show units and a scale reference in the 3D view; check usability of the interface in the Winter CD --- Usability Report & NFR-MA-2, SR-MA-2, Winter CD usability test & H-MA-2\\
 \cmidrule(l){1-8}
-Output not understandable & & & & & & & H-MA-3\\
-\cmidrule(l){1-8}
-Timeout & & & & & & & H-MA-4\\
+Timeout & Member gets no response, either retries or gives up & Large model files, heavy load & M & M & Stop processing after MA\_TIMEOUT and show error message & NFR-MA-1, SR-MA-3 & H-MA-3\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Performance Analysis System (PA)} --- SRS S.2.5.1}\\*
-Calculation API error & & & & & & & H-PA-1\\
+Calculation API error & No estimate, or a wrong ultimate load prediction & External analysis API unavailable, changed, or returning invalid values & H & M & Show an error instead of an estimate when the API fails or returns an invalid value; have test models to check new API calls against & NFR-PA-1, SR-PA-1 & H-PA-1\\
+\cmidrule(l){1-8}
+Output confidence not understood & Estimate is misread or treated as a guaranteed result & Assumptions and limitations hidden, misunderstanding of service & M & L & Show the assumptions and limitations next to each estimate; check usability of the interface in the Winter CD --- Usability Report & FR-PA-4, Winter CD usability test & H-PA-2\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Rule Compliance System (RC)} --- SRS S.2.5.2}\\*
-Misinterpretation of rules (especially with high penalty for non-compliance) & & & & & & & H-RC-1\\
+Misinterpretation of rules (risk high for high penalty rules) & A non-compliant bridge passes the check and is penalized or disqualified at competition & Rule entered incorrectly, wrong year's rule set active, rule cannot be checked from the model, unit errors cause misrepresented comparison & H & L & Show the year of the rule set used, and highlight rules that require a manual check & FR-RC-5, NFR-RC-1, SR-RC-1 & H-RC-1\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Material Testing Manager (MT)} --- SRS S.2.6}\\*
 Calculation API error & & & & & & & H-MT-1\\
 \cmidrule(l){1-8}
@@ -391,6 +399,39 @@ Unchecked, unworking code pushed in haste & & & & & & & H-SYS-2\\
 
 \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
 rationale design process how and why to fake it.)}
+
+\subsection{Functional Requirements}
+
+\begin{itemize}
+    \item \textbf{SR-KR-2:} The Knowledge Repository shall always prompt the user
+    to confirm an action that will result in deletion or modification of stored files. [H-KR-2]
+    \item \textbf{SR-KR-3:} The Knowledge Repository shall require that uploads of 
+    current competition year files are uploaded with a current team, limiting file access 
+    to only members of that team and executives. [H-KR-3]
+    \item \textbf{SR-KR-4:} The Knowledge Repository shall reject an upload that
+    does not include a title, a category selected from a standardized list, and a year. [H-KR-4]
+    \item \textbf{SR-KR-5:} The Knowledge Repository shall return an error message 
+    whenever an uploaded file cannot be stored or a data retrieval error occurs. [H-KR-5]
+    \item \textbf{SR-MA-1:} The Model Analysis System shall display a summary of inputted models
+    to allow users to confirm the details and ensure accuracy and correctness. [H-MA-1]
+    \item \textbf{SR-MA-2:} The Model Analysis System shall display the units of the inputted models, 
+    along with a scale reference in the 3D view. [H-MA-2]
+    \item \textbf{SR-MA-3:} The Model Analysis System shall stop processing a
+    model that has not finished within MA\_TIMEOUT, and shall tell the member why
+    processing stopped. [H-MA-3]
+    \item \textbf{SR-PA-1:} The Performance Analysis System shall display an
+    error message whenever the API fails, does not respond, or returns an inappropriate 
+    value. [H-PA-1]
+    \item \textbf{SR-RC-1:} The Rule Compliance System shall display the competition year 
+    of the active rules with each result, and shall indicate when 
+    manual verification is required. [H-RC-1]
+\end{itemize}
+
+\subsection{Non-Functional Requirements}
+
+\begin{itemize}
+    \item \textbf{SR-KR-1:} Backups of the Knowledge Repository shall be stored on an external platform. [H-KR-1]
+\end{itemize}
 
 \section{Roadmap} \label{SecRoadmap}
 
