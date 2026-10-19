@@ -1,13 +1,10 @@
 \nsection{A.4 Reflection}
 
+\subsubsection*{Team}
+
 \begin{enumerate}
-  \item What went well while writing this deliverable?
-  \item What pain points did you experience during this deliverable, and how did
-  you resolve them?
   \item How many of your requirements were inspired by speaking to your
   client(s) or their proxies (e.g. your peers, stakeholders, potential users)?
-  \item Which of the courses you have taken, or are currently taking, will help
-  your team to be successful with your capstone project.
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete this capstone project?  Examples of possible knowledge
   to acquire include domain specific knowledge from the domain of your
@@ -21,11 +18,19 @@
   member pursue, and why did they make this choice?
 \end{enumerate}
 
+\subsubsection*{Individual}
+
+\begin{enumerate}
+  \item What went well while writing this deliverable?
+  \item What pain points did you experience during this deliverable, and how did
+  you resolve them?
+  \item Which of the courses you have taken, or are currently taking, will help
+  your team to be successful with your capstone project.
+\end{enumerate}
+
 %=================================
 \subsection*{A.4.1 Team}
 \addcontentsline{toc}{subsection}{A.4.1 Team}
-
-Questions 3, 5 \& 6, answered as a team:
 
 \begin{enumerate}
   \item 
