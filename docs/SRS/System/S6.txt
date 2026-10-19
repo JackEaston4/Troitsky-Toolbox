@@ -1,2 +1,70 @@
 \nsection{S.6 Verification and acceptance criteria}
-\comment{Specification of the conditions under which an implementation will be deemed satisfactory.}
+
+\textbf{Validation overview:}
+
+To validate the system, extensive consultation with McMaster's Troitsky club will be done. Each part
+will be shown to the club multiple times over an iterative process to tailor the project to their unique needs.
+The parts demonstrated will be the role-based access system, the knowledge transfer, document upload and
+ knowledge repository retrieval systems, 
+the materials testing system and the model analysis system. While most components are auxiliary and relatively
+simple, the materials system and model analysis systems will be difficult, the latter far more than the former,
+and extensive consultation and testing will be required. Early testing will use simplified models, including elementary
+materials data and bridge models which are far less complex than actual bridge models and materials inputs the club
+develops, and complexity will be iteratively increased after a lower tranche of complexity is deemed satisfactory.
+Key Stakeholders include the Troitsky club, from its president, the rest of its executive team, the bridge and materials
+developers and other members, because every member will interact with this system once it is complete.\\\\
+\textbf{Unit Testing:}\\
+Unit tests will be extensively performed to verify the correctness of individual systems, including
+\begin{itemize}
+    \item The role-based access system;
+    \item The knowledge repository system, namely its upload, transfer, and retrieval and download subsystems;
+    \item The materials testing system; and
+    \item The model analysis system.
+\end{itemize}
+
+By isolating components, errors can be isolated and caught early. These tests will point developers to areas
+that require fixing to make the system work correctly so the system will correctly function without a Herculean effort
+in the end to fix a great multiplicity of errors.
+\\\\
+\textbf{Cross-Platform Environment Compatibility:}\\
+The system shall be tested on Windows, Macintosh and Linux personal computers. Furthermore it shall be tested
+on the common browsers including Chrome, Edge, Firefox and Safari to ensure compatibility. This is necessary because
+users shall be able to access this application on the device and browser of their choice, assuming the device or browser type
+is sufficiently common.
+\\\\
+\textbf{Real-Time Decision Making}\\
+To validate real-time decision making abilities of the system:
+
+\begin{itemize}
+    \item Latency profiling and timing tests shall be done
+    \item Verifying that all tasks, especially the model analysis and materials testing, finish within the limits defined above
+    \item Continious integration (CI) pipelines shall be implemented to ensure changes to any component, especially
+     frequently expected ones like rule changes and role changes, do not negatively impact the response time
+\end{itemize}
+\textbf{Data Privacy and Ethical Compliance:}\\
+While private user data is not used directly by the system, the system may access it. Therefore, no private data
+will be stored without the user's consent. However, this system takes no responsibility regarding the content of
+data inputted to the knowledge repository, whether through uploading a document or content submitted through a knowledge
+transfer form. 
+
+It shall be explicitly stated that this system will store a user's full name, the roles they hold or held within the club,
+and the dates when they started and ended to hold each role. 
+\\\\
+\textbf{Accuracy:}\\
+The accuracy of the engineering calculations calculated by external APIs is out of scope for this project. However,
+all external API calls and internal calculations shall be verified by a person knowledgeable within the domain.
+Formalizing weighting algorithms will be a big asset in verifying accuracy of these deeply technical calculations.
+\\\\
+\textbf{Scalability:}\\
+To test the system ability to scale,
+
+\begin{itemize}
+    \item Performance testing such as:
+    \begin{itemize}
+        \item Load testing
+        \item Stress testing
+    \end{itemize}
+    \item Verify the system can handle many different types of inputs
+    \item Distributive testing, ensuring each member of the club can concurrently use the system without system failure
+\end{itemize}
+
