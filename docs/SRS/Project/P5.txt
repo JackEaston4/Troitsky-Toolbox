@@ -11,15 +11,20 @@ will be used to containerize the service in app development and deployment.
 \\ \textbf {Rationale:} Azure for students also provides limited access to hosting, which is why the university servers are preferred. 
 Docker allows for standardization between development and deployment.
 
-+\item \textbf{Version control and CI:} A GitHub repository with GitHub Actions.
+\item \textbf{Version control and CI:} A GitHub repository with GitHub Actions.
 \\ \textbf {Rationale:} Given by course. Runs with xUnit/Coverlet and \texttt{dotnet format}.
  
-\item \textbf{Model Analysis API/Library:} Pynite (Python)
-\\ \textbf {Rationale:} Tested, open-source, MIT-licensed finite element solvers; Pynite is easier and used in a Python service within 
-the Troitsky Toolbox.
+\item \textbf{Structural Analysis Library:} BriefFiniteElement.NET (BFE.NET).
+\\ \textbf {Rationale:} Open-source (LGPL-3.0) linear-static finite element library written in C\#, supporting 3D frame and truss models. 
+Fallback: a direct stiffness solver written by the team using Math.NET Numerics (MIT).
 
-\item \textbf{STEP Parsing Library:} Open CASCADE, through its Python bindings (CadQuery or pythonocc).
-\\ \textbf {Rationale:} Allows for STEP file input and visualization through a browser viewer SDK. Runs with Python like the 
-rest of the modelling component.
+\item \textbf{STEP Parsing Library:} IxMilia.Step.
+\\ \textbf {Rationale:} Open-source (MIT) STEP reader written in C\#, used to extract member geometry on the server. As it supports a limited set of 
+STEP entities, it will be tested on club STEP exports in the Proof of Concept. Fallback: Open CASCADE (LGPL-2.1) through a C++/CLI wrapper, which 
+requires Windows hosting.
+
+\item \textbf{3D Model Viewer:} occt-import-js with three.js in the browser.
+\\ \textbf {Rationale:} The web app cannot render 3D models in C\#. occt-import-js (Open CASCADE compiled to WebAssembly, LGPL-2.1) reads STEP 
+files in the browser and passes the mesh to three.js for display.
 
 \end{itemize}

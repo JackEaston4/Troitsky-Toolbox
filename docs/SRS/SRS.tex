@@ -63,6 +63,17 @@
     {3.25ex \@plus1ex \@minus.2ex}{0.5ex}{\normalfont\normalsize\bfseries}}
 \makeatother
 \setcounter{tocdepth}{2}
+% Sub-entries (S.2.1, P.1.1, ...) are added at the subsection level like the
+% \nsection entries, but without \numberline. Indent those one step further.
+\makeatletter
+\AtBeginDocument{%
+  \let\srs@l@subsection\l@subsection
+  \renewcommand*\l@subsection[2]{%
+    \@expandtwoargs\in@{\detokenize{\numberline}}{\detokenize{#1}}%
+    \ifin@ \srs@l@subsection{#1}{#2}%
+    \else \@dottedtocline{2}{3.8em}{3.2em}{#1}{#2}\fi}}
+\makeatother
+
 
 %--------------------- Numbering ---------------
 \usepackage{amsthm}

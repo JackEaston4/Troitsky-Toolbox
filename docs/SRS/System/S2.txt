@@ -38,7 +38,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Credential security:} Access Control System shall store passwords only as salted hashes produced by an industry-standard algorithm, and shall never store passwords in plain text. (NFR-AC-1)
+    \item \textbf{Credential security:} Access Control System shall store passwords only as salted hashes produced by an industry-standard algorithm \cite{NIST80063B4}, and shall never store passwords in plain text. (NFR-AC-1)
     \item \textbf{Effective role alterations:} Access Control System shall ensure that if a user's role is altered, the change shall be effective by the user's next request to the system. (NFR-AC-2)
 \end{enumerate}
 
@@ -56,7 +56,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \subsubsection*{Non-Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Extensibility:} Toolbox Broker shall allow a new service to be added to the system by registering it, without modifying the source code of the broker or of any existing service. (NFR-BR-1)
+    \item \textbf{Extensibility:} Toolbox Broker shall allow a new service to be added to the system by registering it, without modifying the source code of the broker or of any existing service \cite{Parnas1978}. (NFR-BR-1)
     \item \textbf{Routing overhead:} Toolbox Broker shall add no more than \const{MAX_BROKER_OVERHEAD} (\valMaxBrokerOverhead) to the response time of any request it routes. (NFR-BR-2)
     \item \textbf{Request logging:} Toolbox Broker shall log each request it handles, including the requesting member, the requested operation, the time, and whether the request succeeded. (NFR-BR-3)
 \end{enumerate}
@@ -106,8 +106,8 @@ This section describes the behaviour of each component identified in S.1. Each s
 
 \paragraph{Functional Requirements}
 \begin{enumerate}
-    \item \textbf{Failure load estimate:} Performance Analysis System shall estimate the failure load of a bridge model, being the maximum load the bridge can support before failure. (FR-PA-1)
-    \item \textbf{Load-to-mass ratio:} Performance Analysis System shall compute the estimated load-to-mass ratio of a bridge model, from its estimated failure load and its extracted mass. (FR-PA-2)
+    \item \textbf{Failure load estimate:} Performance Analysis System shall estimate the failure load of a bridge model, being the maximum load the bridge can support before failure \cite[Sec.~10.5]{TroitskyRulebook2026}. (FR-PA-1)
+    \item \textbf{Load-to-mass ratio:} Performance Analysis System shall compute the estimated load-to-mass ratio of a bridge model, from its estimated failure load and its extracted mass \cite[Sec.~10.6]{TroitskyRulebook2026}. (FR-PA-2)
     \item \textbf{Material selection:} Performance Analysis System shall use the material properties provided by the Material Testing Manager, and shall allow the member to choose which set of material data, such as a given year or material batch, to apply. (FR-PA-3)
     \item \textbf{Assumption disclosure:} Performance Analysis System shall display the assumptions and limitations of each estimate alongside its results, so that members do not mistake an estimate for a guaranteed result. (FR-PA-4)
 \end{enumerate}
@@ -116,7 +116,7 @@ This section describes the behaviour of each component identified in S.1. Each s
 \begin{enumerate}
     \item \textbf{Estimate accuracy:} For past club bridges whose tested failure loads are recorded, Performance Analysis System shall estimate the failure load to within \const{FAILURE_LOAD_TOLERANCE} (\valFailureLoadTolerance) of the recorded value in competition. (NFR-PA-1)
     \item \textbf{Computation time:} Performance Analysis System shall produce results for a typical club bridge model within \const{MAX_ANALYSIS_TIME} (\valMaxAnalysisTime). (NFR-PA-2)
-    \item \textbf{Extensibility:} Performance Analysis System shall be structured so that additional performance metrics can be added in the future without modifying the computation of existing metrics. (NFR-PA-3)
+    \item \textbf{Extensibility:} Performance Analysis System shall be structured so that additional performance metrics can be added in the future without modifying the computation of existing metrics \cite{Parnas1978}. (NFR-PA-3)
 \end{enumerate}
 
 %---------------------------------
