@@ -60,16 +60,16 @@ Table~\ref{tab:survey-features} summarizes the ratings and top-3 choices for eac
 \textbf{Feature} & \textbf{Mean (1--5)} & \textbf{High\textsuperscript{a}} & \textbf{Top-3\textsuperscript{b}} & \textbf{Requirements} \\
 \midrule
 E. Failure load prediction        & 4.35 & 18 & 12 & FR-PA-1 \\
-A. Archive of past designs        & 4.35 & 17 & 11 & FR-MA-6, FR-KR-3 \\
+A. Archive of past designs        & 4.35 & 17 & 11 & FR-KR-3, FR-MA-5, FR-MA-6 \\
 D. Structural efficiency          & 4.25 & 17 & 10 & FR-PA-2 \\
-C. Weight estimator               & 4.10 & 15 &  8 & FR-MA-4 \\
+C. Weight estimator               & 4.10 & 15 &  8 & FR-MA-3 \\
 B. Material test database         & 4.45 & 18 &  6 & S.2.6 \\
-J. Rules reference                & 4.00 & 14 &  5 & FR-KR-1 \\
+J. Rules reference                & 4.00 & 14 &  5 & S.2.5.2 \\
 H. Onboarding material            & 4.00 & 14 &  3 & --- \\
 G. Exit / handover documents      & 4.00 & 15 &  2 & S.2.7 \\
-I. Private team workspace         & 3.55 & 11 &  2 & FR-AC-6, FR-MA-5 \\
-K. Announcements page             & 3.85 & 14 &  1 & FR-WS-2 \\
-F. 3D model viewer                & 3.55 & 12 &  0 & FR-MA-3 \\
+I. Private team workspace         & 3.55 & 11 &  2 & FR-AC-6, FR-MA-4 \\
+K. Announcements page             & 3.85 & 14 &  1 & FR-WS-1 \\
+F. 3D model viewer                & 3.55 & 12 &  0 & FR-MA-2 \\
 \bottomrule
 \end{tabularx}
 
@@ -84,7 +84,7 @@ F. 3D model viewer                & 3.55 & 12 &  0 & FR-MA-3 \\
     \item \textbf{Knowledge Repository Data Prioritization:} When considering what data from past teams and competition years current members wish to have, 
     joint design and construction data was the most prioritized. 
     \item \textbf{Current Team Data Storage Solutions:} Most teams (13/20) utilize Microsoft Teams, with the rest spread between other common services.
-    \item \textbf{Data Sharing Preference:} 17/20 teams have stated that they wish to have results, designs and work preserved and shared within the app.
+    \item \textbf{Data Sharing Preference:} 17/20 respondents have stated that they wish to have results, designs and work preserved and shared within the app.
     \item \textbf{Desired Tutorial Types:} For tutorials kept within the knowledge repository, there was a clear split, with more experienced members stating that 
     they wish to have manufacturing-focused tutorials, while newer, less experienced members pushed for modelling software tutorials. Results: Manufacturing 15, 
     modelling software 9, slab building 9, team organization 4; 1 person wrote in joint method selection
