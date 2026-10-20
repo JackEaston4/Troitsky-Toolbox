@@ -76,8 +76,6 @@
 \subsection*{A.5.3 Mason Azzopardi}
 \addcontentsline{toc}{subsection}{A.4.3 Mason Azzopardi}
 
-\notEmpty
-
 \begin{enumerate}
   \item The Stakeholder analysis, it went so much smoother than it has in the past because of my proximity to the stakeholders. Also the High level usage scenarios and detailed usage scenarios went very smoothly compared to 3RA3, I think the larger technical involvement of this project made them easier to write out.
   \item The main pain points of this submission for me was the hours needed to put in, I had a lot of things going on during reading week and managing my time ended up being very difficult, the solution I had to this was finding the smallest gaps in my schedule to work, for example I reviewed PR requests while I was watching my roommates cross country meet.
@@ -88,20 +86,15 @@
 \subsection*{A.5.4 Michael Roberts}
 \addcontentsline{toc}{subsection}{A.4.4 Michael Roberts}
 
-\notEmpty
-
 \begin{enumerate}
-  \item
-  \item
-  \item
-  \item
+  \item Our team coordination, especially by dividing up issues early.
+  \item The Herculean final effort; with a large meeting at submission time ensuring we were done.
+  \item The course which was the largest aid was SFWRENG 3RA3 - Software Requirements and Security Considerations. A whole course guided our efforts to creating this requirements document and taught us the importance of it.
 \end{enumerate}
 
 %=================================
 \subsection*{A.5.5 Jack Easton}
 \addcontentsline{toc}{subsection}{A.4.5 Jack Easton}
-
-\notEmpty
 
 \begin{enumerate}
   \item I think during the writing of this deliverable the team did a good job of coming together (despite difficulties scheduling and working through reading week) to create a uniform concise document that appropriately represents the design of the system we are creating for the Troitsky team. I think we've done a good job creating requirements that will lead to a polished and producitive end result that will benifit the McMaster Troitsky Club.
