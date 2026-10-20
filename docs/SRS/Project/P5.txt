@@ -3,7 +3,7 @@
 \begin{itemize}
  
 \item \textbf{Database server:} Microsoft SQL Server.
-\\ \textbf {Rationale: } Used to store the shared repository and uploaded models. Pairs with C\# and LINQ. Azure for students can be used to 
+\\ \textbf {Rationale: } Used to store the shared repository and uploaded models. Pairs with C\# and \term{linq}{LINQ}. Azure for students can be used to 
 access SQL Server Development Edition free (testing only).
 
 \item \textbf{Hosting/Deployment:} Azure App Service; if the university server is accessible, that would be preferred. Docker 
@@ -15,16 +15,16 @@ Docker allows for standardization between development and deployment.
 \\ \textbf {Rationale:} Given by course. Runs with xUnit/Coverlet and \texttt{dotnet format}.
  
 \item \textbf{Structural Analysis Library:} BriefFiniteElement.NET (BFE.NET).
-\\ \textbf {Rationale:} Open-source (LGPL-3.0) linear-static finite element library written in C\#, supporting 3D frame and truss models. 
-Fallback: a direct stiffness solver written by the team using Math.NET Numerics (MIT).
+\\ \textbf {Rationale:} Open-source (\termfirst{lgpl}{LGPL}-3.0) linear-static finite element library written in C\#, supporting 3D frame and truss models. 
+Fallback: a direct stiffness solver written by the team using Math.NET Numerics (\termfirst{mit}{MIT}).
 
-\item \textbf{STEP Parsing Library:} IxMilia.Step.
-\\ \textbf {Rationale:} Open-source (MIT) STEP reader written in C\#, used to extract member geometry on the server. As it supports a limited set of 
-STEP entities, it will be tested on club STEP exports in the Proof of Concept. Fallback: Open CASCADE (LGPL-2.1) through a C++/CLI wrapper, which 
+\item \textbf{\term{step}{STEP} Parsing Library:} IxMilia.Step.
+\\ \textbf {Rationale:} Open-source (\term{mit}{MIT}) \term{step}{STEP} reader written in C\#, used to extract member geometry on the server. As it supports a limited set of 
+\term{step}{STEP} entities, it will be tested on club \term{step}{STEP} exports in the Proof of Concept. Fallback: Open CASCADE (\term{lgpl}{LGPL}-2.1) through a C++/CLI wrapper, which 
 requires Windows hosting.
 
 \item \textbf{3D Model Viewer:} occt-import-js with three.js in the browser.
-\\ \textbf {Rationale:} The web app cannot render 3D models in C\#. occt-import-js (Open CASCADE compiled to WebAssembly, LGPL-2.1) reads STEP 
+\\ \textbf {Rationale:} The web app cannot render 3D models in C\#. occt-import-js (Open CASCADE compiled to WebAssembly, \term{lgpl}{LGPL}-2.1) reads \term{step}{STEP} 
 files in the browser and passes the mesh to three.js for display.
 
 \end{itemize}

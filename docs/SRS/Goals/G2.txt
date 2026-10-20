@@ -1,8 +1,8 @@
 \nsection{G.2 Current situation}
 
-Currently, teams operate in a highly individualistic manner, with the greater McMaster Troitsky club covering the administrative details regarding competition registration and providing 
+Currently, teams operate in a highly individualistic manner, with the greater \term{troitsky-club}{McMaster Troitsky club} covering the administrative details regarding competition registration and providing 
 guidance and feedback when possible. Teams store information through Microsoft Teams, Google Drive and emails between members, with many teams resulting in having a single member in charge 
-of different competition components. Currently, the club as a whole does not have a centralized system in place to store past designs, bridge models or technical details, only having more adiminstrative/executive 
+of different competition components. Currently, the club as a whole does not have a centralized system in place to store \termfirst{past-design}{past designs}, bridge models or technical details, only having more adiminstrative/executive 
 documents stored. Even tutorials that are consistently useful for teams do not have a consistent access point and therefore have become unreliable as proper support for the club. 
 To address these challenges, for the past 2 years the club has been pushing for more integration between teams, generalizing the coaching positions, providing larger-scale support 
 and creating a stronger administrative presence through timelines and events, but still lacks a service to centralize and make this data available.

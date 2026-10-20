@@ -4,25 +4,25 @@ The system will interact with the following external components:
 
 \begin{itemize}
 
-\item \textbf{Troitsky Organizing Committee - Concordia:} As the Troitsky competition is organized at Concordia University by the Organizing Committee 
+\item \textbf{Troitsky Organizing Committee - Concordia:} As the \term{troitsky-competition}{Troitsky competition} is organized at Concordia University by the Organizing Committee 
 of the Engineering and Computer Science Association \cite[Secs.~1, 13.1]{TroitskyRulebook2026}, much of what is valued in the product depends on what is valued in the 
 competition itself. Between years, rules are often revised, and different competition components are added, removed or modified. The 
 Organizing Committee also reserves the right to modify the rules at any time \cite[Sec.~3.1]{TroitskyRulebook2026}. As is the case, the product will be heavily dependent on the organization 
 and must allow for compliance and rule checking in line with the current competition standards.
 
-\item \textbf{CAD Software Modelling Tools:} Design software, such as AutoCAD or SolidWorks, is used by teams to model their bridges 
-and to create their STEP files \cite{ISO10303-21}, which will serve as the input for the Model Analysis.
+\item \textbf{\term{cad}{CAD} Software Modelling Tools:} Design software, such as AutoCAD or SolidWorks, is used by teams to model their bridges 
+and to create their \term{step}{STEP} files \cite{ISO10303-21}, which will serve as the input for the Model Analysis.
 
 \item \textbf{Model Analysis Libraries:} For the modelling component of the product, external open-source libraries will be used to read and display 
-the inputted STEP files and to perform their static analysis. This will be used to calculate/create the output predictions and model data (see P.5).
+the inputted \term{step}{STEP} files and to perform their static analysis. This will be used to calculate/create the output predictions and model data (see P.5).
 
 \item \textbf{Hosting and Data Storage Platform:} The product will require a platform or server to host the website and the shared database. This is where the 
 repository of information, uploaded files and backups will be stored. 
 
-\item \textbf{Materials Testing Department Setup:} As the product seeks to support the material testing department, the app will need to work around the data formats 
+\item \textbf{\term{materials-team}{Materials Testing Department} Setup:} As the product seeks to support the \term{materials-team}{material testing department}, the app will need to work around the data formats 
 and the processing the team prefers.
 
-\item \textbf{Club Sponsors and University Funding:} The MES and external sponsors dictate the funding that the club receives yearly. This funding may dictate the future upkeep of the 
+\item \textbf{Club Sponsors and University Funding:} The \term{mes}{MES} and external sponsors dictate the funding that the club receives yearly. This funding may dictate the future upkeep of the 
 product, being required for the hosting and data storage platform.
 
 \end{itemize}

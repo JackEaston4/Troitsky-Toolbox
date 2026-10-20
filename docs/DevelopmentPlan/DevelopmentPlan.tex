@@ -36,7 +36,9 @@
 This document will outline the general development plan of the Troitsky Toolbox project. Sections 1-3 outline the project information and protection information; sections 4-8 describe team member roles, workflow plan, project decomposition and scheduling; sections 9-12 cover technical components of the development process, such as the final proof-of-concept demonstration plan, technology used, and AI use.
 
 \section{Confidential Information?}
-There is no confidental information to protect from industry.
+This project does not depend on confidential information. However, once deployed, some documents held in the knowledge repository
+will be confidential and will be protected through industry-standard measures. All public demonstrations shall exclude 
+these documents, using dummy documents in their stead.
 
 \section{IP to Protect}
 There is no IP to protect in this project.
@@ -131,12 +133,16 @@ The workflow process used during the development of Troitsky's Toolbox will be c
   \item If multiple team members are assign to the same issue they will create sub-issues under said issue and create new branches from the parent issues branch.
   \item When sub-issues are completed they will be merged to the parent branch with a Pull Request (PR), and reviewed by a team member working under the same parent issue.
   \item When issues are completed they will be merged through a PR to main and review by a group member that did not work on said issue, if possible.
-  \item When a PR is made it will be rin through the CI/CD pipeline using GitHub actions, and can only be reviewed and merged if it passes all tests.
+  \item When a PR is made it will be run through the CI/CD pipeline using GitHub actions, and can only be reviewed and merged if it passes all tests.
   \item Once a branch has been reviewed, merged, and passed the CI/CD pipeline it will be deleted.
 \end{enumerate}
 \subsection{Issue Management}
 At the beginning of each sprint, issues and their member assignments will be outlined in our weekly meeting and added to the KanBan as issues by the Current Administrator. It is up to those working on issues to outline their own sub-issues.
-Issues will be classified via the tools they relate to and if they are backend or frontend as tags (i.e, 'Rule Compliance Tester', 'Frontend').
+Issues will be classified via the tools they relate to and if they are backend or frontend as tags (i.e, 'Rule Compliance Tester', 'Frontend'). All fixes to issues
+shall occur on development branches, be tested and determined to be correct by the developer before submitting a pull request. Then,
+another developer shall review the code changes and must approve it before the code may enter production. If there is a merge conflict,
+the onus is on the original developer to resolve the merge conflict, determine the altered codes satisifies tests, and resubmit the code for 
+peer review.
 
 
 \begin{itemize}

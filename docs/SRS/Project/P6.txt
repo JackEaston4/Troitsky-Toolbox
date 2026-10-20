@@ -1,20 +1,18 @@
 \nsection{P.6 Risks and mitigation analysis}
-\comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}
-
 \subsection*{P.6.1 Risk Analysis}
 \addcontentsline{toc}{subsection}{P.6.1 Risk Analysis}
 
 \begin{itemize}
   \item \textbf{Risk: 3D Model Import and Analysis is Infeasible}
   \begin{itemize}
-    \item \textbf{Description:} Parsing STEP (.stp) files, rendering them, and extracting member geometry for the rule compliance and performance prediction tools is the most technically complex feature of the Toolbox. Available libraries may not support the required data extraction, or may not run in a web environment.
-    \item \textbf{Mitigation:} Prove the import and visualization pipeline in the Proof of Concept demonstration before dependent tools are built. Use an established geometry library rather than a custom parser, and agree on a standard CAD export template with the club to limit the variety of input files.
+    \item \textbf{Description:} Parsing \term{step}{STEP} (.stp) files, rendering them, and extracting member geometry for the rule compliance and performance prediction tools is the most technically complex feature of the Toolbox. Available libraries may not support the required data extraction, or may not run in a web environment.
+    \item \textbf{Mitigation:} Prove the import and visualization pipeline in the Proof of Concept demonstration before dependent tools are built. Use an established geometry library rather than a custom parser, and agree on a standard \term{cad}{CAD} export template with the club to limit the variety of input files.
     \item \textbf{Contingency:} Fall back to manual or spreadsheet entry of member geometry so the rule compliance and prediction tools remain usable without 3D import.
   \end{itemize}
 
   \item \textbf{Risk: Insufficient Legacy Club Data}
   \begin{itemize}
-    \item \textbf{Description:} Past designs, material testing results and documentation are scattered across members and inconsistent in format, so the information repository may launch with little useful content.
+    \item \textbf{Description:} \term{past-design}{Past designs}, material testing results and documentation are scattered across members and inconsistent in format, so the information repository may launch with little useful content.
     \item \textbf{Mitigation:} Collect existing documents with the club executives early in the project and define standard upload templates for designs and material tests.
     \item \textbf{Contingency:} Launch with the current season's data only, and plan for the repository to be populated over time through the upload tools.
   \end{itemize}
@@ -30,7 +28,7 @@
   \begin{itemize}
     \item \textbf{Description:} Tasks may take longer than expected or workload may become unbalanced among team members.
     \item \textbf{Mitigation:} Track tasks and milestones on the GitHub Kanban board. The Notetaker records timelines at check-in meetings, and the team revises estimates and reassigns tasks as needed.
-    \item \textbf{Contingency:} Because tools are largely independent, defer lower-priority tools to the software subteam's backlog rather than delaying core features.
+    \item \textbf{Contingency:} Because tools are largely independent, defer lower-priority tools to the \term{software-subteam}{software subteam}'s backlog rather than delaying core features.
   \end{itemize}
 
   \item \textbf{Risk: User Interface is Not User-Friendly}
@@ -57,13 +55,13 @@
     \item \textbf{Contingency:} Utilizing the broker logs to track activity, and utilizing backups to return to a secure state.
   \end{itemize}
 
-  \item \textbf{Threat: Malicious, corrupted or falsified file uploads (STEP models and test data)}
+  \item \textbf{Threat: Malicious, corrupted or falsified file uploads (\term{step}{STEP} models and test data)}
   \begin{itemize}
-    \item \textbf{Description:} A member uploads a corrupted, falsified or malicious file, either by mistake or on purpose. A malformed STEP model 
+    \item \textbf{Description:} A member uploads a corrupted, falsified or malicious file, either by mistake or on purpose. A malformed \term{step}{STEP} model 
     could crash or stall the Model Analysis System. False or incorrect material test results would also taint the aggregated materials property results, 
     skewing model results from teams that reference/utilize those results.
 
-    \item \textbf{Mitigation:} Only authenticated members can upload files, given their role and current project stage. Bridge models must be valid STEP files, and invalid files 
+    \item \textbf{Mitigation:} Only authenticated members can upload files, given their role and current project stage. Bridge models must be valid \term{step}{STEP} files, and invalid files 
     are rejected. Material test results must follow the standard CSV/Excel template and pass validation for missing or physically 
     impossible values, with metadata filled out to club standard. Uploading user is recorded.
     
@@ -80,6 +78,6 @@
     deleted, and the failure of one service does not affect the others.
     
     \item \textbf{Contingency:} Restore lost data from the most recent backup, losing at most \const{BACKUP_INTERVAL} (\valBackupInterval) of contributions. 
-    Test results and handoff documents can also be exported outside the system. 
+    Test results and \term{handoff-document}{handoff documents} can also be exported outside the system. 
   \end{itemize}
 \end{itemize}

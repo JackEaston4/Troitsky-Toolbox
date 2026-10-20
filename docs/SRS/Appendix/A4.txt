@@ -108,3 +108,49 @@
   \item I think the biggest pain point in this deliverable is just the sheer scale, depth, and dependencies between sections across these two documents. It was very difficult intially to get a handle on what order to approach tasks, what needed to happen first, and when we needed to cricle back to a previously written section and revaluate the thngs we had written. We resolved these early on by mapping out and breaking down the deliverable into 3 internal milestones and set internal deadlines for these to promote timely work and provide a realistic framework for achiveing the work we had to get done.
   \item By far the course that has been the most helpful is "SFWRENG 3RA3: Software Requirements and Security Considerations". This course taught me the importance of requirements and how to effectively write and break down problems into necessary, verifiable, and attainable requiements. I think "SFWRENG 3A04: Large System Design" also has been very helpful, and will continue to be helpful in the design and development processes of this project. The course teaches how to design large systems (such as the Troitsky Toolbox we are developing) efficently and in a manner that will make later development as straightforward as possible.
 \end{enumerate}
+\nsection{A.4 Generative AI Use Disclosure}
+
+\subsection*{A.4.1 AI Tools Used}
+\addcontentsline{toc}{subsection}{A.4.1 AI Tools Used}
+
+\begin{itemize}
+  \item ChatGPT 5.2 (OpenAI)
+  \item Claude Opus 5.5 (Anthropic)
+\end{itemize}
+
+\subsection*{A.4.2 How and Where Used}
+\addcontentsline{toc}{subsection}{A.4.2 How and Where Used}
+
+AI tools were used during this deliverable to assist with the following:
+\begin{itemize}
+  \item \textbf{Formatting:} help with LaTeX formatting, building, and layout (tables,
+  lists, and section structure) across the document.
+  \item \textbf{Linking:} adding and fixing internal references and labels
+  between sections and requirements within the SRS.
+  \item \textbf{Review:} reviewing drafted sections for clarity, consistency,
+  and possible errors or omissions.
+  \item \textbf{Cross-referencing between documents:} updating and checking
+  references between the SRS and the Hazard Analysis, so that the functional
+  and non-functional requirements cited in the Hazard Analysis FMEA table
+  match the current SRS.
+\end{itemize}
+
+\subsection*{A.4.3 Verification of AI-Generated Content}
+\addcontentsline{toc}{subsection}{A.4.3 Verification of AI-Generated Content}
+
+The team followed the same policy for AI use that the Development Plan sets
+for AI-generated code: each developer shall thoroughly review all
+AI-generated content before creating a pull request and not submit the
+content for a pull request until they completely understand it and are
+convinced of its validity.
+
+\begin{itemize}
+  \item Each team member reviewed any AI-assisted changes to their own
+  sections before opening a pull request.
+  \item Cross-references between the SRS and the Hazard Analysis were checked
+  by hand against the current version of both documents.
+  \item Pull requests were reviewed by at least one other team member before merging.
+  \item The team is responsible for the accuracy, completeness, consistency,
+  and appropriateness of this document, whether material was written by a
+  person or with help from an AI tool.
+\end{itemize}

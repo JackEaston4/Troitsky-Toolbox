@@ -1,5 +1,4 @@
 \nsection{G.3 Expected benefits}
-\comment{New processes, or improvement to existing processes, made possible by the project's results.}
 %--------------------------------
 The Toolbox addresses the problem described in G.1 by replacing the club's informal, individual team-based data storage solutions with consistent 
 services that retain data between competition years. The member survey, described in P.7, outlines the importance of services and tools, providing 
@@ -10,9 +9,9 @@ The expected benefits of the core user base groups are listed below.
 \subsection*{General Members and Teams}
 
 \begin{itemize}
-    \item \textbf{Self-directed learning for new members:} New members can explore past bridge designs, material test results, and design documentation on their own, rather than relying on experienced members being available to explain them. This lowers the barrier to joining the club and allows new members to contribute to their team sooner.
-    \item \textbf{Learning from past designs:} Teams can load past bridge designs into the model viewer and inspect them alongside their recorded results, so that each year's designs build on what previous teams learned instead of starting from scratch.
-    \item \textbf{Accessible bridge analysis:} Teams can upload their bridge model and receive an estimate of its failure load and load-to-mass ratio, without needing formal structural modelling knowledge. This allows every member of a team, not only those with analysis experience, to take part in evaluating and improving a design.
+    \item \textbf{Self-directed learning for new members:} New members can explore \term{past-design}{past bridge designs}, material test results, and design documentation on their own, rather than relying on experienced members being available to explain them. This lowers the barrier to joining the club and allows new members to contribute to their team sooner.
+    \item \textbf{Learning from \term{past-design}{past designs}:} Teams can load \term{past-design}{past bridge designs} into the model viewer and inspect them alongside their recorded results, so that each year's designs build on what previous teams learned instead of starting from scratch.
+    \item \textbf{Accessible bridge analysis:} Teams can upload their bridge model and receive an estimate of its \termfirst{failure-load}{failure load} and \termfirst{load-to-mass}{load-to-mass ratio}, without needing formal structural modelling knowledge. This allows every member of a team, not only those with analysis experience, to take part in evaluating and improving a design.
     \item \textbf{Early rule compliance checking:} Teams can check their model against the current competition rules before building it, catching violations while they are still easy to fix, rather than after time and materials have been spent on construction.
     \item \textbf{Data-driven material decisions:} Material testing results are recorded in a standard format and compared against previous years, so teams can base their design decisions on the club's accumulated test data. Performance estimates also use material properties measured by the club itself.
 \end{itemize}
@@ -20,13 +19,13 @@ The expected benefits of the core user base groups are listed below.
 \subsection*{Club Executives}
 \begin{itemize}
     \item \textbf{Reduced support burden:} Much of the technical support and information sharing that currently falls on executives is replaced by self-service access to the Toolbox, freeing executives to focus on running the club.
-    \item \textbf{Reliable leadership transitions:} Exit documents and role records give each incoming executive a written account of their position's responsibilities, contacts, and yearly timeline, so that the club's organization does not depend on informal handovers.
+    \item \textbf{Reliable leadership transitions:} \termfirst{exit-document}{Exit documents} and \termfirst{role-record}{role records} give each incoming executive a written account of their position's responsibilities, contacts, and yearly timeline, so that the club's organization does not depend on informal handovers.
     \item \textbf{Consistency across teams:} Because all teams draw on the same repository, test data, and tools, executives can expect a more consistent baseline of knowledge across the four to six teams the club supports each year.
 \end{itemize}
 
 \subsection*{Troitsky Club as a Whole}
 \begin{itemize}
     \item \textbf{Preserved institutional knowledge:} Knowledge that would previously have left the club with graduating members is retained and remains accessible to future members, allowing the club's capabilities to accumulate over time instead of being rebuilt each year.
-    \item \textbf{Sustainable software development:} The Toolbox is designed to be maintained by a software subteam within the club, creating a new way for members interested in software to contribute and ensuring the Toolbox continues to serve the club after the original development team has graduated.
-    \item \textbf{Improved competitive performance:} Together, better access to past knowledge, analysis before construction, and consistent material data are expected to improve the performance of McMaster's teams at the Troitsky competition, benefiting the club's reputation as well as that of the McMaster Engineering Society and McMaster University.
+    \item \textbf{Sustainable software development:} The Toolbox is designed to be maintained by a \termfirst{software-subteam}{software subteam} within the club, creating a new way for members interested in software to contribute and ensuring the Toolbox continues to serve the club after the original development team has graduated.
+    \item \textbf{Improved competitive performance:} Together, better access to past knowledge, analysis before construction, and consistent material data are expected to improve the performance of McMaster's teams at the \termfirst{troitsky-competition}{Troitsky competition}, benefiting the club's reputation as well as that of the \termfirst{mes}{McMaster Engineering Society} and McMaster University.
 \end{itemize}
