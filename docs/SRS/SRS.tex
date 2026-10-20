@@ -106,6 +106,22 @@
 \newcommand{\valMaxRoleSearchTime}{2~minutes}
 \newcommand{\valMinConcurrentUsers}{50~members}
 \newcommand{\valMaxOnboardingTime}{1~week}
+%--------------------- Glossary and requirement links ---------------
+% Glossary terms (E.1):
+%   \termdef{key}{Term}     glossary entry; the bold Term links to its first use
+%   \termfirst{key}{text}   first use of a term in the text (one per key);
+%                           links to the entry and is where the entry links back to
+%   \term{key}{text}        every later use; links to the glossary entry
+% Requirements:
+%   \reqdef{ID}             where ID is defined in S.2; links to its row in A.2
+%   \reqref{ID}             any other mention of ID; links to its definition
+%   \reqrow{ID}             ID cell in the traceability matrix (A.2); links back
+\newcommand{\termdef}[2]{\leavevmode\hypertarget{gls:#1}{}\hyperlink{glsfirst:#1}{\textbf{#2}}}
+\newcommand{\termfirst}[2]{\leavevmode\hypertarget{glsfirst:#1}{}\hyperlink{gls:#1}{#2}}
+\newcommand{\term}[2]{\hyperlink{gls:#1}{#2}}
+\newcommand{\reqdef}[1]{\leavevmode\hypertarget{req:#1}{}\hyperlink{trace:#1}{#1}}
+\newcommand{\reqref}[1]{\hyperlink{req:#1}{#1}}
+\newcommand{\reqrow}[1]{\leavevmode\hypertarget{trace:#1}{}\hyperlink{req:#1}{#1}}
 %--------------------- Comments ---------------
 \newcommand{\mynote}[3][black]{\textcolor{#1}{\fbox{\bfseries\sffamily\scriptsize{#2}}
 {\small\textsf{\emph{#3}}}}}
@@ -132,23 +148,20 @@
 \end{tabularx}
 \end{table}
 
-This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer \cite{Meyer2022}. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
+This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer \cite{Meyer2022}. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.3).
 \newpage{}
 %===============================================================
 \tableofcontents
 \newpage{}
-% Glossary moved to start per Meyer Level 4 (see Becca_SRS change note):
+% E.1 Glossary is placed before the books so that terms are defined before
+% first use (listed in Appendix A.3).
 \input{Environment/E1.txt}
-\newpage{}
-% Environment (rest of E sections)
 \newpage{}
 %===============================================================
 
 %===============================================================
 \book{G}{Goals}
 %===============================================================
-
-\comment{Goals are "needs of the target organization, which the system will address". While the development team is the principal user of the other books, the Goals book addresses a wider audience: essentially, all stakeholders.}
 
 \input{Goals/G1.txt}
 \input{Goals/G2.txt}
@@ -162,8 +175,6 @@ This document follows the requirements documentation structure presented in the 
 \book{E}{Environment}
 %===============================================================
 
-\comment{The Environment book describes the application domain and external context, physical or virtual (or a mix), in which the system will operate.}
-
 \input{Environment/E2.txt}
 \input{Environment/E3.txt}
 \input{Environment/E4.txt}
@@ -173,8 +184,6 @@ This document follows the requirements documentation structure presented in the 
 %===============================================================
 \book{S}{System}
 %===============================================================
-
-\comment{The System book refines the Goal one by focusing on more detailed requirements about the system under development, mainly its constituents, behaviors and properties.}
 
 \input{System/S1.txt}
 \input{System/S2.txt}
@@ -187,8 +196,6 @@ This document follows the requirements documentation structure presented in the 
 %===============================================================
 \book{P}{Project}
 %===============================================================
-
-\comment{The Project book describes all the constraints and expectations not about the system itself, but about how to develop and produce it.}
 
 \input{Project/P1.txt}
 \input{Project/P2.txt}
@@ -216,6 +223,7 @@ This document follows the requirements documentation structure presented in the 
 \input{Appendix/A2.txt}
 \input{Appendix/A3.txt}
 \input{Appendix/A4.txt}
+\input{Appendix/A5.txt}
 
 %===============================================================
 \end{document}

@@ -44,7 +44,7 @@
     
     \begin{minipage}[c]{\linewidth}\vspace{3pt}
     \begin{itemize}[nosep, leftmargin=*]
-      \item VnV Peer Review Requests
+      \item \termfirst{vnv}{VnV} Peer Review Requests
       \item POC Requests
     \end{itemize}\vspace{3pt}
     \end{minipage} & 05/11/2026 \\ 
@@ -69,7 +69,7 @@
     
     \begin{minipage}[c]{\linewidth}\vspace{3pt}
     \begin{itemize}[nosep, leftmargin=*]
-      \item VnV
+      \item \term{vnv}{VnV}
       \item Custom Deliverable Winter
     \end{itemize}\vspace{3pt}
     \end{minipage} & 11/03/2027 \\ 

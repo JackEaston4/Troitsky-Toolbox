@@ -1,21 +1,96 @@
-\nsection{A.2 Changes from Template}
+\nsection{A.2 Traceability Matrix}
 
-Table~\ref{tab:template-changes} lists the changes made to the structure of the Meyer template \cite{Meyer2022} and the reason for each.
+Table~\ref{tab:traceability} lists each requirement in S.2 with the requirements it depends on or fulfils. Each ID in the table links to the requirement in S.2, and the ID in S.2 links back to its row here.
 
-\begin{table}[H]
-\centering
-\caption{Changes from the Meyer template}
-\label{tab:template-changes}
-\begin{tabularx}{\textwidth}{p{4.5cm}X}
+\begin{longtable}{@{} p{3cm} p{0.65\textwidth} @{}}
+\caption{Requirements traceability matrix}
+\label{tab:traceability} \\
 \toprule
-\textbf{Change} & \textbf{Reason} \\
+\textbf{Requirement} & \textbf{Depends on / Fulfils} \\
 \midrule
-Added the Appendix book (A) after the Project book. & The Meyer template has only the Goals, Environment, System and Project books. The course rubric and SRS checklist require content that belongs in none of them (A.1, A.3, A.4). \\
-Added a References section after the Project book. & The Meyer template has no references section. It lists the sources cited in the document, such as those for the values in A.1. \\
-Added A.1 Symbolic Constants. & The SRS checklist requires the values of symbolic constants to be given in a table in the Appendix. \\
-Added A.2 Changes from Template. & The SRS checklist requires changes made to the template to be described in the document. \\
-Added A.3 Generative AI Use Disclosure. & Required by the course rubric. \\
-Added A.4 Reflection. & Required by the course rubric, using the questions from the course's SRS reflection template. \\
+\endfirsthead
+\toprule
+\textbf{Requirement} & \textbf{Depends on / Fulfils} \\
+\midrule
+\endhead
+\reqrow{FR-WS-1} &  \\
+\reqrow{FR-WS-2} &  \\
+\reqrow{FR-WS-3} & Depends on \reqref{FR-AC-3} \\
+\reqrow{NFR-WS-1} &  \\
+\reqrow{NFR-WS-2} &  \\
+\reqrow{NFR-WS-3} &  \\
+\midrule
+\reqrow{FR-AC-1} &  \\
+\reqrow{FR-AC-2} &  \\
+\reqrow{FR-AC-3} &  \\
+\reqrow{FR-AC-4} &  \\
+\reqrow{FR-AC-5} &  \\
+\reqrow{FR-AC-6} & Depends on \reqref{FR-MA-6} \\
+\reqrow{NFR-AC-1} &  \\
+\reqrow{NFR-AC-2} & Fulfils \reqref{FR-AC-6} \\
+\midrule
+\reqrow{FR-BR-1} & Fulfils \reqref{NFR-BR-1} \\
+\reqrow{FR-BR-2} &  \\
+\reqrow{FR-BR-3} &  \\
+\reqrow{FR-BR-4} & Fulfils \reqref{NFR-SYS-3} \\
+\reqrow{NFR-BR-1} &  \\
+\reqrow{NFR-BR-2} &  \\
+\reqrow{NFR-BR-3} &  \\
+\midrule
+\reqrow{FR-KR-1} &  \\
+\reqrow{FR-KR-2} & Fulfils \reqref{FR-KR-3} \\
+\reqrow{FR-KR-3} &  \\
+\reqrow{FR-KR-4} &  \\
+\reqrow{FR-KR-5} &  \\
+\reqrow{NFR-KR-1} &  \\
+\reqrow{NFR-KR-2} &  \\
+\midrule
+\reqrow{FR-MA-1} &  \\
+\reqrow{FR-MA-2} & Fulfils \reqref{FR-MA-5} \\
+\reqrow{FR-MA-3} &  \\
+\reqrow{FR-MA-4} & Depends on \reqref{FR-AC-6} \\
+\reqrow{FR-MA-5} &  \\
+\reqrow{FR-MA-6} &  \\
+\reqrow{NFR-MA-1} &  \\
+\reqrow{NFR-MA-2} &  \\
+\reqrow{NFR-MA-3} &  \\
+\midrule
+\reqrow{FR-PA-1} &  \\
+\reqrow{FR-PA-2} &  \\
+\reqrow{FR-PA-3} &  \\
+\reqrow{FR-PA-4} & Depends on \reqref{NFR-PA-1} \\
+\reqrow{NFR-PA-1} &  \\
+\reqrow{NFR-PA-2} &  \\
+\reqrow{NFR-PA-3} &  \\
+\midrule
+\reqrow{FR-RC-1} &  \\
+\reqrow{FR-RC-2} &  \\
+\reqrow{FR-RC-3} &  \\
+\reqrow{FR-RC-4} &  \\
+\reqrow{FR-RC-5} &  \\
+\reqrow{NFR-RC-1} &  \\
+\reqrow{NFR-RC-2} &  \\
+\midrule
+\reqrow{FR-MT-1} &  \\
+\reqrow{FR-MT-2} & Fulfils \reqref{FR-MT-4}, \reqref{FR-PA-3} \\
+\reqrow{FR-MT-3} &  \\
+\reqrow{FR-MT-4} &  \\
+\reqrow{FR-MT-5} & Fulfils \reqref{NFR-MT-2} \\
+\reqrow{NFR-MT-1} &  \\
+\reqrow{NFR-MT-2} &  \\
+\reqrow{NFR-MT-3} &  \\
+\midrule
+\reqrow{FR-KT-1} &  \\
+\reqrow{FR-KT-2} &  \\
+\reqrow{FR-KT-3} &  \\
+\reqrow{FR-KT-4} &  \\
+\reqrow{FR-KT-5} &  \\
+\reqrow{NFR-KT-1} &  \\
+\reqrow{NFR-KT-2} &  \\
+\midrule
+\reqrow{NFR-SYS-1} &  \\
+\reqrow{NFR-SYS-2} &  \\
+\reqrow{NFR-SYS-3} &  \\
+\reqrow{NFR-SYS-4} &  \\
 \bottomrule
-\end{tabularx}
-\end{table}
+\end{longtable}

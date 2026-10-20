@@ -10,11 +10,11 @@ not fit with current competition rules.
 
 \item \textbf{Member Data and Privacy:} As the service seeks to compile team and member information, member privacy and 
 sharing permissions dictate what can be collected. During the current competition year, individual team files must be left 
-separate, with only executives and coaches being able to view all files. After the competition is complete, exit documentation 
+separate, with only executives and \term{coach}{coaches} being able to view all files. After the competition is complete, \term{exit-document}{exit documentation} 
 collected will determine what individuals wish to have stored for future years.
 
 \item \textbf{Club Data Format Compatibility :} The system must accommodate the file formats that the club utilizes, being 
-constrained to a generalized file format when multiple are available. In the case of modelling files, STEP (.stp) files must be used 
+constrained to a generalized file format when multiple are available. In the case of modelling files, \term{step}{STEP} (.stp) files must be used 
 as input as they are available across utilized services. The material testing data collection must accept .csv files, working with 
 the data exporting the club utilizes.
 
@@ -24,11 +24,11 @@ the data exporting the club utilizes.
 
 \begin{itemize}
 
-\item \textbf{Budget:} The funding set out by the MES, along with the yearly club sponsorships, will determine the budget and 
+\item \textbf{Budget:} The funding set out by the \term{mes}{MES}, along with the yearly club sponsorships, will determine the budget and 
 therefore constrain the services and upkeep of the product. Troitsky Toolbox must operate within its share of the overall club 
 funds, dictating the hosting and storage capabilities of the service.
 
-\item \textbf{Troitsky Software Subteam:} Maintenance year to year after this year will be limited by the number of software 
+\item \textbf{Troitsky \term{software-subteam}{Software Subteam}:} Maintenance year to year after this year will be limited by the number of software 
 subteam members the club recruits. As the subteam is made up of student volunteers, the experience and drive of the members 
 will also determine the level of development of the system.
 

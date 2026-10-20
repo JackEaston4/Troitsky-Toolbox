@@ -8,19 +8,19 @@ team lead.
 
 \subsection*{P.1.2 Troitsky Club Communication Associate - Pedro}
 \addcontentsline{toc}{subsection}{P.1.2 Toritsky Club Communication Associate}
-The Troitsky Club Communication Associate will be responsible for the majority of the coordination with the club 
+The \term{troitsky-club}{Troitsky Club} Communication Associate will be responsible for the majority of the coordination with the club 
 organization and executive members. Surveys and interviews will be organized, distributed, and run by this member.
 
 \subsection*{P.1.3 Front-end / UI Developer - Pedro, Michael}
 \addcontentsline{toc}{subsection}{P.1.3 Front-end / UI Developer}
-This role will be responsible for the UI of the product, both in technical displays of data and in more 
+This role will be responsible for the \termfirst{ui}{UI} of the product, both in technical displays of data and in more 
 theme/design heavy components. They will build the web app's interface, so experience in web frameworks would be 
 beneficial. They will be the ones primarily responsible for the usability testing in the Winter term's CD.
 
 \subsection*{P.1.4 Back-end/Data Developer - Jack, Mason}
 \addcontentsline{toc}{subsection}{P.1.4 Back-end / Data Developer}
 This role will be responsible for the design of the data storage within the app. This will cover both the files and 
-data the club stores (bridge files, tutorials), but also RBAC information and user/club site preferences.
+data the club stores (bridge files, tutorials), but also \termfirst{rbac}{RBAC} information and user/club site preferences.
 
 \subsection*{P.1.5 Quality Assurance / Tester - Michael}
 \addcontentsline{toc}{subsection}{P.1.5 Quality Assurance / Tester}

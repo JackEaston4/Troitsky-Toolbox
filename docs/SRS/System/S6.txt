@@ -2,7 +2,7 @@
 
 \textbf{Validation overview:}
 
-To validate the system, extensive consultation with McMaster's Troitsky club will be done. Each part
+To validate the system, extensive consultation with McMaster's \term{troitsky-club}{Troitsky club} will be done. Each part
 will be shown to the club multiple times over an iterative process to tailor the project to their unique needs.
 The parts demonstrated will be the role-based access system, the knowledge transfer, document upload and
  knowledge repository retrieval systems, 
@@ -11,7 +11,7 @@ simple, the materials system and model analysis systems will be difficult, the l
 and extensive consultation and testing will be required. Early testing will use simplified models, including elementary
 materials data and bridge models which are far less complex than actual bridge models and materials inputs the club
 develops, and complexity will be iteratively increased after a lower tranche of complexity is deemed satisfactory.
-Key Stakeholders include the Troitsky club, from its president, the rest of its executive team, the bridge and materials
+Key Stakeholders include the \term{troitsky-club}{Troitsky club}, from its president, the rest of its executive team, the bridge and materials
 developers and other members, because every member will interact with this system once it is complete.\\\\
 \textbf{Unit Testing:}\\
 Unit tests will be extensively performed to verify the correctness of individual systems, including

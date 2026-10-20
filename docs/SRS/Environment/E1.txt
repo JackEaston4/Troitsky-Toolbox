@@ -1,58 +1,68 @@
-% E.1 Glossary — moved to start of document per Meyer Level 4 (Becca_SRS style):
-% terms/acronyms defined before first use; one definition location; footnote refs.
+\nsection{E.1 Glossary}
 
-\section{E.1 Glossary}
+Terms and acronyms used in this document. Each entry links to the term's first use in the text. Competition terms follow the 2026 rulebook \cite[Secs.~1, 3, 5.1, 5.2, 10.5, 10.6]{TroitskyRulebook2026}.
+
+\subsection*{E.1.1 Terms}
+\addcontentsline{toc}{subsection}{E.1.1 Terms}
 
 \begin{itemize}
 
-\item \textbf{Troitsky / Troitsky Club}
-The McMaster University student-run engineering club that registers and supports 4--6 teams per year to design, model, analyze, and manufacture a bridge from popsicle sticks, white glue, and dental floss [1, G.1]. Named for the Russian structural engineer whose principles inform bridge design; here denotes the student organization, not the person.
+\item \termdef{coach}{Coach:} An advisor to a team who does not compete. The rulebook allows at most one coach per team, who may not help build the bridge on competition day. Coaches are graduate students, people who graduated in the last two years, or undergraduates who have competed before.
 
-\item \textbf{Troitsky Toolbox}
-The web-based repository-and-support system built for the Troitsky club: a broker-mediated architecture storing past designs, material-testing data, rule-compliance results, and role documentation, with quick search and standardized upload [2, G.4; 3, S.1].
+\item \termdef{current-model}{Current model:} A bridge model that a team is developing for the upcoming competition. Only the members of that team can access it (S.1, \reqref{FR-AC-6}).
 
-\item \textbf{Toolbox Broker (Broker)}
-Central mediator in the Troitsky Toolbox architecture. Every service (UI, repository, model loader, compliance checker) and the shared data store registers with the broker; all inter-service and user-to-service communication passes through it, so no service depends directly on another [3, S.1; 4, S.2]. Symbolic overhead: \textsc{valMaxBrokerOverhead}=100~ms.
+\item \termdef{exit-document}{Exit document:} A document that an outgoing executive or team lead completes from the template for their position, so that their successor knows what the position involves (\reqref{FR-KT-1}).
 
-\item \textbf{Repository / Tool Repository}
-The shared data storage service within the Toolbox, holding past bridge designs, material-testing records, compliance results, role-responsibility notes, and exit/knowledge-transfer documents [2, G.4; 5, E.2]. Max capacity: \textsc{valMaxRepositoryItems}=10{,}000 items.
+\item \termdef{failure-load}{Failure load:} The largest load a bridge carries before it fails when loaded at mid-span. The rulebook calls it the ultimate load carrying capacity. Also called load capacity.
 
-\item \textbf{Session}
-A logged user interaction period with the Toolbox web server. Times out at \textsc{valSessionTimeout}=30 minutes [6, E.3].
+\item \termdef{handoff-document}{Handoff document:} Any document that passes knowledge on to future members: exit documents, role records, and onboarding material (S.1). Also called a handover, transition, or knowledge transfer document.
 
-\item \textbf{Model / Model Load}
-A bridge-design model (geometry, materials, loading) registered in the repository. Load-time target: \textsc{valMaxModelLoadTime}=30~s [7, S.2.1].
+\item \termdef{load-to-mass}{Load-to-mass ratio:} A bridge's failure load divided by its mass. The rulebook scores it as structural efficiency.
 
-\item \textbf{Overhead (Broker Overhead)}
-Latency added by routing every message through the Toolbox Broker rather than direct service-to-service calls. Budget: \textsc{valMaxBrokerOverhead}=100~ms [4, S.1].
+\item \termdef{materials-team}{Materials testing team:} The club members who test the competition materials, such as popsicle sticks, glue and floss, and record the results (E.2, S.4.6). Also called the materials testing department.
 
-\item \textbf{Search / Role Search}
-Repository query for past designs, tests, or role documentation. Search-time targets: \textsc{valMaxSearchTime}=2~s (general); \textsc{valMaxRoleSearchTime}=2~min (executive/role lookup) [8, S.2.2].
+\item \termdef{past-design}{Past design:} A bridge model from a previous competition year. Any member can view it, but no one can modify it. At the end of each competition season, current models become past designs (\reqref{FR-MA-5}, \reqref{FR-MA-6}).
 
-\item \textbf{Dimension / Dimension Tolerance}
-Geometric measurement of bridge members; acceptable deviation \textsc{valDimensionTolerance}=0.5~mm [9, E.3].
+\item \termdef{role-record}{Role record:} A record for one executive position that describes its responsibilities, key contacts, and yearly timeline. Unlike an exit document, it is kept up to date across years by the current holder of the position (\reqref{FR-KT-3}).
 
-\item \textbf{Tolerance / Failure Load Tolerance}
-Margin on predicted structural failure load; allowed deviation \textsc{valFailureLoadTolerance}=25\% [10, E.3].
+\item \termdef{rule-set}{Rule set:} The competition rules for one competition year, as stored and checked by the Rule Compliance System (\reqref{FR-RC-1}, \reqref{FR-RC-2}).
 
-\item \textbf{Rule Compliance System}
-Toolbox service that checks an uploaded model against current Troitsky competition rules (updated yearly), using model data fetched through the broker; maintains its own rule set via \texttt{Manage Rules} [3, S.1].
+\item \termdef{software-subteam}{Software subteam:} A planned subteam of club members, mainly CAS students, who will maintain and extend the Toolbox once the original developers graduate (G.7, E.3).
 
-\item \textbf{Curriculum Learning (CL)}
-ML training strategy used in the modeling component: ordered phases of increasing complexity (e.g. lower victory-point thresholds initially, progressing to full rules) [11, G.6; 12, refs].
+\item \termdef{team-captain}{Team captain:} The member of a competing team who is its primary point of communication with the competition's Organizing Committee.
 
-\item \textbf{CV — Computer Vision}
-Area of AI for interpreting visual information; deferred module that would process camera input of a physical board (not active in v1) [13, E.2].
+\item \termdef{troitsky-club}{Troitsky club:} The McMaster Troitsky club, the student-run organization that registers and supports McMaster's teams in the Troitsky competition (G.1).
 
-\item \textbf{LLM — Large Language Model}
-Text-trained generative model used (optional) for natural-language explanations of broker-routed actions or design recommendations; integrated via external API [14, E.2].
-
-\item \textbf{AI — Artificial Intelligence}
-Field of computer science focused on systems performing tasks that normally require human intelligence; here covers RL modeling and LLM explanation services [15, refs].
+\item \termdef{troitsky-competition}{Troitsky competition:} An annual bridge-building competition held at Concordia University. Teams of six to eight undergraduate students build a bridge from popsicle sticks, toothpicks, white glue and dental floss, which is then loaded at mid-span until it fails.
 
 \end{itemize}
 
-% Footnote refs (link to first use / source):
-% [1] G.1 Context; [2] G.4 Functionality Overview; [3] S.1 Components / component diagram;
-% [4] S.1 Broker description; [5] E.2 Environment Components; [6,8,9,10] E.3 Constraints (symbolic constants);
-% [7] S.2.1; [11,12] G.6 + refs; [13,14,15] E.2 / refs.
+\subsection*{E.1.2 Acronyms}
+\addcontentsline{toc}{subsection}{E.1.2 Acronyms}
+
+\begin{longtable}{@{} p{2cm} p{0.7\textwidth} @{}}
+\toprule
+\textbf{Acronym} & \textbf{Expansion} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Acronym} & \textbf{Expansion} \\
+\midrule
+\endhead
+\termdef{cad}{CAD} & Computer-Aided Design \\
+\termdef{cas}{CAS} & Computing and Software, the McMaster department \\
+\termdef{cs}{CS} & Computer Science \\
+\termdef{iso}{ISO} & International Organization for Standardization \\
+\termdef{lgpl}{LGPL} & GNU Lesser General Public License \\
+\termdef{linq}{LINQ} & Language-Integrated Query \\
+\termdef{mes}{MES} & McMaster Engineering Society \\
+\termdef{mit}{MIT} & MIT License, a permissive open-source license \\
+\termdef{owasp}{OWASP} & Open Worldwide Application Security Project \\
+\termdef{rbac}{RBAC} & Role-Based Access Control \\
+\termdef{step}{STEP} & Standard for the Exchange of Product model data (ISO 10303). Also written STP, after the \texttt{.stp} file extension \\
+\termdef{tcf}{TCF} & Team Contribution Factor \\
+\termdef{ui}{UI} & User Interface \\
+\termdef{vnv}{VnV} & Verification and Validation (also written V\&V) \\
+\termdef{vp}{VP} & Vice-President \\
+\bottomrule
+\end{longtable}
