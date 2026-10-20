@@ -59,9 +59,9 @@ By utilizing this formal logic, the system isolates the custom predictive featur
 
 \subsection*{S.7.3 Z-Notation Formalization of Rule Compliance}
 
-To fulfill the goal of automating rule compliance checks for the Concordia Troitsky competition, the physical constraints of the bridge must be formally defined. 
+To fulfill the goal of automating rule compliance checks for the Concordia \term{troitsky-competition}{Troitsky competition}, the physical constraints of the bridge must be formally defined. 
 
-First, we define the state schema of a physical bridge extracted from the \texttt{.stp} CAD file:
+First, we define the state schema of a physical bridge extracted from the \texttt{.stp} \term{cad}{CAD} file:
 
 \vspace{0.5cm}
 \noindent

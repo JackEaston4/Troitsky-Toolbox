@@ -1,2 +1,68 @@
 \nsection{E.1 Glossary}
-\comment{Clear and precise definitions of all the vocabulary specific to the application domain, including technical terms, words from ordinary language used in a special meaning, and acronyms. This chapter should not be empty!}
+
+Terms and acronyms used in this document. Each entry links to the term's first use in the text. Competition terms follow the 2026 rulebook \cite[Secs.~1, 3, 5.1, 5.2, 10.5, 10.6]{TroitskyRulebook2026}.
+
+\subsection*{E.1.1 Terms}
+\addcontentsline{toc}{subsection}{E.1.1 Terms}
+
+\begin{itemize}
+
+\item \termdef{coach}{Coach:} An advisor to a team who does not compete. The rulebook allows at most one coach per team, who may not help build the bridge on competition day. Coaches are graduate students, people who graduated in the last two years, or undergraduates who have competed before.
+
+\item \termdef{current-model}{Current model:} A bridge model that a team is developing for the upcoming competition. Only the members of that team can access it (S.1, \reqref{FR-AC-6}).
+
+\item \termdef{exit-document}{Exit document:} A document that an outgoing executive or team lead completes from the template for their position, so that their successor knows what the position involves (\reqref{FR-KT-1}).
+
+\item \termdef{failure-load}{Failure load:} The largest load a bridge carries before it fails when loaded at mid-span. The rulebook calls it the ultimate load carrying capacity. Also called load capacity.
+
+\item \termdef{handoff-document}{Handoff document:} Any document that passes knowledge on to future members: exit documents, role records, and onboarding material (S.1). Also called a handover, transition, or knowledge transfer document.
+
+\item \termdef{load-to-mass}{Load-to-mass ratio:} A bridge's failure load divided by its mass. The rulebook scores it as structural efficiency.
+
+\item \termdef{materials-team}{Materials testing team:} The club members who test the competition materials, such as popsicle sticks, glue and floss, and record the results (E.2, S.4.6). Also called the materials testing department.
+
+\item \termdef{past-design}{Past design:} A bridge model from a previous competition year. Any member can view it, but no one can modify it. At the end of each competition season, current models become past designs (\reqref{FR-MA-5}, \reqref{FR-MA-6}).
+
+\item \termdef{role-record}{Role record:} A record for one executive position that describes its responsibilities, key contacts, and yearly timeline. Unlike an exit document, it is kept up to date across years by the current holder of the position (\reqref{FR-KT-3}).
+
+\item \termdef{rule-set}{Rule set:} The competition rules for one competition year, as stored and checked by the Rule Compliance System (\reqref{FR-RC-1}, \reqref{FR-RC-2}).
+
+\item \termdef{software-subteam}{Software subteam:} A planned subteam of club members, mainly CAS students, who will maintain and extend the Toolbox once the original developers graduate (G.7, E.3).
+
+\item \termdef{team-captain}{Team captain:} The member of a competing team who is its primary point of communication with the competition's Organizing Committee.
+
+\item \termdef{troitsky-club}{Troitsky club:} The McMaster Troitsky club, the student-run organization that registers and supports McMaster's teams in the Troitsky competition (G.1).
+
+\item \termdef{troitsky-competition}{Troitsky competition:} An annual bridge-building competition held at Concordia University. Teams of six to eight undergraduate students build a bridge from popsicle sticks, toothpicks, white glue and dental floss, which is then loaded at mid-span until it fails.
+
+\end{itemize}
+
+\subsection*{E.1.2 Acronyms}
+\addcontentsline{toc}{subsection}{E.1.2 Acronyms}
+
+\begin{longtable}{@{} p{2cm} p{0.7\textwidth} @{}}
+\toprule
+\textbf{Acronym} & \textbf{Expansion} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Acronym} & \textbf{Expansion} \\
+\midrule
+\endhead
+\termdef{cad}{CAD} & Computer-Aided Design \\
+\termdef{cas}{CAS} & Computing and Software, the McMaster department \\
+\termdef{cs}{CS} & Computer Science \\
+\termdef{iso}{ISO} & International Organization for Standardization \\
+\termdef{lgpl}{LGPL} & GNU Lesser General Public License \\
+\termdef{linq}{LINQ} & Language-Integrated Query \\
+\termdef{mes}{MES} & McMaster Engineering Society \\
+\termdef{mit}{MIT} & MIT License, a permissive open-source license \\
+\termdef{owasp}{OWASP} & Open Worldwide Application Security Project \\
+\termdef{rbac}{RBAC} & Role-Based Access Control \\
+\termdef{step}{STEP} & Standard for the Exchange of Product model data (ISO 10303). Also written STP, after the \texttt{.stp} file extension \\
+\termdef{tcf}{TCF} & Team Contribution Factor \\
+\termdef{ui}{UI} & User Interface \\
+\termdef{vnv}{VnV} & Verification and Validation (also written V\&V) \\
+\termdef{vp}{VP} & Vice-President \\
+\bottomrule
+\end{longtable}

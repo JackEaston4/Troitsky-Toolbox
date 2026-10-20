@@ -1,46 +1,23 @@
-\nsection{A.3 Generative AI Use Disclosure}
+\nsection{A.3 Changes from Template}
 
-\subsection*{A.3.1 AI Tools Used}
-\addcontentsline{toc}{subsection}{A.3.1 AI Tools Used}
+Table~\ref{tab:template-changes} lists the changes made to the structure of the Meyer template \cite{Meyer2022} and the reason for each.
 
-\begin{itemize}
-  \item ChatGPT 5.2 (OpenAI)
-  \item Claude Opus 5.5 (Anthropic)
-\end{itemize}
-
-\subsection*{A.3.2 How and Where Used}
-\addcontentsline{toc}{subsection}{A.3.2 How and Where Used}
-
-AI tools were used during this deliverable to assist with the following:
-\begin{itemize}
-  \item \textbf{Formatting:} help with LaTeX formatting, building, and layout (tables,
-  lists, and section structure) across the document.
-  \item \textbf{Linking:} adding and fixing internal references and labels
-  between sections and requirements within the SRS.
-  \item \textbf{Review:} reviewing drafted sections for clarity, consistency,
-  and possible errors or omissions.
-  \item \textbf{Cross-referencing between documents:} updating and checking
-  references between the SRS and the Hazard Analysis, so that the functional
-  and non-functional requirements cited in the Hazard Analysis FMEA table
-  match the current SRS.
-\end{itemize}
-
-\subsection*{A.3.3 Verification of AI-Generated Content}
-\addcontentsline{toc}{subsection}{A.3.3 Verification of AI-Generated Content}
-
-The team followed the same policy for AI use that the Development Plan sets
-for AI-generated code: each developer shall thoroughly review all
-AI-generated content before creating a pull request and not submit the
-content for a pull request until they completely understand it and are
-convinced of its validity.
-
-\begin{itemize}
-  \item Each team member reviewed any AI-assisted changes to their own
-  sections before opening a pull request.
-  \item Cross-references between the SRS and the Hazard Analysis were checked
-  by hand against the current version of both documents.
-  \item Pull requests were reviewed by at least one other team member before merging.
-  \item The team is responsible for the accuracy, completeness, consistency,
-  and appropriateness of this document, whether material was written by a
-  person or with help from an AI tool.
-\end{itemize}
+\begin{table}[H]
+\centering
+\caption{Changes from the Meyer template}
+\label{tab:template-changes}
+\begin{tabularx}{\textwidth}{p{4.5cm}X}
+\toprule
+\textbf{Change} & \textbf{Reason} \\
+\midrule
+Moved E.1 Glossary to the front of the document, before the Goals book. & The course rubric requires terms and acronyms to be defined before their first use. At the front, the glossary comes before every book that uses its terms. \\
+Added the Appendix book (A) after the Project book. & The Meyer template has only the Goals, Environment, System and Project books. The course rubric and SRS checklist require content that belongs in none of them (A.1, A.2, A.4, A.5). \\
+Added a References section after the Project book. & The Meyer template has no references section. It lists the sources cited in the document, such as those for the values in A.1. \\
+Added A.1 Symbolic Constants. & The SRS checklist requires the values of symbolic constants to be given in a table in the Appendix. \\
+Added A.2 Traceability Matrix. & The course rubric requires a table that shows the traceability between requirements. \\
+Added A.3 Changes from Template. & The SRS checklist requires changes made to the template to be described in the document. \\
+Added A.4 Generative AI Use Disclosure. & Required by the course rubric. \\
+Added A.5 Reflection. & Required by the course rubric, using the questions from the course's SRS reflection template. \\
+\bottomrule
+\end{tabularx}
+\end{table}
