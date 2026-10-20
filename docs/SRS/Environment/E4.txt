@@ -6,9 +6,10 @@ The following properties of the environment are assumed.
 
 \item \textbf{Competition Format Stability:} Despite the product being adaptable to changes within rules and smaller operational changes, 
 the overall format of the Troitsky competition is assumed to remain stable across years. While some forms of bridges, materials or scoring 
-are revised, the product serves the standard competition format of popsicle stick, white glue and floss bridges tested for ultimate 
-point load at the centre. The rule set may change across years, but competition rulebooks are assumed to be published at the start of each 
-competition year, allowing for integration into the rule compliance checker once yearly, with only minor modifications necessary.
+are revised, the product serves the standard competition format of bridges made only of popsicle sticks, toothpicks, white glue and dental floss, 
+loaded at mid-span until failure \cite[Secs.~7.1, 10.5]{TroitskyRulebook2026}. The rule set may change across years, as shown by the summary of changes 
+from the previous edition in each rulebook. Competition rulebooks are assumed to be published before each competition, allowing for 
+integration into the rule compliance checker once yearly, with further updates as revisions are released.
 
 \item \textbf{User Access and Device Availability:} As the product will be available through a website, there is an assumption that members 
 will both have access to a suitable device (desktop or laptop) and a standard internet browser. There is also an assumption that all users will 

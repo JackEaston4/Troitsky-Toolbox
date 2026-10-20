@@ -220,7 +220,7 @@ control:
     files but does not control how they are created.
     \item \textbf{CAD/geometry library:} The external library used by the Model
     Analysis System to read STEP files.
-    \item \textbf{Static model analysis APIs:} The external APIs used to perform
+    \item \textbf{Static model analysis services:} The external libraries/API used to perform
     the static model analysis of bridge model STEP files (SRS E.2).
     \item \textbf{Material test data files:} The CSV and Excel files produced by
     members during material testing, whose content depends on how the tests
@@ -370,27 +370,35 @@ Output display wrong, model analysis display not clear & Member misses a design 
 \cmidrule(l){1-8}
 Timeout & Member gets no response, either retries or gives up & Large model files, heavy load & M & M & Stop processing after MA\_TIMEOUT and show error message & NFR-MA-1, SR-MA-3 & H-MA-3\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Performance Analysis System (PA)} --- SRS S.2.5.1}\\*
-Calculation API error & No estimate, or a wrong ultimate load prediction & External analysis API unavailable, changed, or returning invalid values & H & M & Show an error instead of an estimate when the API fails or returns an invalid value; have test models to check new API calls against & NFR-PA-1, SR-PA-1 & H-PA-1\\
+Calculation error & No estimate, or a wrong ultimate load prediction & External analysis service unavailable, changed, or returning invalid values & H & M & Show an error instead of an estimate when calculations fail or return an invalid value; have test models to check new calculations against & NFR-PA-1, SR-PA-1 & H-PA-1\\
 \cmidrule(l){1-8}
 Output confidence not understood & Estimate is misread or treated as a guaranteed result & Assumptions and limitations hidden, misunderstanding of service & M & L & Show the assumptions and limitations next to each estimate; check usability of the interface in the Winter CD --- Usability Report & FR-PA-4, Winter CD usability test & H-PA-2\\
 \rowcolor{gray!10}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\hspace{1.5em}\textbf{Rule Compliance System (RC)} --- SRS S.2.5.2}\\*
 Misinterpretation of rules (risk high for high penalty rules) & A non-compliant bridge passes the check and is penalized or disqualified at competition & Rule entered incorrectly, wrong year's rule set active, rule cannot be checked from the model, unit errors cause misrepresented comparison & H & L & Show the year of the rule set used, and highlight rules that require a manual check & FR-RC-5, NFR-RC-1, SR-RC-1 & H-RC-1\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Material Testing Manager (MT)} --- SRS S.2.6}\\*
-Calculation API error & & & & & & & H-MT-1\\
+Input File Corruption & Failed or incorrect structural calculations& Information gets corrupted or dropped by the broker during upload & H & L & Given materials inputs, output values like stress or strain must fall within a range that is realistic for material type.& SR-MT-3 & H-MT-1\\
 \cmidrule(l){1-8}
-Corruption of input file & & & & & & & H-MT-2\\
+Unit Mismatch & Incorrect Calculations during FEA, and incorrect display of materials properties & Uploaded data is in alternative units to what is used by the Model Analysis & H & M & Have users select unit of their data during uploads and convert to appropriate units before application in Model Analysis service &  SR-MT-1 & H-MT-2\\
 \cmidrule(l){1-8}
-Output display wrong & & & & & & & H-MT-3\\
-\cmidrule(l){1-8}
-Output not understandable & & & & & & & H-MT-4\\
-\cmidrule(l){1-8}
-Timeout & & & & & & & H-MT-5\\
+Grain Direction Neglection & The Performance Analysis System assumes incorrect material behaviour, predicting joints and other bridge pieces having much higher stress/strain tolerances than in reality & Wood has different material properties along the grain and perpendicular to the grain  & H & L & Include a directional property for materials data that is saved as wood. & ST-MT-2& H-MT-3\\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Transfer Manager (KT)} --- SRS S.2.7}\\*
- & & & & & & & \\
-\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{System-Wide (SYS)} --- SRS S.2.8}\\*
-Upgrade causes our code to no longer compile & & & & & & & H-SYS-1\\
+Incomplete/Hollow Handoffs&Transition documentation contains broad details that future executives have little use for. & Executives treat transition documents as a "checkbox" to mark off and submit empty or vague transition documentation to complete the requirement.& L & M & Integrate the work documentation process as part of an executives week to week work, so when it come time to fill out transition documentation they will have a trove of data to pull from.& SR-KT-1 SR-KT-4 & H-KT-1 \\
 \cmidrule(l){1-8}
-Unchecked, unworking code pushed in haste & & & & & & & H-SYS-2\\
+Dangling \& Broken References& Instructions reference external links that lead to 404 errors or missing technical context. & Documentation references external links or repository IDs that are later moved, renamed, or deleted in the Knowledge Repository.& M & L & References link to a look-up table that dynamically updates links to all documentation& SR-KT-2 & H-KT-2 \\
+\cmidrule(l){1-8}
+Knowledge Staleness&  Members build bridges or perform testing using obsolete/disallowed specifications & Transition documents contain information that is only applicable to previous years rules or outdated tools& L & H & When opening old documentation, have a tab you can open that references the old rules and tools used compared to the current ones.& SR-KT-4 & H-KT-3 \\
+\cmidrule(l){1-8}
+Lack of Role Succession Continuity& New executives cannot locate their predecessor's records & An executive role is modified, split, or renamed between years, causing previous role records and onboarding material to become unassigned or orphaned. & H & L & Create Built in role modification, splitting, and inheritence so that records can be carried over to new or alternative roles & SR-KT-3 & H-KT-4 \\
+\cmidrule(l){1-8}
+Exposure of Sensitive Club Information& If stored as plain-text onboarding docs without field-level masking or strict role-based access, sensitive operational keys or personal data may leak & Handoff notes can contain sensitive credentials (e.g., third-party software licenses, passwords, personal phone numbers, sponsor contact details). & H & L & The Knowledge Transfer Manager must strictly forbid storing credentials as plain text in the KR & SR-KT-4 & H-KT-5 \\
+\cmidrule(l){1-8}
+Partial Transaction/Distributed State Failure & KT states that documentation exist within the KR when in fact it doesn't & When a transition document is completed the KT registers the completion but the handoff to the KR fails. & H & L & Have the KR send an acknowledgement  & SR-KT-5 & H-KT-6 \\
+\rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{System-Wide (SYS)} --- SRS S.2.8}\\*
+Compilation Error Due to Dependency Update & Project does not compile & A third part dependency updates and functions within that dependency that are used become degraded & H & L & Research and review dependencies Troitsky Toolbox will rely on and confirm that they are receiving quality updates and core functionalities Troitsky Toolbox depends on will continue to be functional.& SR-SYS-1 & H-SYS-1\\
+\cmidrule(l){1-8}
+Code Deployed Without Testing or Review & Faults and Errors within the pushed product & Lack of testing and review & H & M & A CI/CD pipeline can help with some standardized testing along with a procedure outline for code reviews to alleviate some of the overhead in the reviews. & SR-SYS-2 & H-SYS-2\\
+\cmidrule(l){1-8}
+Software Abandonment & Toolbox becomes unusable after initial capstone team leaves.& Initial capstone team leaves a project that is too difficult to maintain for the leftover software team.& H & M & Document every part of the development process, have multiple pieces of documentation for all critical system components, and train replacements before initial capstone team graduates. & SR-SYS-3 &  H-SYS-3\\
 \end{longtable}}
 \end{landscape}
 \restoregeometry
@@ -420,7 +428,7 @@ rationale design process how and why to fake it.)}
     model that has not finished within MA\_TIMEOUT, and shall tell the member why
     processing stopped. [H-MA-3]
     \item \textbf{SR-PA-1:} The Performance Analysis System shall display an
-    error message whenever the API fails, does not respond, or returns an inappropriate 
+    error message whenever the calculation service fails, does not respond, or returns an inappropriate 
     value. [H-PA-1]
     \item \textbf{SR-RC-1:} The Rule Compliance System shall display the competition year 
     of the active rules with each result, and shall indicate when 
@@ -526,6 +534,47 @@ whether material was generated by a human or an AI system.}
     \item Other than the risk of physical harm (some projects may not have any
     appreciable risks of this form), list at least 2 other types of risk in
     software products. Why are they important to consider?
+\end{enumerate}
+
+\subsection*{Pedro Azevedo}
+
+\begin{enumerate}
+    
+    \item In writing this deliverable, I believe that the team did well in the ideation and identification of the primary hazards present 
+     in the system and the development process. The team was able to separate the hazards based on their components strictly, so the 
+     splitting of work went well and was able to be smoothly integrated into the final deliverable. Since I have direct experience in the club 
+     I was able to provide direct insight into the hazards and the effects they would have on the club and its members.
+
+    \item The primary pain point during this deliverable was the linking and integration with the SRS. Since the SRS contains the FR and NFR that 
+    are referenced in the FMEA table, it was difficult to constantly ensure that referencing was up to date and correct, reflecting the changes to 
+    the SRS. This was resolved by having checkpoints where the team understood that the SRS was in a stable state. AI was also used to check and 
+    verify the references.
+
+    \item Of the listed risks, the primary ones the team had discussed were the risk of data loss and corruption, as the knowledge repository is 
+    central to the success of the service, and incorrect prediction or comprehension for the model analysis service, as this would directly affect 
+    teams' performance in competition. The other risks were identified during the writing of this deliverable mainly centred around operational hazards, 
+    such as the web server being down or overloaded, and the access control system being compromised. These were identified by the team by considering 
+    the state of the project once it is deployed and maintained by future members, outside the control of the current team.
+
+    \item Other than the risk of physical harm, 2 other types of risk in software projects may be data privacy risks and false confidence risks, which 
+    may present as future psychological harm or strict harm in user performance. These risks are important as they consider the effects of 
+     a software product that may not be immediately apparent, looking at what happens in the real world through the effect of the product. Having 
+    information leaked online, or having a user trust a result that is incorrect, both may lead to severe consequences for the user, outside the 
+    software domain.
+
+\end{enumerate}
+
+
+\subsection*{Jack Easton}
+
+\begin{enumerate}
+    \item I think during the writing of this deliverable. The team did a good job clearly identifing unique aspects of the system, and thoroughly ideating as to potential hazards. The team did a great job of splitting considerations of components to consider specific, yet realisitic, risks and hazards to the system.
+    \item I think an intiail pain point of the deliverable was just rooted in the fact that this isn't something the team has done before. We all felt quite confident in our work up to this deliverable because requirments, development, and identifing problem statements is something that we have a lot of experience with in other courses. However, the team came together well and focused a lot on the specific concepts, questions, and suggestions outlined in lecture as well as referencing provided example documents to gain confidence that we are approaching the deliverable correctly.
+    \item Before this deliverable, the team had discussed the risks of data loss or corruption. These were immediatly obvious because the knowledge respository is a central component of the system and one of the primary goals of the project relates to centralizing the Troitsky Team's data storage. Other risks such as the seb server being down, or overloaded, or the access control system being comprismised, were identified later while doing the Harzard Analysis. These came about as the team conducted interviews and surveys with the Troitsky Team members as we were able to get a better idea of what the day to day use of the system would look like and what things were  most important or spooky from the Team's perspective.
+    \item Other than the risk of physical harm (some projects may not have any
+    appreciable risks of this form), list at least 2 other types of risk in
+    software products. Why are they important to consider?
+    
 \end{enumerate}
 
 \end{document}

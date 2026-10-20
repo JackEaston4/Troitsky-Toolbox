@@ -66,6 +66,17 @@
     {3.25ex \@plus1ex \@minus.2ex}{0.5ex}{\normalfont\normalsize\bfseries}}
 \makeatother
 \setcounter{tocdepth}{2}
+% Sub-entries (S.2.1, P.1.1, ...) are added at the subsection level like the
+% \nsection entries, but without \numberline. Indent those one step further.
+\makeatletter
+\AtBeginDocument{%
+  \let\srs@l@subsection\l@subsection
+  \renewcommand*\l@subsection[2]{%
+    \@expandtwoargs\in@{\detokenize{\numberline}}{\detokenize{#1}}%
+    \ifin@ \srs@l@subsection{#1}{#2}%
+    \else \@dottedtocline{2}{3.8em}{3.2em}{#1}{#2}\fi}}
+\makeatother
+
 
 %--------------------- Numbering ---------------
 \usepackage{amsthm}
@@ -121,7 +132,7 @@
 \end{tabularx}
 \end{table}
 
-This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
+This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer \cite{Meyer2022}. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
 \newpage{}
 %===============================================================
 \tableofcontents
@@ -182,6 +193,15 @@ This document follows the requirements documentation structure presented in the 
 \input{Project/P5.txt}
 \input{Project/P6.txt}
 \input{Project/P7.txt}
+
+\newpage{}
+%===============================================================
+% References: shared refs/References.bib (same setup as the HA). IEEEtran
+% prints only the entries this document cites.
+\phantomsection
+\addcontentsline{toc}{section}{\protect\numberline{}References}
+\bibliographystyle{IEEEtran}
+\bibliography{../../refs/References}
 
 \newpage{}
 %===============================================================

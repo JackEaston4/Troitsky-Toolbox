@@ -108,3 +108,19 @@ $\quad \quad \quad \ \ \ (clearanceHeight \geq MinClearance)$ \\
     \item $\mathbb{B}$ represents a Boolean value (True/False) returned to the frontend.
     \item $\land$ represents the logical AND operator, ensuring that a bridge is only deemed valid if \textit{all} structural and mass constraints are simultaneously satisfied.
 \end{itemize}
+\nsection{S.7 Formalizations}
+
+The nature of the analysis is to be determined, so this formalization shall be updated in the future.
+However, the weighting can be formalized now, so a model will be shown below.
+
+Let $r_1, r_2, ..., r_n$ represent hard constraints 1 to $n$.
+Let $w_1, w_2, ..., w_m$ represent the weights for objectives 1 to $m$.
+Let $s_1, s_2, ..., s_m$ represent the scores for each objective 1 to $m$.
+Let $b_1, b_2, ..., b_k$ represent whether a soft constraint has been violated. There are $k$ soft constraints.
+Let $p_i$ represent the penalty for violating soft constraint $i$.
+
+So the weighted score $W$ is
+
+\[
+    W = \prod_{i=1}^{n} r_i (\sum_{i=1}^{m} w_is_i - \sum_{i=1}^{k} b_ip_i)
+\]
