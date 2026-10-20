@@ -1,7 +1,5 @@
 \nsection{S.1 Components}
-\comment{Overall structure expressed by the list of major software and, if applicable, hardware parts.}
-%---------------------------------
-
+\subsection*{S.1.1 Component Descriptions}
 The Troitsky Toolbox is a web-based application structured around a central broker. Each tool, as well as the shared data storage, is a service that registers with the broker. All communication between the user interface and the services, and between the services themselves, passes through the broker, so that no service depends directly on another. The system relies on the following software components:
 
 \begin{itemize}
@@ -34,10 +32,108 @@ In addition to these components, the system will interact with external componen
 Club members interact with the system through the \textbf{Toolbox Web App}, a browser-based interface served by the Web Server, which presents each of the tools above. Through it, members can browse and contribute to the repository, upload and analyze bridge models, record material tests, and complete handoff documents. Members of the software subteam use the same interface, with elevated privileges granted by the Access Control System, to maintain accounts, competition rules, and stored content.
 
 Figure~\ref{fig:component-diagram} shows the components of the system and the interfaces through which they interact.
-
+\clearpage
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{System/s1component-dark.png}
     \caption{Component diagram of the Troitsky Toolbox. All communication between services passes through the Toolbox Broker.}
     \label{fig:component-diagram}
 \end{figure}
+
+\subsection*{S.1.2 Component Inputs and Outputs}
+\clearpage
+\begin{longtable}{|p{0.15\linewidth} | p{0.45\linewidth} | p{0.45\linewidth}|}
+\hline
+\textbf{Component} & \textbf{Inputs} & \textbf{Outputs} \\ \hline
+Web Server & 
+\begin{itemize}
+    \item Incoming web requests from members' browsers
+    \item Authentication decisions from the Access Control System
+    \item Responses and data routed from the Toolbox Broker
+\end{itemize} & 
+\begin{itemize}
+    \item Served Toolbox Web App and public landing page
+    \item Authentication requests to the Access Control System
+    \item Forwarded club service requests to the Toolbox Broker
+\end{itemize}
+\\ \hline
+
+Access Control System & 
+\begin{itemize}
+    \item Login credentials/Authentication requests
+    \item Authorization requests (verifying service/data access)
+    \item Member account, team, and role management data
+\end{itemize} & 
+\begin{itemize}
+    \item Authentication decisions (success/failure)
+    \item Authorization decisions based on roles and teams
+    \item Member and team registry information
+\end{itemize}
+\\ \hline
+
+Toolbox Broker & 
+\begin{itemize}
+    \item Service registration requests
+    \item Incoming service requests from the Web Server and other services
+    \item Authorization decisions from the Access Control System
+    \item Responses/data from target services
+\end{itemize} & 
+\begin{itemize}
+    \item Authorization requests to the Access Control System
+    \item Routed requests to the appropriate registered service
+    \item Routed responses back to the Web Server or requesting service
+\end{itemize}
+\\ \hline
+
+Knowledge Repository & 
+\begin{itemize}
+    \item Content to be stored (documents, bridge models, test results, rules, etc.)
+    \item Search queries and filter parameters
+    \item Data retrieval requests from other services via the broker
+\end{itemize} & 
+\begin{itemize}
+    \item Stored club information and files
+    \item Filtered search results
+    \item Acknowledgment of successfully stored content
+\end{itemize}
+\\ \hline
+
+Model Analysis System & 
+\begin{itemize}
+    \item 3D bridge models (e.g., STEP files)
+    \item Material properties (from Material Testing Manager)
+    \item Competition rules (via Knowledge Repository/Broker)
+\end{itemize} & 
+\begin{itemize}
+    \item Interactive 3D model visualizations
+    \item Extracted geometric and structural data
+    \item Performance metrics and predictions
+    \item Rule compliance assessments
+\end{itemize}
+\\ \hline
+
+Material Testing Manager & 
+\begin{itemize}
+    \item Raw material test results submitted by members
+    \item Requests for material properties from other services (e.g., Model Analysis System)
+\end{itemize} & 
+\begin{itemize}
+    \item Standardized material test records
+    \item Derived material-specific properties and data
+\end{itemize}
+\\ \hline
+
+Knowledge Transfer Manager & 
+\begin{itemize}
+    \item Submitted exit documents and role records
+    \item Submitted onboarding materials
+    \item Retrieval requests for handoff documents
+\end{itemize} & 
+\begin{itemize}
+    \item Organized handoff documents and knowledge records
+    \item Preserved historical executive and subteam data
+\end{itemize}
+\\ \hline
+
+\end{longtable}
+\clearpage
