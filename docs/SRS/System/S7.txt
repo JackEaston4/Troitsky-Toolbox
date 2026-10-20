@@ -1,3 +1,113 @@
+\nsection{S.7 Formalization}
+\subsubsection*{S.7.1 FEA Payload Schema}
+
+This schema defines the structured mathematical model generated from the parsed \texttt{.stp} file, which is sent to the external FEA API.
+
+\vspace{0.5cm}
+\noindent
+\begin{tabular}{|l}
+\hline
+\textbf{FEAPayload} \\
+\hline
+$nodes : \mathbb{P} \ NODE$ \\
+$elements : \mathbb{P} \ ELEMENT$ \\
+$elementMaterial : ELEMENT \rightarrow MATERIAL$ \\
+$materialProperties : MATERIAL \rightarrow (YoungsModulus \times YieldStrength)$ \\
+$boundaryConditions : \mathbb{P} \ NODE$ \\
+$appliedLoad : \mathbb{R}$ \\
+\hline
+$\forall e \in elements \bullet elementMaterial(e) \in \text{dom } materialProperties$ \\
+$boundaryConditions \subseteq nodes$ \\
+$appliedLoad > 0$ \\
+\hline
+\end{tabular}
+\vspace{0.5cm}
+
+\noindent
+\textbf{Where:}
+\begin{itemize}
+    \item $\mathbb{P}$ represents the power set (a set of sets), meaning $nodes$ and $elements$ are collections of multiple structural pieces.
+    \item $\rightarrow$ represents a total function, ensuring that \textit{every} extracted element is mapped to exactly one material.
+    \item $\times$ represents the Cartesian product, meaning material properties consist of a tuple (e.g., Young's Modulus and Yield Strength).
+    \item $\text{dom}$ refers to the domain of the function, ensuring the material assigned to an element actually exists in our material properties database.
+    \item The predicate section (below the middle line) enforces the strict constraints required by the API: all materials must be known, boundary conditions must be valid nodes, and the load must be positive.
+\end{itemize}
+
+\subsection*{S.7.2 Mathematical Definition of Predictive Analysis (Post-Processing)}
+
+While the external Finite Element Analysis (FEA) API computes the complex differential equations required to simulate load distribution, the Troitsky Toolbox is responsible for the predictive logic. This section mathematically formalizes how the system bridges the gap between raw FEA output and the user-facing bridge failure prediction.
+
+Let $E$ be the set of all structural elements (e.g., popsicle sticks) in the bridge model. When the FEA API returns its analysis, let $\sigma_{API}(e)$ represent the maximum axial stress computed for element $e \in E$.
+
+Let $\mu_{strength}(m)$ be the average ultimate strength of a material $m$, calculated from the club's historical material testing repository.
+
+The system determines the \textbf{Factor of Safety (FoS)} for each individual element $e$ as the ratio of the material's historical strength to the stress applied under the simulated load:
+
+\begin{equation}
+    FoS(e) = \frac{\mu_{strength}(elementMaterial(e))}{\sigma_{API}(e)}
+\end{equation}
+
+The system predicts that the bridge will \textbf{fail} under the applied load if there exists at least one element where the applied stress exceeds the material's ultimate strength (i.e., the Factor of Safety drops below 1). This is formalized logically as:
+
+\begin{equation}
+    \text{BridgeFailure} \iff \exists e \in E \mid FoS(e) < 1
+\end{equation}
+
+By utilizing this formal logic, the system isolates the custom predictive features (based on Troitsky's unique materials) from the standard physics simulation provided by the external API.
+
+\vspace{0.5cm}
+
+\subsection*{S.7.3 Z-Notation Formalization of Rule Compliance}
+
+To fulfill the goal of automating rule compliance checks for the Concordia Troitsky competition, the physical constraints of the bridge must be formally defined. 
+
+First, we define the state schema of a physical bridge extracted from the \texttt{.stp} CAD file:
+
+\vspace{0.5cm}
+\noindent
+\begin{tabular}{|l}
+\hline
+\textbf{BridgeModel} \\
+\hline
+$totalMass : \mathbb{R}$ \\
+$length : \mathbb{R}$ \\
+$width : \mathbb{R}$ \\
+$clearanceHeight : \mathbb{R}$ \\
+\hline
+$totalMass > 0$ \\
+$length > 0 \land width > 0 \land clearanceHeight > 0$ \\
+\hline
+\end{tabular}
+\vspace{0.5cm}
+
+Next, we define the rule compliance operation. This schema takes a \texttt{BridgeModel} and evaluates it against the competition's geometric and mass constraints, outputting a Boolean value (\texttt{isValid!}) to the user interface.
+
+\vspace{0.5cm}
+\noindent
+\begin{tabular}{|l}
+\hline
+\textbf{RuleComplianceCheck} \\
+\hline
+$\Xi BridgeModel$ \\
+$MaxAllowedMass, MinRequiredLength, MaxAllowedLength : \mathbb{R}$ \\
+$MinRequiredWidth, MaxAllowedWidth, MinClearance : \mathbb{R}$ \\
+$isValid! : \mathbb{B}$ \\
+\hline
+$isValid! = (totalMass \leq MaxAllowedMass) \ \land$ \\
+$\quad \quad \quad \ \ \ (length \geq MinRequiredLength \land length \leq MaxAllowedLength) \ \land$ \\
+$\quad \quad \quad \ \ \ (width \geq MinRequiredWidth \land width \leq MaxAllowedWidth) \ \land$ \\
+$\quad \quad \quad \ \ \ (clearanceHeight \geq MinClearance)$ \\
+\hline
+\end{tabular}
+\vspace{0.5cm}
+
+\noindent
+\textbf{Where:}
+\begin{itemize}
+    \item $\Xi BridgeModel$ indicates that this operation observes the state of the \texttt{BridgeModel} but does not alter or mutate the bridge data itself.
+    \item $\mathbb{B}$ represents a Boolean value (True/False) returned to the frontend.
+    \item $\land$ represents the logical AND operator, ensuring that a bridge is only deemed valid if \textit{all} structural and mass constraints are simultaneously satisfied.
+\end{itemize}
 \nsection{S.7 Formalizations}
 
 The nature of the analysis is to be determined, so this formalization shall be updated in the future.
