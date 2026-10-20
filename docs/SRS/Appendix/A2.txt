@@ -1,96 +1,104 @@
 \nsection{A.2 Traceability Matrix}
 
-Table~\ref{tab:traceability} lists each requirement in S.2 with the requirements it depends on or fulfils. Each ID in the table links to the requirement in S.2, and the ID in S.2 links back to its row here.
+Table~\ref{tab:traceability} lists each requirement in S.2 with its relationships to other requirements. Each ID in the table links to the requirement in S.2, and the ID in S.2 links back to its row here. Three relationships are used:
+
+\begin{itemize}
+    \item \textbf{Depends on:} The requirement cannot be met unless the listed requirements are also met.
+    \item \textbf{Fulfils:} Meeting the requirement contributes to meeting the listed requirements.
+    \item \textbf{Constrains:} The requirement, usually non-functional, places a limit on how the listed requirements are met.
+\end{itemize}
+
+Each relationship is listed once, in the row of the requirement it describes. For example, \reqref{FR-BR-1} is listed as fulfilling \reqref{NFR-BR-1}, so the relationship is not repeated in the row of \reqref{NFR-BR-1}. Dependencies on the Toolbox Broker's routing are not listed for every service, since all communication between services passes through the broker (S.1).
 
 \begin{longtable}{@{} p{3cm} p{0.65\textwidth} @{}}
 \caption{Requirements traceability matrix}
 \label{tab:traceability} \\
 \toprule
-\textbf{Requirement} & \textbf{Depends on / Fulfils} \\
+\textbf{Requirement} & \textbf{Depends on / Fulfils / Constrains} \\
 \midrule
 \endfirsthead
 \toprule
-\textbf{Requirement} & \textbf{Depends on / Fulfils} \\
+\textbf{Requirement} & \textbf{Depends on / Fulfils / Constrains} \\
 \midrule
 \endhead
-\reqrow{FR-WS-1} &  \\
-\reqrow{FR-WS-2} &  \\
-\reqrow{FR-WS-3} & Depends on \reqref{FR-AC-3} \\
-\reqrow{NFR-WS-1} &  \\
-\reqrow{NFR-WS-2} &  \\
-\reqrow{NFR-WS-3} &  \\
+\reqrow{FR-WS-1} & None \\
+\reqrow{FR-WS-2} & Depends on \reqref{FR-AC-1} \\
+\reqrow{FR-WS-3} & Depends on \reqref{FR-AC-3}, \reqref{FR-BR-3} \\
+\reqrow{NFR-WS-1} & None \\
+\reqrow{NFR-WS-2} & Fulfils \reqref{NFR-AC-1}, \reqref{FR-AC-6} \\
+\reqrow{NFR-WS-3} & Depends on \reqref{FR-WS-2} \\
 \midrule
-\reqrow{FR-AC-1} &  \\
-\reqrow{FR-AC-2} &  \\
-\reqrow{FR-AC-3} &  \\
-\reqrow{FR-AC-4} &  \\
-\reqrow{FR-AC-5} &  \\
-\reqrow{FR-AC-6} & Depends on \reqref{FR-MA-6} \\
-\reqrow{NFR-AC-1} &  \\
-\reqrow{NFR-AC-2} & Fulfils \reqref{FR-AC-6} \\
+\reqrow{FR-AC-1} & Depends on \reqref{FR-AC-4} \\
+\reqrow{FR-AC-2} & Depends on \reqref{FR-AC-4} \\
+\reqrow{FR-AC-3} & Depends on \reqref{FR-AC-2}, \reqref{FR-AC-5} \\
+\reqrow{FR-AC-4} & None \\
+\reqrow{FR-AC-5} & Fulfils \reqref{FR-AC-6} \\
+\reqrow{FR-AC-6} & Depends on \reqref{FR-AC-3}, \reqref{FR-AC-5}, \reqref{FR-MA-6} \\
+\reqrow{NFR-AC-1} & Constrains \reqref{FR-AC-1} \\
+\reqrow{NFR-AC-2} & Constrains \reqref{FR-AC-4}, \reqref{FR-AC-5} \newline Fulfils \reqref{FR-AC-6} \\
 \midrule
 \reqrow{FR-BR-1} & Fulfils \reqref{NFR-BR-1} \\
-\reqrow{FR-BR-2} &  \\
-\reqrow{FR-BR-3} &  \\
-\reqrow{FR-BR-4} & Fulfils \reqref{NFR-SYS-3} \\
-\reqrow{NFR-BR-1} &  \\
-\reqrow{NFR-BR-2} &  \\
-\reqrow{NFR-BR-3} &  \\
+\reqrow{FR-BR-2} & Depends on \reqref{FR-AC-3} \\
+\reqrow{FR-BR-3} & Depends on \reqref{FR-BR-1}, \reqref{FR-BR-2} \\
+\reqrow{FR-BR-4} & Depends on \reqref{FR-BR-1} \newline Fulfils \reqref{NFR-SYS-3} \\
+\reqrow{NFR-BR-1} & Fulfils \reqref{NFR-SYS-4} \\
+\reqrow{NFR-BR-2} & Constrains \reqref{FR-BR-3} \\
+\reqrow{NFR-BR-3} & Depends on \reqref{FR-BR-3} \newline Fulfils \reqref{NFR-SYS-4} \\
 \midrule
-\reqrow{FR-KR-1} &  \\
-\reqrow{FR-KR-2} & Fulfils \reqref{FR-KR-3} \\
-\reqrow{FR-KR-3} &  \\
-\reqrow{FR-KR-4} &  \\
-\reqrow{FR-KR-5} &  \\
-\reqrow{NFR-KR-1} &  \\
-\reqrow{NFR-KR-2} &  \\
+\reqrow{FR-KR-1} & None \\
+\reqrow{FR-KR-2} & Depends on \reqref{FR-KR-1} \newline Fulfils \reqref{FR-KR-3} \\
+\reqrow{FR-KR-3} & Depends on \reqref{FR-KR-1} \\
+\reqrow{FR-KR-4} & Depends on \reqref{FR-KR-1} \\
+\reqrow{FR-KR-5} & Depends on \reqref{FR-KR-1}, \reqref{FR-AC-3} \\
+\reqrow{NFR-KR-1} & Constrains \reqref{FR-KR-3} \\
+\reqrow{NFR-KR-2} & Constrains \reqref{FR-KR-1} \\
 \midrule
-\reqrow{FR-MA-1} &  \\
-\reqrow{FR-MA-2} & Fulfils \reqref{FR-MA-5} \\
-\reqrow{FR-MA-3} &  \\
-\reqrow{FR-MA-4} & Depends on \reqref{FR-AC-6} \\
-\reqrow{FR-MA-5} &  \\
-\reqrow{FR-MA-6} &  \\
-\reqrow{NFR-MA-1} &  \\
-\reqrow{NFR-MA-2} &  \\
-\reqrow{NFR-MA-3} &  \\
+\reqrow{FR-MA-1} & Fulfils \reqref{FR-MA-3} \\
+\reqrow{FR-MA-2} & Depends on \reqref{FR-MA-1} \newline Fulfils \reqref{FR-MA-5} \\
+\reqrow{FR-MA-3} & Depends on \reqref{FR-MA-1} \\
+\reqrow{FR-MA-4} & Depends on \reqref{FR-AC-6}, \reqref{FR-KR-1}, \reqref{FR-MA-3} \\
+\reqrow{FR-MA-5} & Depends on \reqref{FR-MA-2}, \reqref{FR-MA-6} \\
+\reqrow{FR-MA-6} & Depends on \reqref{FR-MA-4} \\
+\reqrow{NFR-MA-1} & Constrains \reqref{FR-MA-1}, \reqref{FR-MA-4} \\
+\reqrow{NFR-MA-2} & Constrains \reqref{FR-MA-2} \\
+\reqrow{NFR-MA-3} & Constrains \reqref{FR-MA-3} \newline Fulfils \reqref{NFR-RC-1} \\
 \midrule
-\reqrow{FR-PA-1} &  \\
-\reqrow{FR-PA-2} &  \\
-\reqrow{FR-PA-3} &  \\
-\reqrow{FR-PA-4} & Depends on \reqref{NFR-PA-1} \\
-\reqrow{NFR-PA-1} &  \\
-\reqrow{NFR-PA-2} &  \\
-\reqrow{NFR-PA-3} &  \\
+\reqrow{FR-PA-1} & Depends on \reqref{FR-MA-3}, \reqref{FR-PA-3} \\
+\reqrow{FR-PA-2} & Depends on \reqref{FR-PA-1}, \reqref{FR-MA-3} \\
+\reqrow{FR-PA-3} & Depends on \reqref{FR-MT-4} \\
+\reqrow{FR-PA-4} & Depends on \reqref{FR-PA-1}, \reqref{NFR-PA-1} \\
+\reqrow{NFR-PA-1} & Constrains \reqref{FR-PA-1} \newline Depends on \reqref{FR-MA-5} \\
+\reqrow{NFR-PA-2} & Constrains \reqref{FR-PA-1}, \reqref{FR-PA-2} \\
+\reqrow{NFR-PA-3} & Fulfils \reqref{NFR-SYS-4} \\
 \midrule
-\reqrow{FR-RC-1} &  \\
-\reqrow{FR-RC-2} &  \\
-\reqrow{FR-RC-3} &  \\
-\reqrow{FR-RC-4} &  \\
-\reqrow{FR-RC-5} &  \\
-\reqrow{NFR-RC-1} &  \\
-\reqrow{NFR-RC-2} &  \\
+\reqrow{FR-RC-1} & Depends on \reqref{FR-KR-1} \\
+\reqrow{FR-RC-2} & Fulfils \reqref{NFR-RC-2} \\
+\reqrow{FR-RC-3} & Depends on \reqref{FR-MA-3}, \reqref{FR-RC-1} \\
+\reqrow{FR-RC-4} & Depends on \reqref{FR-RC-3} \\
+\reqrow{FR-RC-5} & Depends on \reqref{FR-RC-3} \\
+\reqrow{NFR-RC-1} & Constrains \reqref{FR-RC-3} \newline Depends on \reqref{NFR-MA-3} \\
+\reqrow{NFR-RC-2} & Constrains \reqref{FR-RC-1}, \reqref{FR-RC-2} \\
 \midrule
-\reqrow{FR-MT-1} &  \\
+\reqrow{FR-MT-1} & None \\
 \reqrow{FR-MT-2} & Fulfils \reqref{FR-MT-4}, \reqref{FR-PA-3} \\
-\reqrow{FR-MT-3} &  \\
-\reqrow{FR-MT-4} &  \\
-\reqrow{FR-MT-5} & Fulfils \reqref{NFR-MT-2} \\
-\reqrow{NFR-MT-1} &  \\
-\reqrow{NFR-MT-2} &  \\
-\reqrow{NFR-MT-3} &  \\
+\reqrow{FR-MT-3} & Depends on \reqref{FR-MT-1} \\
+\reqrow{FR-MT-4} & Depends on \reqref{FR-MT-1}, \reqref{FR-MT-2} \\
+\reqrow{FR-MT-5} & Fulfils \reqref{FR-MT-4}, \reqref{NFR-MT-2} \\
+\reqrow{NFR-MT-1} & Depends on \reqref{FR-MT-2} \\
+\reqrow{NFR-MT-2} & Constrains \reqref{FR-MT-4} \\
+\reqrow{NFR-MT-3} & Depends on \reqref{FR-MT-1} \\
 \midrule
-\reqrow{FR-KT-1} &  \\
-\reqrow{FR-KT-2} &  \\
-\reqrow{FR-KT-3} &  \\
-\reqrow{FR-KT-4} &  \\
-\reqrow{FR-KT-5} &  \\
-\reqrow{NFR-KT-1} &  \\
-\reqrow{NFR-KT-2} &  \\
+\reqrow{FR-KT-1} & None \\
+\reqrow{FR-KT-2} & Depends on \reqref{FR-KT-1} \\
+\reqrow{FR-KT-3} & Depends on \reqref{FR-AC-2} \\
+\reqrow{FR-KT-4} & Depends on \reqref{FR-KT-2}, \reqref{FR-KT-3}, \reqref{FR-KR-1} \\
+\reqrow{FR-KT-5} & Depends on \reqref{FR-KT-2}, \reqref{FR-AC-2} \\
+\reqrow{NFR-KT-1} & Constrains \reqref{FR-KT-3} \newline Depends on \reqref{FR-KR-3} \\
+\reqrow{NFR-KT-2} & Constrains \reqref{FR-KT-2}, \reqref{FR-KT-3} \\
 \midrule
-\reqrow{NFR-SYS-1} &  \\
-\reqrow{NFR-SYS-2} &  \\
-\reqrow{NFR-SYS-3} &  \\
-\reqrow{NFR-SYS-4} &  \\
+\reqrow{NFR-SYS-1} & Constrains \reqref{NFR-WS-1} \\
+\reqrow{NFR-SYS-2} & Constrains \reqref{NFR-BR-2}, \reqref{NFR-KR-1}, \reqref{NFR-MA-2}, \reqref{NFR-PA-2} \\
+\reqrow{NFR-SYS-3} & Depends on \reqref{FR-BR-3} \\
+\reqrow{NFR-SYS-4} & None \\
 \bottomrule
 \end{longtable}
