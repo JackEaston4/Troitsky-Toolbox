@@ -138,7 +138,11 @@ The workflow process used during the development of Troitsky's Toolbox will be c
 \end{enumerate}
 \subsection{Issue Management}
 At the beginning of each sprint, issues and their member assignments will be outlined in our weekly meeting and added to the KanBan as issues by the Current Administrator. It is up to those working on issues to outline their own sub-issues.
-Issues will be classified via the tools they relate to and if they are backend or frontend as tags (i.e, 'Rule Compliance Tester', 'Frontend').
+Issues will be classified via the tools they relate to and if they are backend or frontend as tags (i.e, 'Rule Compliance Tester', 'Frontend'). All fixes to issues
+shall occur on development branches, be tested and determined to be correct by the developer before submitting a pull request. Then,
+another developer shall review the code changes and must approve it before the code may enter production. If there is a merge conflict,
+the onus is on the original developer to resolve the merge conflict, determine the altered codes satisifies tests, and resubmit the code for 
+peer review.
 
 
 \begin{itemize}
