@@ -312,39 +312,49 @@ outages, and data entry errors, remain within the scope of the analysis.
 \bottomrule
 \endlastfoot
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Web Server (WS)} --- SRS S.2.1}\\*
-Server down & & & & & & & H-WS-1\\
+Interal server error & Application unacessible & Runtime error in application software code & M & H & 
+    Restore the previous working backup. Then fix the bug, check the new version thoroughly and
+    push it to main. & SR-WS-1, SR-WS-2 & H-WS-1 \\
 \cmidrule(l){1-8}
-Server externally attacked & & & & & & & H-WS-2\\
+Server externally attacked & Server compromised and most likely down & 
+Malicious actor breaches the server's security defenses & H & L & 
+Deactivate server immediately. Restore security (e.g. reset all credentials) and push the previous working backup
+to production, then reactivate server. & SR-WS-2, SR-AC-1 & H-WS-2\\
 \cmidrule(l){1-8}
-Server overloaded from legitimate traffic & & & & & & & H-WS-3\\
+Server overloaded from legitimate traffic & Service unavailable for some users &
+Too many users are using the server. & L & L & Likely error in code harming concurrency. 
+Fix it and push the fix to production. & 
+SR-WS-3 & H-WS-3\\
 \cmidrule(l){1-8}
-Server loses connection to internet & & & & & & & H-WS-4\\
-\cmidrule(l){1-8}
-Server compromised & & & & & & & H-WS-5\\
-\cmidrule(l){1-8}
-Rogue actor gets access to change server & & & & & & & H-WS-6\\
+Server loses connection to internet & The application is unavailable & The internet connection the hosting server uses fails. & 
+M & L & 
+In case of an external disaster, wait for repair services to restore internet connectivity. Otherwise,
+manually try to reconnect. If manual attempts fails, call the interent provider's support hotline. & SR-WS-4& H-WS-4\\
+
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Access Control System (AC)} --- SRS S.2.2}\\*
-\multicolumn{8}{l}{\textit{Wrong user gets in}}\\*
 \cmidrule(l){1-8}
-Data leak (I/E) & & & & & & & H-AC-1\\
-\cmidrule(l){1-8}
-Password leak (I/E) & & & & & & & H-AC-2\\
-\cmidrule(l){1-8}
-Convenience leak (Superior gives inferior account access without clearance) & & & & & & & H-AC-3\\
-\cmidrule(l){1-8}
-Role category given extra rights & & & & & & & H-AC-4\\
-\cmidrule(l){1-8}
-Wrong person assigned to role category & & & & & & & H-AC-5\\
-\cmidrule(l){1-8}
-\multicolumn{8}{l}{\textit{Right user locked out}}\\*
-\cmidrule(l){1-8}
-Forgot password & & & & & & & H-AC-6\\
-\cmidrule(l){1-8}
-Role category given less rights & & & & & & & H-AC-7\\
-\cmidrule(l){1-8}
-Right person not given role & & & & & & & H-AC-8\\
+Credential leak & An unauthorized party gains access to the credentials & A security breach by a malicious actor & H & L
+& Deactivate the system. Patch the breach and force users to change their passwords before logging in again. & SR-AC-1 & H-AC-1 \\
+User password leak & A malicious party may use a legitimate user's account & Poor password practice, especially weak passwords
+& M & L & Deactivate the account. Force the user to change their password and let them log in again. & SR-AC-2 & H-AC-2 \\
+Forgot password & User cannot log in & User forgot their password & L & H & Have a privileged member reset their password
+& \textit{None} & H-AC-3 \\
+Right not granted & User cannot perform necessary function & User not given required role & L & M & Have a privileged member
+grant them the necessary role to perform their tasks. & \textit{None} & H-AC-4 \\
+Incorrect right granted & User can perform function they should not be allowed to perform & User given wrong role & L & L &
+Have a privileged member assign them the correct role, removing the incorrect rights. & \textit{None} & H-AC-5 \\
+
+
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Toolbox Broker (BR)} --- SRS S.2.3}\\*
- & & & & & & & \\
+User home page down & User has no understandable menu outlining their tasks & Software error & L & L &
+Fix software error. In the meantime, use direct links to perform tasks. & SR-BR-1 & H-BR-1 \\
+Task unavailable & User cannot perform task they should be able to perform & Software or role-based error & M & L &
+Fix software error; grant required role. In the meantime, ask another member with similar privileges to perform the task.
+& \textit{None} & H-BR-2 \\
+Output unavailable & User cannot see output to task & Software error or connection error & L & M &
+Establish reliable connection and try again. If still problematic, fix software bug. & \textit{None} & H-BR-3 \\
+Log out not working & User cannot log out or automatic log out fails & Software error & M & L &
+Log the account server-side. If that fails, disable the account. & SR-BR-1 & H-BR-4 \\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{Knowledge Repository (KR)} --- SRS S.2.4}\\*
 Stored data lost or corrupted & Club data stored since the last backup is lost & Host or server failure, backup failure & H & L & Store backup of system (KR) off the server, on another platform & NFR-KR-2, SR-KR-1 & H-KR-1\\
 \cmidrule(l){1-8}
@@ -403,6 +413,11 @@ rationale design process how and why to fake it.)}
 \subsection{Functional Requirements}
 
 \begin{itemize}
+    \item \textbf{SR-AC-2:} The Access Control Manager should ensure passwords meet 
+    industry-standard password requirements, minimally at least 8 characters, and containing at least
+    one upper case alphabetic character, at least one lower case alphabetic character, at least one number,
+    at least one symbol. [H-AC-2]
+    \item \textbf{SR-BR-1:} The broker shall be able to log out and disable accounts from the server side. [H-BR-4]
     \item \textbf{SR-KR-2:} The Knowledge Repository shall always prompt the user
     to confirm an action that will result in deletion or modification of stored files. [H-KR-2]
     \item \textbf{SR-KR-3:} The Knowledge Repository shall require that uploads of 
@@ -442,7 +457,17 @@ rationale design process how and why to fake it.)}
 \subsection{Non-Functional Requirements}
 
 \begin{itemize}
+    \item \textbf{SR-WS-1:} All code shall be throroughly tested to work semantically and syntatically before 
+    being pushed to production. [H-WS-1]
+    \item \textbf{SR-WS-2:} The previous production code of the application shall be stored on the server so
+    it can be restored if the current production code is defective. [H-WS-1, H-WS-2]
+    \item \textbf{SR-WS-3:} All actions in the code shall be thread-safe, unless it is impossible for two
+    concurrent users to access the action simultaneously. [H-WS-3]
+    \item \textbf{SR-WS-4:} The server shall be in a place with robust internet connection which shall 
+    almost always be available, at minimum to the residential standard 99.9\% of the time. [H-WS-4]
+    \item \textbf{SR-AC-1:} The Access Control system and the server shall have industry-standard defenses against cyberattacks. [H-WS-2, H-AC-1]
     \item \textbf{SR-KR-1:} Backups of the Knowledge Repository shall be stored on an external platform. [H-KR-1]
+    
 \end{itemize}
 
 \section{Roadmap} \label{SecRoadmap}
@@ -513,9 +538,12 @@ made to the template to be described in the document. \\
 
 \wss{ChatGPT (version 5) was used to brainstorm ideas for the template for this disclose section.}
 
+
+
+
 \subsection{AI Tools Used}
 
-\wss{Give the name of the AI tool(s) used and the version.}
+ChatGPT (version 5), Gemini (version 3) and Claude (version 5.5)
 
 \subsection{How and Where Used}
 
@@ -524,10 +552,20 @@ explaining a technical concept, reviewing the document, generating or modifying
 text, generating or modifying diagrams, identifying errors or omissions or
 inconsistencies.}
 
-\wss{For each of the uses, identify which parts of the document were affected.}
+\begin{itemize}
+  \item \textbf{Brainstorming:} coming up with ideas for the hazard analysis
+  \item \textbf{Formatting:} help with LaTeX formatting, building, and layout (tables,
+  lists, and section structure) across the document.
+  \item \textbf{Review:} reviewing drafted sections for clarity, consistency,
+  and possible errors or omissions.
+  \item \textbf{Cross-referencing between documents:} updating and checking
+  references between the SRS and the Hazard Analysis, so that the functional
+  and non-functional requirements cited in the Hazard Analysis FMEA table
+  match the current SRS.
+\end{itemize}
 
-\wss{You do not need to report every interaction, but you should disclose the 
-uses that materially contributed to your work}
+No AI was used to draft the text initially or otherwise copy-paste substantial content
+directly into the document. 
 
 \subsection{Verification of AI-Generated Content}
 
@@ -541,6 +579,11 @@ uses that materially contributed to your work}
 consistency, and appropriateness of the submitted document, regardless of
 whether material was generated by a human or an AI system.}
 \end{itemize}}
+
+    All suggestions delivered by AI were critically thought about by members of the group.
+    All facts were verified on reliable human-created sources and formatting code was 
+    deemed valid through sucessful running of the reformatted code and that the output
+    conformed to the members' desired expectations.
 
 \newpage{}
 

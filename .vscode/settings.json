@@ -17,6 +17,10 @@
         "**/SRS.aux": true,
         "**/SRS.log": true,
         "**/SRS.gz": true,
-        "**/SRS.out": true
+        "**/SRS.out": true,
+        "**/HazardAnalysis.aux": true,
+        "**/HazardAnalysis.log": true,
+        "**/HazardAnalysis.gz": true,
+        "**/HazardAnalysis.out": true
     }
 }
