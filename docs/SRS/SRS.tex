@@ -14,29 +14,40 @@
 \usepackage{underscore}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{xltabular}
 \usepackage{float}
 \usepackage{enumitem}
-\setlist[itemize]{label=\textbullet}  % dots at every list level
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=false,
+    pdftitle={Software Requirement Specification},
+    pdfauthor={Jean-Philippe Eisenbarth},
+    pdfsubject={TeX and LaTeX},
+    pdfkeywords={TeX, LaTeX, graphics, images},
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=purple,
+    linktoc=page
+}
+\def\myversion{1.24.8 }
+\setlist[itemize]{label=\textbullet}
 
 \title{Software Requirements Specification\\\progname}
-
 \author{\authname}
-
 \date{}
-
 \input{../Comments.text}
 \input{../Common.text}
+
+
 
 %--------------------- Headings ---------------
 % Same look as the numbered headings in the Development Plan, but with the
 % Meyer book letters (G, E, S, P) in place of section numbers.
-% \book{G}{Goals}                 -> like "1  Introduction"
-% \nsection{G.1 Context ...}      -> like "1.1  Team Meet"
-% \subsection* in a section file  -> like "4.3.2  Agenda Structure"
-% \subsubsection* in a section file -> bold paragraph heading
 \makeatletter
 \let\srs@section\section
 \let\srs@subsection\subsection
@@ -52,6 +63,17 @@
     {3.25ex \@plus1ex \@minus.2ex}{0.5ex}{\normalfont\normalsize\bfseries}}
 \makeatother
 \setcounter{tocdepth}{2}
+% Sub-entries (S.2.1, P.1.1, ...) are added at the subsection level like the
+% \nsection entries, but without \numberline. Indent those one step further.
+\makeatletter
+\AtBeginDocument{%
+  \let\srs@l@subsection\l@subsection
+  \renewcommand*\l@subsection[2]{%
+    \@expandtwoargs\in@{\detokenize{\numberline}}{\detokenize{#1}}%
+    \ifin@ \srs@l@subsection{#1}{#2}%
+    \else \@dottedtocline{2}{3.8em}{3.2em}{#1}{#2}\fi}}
+\makeatother
+
 
 %--------------------- Numbering ---------------
 \usepackage{amsthm}
@@ -67,7 +89,7 @@
 %--------------------- Symbolic constants ---------------
 % Values used by the requirements in S.2. Change a value here and it is
 % updated everywhere it is used. Rationale for each value is given in the
-% Symbolic Constants table at the end of S.2.
+% Symbolic Constants table in Appendix A.1.
 \newcommand{\const}[1]{\textsc{#1}}                % typesets a constant's name
 \newcommand{\valMaxBrokerOverhead}{100~ms}
 \newcommand{\valSessionTimeout}{30~minutes}
@@ -107,7 +129,7 @@
 \end{tabularx}
 \end{table}
 
-This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer.
+This document follows the requirements documentation structure presented in the \href{ https://link.springer.com/content/pdf/10.1007/978-3-031-06739-6.pdf}{Handbook of requirements and business analysis}, by Bertrand Meyer \cite{Meyer2022}. Changes made to the template are listed in Table~\ref{tab:template-changes} (Appendix A.2).
 \newpage{}
 %===============================================================
 \tableofcontents
@@ -157,6 +179,7 @@ This document follows the requirements documentation structure presented in the 
 \input{System/S4.txt}
 \input{System/S5.txt}
 \input{System/S6.txt}
+\input{System/S7.txt}
 
 %===============================================================
 \book{P}{Project}
@@ -172,6 +195,24 @@ This document follows the requirements documentation structure presented in the 
 \input{Project/P6.txt}
 \input{Project/P7.txt}
 
+\newpage{}
+%===============================================================
+% References: shared refs/References.bib (same setup as the HA). IEEEtran
+% prints only the entries this document cites.
+\phantomsection
+\addcontentsline{toc}{section}{\protect\numberline{}References}
+\bibliographystyle{IEEEtran}
+\bibliography{../../refs/References}
+
+\newpage{}
+%===============================================================
+\book{A}{Appendix}
+%===============================================================
+
+\input{Appendix/A1.txt}
+\input{Appendix/A2.txt}
+\input{Appendix/A3.txt}
+\input{Appendix/A4.txt}
 
 %===============================================================
 \end{document}
