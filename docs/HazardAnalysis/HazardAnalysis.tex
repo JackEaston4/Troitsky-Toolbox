@@ -285,14 +285,6 @@ outages, and data entry errors, remain within the scope of the analysis.
 
 \section{Failure Mode and Effect Analysis}
 
-\wss{Include your FMEA table here. This is the most important part of this document.}
-\wss{The safety requirements in the table do not have to have the prefix SR.
-The most important thing is to show traceability to your SRS. You might trace to
-requirements you have already written, or you might need to add new
-requirements.}
-\wss{If no safety requirement can be devised, other mitigation strategies can be
-entered in the table, including strategies involving providing additional
-documentation, and/or test cases.}
 
 \newgeometry{margin=0.5in}
 \newgeometry{margin=0.5in}
@@ -433,6 +425,18 @@ rationale design process how and why to fake it.)}
     \item \textbf{SR-RC-1:} The Rule Compliance System shall display the competition year 
     of the active rules with each result, and shall indicate when 
     manual verification is required. [H-RC-1]
+    \item \textbf{SR-KT-1:} The KT shall enforce schema-level validation on all handoff submissions, rejecting any submission that leaves mandatory operational fields blank or below a minimum character threshold [H-KT-1]
+    \item \textbf{SR-KT-2:} The KT shall verify that all cross-referenced bridge models, test result IDs, and rule versions stored in the Knowledge Repository exist and are valid before a handoff document is accepted. [H-KT-2]
+    \item \textbf{SR-KT-3:} The KT shall track role succession states and block the archival of an outgoing lead's account until a designated successor or faculty advisor has been assigned to inherit the role records. [H-KT-4]
+    \item \textbf{SR-KT-4:} The KT shall enforce a two stage publishing lifecycle. (Draft \(\rightarrow\) Review \(\rightarrow\) Publishing). [H-KT-1], [H-KT-3], [H-KT-5]
+    \item \textbf{SR-KT-5:} The KT shall verify an acknowledgement is sent from the KR when publishing documents to show confirmation of documentation being saved. [H-KT-6]
+    \item \textbf{SR-MT-1:} The MT shall automatically parse, validate, and convert all uploaded data into base standardized Units, rejecting datasets lacking unit metadata. [SR-MT-3]
+    \item \textbf{SR-MT-2:} The MT shall mandate the inclusion of grain orientation data on any wooden material test. [SR-MT-1]
+    \item \textbf{SR-MT-3:} The MT shall preform automated sanity checks to ensure all submitted data is within acceptable boundaries. [SR-MT-2]
+    \item \textbf{SR-SYS-1:} The project build system shall strictly enforce deterministic dependency resolution by pinning all direct and transitive third-party dependencies to immutable versions using lockfiles. [H-SYS-1]
+    \item \textbf{SR-SYS-2:} The deployment Pipeline shall enforce mandatory branch protection rules that block deployment to production environments; All automated unit tests execute and pass the CI/CD pipeline and any code changes must receive ibe documented. [H-SYS-2]
+    \item \textbf{SR-SYS-3:} The system shall provide fully containerized, reproducible deployment configurations (e.g., Dockerfile and docker-compose.yml) alongside automated setup scripts, standardized API documentation (e.g., OpenAPI/Swagger), and a maintainer onboarding guide that allows a new developer to build, deploy, and verify the full system locally within a single documented procedure. [H-SYS-3]
+    
 \end{itemize}
 
 \subsection{Non-Functional Requirements}
@@ -442,10 +446,33 @@ rationale design process how and why to fake it.)}
 \end{itemize}
 
 \section{Roadmap} \label{SecRoadmap}
-
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
-
+\subsection{Requirements Planned During Capstone}
+\begin{itemize}
+    \item \textbf{SR-KR-2:} A main goal if this project is to ensure information carries on between years of Troitsky members; although the project would function without this requirement it would go against the purpose of the project to delay such a feature.
+    \item \textbf{SR-KR-4:} There is little point to having a database with information that is not labeled, this is essential to the project and cannot be delayed.
+    \item \textbf{SR-KR-5:} Error acknowledgements are essential for users to work with the project, this requirement cannot wait.
+    \item \textbf{SR-MA-1:} The ability to confirm correctness is essential to test and work with our project.
+    \item \textbf{SR-MA-3:} If a timeout function isn't implemented we would have to implement a way to cancel model processing, so it is a necessary feature.
+    \item \textbf{SR-PA-1:} Error acknowledgements are essential for users to work with the project, this requirement cannot wait.
+    \item \textbf{SR-KT-2:} If references aren't properly tracked, the long term success of the project is compromised through the tediousness of fixing them.
+    \item \textbf{SR-KT-3:} Transition document succession is a necessary feature to ensure information carries throughout the years.
+    \item \textbf{SR-KT-5:} An acknowledgement that the KR has received the uploaded data is essential to ensure completeness of the repository.
+    \item \textbf{SR-MT-2:} Grain direction is a non-negotiable whe it comes to correctness of material properties.
+    \item \textbf{SR-SYS-1:} Pinning third party dependencies to lock files would be a mess to do post capstone development.
+    \item \textbf{SR-SYS-2:} Essential for an effective continuous development process.
+    \item \textbf{SR-SYS-3:} Essential for development to continue after the initial capstone development process.
+\end{itemize}
+\subsection{Delayed Requirements}
+\begin{itemize}
+    \item \textbf{SR-KR-1:} Repository backups aren't necessary during capstone development but would be a high priority item post capstone.
+    \item \textbf{SR-KR-3:} Long term team data separation is important however during development we cannot guarantee that we will have more than one team using the project at a time during development.
+    \item \textbf{SR-MA-2:} This is a more in-depth application of SR-MA-1; users will have alternative software to view their models.
+    \item \textbf{SR-RC-1:} As long as the rules are stored and applied than actually showing them along with every result is more of a 'quality of life' feature than a absolutely necessary one.
+    \item \textbf{SR-KT-1:} The first set of executives are invested in the success of this product, incomplete or hollow handoffs have a smaller risk of occuring in the first year.
+    \item \textbf{SR-KT-4:} For long term quality of the documents this is a great feature to have, but it is less critical during development than other requirements.
+    \item \textbf{SR-MT-1:} For intial development we can work on the assumption that submission will all be in the same standardized units.
+    \item \textbf{SR-MT-3:} Sanity checks within submitted data are great to have but are essential to the functionality of this product.
+\end{itemize}
 \bibliographystyle{IEEEtran}
 \bibliography{../../refs/References}
 
