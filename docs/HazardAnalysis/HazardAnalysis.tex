@@ -64,7 +64,7 @@ Table~\ref{TblTemplateChanges} (Section~\ref{SecTemplateChanges}).
 
 \pagenumbering{arabic}
 
-\wss{You are free to modify this template.}
+
 
 \section{Introduction}
 
@@ -416,8 +416,6 @@ Software abandonment & Toolbox becomes unusable after the initial capstone team 
 
 \section{Safety and Security Requirements} \label{SecSafetyReqs}
 
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
 
 \subsection{Functional Requirements}
 
@@ -481,9 +479,21 @@ rationale design process how and why to fake it.)}
 \section{Roadmap} \label{SecRoadmap}
 \subsection{Requirements Planned During Capstone}
 \begin{itemize}
+<<<<<<< HEAD
     \item \textbf{SR-KR-2:} A main goal of this project is to ensure information carries on between years of Troitsky members; although the project would function without this requirement it would go against the purpose of the project to delay such a feature.
     \item \textbf{SR-KR-4:} There is little point to having a database with information that is not labeled; this is essential to the project and cannot be delayed.
     \item \textbf{SR-KR-5:} Error acknowledgements are essential for users to work with the project; this requirement cannot wait.
+=======
+    \item \textbf{SR-WS-1:} Thoroughly testing all code before production is a fundamental development practice that is essential for delivering a stable and reliable system.
+    \item \textbf{SR-WS-2:} Storing a previous version of the production code is a critical fallback mechanism to ensure service can be quickly restored after a faulty deployment. This is a core part of a responsible deployment strategy.
+    \item \textbf{SR-WS-3:} Ensuring code is thread-safe is necessary for a multi-user web application to prevent data corruption and concurrency issues. Addressing this during initial development is far more effective than trying to fix it later.
+    \item \textbf{SR-AC-1:} Implementing industry-standard security defenses is non-negotiable for protecting user data and club information. This must be a priority from the beginning of development.
+    \item \textbf{SR-AC-2:} Enforcing strong password policies is a basic and effective security measure that is simple to implement and essential for protecting user accounts.
+    \item \textbf{SR-BR-1:} The ability for an administrator to log out or disable an account from the server side is a critical security feature for responding to a compromised account or other security incidents.
+    \item \textbf{SR-KR-2:} A main goal if this project is to ensure information carries on between years of Troitsky members; although the project would function without this requirement it would go against the purpose of the project to delay such a feature.
+    \item \textbf{SR-KR-4:} There is little point to having a database with information that is not labeled, this is essential to the project and cannot be delayed.
+    \item \textbf{SR-KR-5:} Error acknowledgements are essential for users to work with the project, this requirement cannot wait.
+>>>>>>> ace0c2bc8fd6b356e8ba2e4bee2b163c29904c7f
     \item \textbf{SR-MA-1:} The ability to confirm correctness is essential to test and work with our project.
     \item \textbf{SR-MA-3:} If a timeout function isn't implemented we would have to implement a way to cancel model processing, so it is a necessary feature.
     \item \textbf{SR-PA-1:} Error acknowledgements are essential for users to work with the project; this requirement cannot wait.
@@ -497,8 +507,14 @@ rationale design process how and why to fake it.)}
 \end{itemize}
 \subsection{Delayed Requirements}
 \begin{itemize}
+<<<<<<< HEAD
     \item \textbf{SR-KR-1:} Repository backups aren't necessary during capstone development but would be a high-priority item after capstone.
     \item \textbf{SR-KR-3:} Long-term team data separation is important; however, during development we cannot guarantee that more than one team will use the project at a time.
+=======
+    \item \textbf{SR-WS-4:} While high availability is important for the final deployed application, the specific hosting infrastructure and its internet robustness are operational concerns that are outside the direct scope of capstone software development. The system can be developed and demonstrated on standard infrastructure.
+    \item \textbf{SR-KR-1:} Repository backups aren't necessary during capstone development but would be a high priority item post capstone.
+    \item \textbf{SR-KR-3:} Long term team data separation is important however during development we cannot guarantee that we will have more than one team using the project at a time during development.
+>>>>>>> ace0c2bc8fd6b356e8ba2e4bee2b163c29904c7f
     \item \textbf{SR-MA-2:} This is a more in-depth application of SR-MA-1; users will have alternative software to view their models.
     \item \textbf{SR-RC-1:} As long as the rules are stored and applied, showing them along with every result is more of a quality-of-life feature than an absolutely necessary one.
     \item \textbf{SR-KT-1:} The first set of executives are invested in the success of this product, so incomplete or hollow handoffs are less likely to occur in the first year.
@@ -544,7 +560,6 @@ made to the template to be described in the document. \\
 
 \section{Appendix --- Generative AI Use Disclosure}
 
-\wss{ChatGPT (version 5) was used to brainstorm ideas for the template for this disclose section.}
 
 
 
@@ -555,10 +570,7 @@ ChatGPT (version 5), Gemini (version 3) and Claude (version 5.5)
 
 \subsection{How and Where Used}
 
-\wss{Explain what the tool(s) were used for.  Examples include: brainstorming,
-explaining a technical concept, reviewing the document, generating or modifying
-text, generating or modifying diagrams, identifying errors or omissions or
-inconsistencies.}
+
 
 \begin{itemize}
   \item \textbf{Brainstorming:} coming up with ideas for the hazard analysis
@@ -577,27 +589,36 @@ directly into the document.
 
 \subsection{Verification of AI-Generated Content}
 
-\wss{\begin{itemize}
-    \item Describe how the team checked AI-generated or AI-assisted material
-    before including it in the document.
-    \item In particular, verify factual claims, technical assertions,
-    requirements, calculations, references, and other information for which an
-    AI system may produce incorrect or fabricated results.
-    \item \textbf{The team is responsible for the accuracy, completeness,
-consistency, and appropriateness of the submitted document, regardless of
-whether material was generated by a human or an AI system.}
-\end{itemize}}
 
+<<<<<<< HEAD
     All suggestions delivered by AI were critically thought about by members of the group.
     All facts were verified on reliable human-created sources and formatting code was 
     deemed valid through successful running of the reformatted code and that the output
     conformed to the members' desired expectations.
+=======
+The team followed the same policy for AI use that the Development Plan sets
+for AI-generated code: each developer shall thoroughly review all
+AI-generated content before creating a pull request and not submit the
+content for a pull request until they completely understand it and are
+convinced of its validity.
+
+\begin{itemize}
+  \item Each team member reviewed any AI-assisted changes to their own
+  sections before opening a pull request.
+  \item Cross-references between the SRS and the Hazard Analysis were checked
+  by hand against the current version of both documents.
+  \item Pull requests were reviewed by at least one other team member before merging.
+  \item The team is responsible for the accuracy, completeness, consistency,
+  and appropriateness of this document, whether material was written by a
+  person or with help from an AI tool.
+\end{itemize}
+>>>>>>> ace0c2bc8fd6b356e8ba2e4bee2b163c29904c7f
 
 \newpage{}
 
 \section{Appendix --- Reflection}
 
-\wss{Not required for CAS 741}
+
 
 \input{../Reflection.text}
 
@@ -651,5 +672,11 @@ whether material was generated by a human or an AI system.}
     \item Before this deliverable, the team had discussed the risks of data loss or corruption. These were immediately obvious because the knowledge repository is a central component of the system and one of the primary goals of the project relates to centralizing the Troitsky Team's data storage. Other risks such as the web server being down, or overloaded, or the access control system being compromised, were identified later while doing the Hazard Analysis. These came about as the team conducted interviews and surveys with the Troitsky Team members as we were able to get a better idea of what the day-to-day use of the system would look like and what things were most important or spooky from the Team's perspective.
     \item In this project, some additional risks that should be considered are data privacy/security risks as well as information correctness risks. Data privacy and security is obviously important because it is imperative that only authorized and intended users are able to access specific information. Since data could contain personally identifiable information or competitive secrets, it is critical that these risks are considered. Additionally, since our application facilitates the storage and sharing of information across generations of students, it is very important to consider risks to correctness/integrity of the data being stored and accessed within the system.
 \end{enumerate}
-
+\subsection*{Mason Azzopardi}
+\begin{enumerate}
+    \item I put a lot of time and effort into the work I did for the failure mode and effective analysis, I'm pretty proud of the result of my efforts. The team did a great job with the work separation and making it so it was easy to work off of each other.
+    \item Items got done late, I maybe put too much time into my failure mode and effective analysis, it got done a day late. We were supposed to have everything but the roadmap and reflections done by the Saturday before the due date but some work was still trickling in on Monday. The best way we had to resolve them was to just communicate that we were going to be late and make a plan about how we were going to tackle the rest of the work in this document in a shorter time period than planned.
+    \item Calculation Error was thought of by the team, H-PA-1, we have been planning around the probability that our estimates could be off, since the start by looking through multiple potential API and third part dependencies we can use. Grain direction Neglection H-MT-3 was a hazard I thought of early in the development process just because I thought it might be annoying to accommodate for.
+    \item Data integrity risk and relative calculation error are two risk that are not physical. Packets can be lost when uploading files to web services, or details can become corrupted when converting file type, a repository fails if users cannot trust that the information it stores is what was uploaded. Additionally, we will be working with repetitive calculation when preforming FEA, it is possible for errors to multiply through each iteration resulting in drastically wrong calculations.
+\end{enumerate}
 \end{document}

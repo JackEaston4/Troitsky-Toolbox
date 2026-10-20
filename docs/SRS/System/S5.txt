@@ -1,5 +1,4 @@
 \nsection{S.5 Prioritization}
-\comment{Classification of the behaviors, interfaces and scenarios (S.2, S.3 and S.4) by their degree of criticality.}
 %---------------------------------
 
 This section classifies the requirements of S.2, the interfaces of S.3, the usage scenarios of S.4, and the safety and security requirements identified in the Hazard Analysis by their degree of criticality, using the MoSCoW method:
@@ -7,7 +6,7 @@ This section classifies the requirements of S.2, the interfaces of S.3, the usag
 \begin{itemize}
     \item \textbf{Must have (M):} Essential for the system to meet its goals. The Toolbox cannot be released without it.
     \item \textbf{Should have (S):} Important, and planned for the capstone release, but the system can still meet its core goals without it.
-    \item \textbf{Could have (C):} Desirable, and implemented if time allows. Otherwise left for future software subteams.
+    \item \textbf{Could have (C):} Desirable, and implemented if time allows. Otherwise left for future \term{software-subteam}{software subteams}.
     \item \textbf{Won't have (W):} Not planned for the current release.
 \end{itemize}
 
@@ -25,17 +24,17 @@ The criteria used to assign each priority are explained in S.5.12, and the influ
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-WS-1 & Public landing page & Should & Useful for announcements and recruitment (survey feature K), but no club service depends on it. \\
+\reqref{FR-WS-1} & Public landing page & Should & Useful for announcements and recruitment (survey feature K), but no club service depends on it. \\
 \hline
-FR-WS-2 & Login and logout & Must & No club service or data can be reached without logging in. \\
+\reqref{FR-WS-2} & Login and logout & Must & No club service or data can be reached without logging in. \\
 \hline
-FR-WS-3 & Request forwarding & Must & The only path from the browser to the broker, and therefore to every service. \\
+\reqref{FR-WS-3} & Request forwarding & Must & The only path from the browser to the broker, and therefore to every service. \\
 \hline
-NFR-WS-1 & Serve web app & Must & The web app is the only way members use the Toolbox. \\
+\reqref{NFR-WS-1} & Serve web app & Must & The web app is the only way members use the Toolbox. \\
 \hline
-NFR-WS-2 & Encrypted communication & Must & Protects passwords and unreleased team designs on shared networks such as campus Wi-Fi. \\
+\reqref{NFR-WS-2} & Encrypted communication & Must & Protects passwords and unreleased team designs on shared networks such as campus Wi-Fi. \\
 \hline
-NFR-WS-3 & Session expiry & Should & Reduces the risk of an unattended browser, but the system remains secure enough for an initial release without it. \\
+\reqref{NFR-WS-3} & Session expiry & Should & Reduces the risk of an unattended browser, but the system remains secure enough for an initial release without it. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -52,21 +51,21 @@ NFR-WS-3 & Session expiry & Should & Reduces the risk of an unattended browser, 
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-AC-1 & Authentication & Must & Limits club data to members, as required by the Problem Statement. \\
+\reqref{FR-AC-1} & Authentication & Must & Limits club data to members, as required by the Problem Statement. \\
 \hline
-FR-AC-2 & Roles & Must & Every permission decision in the system depends on the member's role. \\
+\reqref{FR-AC-2} & Roles & Must & Every permission decision in the system depends on the member's role. \\
 \hline
-FR-AC-3 & Authorization & Must & The broker relies on it to check every request (FR-BR-2). \\
+\reqref{FR-AC-3} & Authorization & Must & The broker relies on it to check every request (\reqref{FR-BR-2}). \\
 \hline
-FR-AC-4 & Member management & Must & Without it, accounts could not be created or removed as members join and graduate. \\
+\reqref{FR-AC-4} & Member management & Must & Without it, accounts could not be created or removed as members join and graduate. \\
 \hline
-FR-AC-5 & Team membership & Must & Required for team data isolation (FR-AC-6). \\
+\reqref{FR-AC-5} & Team membership & Must & Required for team data isolation (\reqref{FR-AC-6}). \\
 \hline
-FR-AC-6 & Team data isolation & Must & Teams compete with each other, so exposing a current design to a rival team would make the Toolbox unusable for current work. \\
+\reqref{FR-AC-6} & Team data isolation & Must & Teams compete with each other, so exposing a \term{current-model}{current design} to a rival team would make the Toolbox unusable for current work. \\
 \hline
-NFR-AC-1 & Credential security & Must & Members reuse passwords, so a database leak must not expose them. \\
+\reqref{NFR-AC-1} & Credential security & Must & Members reuse passwords, so a database leak must not expose them. \\
 \hline
-NFR-AC-2 & Effective role alterations & Should & Important for isolation when members change teams, but such changes are infrequent and a short delay is a limited risk. \\
+\reqref{NFR-AC-2} & Effective role alterations & Should & Important for isolation when members change teams, but such changes are infrequent and a short delay is a limited risk. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -83,19 +82,19 @@ NFR-AC-2 & Effective role alterations & Should & Important for isolation when me
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-BR-1 & Service registration & Must & The broker cannot route requests to services it does not know about. \\
+\reqref{FR-BR-1} & Service registration & Must & The broker cannot route requests to services it does not know about. \\
 \hline
-FR-BR-2 & Request authorization & Must & The single point at which access control is enforced for every service. \\
+\reqref{FR-BR-2} & Request authorization & Must & The single point at which access control is enforced for every service. \\
 \hline
-FR-BR-3 & Request routing & Must & All communication between the web app and the services depends on it. \\
+\reqref{FR-BR-3} & Request routing & Must & All communication between the web app and the services depends on it. \\
 \hline
-FR-BR-4 & Unavailable services & Should & Improves the experience when a service fails, and supports service independence (NFR-SYS-3), but is not needed for normal operation. \\
+\reqref{FR-BR-4} & Unavailable services & Should & Improves the experience when a service fails, and supports service independence (\reqref{NFR-SYS-3}), but is not needed for normal operation. \\
 \hline
-NFR-BR-1 & Extensibility & Should & Central to long-term maintenance by future subteams, but not required for the initial set of tools to work. \\
+\reqref{NFR-BR-1} & Extensibility & Should & Central to long-term maintenance by future subteams, but not required for the initial set of tools to work. \\
 \hline
-NFR-BR-2 & Routing overhead & Should & Affects every response time, but the club's small number of users makes a violation unlikely. \\
+\reqref{NFR-BR-2} & Routing overhead & Should & Affects every response time, but the club's small number of users makes a violation unlikely. \\
 \hline
-NFR-BR-3 & Request logging & Should & The main diagnostic tool for future maintainers, and supports privacy investigations, but not needed for the system to function. \\
+\reqref{NFR-BR-3} & Request logging & Should & The main diagnostic tool for future maintainers, and supports privacy investigations, but not needed for the system to function. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -112,19 +111,19 @@ NFR-BR-3 & Request logging & Should & The main diagnostic tool for future mainta
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-KR-1 & Data storage & Must & Every other service stores its data here. Centralizing the club's information is the project's first goal. \\
+\reqref{FR-KR-1} & Data storage & Must & Every other service stores its data here. Centralizing the club's information is the project's first goal. \\
 \hline
-FR-KR-2 & Content upload & Must & The repository can only grow if members can add to it. \\
+\reqref{FR-KR-2} & Content upload & Must & The repository can only grow if members can add to it. \\
 \hline
-FR-KR-3 & Search and filter & Must & Supports the archive of past designs (survey feature A), the second-highest priority feature. \\
+\reqref{FR-KR-3} & Search and filter & Must & Supports the archive of \term{past-design}{past designs} (survey feature A), the second-highest priority feature. \\
 \hline
-FR-KR-4 & View and download & Must & Stored information is only useful if members can open it. \\
+\reqref{FR-KR-4} & View and download & Must & Stored information is only useful if members can open it. \\
 \hline
-FR-KR-5 & Content management & Should & Keeps the repository organized over time, but is not needed for it to be useful in its first year. \\
+\reqref{FR-KR-5} & Content management & Should & Keeps the repository organized over time, but is not needed for it to be useful in its first year. \\
 \hline
-NFR-KR-1 & Search responsiveness & Should & Important for usability, but the repository will hold far fewer than \const{MAX_REPOSITORY_ITEMS} items initially. \\
+\reqref{NFR-KR-1} & Search responsiveness & Should & Important for usability, but the repository will hold far fewer than \const{MAX_REPOSITORY_ITEMS} items initially. \\
 \hline
-NFR-KR-2 & Data durability & Must & Once the repository replaces the club's scattered storage, it holds the only copy of much of the club's history. \\
+\reqref{NFR-KR-2} & Data durability & Must & Once the repository replaces the club's scattered storage, it holds the only copy of much of the club's history. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -141,23 +140,23 @@ NFR-KR-2 & Data durability & Must & Once the repository replaces the club's scat
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-MA-1 & File validation & Must & Analysing an invalid model would produce meaningless results that members might act on. \\
+\reqref{FR-MA-1} & File validation & Must & Analysing an invalid model would produce meaningless results that members might act on. \\
 \hline
-FR-MA-2 & 3D visualization & Must & Rated lowest on its own (survey feature F), but needed to confirm the model was read correctly and to inspect past designs. It is also the focus of the Proof of Concept. \\
+\reqref{FR-MA-2} & 3D visualization & Must & Rated lowest on its own (survey feature F), but needed to confirm the model was read correctly and to inspect \term{past-design}{past designs}. It is also the focus of the Proof of Concept. \\
 \hline
-FR-MA-3 & Data extraction & Must & Both analysis subsystems depend on the extracted data. \\
+\reqref{FR-MA-3} & Data extraction & Must & Both analysis subsystems depend on the extracted data. \\
 \hline
-FR-MA-4 & Current model storage & Must & Lets a team share its current design with all of its members. \\
+\reqref{FR-MA-4} & \term{current-model}{Current model} storage & Must & Lets a team share its \term{current-model}{current design} with all of its members. \\
 \hline
-FR-MA-5 & Past design viewing & Must & Access to past designs was the most common frustration in the survey (feature A). \\
+\reqref{FR-MA-5} & \term{past-design}{Past design} viewing & Must & Access to \term{past-design}{past designs} was the most common frustration in the survey (feature A). \\
 \hline
-FR-MA-6 & Archiving current models & Should & Needed to grow the archive each year, but only first needed at the end of the first season, and could be done manually until then. \\
+\reqref{FR-MA-6} & Archiving \term{current-model}{current models} & Should & Needed to grow the archive each year, but only first needed at the end of the first season, and could be done manually until then. \\
 \hline
-NFR-MA-1 & Model upload (STEP) & Must & No model can enter the system without it. \\
+\reqref{NFR-MA-1} & Model upload (\term{step}{STEP}) & Must & No model can enter the system without it. \\
 \hline
-NFR-MA-2 & Load time & Should & Affects usability, but slow loading does not prevent analysis. \\
+\reqref{NFR-MA-2} & Load time & Should & Affects usability, but slow loading does not prevent analysis. \\
 \hline
-NFR-MA-3 & Extraction accuracy & Must & Inaccurate dimensions could let a bridge that violates a size rule pass the compliance check. \\
+\reqref{NFR-MA-3} & Extraction accuracy & Must & Inaccurate dimensions could let a bridge that violates a size rule pass the compliance check. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -173,19 +172,19 @@ NFR-MA-3 & Extraction accuracy & Must & Inaccurate dimensions could let a bridge
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-PA-1 & Failure load estimate & Must & The highest-priority feature in the member survey (feature E, 12 top-3 picks). \\
+\reqref{FR-PA-1} & \term{failure-load}{Failure load} estimate & Must & The highest-priority feature in the member survey (feature E, 12 top-3 picks). \\
 \hline
-FR-PA-2 & Load-to-mass ratio & Must & The third-highest priority feature (feature D), and computed directly from FR-PA-1 and the extracted mass. \\
+\reqref{FR-PA-2} & \term{load-to-mass}{Load-to-mass ratio} & Must & The third-highest priority feature (feature D), and computed directly from \reqref{FR-PA-1} and the extracted mass. \\
 \hline
-FR-PA-3 & Material selection & Must & A failure load cannot be estimated without material properties, which come from the club's own test data. \\
+\reqref{FR-PA-3} & Material selection & Must & A \term{failure-load}{failure load} cannot be estimated without material properties, which come from the club's own test data. \\
 \hline
-FR-PA-4 & Assumption disclosure & Must & Prevents inexperienced members from over-trusting an estimate, a safety concern identified in the Hazard Analysis. \\
+\reqref{FR-PA-4} & Assumption disclosure & Must & Prevents inexperienced members from over-trusting an estimate, a safety concern identified in the Hazard Analysis. \\
 \hline
-NFR-PA-1 & Estimate accuracy & Should & The goal for the estimates, but it can only be verified for past bridges whose failure loads were recorded. \\
+\reqref{NFR-PA-1} & Estimate accuracy & Should & The goal for the estimates, but it can only be verified for past bridges whose \term{failure-load}{failure loads} were recorded. \\
 \hline
-NFR-PA-2 & Computation time & Should & Analysis is requested occasionally, so a slower result is inconvenient rather than blocking. \\
+\reqref{NFR-PA-2} & Computation time & Should & Analysis is requested occasionally, so a slower result is inconvenient rather than blocking. \\
 \hline
-NFR-PA-3 & Extensibility & Could & Benefits future subteams adding new metrics, but does not affect the initial metrics. \\
+\reqref{NFR-PA-3} & Extensibility & Could & Benefits future subteams adding new metrics, but does not affect the initial metrics. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -201,19 +200,19 @@ NFR-PA-3 & Extensibility & Could & Benefits future subteams adding new metrics, 
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-RC-1 & Rule import & Should & Rule compliance (survey feature J) was rated useful, but below the performance and repository features. \\
+\reqref{FR-RC-1} & Rule import & Should & Rule compliance (survey feature J) was rated useful, but below the performance and repository features. \\
 \hline
-FR-RC-2 & Rule configuration & Should & Needed for compliance checks, which are themselves a Should. \\
+\reqref{FR-RC-2} & Rule configuration & Should & Needed for compliance checks, which are themselves a Should. \\
 \hline
-FR-RC-3 & Compliance check & Should & Catches violations before construction, but teams can still check the rules by hand. \\
+\reqref{FR-RC-3} & Compliance check & Should & Catches violations before construction, but teams can still check the rules by hand. \\
 \hline
-FR-RC-4 & Violation details & Should & Makes a failed check actionable, but a pass or fail result alone is still useful. \\
+\reqref{FR-RC-4} & Violation details & Should & Makes a failed check actionable, but a pass or fail result alone is still useful. \\
 \hline
-FR-RC-5 & Manual checks & Should & Required whenever compliance checking is provided, so that an all-pass result is not mistaken for full compliance. \\
+\reqref{FR-RC-5} & Manual checks & Should & Required whenever compliance checking is provided, so that an all-pass result is not mistaken for full compliance. \\
 \hline
-NFR-RC-1 & Check correctness & Must & If compliance checking is provided, a false pass could lead to a disqualified bridge. A check that gives false passes is worse than no check. \\
+\reqref{NFR-RC-1} & Check correctness & Must & If compliance checking is provided, a false pass could lead to a disqualified bridge. A check that gives false passes is worse than no check. \\
 \hline
-NFR-RC-2 & Rule updatability & Should & Rules change every year, but the software subteam can update them in the first year if executives cannot. \\
+\reqref{NFR-RC-2} & Rule updatability & Should & Rules change every year, but the \term{software-subteam}{software subteam} can update them in the first year if executives cannot. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -230,21 +229,21 @@ NFR-RC-2 & Rule updatability & Should & Rules change every year, but the softwar
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-MT-1 & Result entry & Must & A database of material test results (survey feature B) has the highest mean rating of any feature. \\
+\reqref{FR-MT-1} & Result entry & Must & A database of material test results (survey feature B) has the highest mean rating of any feature. \\
 \hline
-FR-MT-2 & Input validation & Must & A single entry error would distort every failure load estimate that uses the data. \\
+\reqref{FR-MT-2} & Input validation & Must & A single entry error would distort every \term{failure-load}{failure load} estimate that uses the data. \\
 \hline
-FR-MT-3 & Historical comparison & Should & Helps teams spot unusual batches and testing errors, but results remain usable without it. \\
+\reqref{FR-MT-3} & Historical comparison & Should & Helps teams spot unusual batches and testing errors, but results remain usable without it. \\
 \hline
-FR-MT-4 & Material properties & Must & The Performance Analysis System depends on it (FR-PA-3). \\
+\reqref{FR-MT-4} & Material properties & Must & The Performance Analysis System depends on it (\reqref{FR-PA-3}). \\
 \hline
-FR-MT-5 & Result review & Should & Lets executives exclude bad results, but input validation (FR-MT-2) catches the most common errors. \\
+\reqref{FR-MT-5} & Result review & Should & Lets executives exclude bad results, but input validation (\reqref{FR-MT-2}) catches the most common errors. \\
 \hline
-NFR-MT-1 & Result import & Must & The club's existing and past test data is stored in spreadsheets, and importing it is how that data enters the system. \\
+\reqref{NFR-MT-1} & Result import & Must & The club's existing and past test data is stored in spreadsheets, and importing it is how that data enters the system. \\
 \hline
-NFR-MT-2 & Traceability & Should & Lets members check the data behind a questionable estimate, but is not needed to produce estimates. \\
+\reqref{NFR-MT-2} & Traceability & Should & Lets members check the data behind a questionable estimate, but is not needed to produce estimates. \\
 \hline
-NFR-MT-3 & Export & Could & Convenient for members' own analysis, but not part of any core workflow. \\
+\reqref{NFR-MT-3} & Export & Could & Convenient for members' own analysis, but not part of any core workflow. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -261,19 +260,19 @@ NFR-MT-3 & Export & Could & Convenient for members' own analysis, but not part o
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-FR-KT-1 & Exit document templates & Must & Ease of transition between executives is a main goal identified with the Troitsky executives, and exit documents were rated highly (survey feature G). \\
+\reqref{FR-KT-1} & \term{exit-document}{Exit document} templates & Must & Ease of transition between executives is a main goal identified with the Troitsky executives, and \term{exit-document}{exit documents} were rated highly (survey feature G). \\
 \hline
-FR-KT-2 & Exit document submission & Must & Templates are only useful if members can complete and submit them. \\
+\reqref{FR-KT-2} & \term{exit-document}{Exit document} submission & Must & Templates are only useful if members can complete and submit them. \\
 \hline
-FR-KT-3 & Role records & Should & Improves on exit documents by keeping a current description of each role, but exit documents alone already preserve the key information. \\
+\reqref{FR-KT-3} & \term{role-record}{Role records} & Should & Improves on \term{exit-document}{exit documents} by keeping a current description of each role, but \term{exit-document}{exit documents} alone already preserve the key information. \\
 \hline
-FR-KT-4 & Publication & Must & Exit documents must be findable by future members to preserve knowledge. \\
+\reqref{FR-KT-4} & Publication & Must & \term{exit-document}{Exit documents} must be findable by future members to preserve knowledge. \\
 \hline
-FR-KT-5 & Outstanding documents & Could & Helps executives follow up, but they can track submissions informally. \\
+\reqref{FR-KT-5} & Outstanding documents & Could & Helps executives follow up, but they can track submissions informally. \\
 \hline
-NFR-KT-1 & Findability & Should & Role records only reduce the support burden if new executives can find them, but search (FR-KR-3) already provides a basic way to do so. \\
+\reqref{NFR-KT-1} & Findability & Should & \term{role-record}{Role records} only reduce the support burden if new executives can find them, but search (\reqref{FR-KR-3}) already provides a basic way to do so. \\
 \hline
-NFR-KT-2 & Longevity (PDF export) & Could & Protects against the Toolbox being retired, which is not expected in the near term. \\
+\reqref{NFR-KT-2} & Longevity (PDF export) & Could & Protects against the Toolbox being retired, which is not expected in the near term. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -290,13 +289,13 @@ NFR-KT-2 & Longevity (PDF export) & Could & Protects against the Toolbox being r
 \hline
 \textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-NFR-SYS-1 & Browser support & Must & Members must be able to use the Toolbox on the computers they already have. \\
+\reqref{NFR-SYS-1} & Browser support & Must & Members must be able to use the Toolbox on the computers they already have. \\
 \hline
-NFR-SYS-2 & Capacity & Should & Usage peaks, such as before the competition, involve at most the club's members, so this is unlikely to be exceeded. \\
+\reqref{NFR-SYS-2} & Capacity & Should & Usage peaks, such as before the competition, involve at most the club's members, so this is unlikely to be exceeded. \\
 \hline
-NFR-SYS-3 & Service independence & Should & Protects the repository from failures in the more complex analysis services, but the broker architecture already isolates services. \\
+\reqref{NFR-SYS-3} & Service independence & Should & Protects the repository from failures in the more complex analysis services, but the broker architecture already isolates services. \\
 \hline
-NFR-SYS-4 & Maintainability & Must & The Problem Statement identifies maintenance by a club software subteam as fundamentally crucial to the project's success. \\
+\reqref{NFR-SYS-4} & Maintainability & Must & The Problem Statement identifies maintenance by a club \term{software-subteam}{software subteam} as fundamentally crucial to the project's success. \\
 \hline
 \end{tabularx}
 \end{table}
@@ -319,9 +318,9 @@ S.4.1 & Knowledge Repository Information Viewing & Must & The most common use of
 \hline
 S.4.2 & Knowledge Repository Information Addition & Must & The repository only preserves knowledge if members can add to it. \\
 \hline
-S.4.3 & Transition Information Addition & Must & Supports the knowledge transfer goal, which depends on exit documents being written (FR-KT-1, FR-KT-2). \\
+S.4.3 & Transition Information Addition & Must & Supports the knowledge transfer goal, which depends on \term{exit-document}{exit documents} being written (\reqref{FR-KT-1}, \reqref{FR-KT-2}). \\
 \hline
-S.4.4 & Performance Analysis & Must & Delivers the highest-priority feature in the member survey (FR-PA-1). \\
+S.4.4 & Performance Analysis & Must & Delivers the highest-priority feature in the member survey (\reqref{FR-PA-1}). \\
 \hline
 S.4.5 & Rule Compliance Verification & Should & Depends on the Rule Compliance System, whose functional requirements are Should. \\
 \hline
@@ -344,13 +343,13 @@ The interfaces described in S.3 are prioritized below. Each interface takes the 
 \hline
 \textbf{Interface} & \textbf{Priority} & \textbf{Reasoning} \\
 \hline
-RESTful API between the front end and the back end & Must & Every member-facing requirement reaches the back end through this interface, including login (FR-WS-2) and request forwarding (FR-WS-3). \\
+RESTful API between the front end and the back end & Must & Every member-facing requirement reaches the back end through this interface, including login (\reqref{FR-WS-2}) and request forwarding (\reqref{FR-WS-3}). \\
 \hline
-External static modelling libraries & Must & Data extraction (FR-MA-3) and the failure load estimate (FR-PA-1) depend on them, and both are Must. \\
+External static modelling libraries & Must & Data extraction (\reqref{FR-MA-3}) and the \term{failure-load}{failure load} estimate (\reqref{FR-PA-1}) depend on them, and both are Must. \\
 \hline
-External data server & Must & Holds all of the club's stored data, so data storage (FR-KR-1) and data durability (NFR-KR-2) depend on it. \\
+External data server & Must & Holds all of the club's stored data, so data storage (\reqref{FR-KR-1}) and data durability (\reqref{NFR-KR-2}) depend on it. \\
 \hline
-Login aid (login service or password hashing) & Must & Required for authentication (FR-AC-1) and credential security (NFR-AC-1). \\
+Login aid (login service or password hashing) & Must & Required for authentication (\reqref{FR-AC-1}) and credential security (\reqref{NFR-AC-1}). \\
 \hline
 \end{tabularx}
 \end{table}
@@ -371,21 +370,21 @@ The safety and security requirements are specifically identified in the Hazard A
 Priorities were assigned using four criteria, in the following order:
 
 \begin{enumerate}
-    \item \textbf{Dependency:} A requirement that other Must requirements depend on is itself a Must. For example, the Toolbox Broker's routing (FR-BR-3) and the Material Testing Manager's material properties (FR-MT-4) are Must because every service, and the failure load estimate, respectively, cannot work without them.
-    \item \textbf{Project goals:} Requirements that directly deliver one of the goals in the Problem Statement, being information centralization, model analysis, material testing support, knowledge transfer, and maintainability by a software subteam, were ranked above those that only improve them.
-    \item \textbf{Member survey:} Between features that serve the same goal, the member survey (P.7.1) was used to rank them. Failure load prediction (feature E), the archive of past designs (feature A), and the material test database (feature B) were the most highly rated, so their requirements are Must. Rule compliance (feature J) was rated lower, so the Rule Compliance System's functional requirements are Should.
-    \item \textbf{Schedule and risk:} The Development Plan identifies STEP model loading and visualization as the riskiest feature, and the focus of the Proof of Concept. Requirements on that path are Must, so that the riskiest work is done first, while requirements only needed after the first competition season, such as archiving current models (FR-MA-6), are Should.
+    \item \textbf{Dependency:} A requirement that other Must requirements depend on is itself a Must. For example, the Toolbox Broker's routing (\reqref{FR-BR-3}) and the Material Testing Manager's material properties (\reqref{FR-MT-4}) are Must because every service, and the \term{failure-load}{failure load} estimate, respectively, cannot work without them.
+    \item \textbf{Project goals:} Requirements that directly deliver one of the goals in the Problem Statement, being information centralization, model analysis, material testing support, knowledge transfer, and maintainability by a \term{software-subteam}{software subteam}, were ranked above those that only improve them.
+    \item \textbf{Member survey:} Between features that serve the same goal, the member survey (P.7.1) was used to rank them. \term{failure-load}{Failure load} prediction (feature E), the archive of \term{past-design}{past designs} (feature A), and the material test database (feature B) were the most highly rated, so their requirements are Must. Rule compliance (feature J) was rated lower, so the Rule Compliance System's functional requirements are Should.
+    \item \textbf{Schedule and risk:} The Development Plan identifies \term{step}{STEP} model loading and visualization as the riskiest feature, and the focus of the Proof of Concept. Requirements on that path are Must, so that the riskiest work is done first, while requirements only needed after the first competition season, such as archiving \term{current-model}{current models} (\reqref{FR-MA-6}), are Should.
 \end{enumerate}
 
-Must requirements together form the minimum system that meets every project goal. Should requirements are planned for the capstone release, and Could requirements are left to future software subteams if time does not allow. No requirement in S.2 is currently classified as Won't have. Features that were deliberately left out of S.2, such as onboarding material (survey feature H) and the identification of a bridge's weak points, are not part of this release, and the extensibility requirements (NFR-BR-1, NFR-PA-3) ensure they can be added later without changing existing services.
+Must requirements together form the minimum system that meets every project goal. Should requirements are planned for the capstone release, and Could requirements are left to future \term{software-subteam}{software subteams} if time does not allow. No requirement in S.2 is currently classified as Won't have. Features that were deliberately left out of S.2, such as onboarding material (survey feature H) and the identification of a bridge's weak points, are not part of this release, and the extensibility requirements (\reqref{NFR-BR-1}, \reqref{NFR-PA-3}) ensure they can be added later without changing existing services.
 
 %=================================
 \subsection*{S.5.13 Role of Security Concerns}
 \addcontentsline{toc}{subsection}{S.5.13 Role of Security Concerns}
 
-Security and safety concerns raised the priority of several requirements that would otherwise have been ranked lower. The club's teams compete against each other, so a leak of a team's current design to another team would undermine trust in the Toolbox and make teams unwilling to store their work in it. For this reason, every requirement that enforces access control or team data isolation, being FR-AC-1 to FR-AC-6, FR-BR-2, and SR-KR-3, is Must, as are encrypted communication (NFR-WS-2) and password hashing (NFR-AC-1), which protect members' credentials.
+Security and safety concerns raised the priority of several requirements that would otherwise have been ranked lower. The club's teams compete against each other, so a leak of a team's \term{current-model}{current design} to another team would undermine trust in the Toolbox and make teams unwilling to store their work in it. For this reason, every requirement that enforces access control or team data isolation, being \reqref{FR-AC-1} to \reqref{FR-AC-6}, \reqref{FR-BR-2}, and SR-KR-3, is Must, as are encrypted communication (\reqref{NFR-WS-2}) and password hashing (\reqref{NFR-AC-1}), which protect members' credentials.
 
-Safety concerns affected the analysis tools in the same way. Although the Toolbox does not control any physical equipment, a team that trusts an incorrect estimate or compliance result may build, or load test, a weaker bridge, or one that is disqualified. Requirements that prevent results from being over-trusted, being assumption disclosure (FR-PA-4), error reporting (SR-PA-1), and the absence of false passes (NFR-RC-1), are therefore Must, even where the feature they belong to is not. Finally, because the Knowledge Repository becomes the only copy of the club's history, the requirements that protect it from loss, being data durability (NFR-KR-2), external backups (SR-KR-1), and error reporting on storage (SR-KR-5), are Must.
+Safety concerns affected the analysis tools in the same way. Although the Toolbox does not control any physical equipment, a team that trusts an incorrect estimate or compliance result may build, or load test, a weaker bridge, or one that is disqualified. Requirements that prevent results from being over-trusted, being assumption disclosure (\reqref{FR-PA-4}), error reporting (SR-PA-1), and the absence of false passes (\reqref{NFR-RC-1}), are therefore Must, even where the feature they belong to is not. Finally, because the Knowledge Repository becomes the only copy of the club's history, the requirements that protect it from loss, being data durability (\reqref{NFR-KR-2}), external backups (SR-KR-1), and error reporting on storage (SR-KR-5), are Must.
 
 %=================================
 \subsection*{S.5.14 Phase-In Plan}
@@ -402,42 +401,42 @@ The requirements will be implemented in three phases, each ending at one of the 
 \hline
 \textbf{Phase} & \textbf{Milestone dates} & \textbf{Requirements implemented} \\
 \hline
-1. Proof of Concept & PoC demonstrations, 23 November to 3 December 2026 & The \term{step}{STEP} model loading and visualization path: NFR-WS-1, NFR-MA-1, FR-MA-1, FR-MA-2, and FR-MA-3, using the external static modelling libraries (S.3). \\
+1. Proof of Concept & PoC demonstrations, 23 November to 3 December 2026 & The \term{step}{STEP} model loading and visualization path: \reqref{NFR-WS-1}, \reqref{NFR-MA-1}, \reqref{FR-MA-1}, \reqref{FR-MA-2}, and \reqref{FR-MA-3}, using the external static modelling libraries (S.3). \\
 \hline
 2. Revision 0 & Rev 0 presentations, 1 to 11 February 2027 & All remaining Must requirements, apart from those of the Rule Compliance System: \newline
-\textbf{Web Server:} FR-WS-2, FR-WS-3, NFR-WS-2 \newline
-\textbf{Access Control:} FR-AC-1 to FR-AC-6, NFR-AC-1 \newline
-\textbf{Broker:} FR-BR-1, FR-BR-2, FR-BR-3 \newline
-\textbf{Repository:} FR-KR-1 to FR-KR-4, NFR-KR-2 \newline
-\textbf{Model Analysis:} FR-MA-4, FR-MA-5, NFR-MA-3 \newline
-\textbf{Performance Analysis:} FR-PA-1 to FR-PA-4 \newline
-\textbf{Material Testing:} FR-MT-1, FR-MT-2, FR-MT-4, NFR-MT-1 \newline
-\textbf{Knowledge Transfer:} FR-KT-1, FR-KT-2, FR-KT-4 \newline
-\textbf{System-wide:} NFR-SYS-1, NFR-SYS-4 \\
+\textbf{Web Server:} \reqref{FR-WS-2}, \reqref{FR-WS-3}, \reqref{NFR-WS-2} \newline
+\textbf{Access Control:} \reqref{FR-AC-1} to \reqref{FR-AC-6}, \reqref{NFR-AC-1} \newline
+\textbf{Broker:} \reqref{FR-BR-1}, \reqref{FR-BR-2}, \reqref{FR-BR-3} \newline
+\textbf{Repository:} \reqref{FR-KR-1} to \reqref{FR-KR-4}, \reqref{NFR-KR-2} \newline
+\textbf{Model Analysis:} \reqref{FR-MA-4}, \reqref{FR-MA-5}, \reqref{NFR-MA-3} \newline
+\textbf{Performance Analysis:} \reqref{FR-PA-1} to \reqref{FR-PA-4} \newline
+\textbf{Material Testing:} \reqref{FR-MT-1}, \reqref{FR-MT-2}, \reqref{FR-MT-4}, \reqref{NFR-MT-1} \newline
+\textbf{Knowledge Transfer:} \reqref{FR-KT-1}, \reqref{FR-KT-2}, \reqref{FR-KT-4} \newline
+\textbf{System-wide:} \reqref{NFR-SYS-1}, \reqref{NFR-SYS-4} \\
 \hline
-3. Revision 1 (final) & Final demonstrations, 15 to 21 March 2027; final documentation due 31 March 2027 & The Rule Compliance System, including its Must requirement NFR-RC-1, and all Should requirements: \newline
-\textbf{Web Server:} FR-WS-1, NFR-WS-3 \newline
-\textbf{Access Control:} NFR-AC-2 \newline
-\textbf{Broker:} FR-BR-4, NFR-BR-1, NFR-BR-2, NFR-BR-3 \newline
-\textbf{Repository:} FR-KR-5, NFR-KR-1 \newline
-\textbf{Model Analysis:} FR-MA-6, NFR-MA-2 \newline
-\textbf{Performance Analysis:} NFR-PA-1, NFR-PA-2 \newline
-\textbf{Rule Compliance:} FR-RC-1 to FR-RC-5, NFR-RC-1, NFR-RC-2 \newline
-\textbf{Material Testing:} FR-MT-3, FR-MT-5, NFR-MT-2 \newline
-\textbf{Knowledge Transfer:} FR-KT-3, NFR-KT-1 \newline
-\textbf{System-wide:} NFR-SYS-2, NFR-SYS-3 \\
+3. Revision 1 (final) & Final demonstrations, 15 to 21 March 2027; final documentation due 31 March 2027 & The Rule Compliance System, including its Must requirement \reqref{NFR-RC-1}, and all Should requirements: \newline
+\textbf{Web Server:} \reqref{FR-WS-1}, \reqref{NFR-WS-3} \newline
+\textbf{Access Control:} \reqref{NFR-AC-2} \newline
+\textbf{Broker:} \reqref{FR-BR-4}, \reqref{NFR-BR-1}, \reqref{NFR-BR-2}, \reqref{NFR-BR-3} \newline
+\textbf{Repository:} \reqref{FR-KR-5}, \reqref{NFR-KR-1} \newline
+\textbf{Model Analysis:} \reqref{FR-MA-6}, \reqref{NFR-MA-2} \newline
+\textbf{Performance Analysis:} \reqref{NFR-PA-1}, \reqref{NFR-PA-2} \newline
+\textbf{Rule Compliance:} \reqref{FR-RC-1} to \reqref{FR-RC-5}, \reqref{NFR-RC-1}, \reqref{NFR-RC-2} \newline
+\textbf{Material Testing:} \reqref{FR-MT-3}, \reqref{FR-MT-5}, \reqref{NFR-MT-2} \newline
+\textbf{Knowledge Transfer:} \reqref{FR-KT-3}, \reqref{NFR-KT-1} \newline
+\textbf{System-wide:} \reqref{NFR-SYS-2}, \reqref{NFR-SYS-3} \\
 \hline
-After Revision 1 & If time allows before the final demonstrations, otherwise left for future \term{software-subteam}{software subteams} & The Could requirements: NFR-PA-3, NFR-MT-3, FR-KT-5, NFR-KT-2. \\
+After Revision 1 & If time allows before the final demonstrations, otherwise left for future \term{software-subteam}{software subteams} & The Could requirements: \reqref{NFR-PA-3}, \reqref{NFR-MT-3}, \reqref{FR-KT-5}, \reqref{NFR-KT-2}. \\
 \hline
 \end{tabularx}
 \end{table}
 
 \paragraph{Phase 1: Proof of Concept.} The Development Plan identifies loading a \term{step}{STEP} model, displaying it, and extracting its data as the riskiest part of the project, so it is implemented first. Demonstrating it at the Proof of Concept confirms that the Model Analysis System, on which both analysis subsystems depend, is feasible before the rest of the system is built around it. If the demonstration shows that this path is not feasible, the Development Plan's risk mitigation applies, and the scope of the analysis tools is revised before Revision 0.
 
-\paragraph{Phase 2: Revision 0.} Revision 0 delivers the minimum system that meets every project goal: members can log in, store and search the club's information, analyse their team's model and estimate its \term{failure-load}{failure load}, record material tests, and write \term{exit-document}{exit documents}. The Web Server, Access Control System, Toolbox Broker, and Knowledge Repository are implemented first within this phase, since every other service depends on them (Table~\ref{tab:traceability}). All safety and security requirements classified as Must, such as team data isolation (FR-AC-6) and data durability (NFR-KR-2), are part of this phase, so that the system is secure from the first time members use it.
+\paragraph{Phase 2: Revision 0.} Revision 0 delivers the minimum system that meets every project goal: members can log in, store and search the club's information, analyse their team's model and estimate its \term{failure-load}{failure load}, record material tests, and write \term{exit-document}{exit documents}. The Web Server, Access Control System, Toolbox Broker, and Knowledge Repository are implemented first within this phase, since every other service depends on them (Table~\ref{tab:traceability}). All safety and security requirements classified as Must, such as team data isolation (\reqref{FR-AC-6}) and data durability (\reqref{NFR-KR-2}), are part of this phase, so that the system is secure from the first time members use it.
 
-\paragraph{Phase 3: Revision 1.} The final phase adds the Rule Compliance System, which was ranked below the other analysis tools in the member survey, together with the Should requirements that improve the usability, performance, and maintainability of the services delivered at Revision 0. Feedback from the Revision 0 demonstration and from usability testing is also addressed in this phase. Because NFR-RC-1 only applies once compliance checking exists, it is implemented together with the Rule Compliance System rather than at Revision 0.
+\paragraph{Phase 3: Revision 1.} The final phase adds the Rule Compliance System, which was ranked below the other analysis tools in the member survey, together with the Should requirements that improve the usability, performance, and maintainability of the services delivered at Revision 0. Feedback from the Revision 0 demonstration and from usability testing is also addressed in this phase. Because \reqref{NFR-RC-1} only applies once compliance checking exists, it is implemented together with the Rule Compliance System rather than at Revision 0.
 
-\paragraph{After Revision 1.} The Could requirements are implemented if time allows before the final demonstrations. Otherwise, they are documented as future work for the club's \term{software-subteam}{software subteam}. The extensibility requirements (NFR-BR-1, NFR-PA-3) ensure that they, and features outside the current scope, can be added later without changing existing services.
+\paragraph{After Revision 1.} The Could requirements are implemented if time allows before the final demonstrations. Otherwise, they are documented as future work for the club's \term{software-subteam}{software subteam}. The extensibility requirements (\reqref{NFR-BR-1}, \reqref{NFR-PA-3}) ensure that they, and features outside the current scope, can be added later without changing existing services.
 
 The phasing of the safety and security requirements from the Hazard Analysis is given in the Hazard Analysis roadmap.

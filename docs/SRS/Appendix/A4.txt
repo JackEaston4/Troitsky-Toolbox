@@ -1,3 +1,113 @@
+\nsection{A.4 Reflection}
+
+\subsubsection*{Team}
+
+\begin{enumerate}
+  \item How many of your requirements were inspired by speaking to your
+  client(s) or their proxies (e.g. your peers, stakeholders, potential users)?
+  \item What knowledge and skills will the team collectively need to acquire to
+  successfully complete this capstone project?  Examples of possible knowledge
+  to acquire include domain specific knowledge from the domain of your
+  application, or software engineering knowledge, mechatronics knowledge or
+  computer science knowledge.  Skills may be related to technology, or writing,
+  or presentation, or team management, etc.  You should look to identify at
+  least one item for each team member.
+  \item For each of the knowledge areas and skills identified in the previous
+  question, what are at least two approaches to acquiring the knowledge or
+  mastering the skill?  Of the identified approaches, which will each team
+  member pursue, and why did they make this choice?
+\end{enumerate}
+
+\subsubsection*{Individual}
+
+\begin{enumerate}
+  \item What went well while writing this deliverable?
+  \item What pain points did you experience during this deliverable, and how did
+  you resolve them?
+  \item Which of the courses you have taken, or are currently taking, will help
+  your team to be successful with your capstone project.
+\end{enumerate}
+
+%=================================
+\subsection*{A.4.1 Team}
+\addcontentsline{toc}{subsection}{A.4.1 Team}
+
+\begin{enumerate}
+  \item The majority of our requirements came from our clients and their proxies; we are developing a service for a small club full of engineering students in alternate disciplines to ours, we do not have the background to write the requirements needed for this project without asking those more closely involved in the club. Additionally the size of the club makes it very realistic to at least survey the majority of the members and get a strong idea of what is needed before writing out requirements. In particular I think the functional requirements are more closely related to our conversations with our stakeholders, while the more technical requirements within the non-functional requirements we had the technical background to cover the best.
+  \item Below is a list of knowledge and skills that each teammate will need to learn during the corse ofthis capstone
+  \begin{itemize}
+    \item \textbf{Mason Azzopardi:} Will need to learn how to work with third party dependencies in order to preform FEA on STEP file in C\#.
+    \item \textbf{Jack Easton:} Will need to get familiar with C\# as he only has a bit of experience working with it in his course work.
+    \item \textbf{Michael Roberts:} Will need to get familiar with front end integration using JavaScript and Razor.
+    \item \textbf{Pedro Azevedo:} Will need to learn to integrate the project within the day to day of the Troitsky club.
+  \end{itemize}
+  \item Below is how each group member will work on their skills/ knowledge.
+  \begin{itemize}
+    \item \textbf{Mason Azzopardi:} Will read through documentation or use Gen AI to explain the dependencies to him. Most likely will read documentation first as it is more reliable.
+    \item \textbf{Jack Easton:} Will watch youtube tutorials or go through a free online C\# course, most likely will go through youtube tutorials as it fits his learning style more.
+    \item \textbf{Micheal Roberts:} Will use his C\# experience to practice with Razor or work with Pedro who has experience with Razor. Most likely the first due to Pedros availability.
+    \item \textbf{Pedro Azevedo:} Pedro will work on the integration of project within the club through interactions with peers and conversations with execs. He will prioritize his interactions with peers because their adoption will drive the executives adoption.
+  \end{itemize}
+\end{enumerate}
+
+%=================================
+\subsection*{A.4.2 Pedro Azevedo}
+\addcontentsline{toc}{subsection}{A.4.2 Pedro Azevedo}
+
+\begin{enumerate}
+
+  \item In writing this deliverable, the utilization of GitHub features, such as kanbans, issues, comments, PRs, milestones, tags and even kanban custom views, 
+  facilitated development and allocation of work among the team. As the SRS is such a large document, utilizing these features allowed confidence in limited 
+  conflicts appearing. The utilization of a LaTeX template with component text documents that are loaded in allowed branches to isolate their 
+  features to single documents.
+
+  \item The primary pain points came from determining what is expected within this deliverable and working with that in our project 
+  domain. As many of the examples given for the SRS are varied, there was a lack of clarity in the necessary depth for certain sections. It 
+  was also difficult working around the hyperlinking and interconnection within the document, as updates to sections would have to be reflected in several components.
+
+  \item The primary course that has helped so far is 3RA3, as that covered the development of a requirements document and the necessary domain 
+  knowledge around requirements development. My software architecture course also was and will be applicable, as it helped to understand better and design the 
+  format of the system. Choosing between different architecture styles was a lot more straightforward due to this. Due to the nature of the project 
+  4HC3 will be highly applicable as development begins, especially when it comes to usability testing.
+
+\end{enumerate}
+
+%=================================
+\subsection*{A.4.3 Mason Azzopardi}
+\addcontentsline{toc}{subsection}{A.4.3 Mason Azzopardi}
+
+\notEmpty
+
+\begin{enumerate}
+  \item The Stakeholder analysis, it went so much smoother than it has in the past because of my proximity to the stakeholders. Also the High level usage scenarios and detailed usage scenarios went very smoothly compared to 3RA3, I think the larger technical involvement of this project made them easier to write out.
+  \item The main pain points of this submission for me was the hours needed to put in, I had a lot of things going on during reading week and managing my time ended up being very difficult, the solution I had to this was finding the smallest gaps in my schedule to work, for example I reviewed PR requests while I was watching my roommates cross country meet.
+  \item I think courses like 2AA4 and 3A04 will be the most helpful for this project, because they focus on the fundamentals of system design and one of the main goals of the project is the inheritence of the project by future software teams, and solid software design principles are needed to do that. 
+\end{enumerate}
+
+%=================================
+\subsection*{A.4.4 Michael Roberts}
+\addcontentsline{toc}{subsection}{A.4.4 Michael Roberts}
+
+\notEmpty
+
+\begin{enumerate}
+  \item
+  \item
+  \item
+  \item
+\end{enumerate}
+
+%=================================
+\subsection*{A.4.5 Jack Easton}
+\addcontentsline{toc}{subsection}{A.4.5 Jack Easton}
+
+\notEmpty
+
+\begin{enumerate}
+  \item I think during the writing of this deliverable the team did a good job of coming together (despite difficulties scheduling and working through reading week) to create a uniform concise document that appropriately represents the design of the system we are creating for the Troitsky team. I think we've done a good job creating requirements that will lead to a polished and producitive end result that will benifit the McMaster Troitsky Club.
+  \item I think the biggest pain point in this deliverable is just the sheer scale, depth, and dependencies between sections across these two documents. It was very difficult intially to get a handle on what order to approach tasks, what needed to happen first, and when we needed to cricle back to a previously written section and revaluate the thngs we had written. We resolved these early on by mapping out and breaking down the deliverable into 3 internal milestones and set internal deadlines for these to promote timely work and provide a realistic framework for achiveing the work we had to get done.
+  \item By far the course that has been the most helpful is "SFWRENG 3RA3: Software Requirements and Security Considerations". This course taught me the importance of requirements and how to effectively write and break down problems into necessary, verifiable, and attainable requiements. I think "SFWRENG 3A04: Large System Design" also has been very helpful, and will continue to be helpful in the design and development processes of this project. The course teaches how to design large systems (such as the Troitsky Toolbox we are developing) efficently and in a manner that will make later development as straightforward as possible.
+\end{enumerate}
 \nsection{A.4 Generative AI Use Disclosure}
 
 \subsection*{A.4.1 AI Tools Used}
