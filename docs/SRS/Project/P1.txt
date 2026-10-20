@@ -33,7 +33,7 @@ testing within the system.
 The supervisor for the project will provide guidance, domain expertise and general feedback for the service. As they are 
 heavily involved in the club, they will also support interaction and integration with the club.
 
-\subsection*{P.1.7 Teaching Assistant - Mohamad Mirhoseininejad}
+\subsection*{P.1.7 Teaching Assistant - Melvin Mokhtari}
 \addcontentsline{toc}{subsection}{P.1.7 Teaching Assistant}
 The TA will provide course-related feedback, answer administrative questions and provide feedback on expectations and course 
 grading. They will serve as the main point of contact with course administration. General project feedback during TA meetings will also 
