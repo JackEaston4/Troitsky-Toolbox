@@ -1,9 +1,9 @@
 \nsection{S.3 Interfaces}
 
-This system requires several sofware interfaces, including:
+This system requires several software interfaces, including:
 
 \begin{itemize}
-    \item An RESTful API (artificial programming interface), which shall enable users to communicate
+    \item An RESTful API (application programming interface), which shall enable users to communicate
     with the backend through the frontend and alter it when permitted and desired.
     \item External static modelling libraries, which shall perform technical engineering calculations
     on given inputs, both on calculations necessary to score \term{step}{STP} models and inputs for materials testing.
