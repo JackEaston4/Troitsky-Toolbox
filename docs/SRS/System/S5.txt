@@ -11,7 +11,7 @@ This section classifies the requirements of S.2, the interfaces of S.3, the usag
     \item \textbf{Won't have (W):} Not planned for the current release.
 \end{itemize}
 
-The criteria used to assign each priority are explained in S.5.12, and the influence of security concerns in S.5.13.
+The criteria used to assign each priority are explained in S.5.12, and the influence of security concerns in S.5.13. S.5.14 then uses these priorities to plan the order in which the requirements will be implemented.
 
 %=================================
 \subsection*{S.5.1 Web Server}
@@ -361,38 +361,8 @@ All four interfaces are Must, because each one supports at least one Must requir
 \subsection*{S.5.11 Safety and Security Requirements}
 \addcontentsline{toc}{subsection}{S.5.11 Safety and Security Requirements}
 
-The safety and security requirements identified in the Hazard Analysis are prioritized below. Requirements that the Hazard Analysis identifies for the Knowledge Transfer Manager, the Material Testing Manager, and the system as a whole will be added to this table once they are finalized.
+The safety and security requirements are specifically identified in the Hazard Analysis. The Hazard Analysis document also contains a breakdown and a roadmap of these requirements 
 
-\begin{table}[H]
-\centering
-\small
-\caption{Priority table for the safety and security requirements}
-\begin{tabularx}{\textwidth}{|p{1.7cm}|p{3.2cm}|p{1.4cm}|X|}
-\hline
-\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Reasoning} \\
-\hline
-SR-KR-1 & External backups & Must & Backups stored on the same platform as the repository would be lost with it, defeating data durability (NFR-KR-2). \\
-\hline
-SR-KR-2 & Confirm deletion or modification & Should & Prevents accidental loss of stored files, but archived items remain retrievable (FR-KR-5). \\
-\hline
-SR-KR-3 & Current-year uploads tied to a team & Must & Enforces team data isolation (FR-AC-6) for uploaded files. \\
-\hline
-SR-KR-4 & Required upload metadata & Should & Keeps the repository searchable, but missing metadata can be corrected later. \\
-\hline
-SR-KR-5 & Storage and retrieval errors & Must & A silent failure could lead a member to believe their work was saved when it was not. \\
-\hline
-SR-MA-1 & Model summary & Should & Lets members confirm the model was read correctly before trusting its analysis. \\
-\hline
-SR-MA-2 & Units and scale reference & Should & Helps members catch unit errors from export, which would otherwise distort every result. \\
-\hline
-SR-MA-3 & Processing timeout & Should & Prevents a malformed model from tying up the service, but does not affect results. \\
-\hline
-SR-PA-1 & Analysis error messages & Must & An unreported failure could be mistaken for a valid estimate. \\
-\hline
-SR-RC-1 & Rule year and manual checks shown & Should & Prevents checks against outdated rules. Same priority as the Rule Compliance System it belongs to. \\
-\hline
-\end{tabularx}
-\end{table}
 
 %=================================
 \subsection*{S.5.12 Justification for Prioritization}
@@ -416,3 +386,58 @@ Must requirements together form the minimum system that meets every project goal
 Security and safety concerns raised the priority of several requirements that would otherwise have been ranked lower. The club's teams compete against each other, so a leak of a team's current design to another team would undermine trust in the Toolbox and make teams unwilling to store their work in it. For this reason, every requirement that enforces access control or team data isolation, being FR-AC-1 to FR-AC-6, FR-BR-2, and SR-KR-3, is Must, as are encrypted communication (NFR-WS-2) and password hashing (NFR-AC-1), which protect members' credentials.
 
 Safety concerns affected the analysis tools in the same way. Although the Toolbox does not control any physical equipment, a team that trusts an incorrect estimate or compliance result may build, or load test, a weaker bridge, or one that is disqualified. Requirements that prevent results from being over-trusted, being assumption disclosure (FR-PA-4), error reporting (SR-PA-1), and the absence of false passes (NFR-RC-1), are therefore Must, even where the feature they belong to is not. Finally, because the Knowledge Repository becomes the only copy of the club's history, the requirements that protect it from loss, being data durability (NFR-KR-2), external backups (SR-KR-1), and error reporting on storage (SR-KR-5), are Must.
+
+%=================================
+\subsection*{S.5.14 Phase-In Plan}
+\addcontentsline{toc}{subsection}{S.5.14 Phase-In Plan}
+
+The requirements will be implemented in three phases, each ending at one of the course's demonstration milestones. The dates below are taken from the capstone course calendar. Each phase builds on the previous one, so that the system is usable at the end of every phase, and the riskiest and highest-priority requirements are implemented first.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Phase-in plan for the requirements}
+\label{tab:phase-in}
+\begin{tabularx}{\textwidth}{|p{2.3cm}|p{2.6cm}|X|}
+\hline
+\textbf{Phase} & \textbf{Milestone dates} & \textbf{Requirements implemented} \\
+\hline
+1. Proof of Concept & PoC demonstrations, 23 November to 3 December 2026 & The \term{step}{STEP} model loading and visualization path: NFR-WS-1, NFR-MA-1, FR-MA-1, FR-MA-2, and FR-MA-3, using the external static modelling libraries (S.3). \\
+\hline
+2. Revision 0 & Rev 0 presentations, 1 to 11 February 2027 & All remaining Must requirements, apart from those of the Rule Compliance System: \newline
+\textbf{Web Server:} FR-WS-2, FR-WS-3, NFR-WS-2 \newline
+\textbf{Access Control:} FR-AC-1 to FR-AC-6, NFR-AC-1 \newline
+\textbf{Broker:} FR-BR-1, FR-BR-2, FR-BR-3 \newline
+\textbf{Repository:} FR-KR-1 to FR-KR-4, NFR-KR-2 \newline
+\textbf{Model Analysis:} FR-MA-4, FR-MA-5, NFR-MA-3 \newline
+\textbf{Performance Analysis:} FR-PA-1 to FR-PA-4 \newline
+\textbf{Material Testing:} FR-MT-1, FR-MT-2, FR-MT-4, NFR-MT-1 \newline
+\textbf{Knowledge Transfer:} FR-KT-1, FR-KT-2, FR-KT-4 \newline
+\textbf{System-wide:} NFR-SYS-1, NFR-SYS-4 \\
+\hline
+3. Revision 1 (final) & Final demonstrations, 15 to 21 March 2027; final documentation due 31 March 2027 & The Rule Compliance System, including its Must requirement NFR-RC-1, and all Should requirements: \newline
+\textbf{Web Server:} FR-WS-1, NFR-WS-3 \newline
+\textbf{Access Control:} NFR-AC-2 \newline
+\textbf{Broker:} FR-BR-4, NFR-BR-1, NFR-BR-2, NFR-BR-3 \newline
+\textbf{Repository:} FR-KR-5, NFR-KR-1 \newline
+\textbf{Model Analysis:} FR-MA-6, NFR-MA-2 \newline
+\textbf{Performance Analysis:} NFR-PA-1, NFR-PA-2 \newline
+\textbf{Rule Compliance:} FR-RC-1 to FR-RC-5, NFR-RC-1, NFR-RC-2 \newline
+\textbf{Material Testing:} FR-MT-3, FR-MT-5, NFR-MT-2 \newline
+\textbf{Knowledge Transfer:} FR-KT-3, NFR-KT-1 \newline
+\textbf{System-wide:} NFR-SYS-2, NFR-SYS-3 \\
+\hline
+After Revision 1 & If time allows before the final demonstrations, otherwise left for future \term{software-subteam}{software subteams} & The Could requirements: NFR-PA-3, NFR-MT-3, FR-KT-5, NFR-KT-2. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\paragraph{Phase 1: Proof of Concept.} The Development Plan identifies loading a \term{step}{STEP} model, displaying it, and extracting its data as the riskiest part of the project, so it is implemented first. Demonstrating it at the Proof of Concept confirms that the Model Analysis System, on which both analysis subsystems depend, is feasible before the rest of the system is built around it. If the demonstration shows that this path is not feasible, the Development Plan's risk mitigation applies, and the scope of the analysis tools is revised before Revision 0.
+
+\paragraph{Phase 2: Revision 0.} Revision 0 delivers the minimum system that meets every project goal: members can log in, store and search the club's information, analyse their team's model and estimate its \term{failure-load}{failure load}, record material tests, and write \term{exit-document}{exit documents}. The Web Server, Access Control System, Toolbox Broker, and Knowledge Repository are implemented first within this phase, since every other service depends on them (Table~\ref{tab:traceability}). All safety and security requirements classified as Must, such as team data isolation (FR-AC-6) and data durability (NFR-KR-2), are part of this phase, so that the system is secure from the first time members use it.
+
+\paragraph{Phase 3: Revision 1.} The final phase adds the Rule Compliance System, which was ranked below the other analysis tools in the member survey, together with the Should requirements that improve the usability, performance, and maintainability of the services delivered at Revision 0. Feedback from the Revision 0 demonstration and from usability testing is also addressed in this phase. Because NFR-RC-1 only applies once compliance checking exists, it is implemented together with the Rule Compliance System rather than at Revision 0.
+
+\paragraph{After Revision 1.} The Could requirements are implemented if time allows before the final demonstrations. Otherwise, they are documented as future work for the club's \term{software-subteam}{software subteam}. The extensibility requirements (NFR-BR-1, NFR-PA-3) ensure that they, and features outside the current scope, can be added later without changing existing services.
+
+The phasing of the safety and security requirements from the Hazard Analysis is given in the Hazard Analysis roadmap.
