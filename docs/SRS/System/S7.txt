@@ -108,7 +108,7 @@ $\quad \quad \quad \ \ \ (clearanceHeight \geq MinClearance)$ \\
     \item $\mathbb{B}$ represents a Boolean value (True/False) returned to the frontend.
     \item $\land$ represents the logical AND operator, ensuring that a bridge is only deemed valid if \textit{all} structural and mass constraints are simultaneously satisfied.
 \end{itemize}
-\nsection{S.7 Formalizations}
+
 
 The nature of the analysis is to be determined, so this formalization shall be updated in the future.
 However, the weighting can be formalized now, so a model will be shown below.
