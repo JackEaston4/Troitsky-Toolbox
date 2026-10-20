@@ -77,13 +77,11 @@
 \subsection*{A.5.4 Michael Roberts}
 \addcontentsline{toc}{subsection}{A.5.4 Michael Roberts}
 
-\notEmpty
 
 \begin{enumerate}
-  \item
-  \item
-  \item
-  \item
+  \item Our team coordination, especially by dividing up issues early.
+  \item The Herculean final effort; with a large meeting at submission time ensuring we were done.
+  \item The course which was the largest aid was SFWRENG 3RA3 - Software Requirements and Security Considerations. A whole course guided our efforts to creating this requirements document and taught us the importance of it.
 \end{enumerate}
 
 %=================================
@@ -97,3 +95,4 @@
   \item I think the biggest pain point in this deliverable is just the sheer scale, depth, and dependencies between sections across these two documents. It was very difficult intially to get a handle on what order to approach tasks, what needed to happen first, and when we needed to cricle back to a previously written section and revaluate the thngs we had written. We resolved these early on by mapping out and breaking down the deliverable into 3 internal milestones and set internal deadlines for these to promote timely work and provide a realistic framework for achiveing the work we had to get done.
   \item By far the course that has been the most helpful is "SFWRENG 3RA3: Software Requirements and Security Considerations". This course taught me the importance of requirements and how to effectively write and break down problems into necessary, verifiable, and attainable requiements. I think "SFWRENG 3A04: Large System Design" also has been very helpful, and will continue to be helpful in the design and development processes of this project. The course teaches how to design large systems (such as the Troitsky Toolbox we are developing) efficently and in a manner that will make later development as straightforward as possible.
 \end{enumerate}
+
