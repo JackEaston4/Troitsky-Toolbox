@@ -2,7 +2,7 @@
 \comment{Classification of the behaviors, interfaces and scenarios (S.2, S.3 and S.4) by their degree of criticality.}
 %---------------------------------
 
-This section classifies the requirements of S.2, the usage scenarios of S.4, and the safety and security requirements identified in the Hazard Analysis by their degree of criticality, using the MoSCoW method:
+This section classifies the requirements of S.2, the interfaces of S.3, the usage scenarios of S.4, and the safety and security requirements identified in the Hazard Analysis by their degree of criticality, using the MoSCoW method:
 
 \begin{itemize}
     \item \textbf{Must have (M):} Essential for the system to meet its goals. The Toolbox cannot be released without it.
@@ -334,7 +334,28 @@ S.4.6 & Materials Data Publication & Must & Material data is required for perfor
 \subsection*{S.5.10 Interfaces}
 \addcontentsline{toc}{subsection}{S.5.10 Interfaces}
 
-\textit{To be completed once S.3 Interfaces is finalized.} The interfaces described in S.3 will be prioritized here using the same criteria, with each interface taking the highest priority of the requirements that depend on it.
+The interfaces described in S.3 are prioritized below. Each interface takes the highest priority of the requirements that depend on it.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Priority table for the interfaces}
+\begin{tabularx}{\textwidth}{|p{4.2cm}|p{1.4cm}|X|}
+\hline
+\textbf{Interface} & \textbf{Priority} & \textbf{Reasoning} \\
+\hline
+RESTful API between the front end and the back end & Must & Every member-facing requirement reaches the back end through this interface, including login (FR-WS-2) and request forwarding (FR-WS-3). \\
+\hline
+External static modelling libraries & Must & Data extraction (FR-MA-3) and the failure load estimate (FR-PA-1) depend on them, and both are Must. \\
+\hline
+External data server & Must & Holds all of the club's stored data, so data storage (FR-KR-1) and data durability (NFR-KR-2) depend on it. \\
+\hline
+Login aid (login service or password hashing) & Must & Required for authentication (FR-AC-1) and credential security (NFR-AC-1). \\
+\hline
+\end{tabularx}
+\end{table}
+
+All four interfaces are Must, because each one supports at least one Must requirement. This is expected: S.3 lists only the interfaces the system cannot operate without, while optional behaviour is expressed in S.2 as Should and Could requirements.
 
 %=================================
 \subsection*{S.5.11 Safety and Security Requirements}
