@@ -11,6 +11,7 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{amsmath}
 
 \input{../Comments.text}
 \input{../Common.text}
@@ -366,6 +367,10 @@ and as many tests as needed for edge cases.  Rather than create the details of t
 and output here, you could point to the unit testing code.  For this to work, you code 
 needs to be well-documented, with meaningful names for all of the tests.}
 
+Unit tests are an integral part of the verification of the implementation of this project.
+Below is a sketch of the unit tests that will be employed in this software project. 
+
+
 \subsection{Unit Testing Scope}
 
 \wss{What modules are outside of the scope.  If there are modules that are
@@ -374,52 +379,120 @@ needs to be well-documented, with meaningful names for all of the tests.}
   have a lower priority for verification than others.  If this is the case,
   explain your rationale for the ranking of module importance.}
 
+  The crown jewel of this project is the model analysis, because all other services offered are pretty simple.
+  The model analysis service contains five (5) modules: (a) an upload module to upload the STP file,
+  (b) an external computer-aided design (CAD) module to perform technical engineering calculations, (c) the bridge failure
+  module, (d) the rule compliance module, and (e) the scoring module. The upload module is very straightforward; 
+  uploading is very easy to test. The validation of the calculations of the external CAD module is beyond the software
+  scope of this project; rather, they shall be shown to be accurate by comparing results against the current standards
+  process Troitsky uses and deeming it satisfactory if they are the same for several STP files, including
+  files purposely hidden from the training data. The last three modules shall be verified through unit testing, having
+  been formalized in the SRS (see S.7).
+
+  The other services are the log-in, the materials testing database, the knowledge repository
+   (both adding new files and searching existing files),
+  and the knowledge transfer service to facilitate the creation of transition documents. All these tasks will
+  contain are a login suite, CRUD (create, read, update, delete) operations for a database or a shared file store, 
+  a form to submit information, and a naive search engine (a simple LIKE-based search is almost certainly sufficient for now). 
+  These problems are not novel and be quickly implemented and verified.
+  Therefore, while unit testing should exist for them, a few will suffice for each. Therefore, the vast majority of unit testing should
+  be directed at the last three sub-modules of the model analysis service.
+
 \subsection{Tests for Functional Requirements}
 
 \wss{Most of the verification will be through automated unit testing.  If
   appropriate specific modules can be verified by a non-testing based
   technique.  That can also be documented in this section.}
 
-\subsubsection{Module 1}
+  Below is a sketch of automated tests for the functional requirements.
+  First are the three major modules and below them are the auxiliary services.
+  For the first three tests, two phyla of tests shall be conducted, a depressed test with dummy data,
+  and an actual test with a real STP file. The former is be white box, as the input is artificial 
+  and the latter is black box, as the output is based on a bona fide STP file. Inputting artificial data
+  is the domain of the developers for testing. A real user should input a raw STP file and see the output
+  of the system's analysis of it, because calculating and inputting intermediate results an external
+  CAD library would do is highly error-prone.
+
+\subsubsection{Bridge Failure Module}
 
 \wss{Include a blurb here to explain why the subsections below cover the module.
   References to the MIS would be good.  You will want tests from a black box
   perspective and from a white box perspective.  Explain to the reader how the
   tests were selected.}
 
+This module determines whether a bridge fails, i.e., whether there is an element in the bridge whose
+factor of safety is less than one. The examples below are illustrative of the test types, in reality
+there will be several for each type.
+
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{Artificial, Bridge Succeeds\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+Type: Automatic
 					
-Initial State: 
+Initial State: System requests artificial data for an STP model to analyze.
 					
-Input: 
+Input: This bridge contains two elements. Element $e_a$ is of a material $m_a$ where $\mu_{strength}(m_a) = 5$ and 
+$\sigma_{API}(e_a) = 4 $ and Element $e_b$ is of a material $m_b$ where $\mu_{strength}(m_b) = 3$ and 
+$\sigma_{API}(e_b) = 2 $.
 					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Output: $BridgeFailure \equiv false$
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+\begin{align*}
+BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1) \\
+              &\equiv \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_a))}{\sigma_{\text{API}}(e_a)} < 1 \; \lor \; \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_b))}{\sigma_{\text{API}}(e_b)} < 1 \\
+              &\equiv \frac{5}{4} < 1 \; \lor \; \frac{3}{2} < 1 \\
+              &\equiv \text{false} \lor \text{false} \\
+              &\equiv \text{false}
+\end{align*}
 
-\item{...\\}
+\item{Artificial, Bridge Fails\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data for an STP model to analyze.
+					
+Input: This bridge contains two elements. Element $e_a$ is of a material $m_a$ where $\mu_{strength}(m_a) = 5$ and 
+$\sigma_{API}(e_a) = 4 $ and Element $e_b$ is of a material $m_b$ where $\mu_{strength}(m_b) = 3$ and 
+$\sigma_{API}(e_b) = 4 $.
+					
+Output: $BridgeFailure \equiv true$
+
+Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+\begin{align*}
+BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1) \\
+              &\equiv \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_a))}{\sigma_{\text{API}}(e_a)} < 1 \; \lor \; \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_b))}{\sigma_{\text{API}}(e_b)} < 1 \\
+              &\equiv \frac{5}{4} < 1 \; \lor \; \frac{3}{4} < 1 \\
+              &\equiv \text{false} \lor \text{true} \\
+              &\equiv \text{true}
+\end{align*}
+
+
+
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+					
+\item{Natural}
+
+Type: Automatic
+					
+Initial State: System requests an STP file that models a bridge
+					
+Input: The STP file
+					
+Output: If there is an element $e$ where \\ 
+$\frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1$ \\
+$BridgeFailure \equiv true$. Otherwise, $BridgeFailure \equiv false$.
+
+Test Case Derivation: From the formalization in (S.7.2 (1)). The external CAD library will return
+$m_e = elementMaterial(e)$ and $\sigma_{API}(e)$ for each element present in the bridge model. The materials testing module
+will be invoked to find $\mu_{\text{strength}(m_e)}$. Then, this module will have gained its input to perform its calculations
+and will yield outputs consistent with the formula provided. For more information, see the above two artificial test cases. 
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
     
 \end{enumerate}
 
