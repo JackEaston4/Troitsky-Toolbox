@@ -16,9 +16,11 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    
+  
+    runs-on: ubuntu-latest
+
     steps:
+      
       - name: Checkout repo
         uses: actions/checkout@v5
         with:
@@ -86,16 +88,23 @@ jobs:
       # texlive-full is avoided deliberately; it is far larger than needed.
       # pandoc drives the Markdown -> PDF rule in the Makefile.
       - name: Install TeX Live and pandoc
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
+        with:
+          packages: texlive-latex-extra texlive-science texlive-fonts-extra texlive-fonts-recommended texlive-latex-recommended lmodern pandoc
+          version: 1.1
+      - name: Restore cached TeX packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-tex-${{ hashFiles('.github/workflows/latex-pages.yml') }}
+
+      - name: Rebuild TeX format files
         run: |
-          sudo apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            texlive-latex-extra \
-            texlive-science \
-            texlive-fonts-extra \
-            texlive-fonts-recommended \
-            texlive-latex-recommended \
-            lmodern \
-            pandoc
+          sudo mktexlsr
+          sudo updmap-sys >/dev/null
+          sudo fmtutil-sys --all >/dev/null || true
       - name: Verify the TeX toolchain is usable
         run: |
           # A restored cache that skipped texlive's postinst would leave
