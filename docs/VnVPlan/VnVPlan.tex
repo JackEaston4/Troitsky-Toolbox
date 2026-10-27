@@ -396,7 +396,8 @@ Below is a sketch of the unit tests that will be employed in this software proje
   a form to submit information, and a naive search engine (a simple LIKE-based search is almost certainly sufficient for now). 
   These problems are not novel and be quickly implemented and verified. \\
   
-  Therefore, while unit testing should exist for them, a few will suffice for each. Therefore, the vast majority of unit testing should
+  Therefore, while unit testing should exist for them, a few will suffice for each. 
+  Therefore, the vast majority of unit testing should
   be directed at the last three sub-modules of the model analysis service.
 
 \subsection{Tests for Functional Requirements}
@@ -415,6 +416,9 @@ Below is a sketch of the unit tests that will be employed in this software proje
   of the system's analysis of it, because calculating and inputting intermediate results an external
   CAD library would do is highly error-prone. \\
 
+  Per the straightforwardness of the auxiliary services above, each service shall contain no more than two (2) examples, 
+  of unit tests. There may be more in the actual unit testing suite, but this document serves as a sketch, not
+  a complete guide, for the suite.
 
 
 
@@ -675,9 +679,256 @@ How test will be performed: Through MsTest within the .NET solution used for imp
     
 \end{enumerate}
 
-\subsubsection{Module 2}
+\subsubsection{Log-in}
 
-...
+This module handles an attempt by any person to demonstrate they are the person associated with
+a given user account. Because single sign-on (SSO) shall be employed, the system shall recieve
+a confirmation a user is the owner of a specific email address, almost always a McMaster one, not a username
+and password.
+
+\begin{enumerate}
+
+\item{Successful Attempt\\}
+
+Type: Automatic
+					
+Initial State: Session not logged in
+					
+Input: SSO confirmation of an email that matches an active account in system
+					
+Output: Session logged in as that account
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item System performs parametrized query on the Users database looking for user accounts that match the inputted confirmation's email
+  \item System finds one active account in the system that fits the query
+  \item System logs in session with that active account
+\end{itemize}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Failed Attempt\\}
+
+Type: Automatic
+					
+Initial State: Session not logged in
+					
+Input: SSO confirmation of an email that does not match an active account in system
+					
+Output: Session not logged in, error message shown to user
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item System performs parametrized query on the Users database looking for user accounts that match the inputted confirmation's email
+  \item System finds no active accounts that fit the query
+  \item System displays error message to user, session remains not logged in
+\end{itemize}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+    
+\end{enumerate}
+
+\subsubsection{Materials Testing}
+
+This module stores the results of materials tests manually done by club members to test the strength of a given 
+material. Any authorized user shall be able to submit a test result and it shall be presumed to be reliable.
+However an executive user may mark the test unreliable, which will exclude it from all future materials analysis calculations
+as long as it marked as unreliable. 
+
+Automatic tests are a poor fit here because the bulk of the work is to convert a user request into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+
+\begin{enumerate}
+
+\item{Results Submission\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User on materials testing page and may submit a materials test
+					
+Input: A materials testing result (containing a material and its strength)
+					
+Output: The result is stored as reliable materials testing result. User recieves confirmation of sucessful submission.
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks "Add Materials Test Result" button
+  \item Graphical user interface (GUI) opens, prompting the user to enter the material and its observed strength
+  \item User submits results through the GUI
+  \item System normalizes the submitted data to obtain values used to add to the materials testing database
+  \item System adds a new row to the database containg the obtained values and the reliable flag set to true
+  \item System recieves confiramation from the database that the row was added successfully
+  \item User recieves confirmation from the system the materials test was submitted successfully
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+
+\item{Test Marked as Unreliable}
+
+Type: Manual
+					
+Initial State: User on materials testing page and may deem a test unreliable
+					
+Input: The test a user deems unreliable
+					
+Output: The test is marked unreliable; user recieves corresponding confirmation
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks "Mark Test Unreliable" button
+  \item System displays list of materials tests submitted, in an order descending by date.
+  \item User picks the test they have judged to be unreliable from the menu.
+  \item The user clicks the "Mark Unreliable" button. 
+  \item A confirm dialog opens, and the user selects the "Yes, I am sure" button. The dialog closes.
+  \item The system submits a query to the materials testing database to mark the picked test unreliable.
+  \item The database marks that test unreliable and sends a confirmation to the system. 
+  \item The system tells the user through an on-screen message that the test (with a brief description of it) was successfully marked unreliable.
+\end{itemize}
+
+How test will be performed: Manually, through the front-end
+    
+\end{enumerate}
+
+\subsubsection{Knowledge Repository}
+
+This module contains the club-wide document share and lets users add documents to it, alter or delete their own documents
+or any document as an executive, and search, preview and download documents. There is a role-based access system based on
+account classification, so not all users may see every document added to the document share.
+
+
+Automatic tests are a poor fit here because the bulk of the work is to convert a user request into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+\begin{enumerate}
+
+\item{Alter Document\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User is logged in and on the knowledge repository page. They also may perform their desired action.
+					
+Input: The document name, the action, and the contents if the action is not delete.
+					
+Output: The action is done to the document with the inputted name, adding the contents to the document if the action was not delete.
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks one of the following buttons: (a) "Add Document", (b) "Replace Document", (c) "Edit Document" or (d) "Delete Document.
+  \item If the button clicked is (a) or (b):
+  \begin{itemize}
+    \item A dialog opens, with an empty markdown textbox and a button to open an upload wizard.
+    \item The user uploads a document from the upload wizard. 
+    \item Alternatively, the user adds to the markdown textbox.
+    \item The user clicks the corresponding submit button, submitting their desired input to the system.
+  \end{itemize}
+  \item If the button clicked is (c):
+  \begin{itemize}
+      \item A dialog opens with a markdown textbox containing the existing markdown document.
+      \item The user edits the document to their heart's desire.
+      \item The user submits the document.
+  \end{itemize}
+  \item If the user clicks button (d), the request is submitted directly.
+  \item The system request the drive fulfill the request. The drive does and confirms it to the system.
+  \item The system displays a confirmation message to the user.
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+
+\item{Obtain Document}
+
+Type: Manual
+					
+Initial State: User on knowledge repository page and access a document
+					
+Input: The document name
+					
+Output: The user gains access to document, with a preview (unlessit cannot be done) and a download option
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks "Search for Document" button
+  \item User enters suitable query to search bar.
+  \item User hits "Search" and results are returned in declining likeness to the query.
+  \item The user selects their desired document. 
+  \item A new page opens with the preview. The user is also presented with a button they may click if they wish to download the document.
+\end{itemize}
+
+How test will be performed: Manually, through the front-end
+    
+\end{enumerate}
+
+\subsubsection{Knowledge Transfer}
+
+This module tracks whether a user may leave the club soon. If so, the module will give them an alert
+on their user homepage, prompting them to fill out their transition document. The module then takes input
+through a form. Once the user submits it, the system adds it to the knowledge repository.
+
+Automatic tests are a poor fit here because the bulk of the work is to convert user-entered text into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+\begin{enumerate}
+
+\item{Submit Transfer Document\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User is logged in and may leave the club soon
+					
+Input: The text entered into each input field of the tranfer form 
+					
+Output: The text is converted into one easy-to-read document, which is added to the knowledge repository.
+
+\begin{itemize}
+  \item User finds alert "Make Transition Document" on user homepage.
+  \item User clicks the alert, opening up the transition document form
+  \item The user fills out the form and submits it
+  \item The system converts it into an easily readable and understandable document
+  \item The system uploads the document to the knowledge repository.
+  \item Once recieving a confirmation of success, it displays a "form successfully submitted" message to the user
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+    
+\end{enumerate}
+
+\subsubsection{Toolbox Broker}
+
+This module fashions and displays the homepage. It furthermore transfers the user from the home page to the pages
+for every other module they can access, besides the public logged out module.
+
+Automatic tests are a poor fit here because the bulk of the work is to convert a user request into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+\begin{enumerate}
+
+\item{Go to Service\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User is logged in and is on home page. They may access the page they desire to access.
+					
+Input: The user clicks the buttton corresponding to their desired action.
+					
+Output: The system displays the page for their desired action.
+
+\begin{itemize}
+  \item The user clicks the button
+  \item The system opens up the corresponding page
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+    
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
