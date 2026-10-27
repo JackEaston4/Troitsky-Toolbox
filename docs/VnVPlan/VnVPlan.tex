@@ -230,61 +230,226 @@ as a Rev 0 demo for the supervisor.}
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
-\subsection{Tests for Functional Requirements}
+\subsection{Tests for Functional Requirements} \label{SecFRTests}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+% \testdef marks where a test is defined; \testref links to it from the
+% traceability table in Section~\ref{SecTraceability}.
+\newcommand{\testdef}[1]{\hypertarget{test:#1}{#1}}
+\newcommand{\testref}[1]{\hyperlink{test:#1}{#1}}
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+The tests below are categorized by the components defined in Section S.2 of the
+SRS \citep{SRS}, so that every functional requirement is covered. Each test is a
+system-level test of the deployed system, following a workflow that a club
+member performs through the Toolbox Web App, and verifies several related
+requirements. The tests also verify the functional safety and security
+requirements that the Hazard Analysis Roadmap plans for the capstone.
 
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+\subsubsection{Web Server (S.2.1)}
 
 \begin{enumerate}
 
-\item{test-id1\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
+\item \testdef{T.FR.WS.1.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} System deployed. User not logged in.\\
+\textbf{Input:} User opens the public landing page, then attempts to open a club
+service. User then logs in with valid credentials, uses the service, and logs
+out.\\
+\textbf{Output:} The landing page is shown without logging in. The club service
+redirects to the login page until the user logs in, and is no longer accessible
+after logout.\\
+\textbf{Derivation:} Verifies FR-WS-1, FR-WS-2, FR-WS-3.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Access Control System (S.2.2)}
 
-...
+\begin{enumerate}
+
+\item \testdef{T.FR.AC.2.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} An executive is logged in.\\
+\textbf{Input:} The executive creates an account, first with a password that does
+not meet the password requirements, then with one that does. The executive
+changes the account's role and team, ends its session from the server side, and
+deactivates it.\\
+\textbf{Output:} The invalid password is rejected with the reason. The account
+always has exactly one role and at most one team. Ending the session logs the
+user out, and the deactivated account cannot log in.\\
+\textbf{Derivation:} Verifies FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2,
+SR-WS-5.
+
+\item \testdef{T.FR.AC.2.2}\\
+\textbf{Control:} Automatic\\
+\textbf{Initial State:} One account for each role, on two different teams. Each
+team has a current bridge model.\\
+\textbf{Input:} Each account requests each restricted operation (member
+management, rule configuration, season archiving, test result review) and each
+team's current model.\\
+\textbf{Output:} Each request is allowed only for the roles that the SRS permits.
+Refused requests show an error and change nothing. Only members of a team can
+access its current models.\\
+\textbf{Derivation:} Verifies FR-AC-3, FR-AC-6, FR-BR-2.
+
+\end{enumerate}
+
+\subsubsection{Toolbox Broker (S.2.3)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.BR.3.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} System has just been started. User logged in.\\
+\textbf{Input:} User opens each tool. One service is then stopped, and the user
+requests that service and another tool.\\
+\textbf{Output:} Every tool opens. The stopped service returns an error message
+instead of hanging, while the other tool keeps working.\\
+\textbf{Derivation:} Verifies FR-BR-1, FR-BR-3, FR-BR-4.
+
+\end{enumerate}
+
+\subsubsection{Knowledge Repository (S.2.4)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.KR.4.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} User logged in. Repository contains items with known
+metadata.\\
+\textbf{Input:} User uploads files of common types with metadata, and one file
+without the required metadata. User then searches and filters the repository,
+previews a file, and downloads one.\\
+\textbf{Output:} Valid uploads are stored with their metadata, and the upload
+without required metadata is rejected with a message. Searches return exactly
+the matching items, and downloaded files are identical to the uploaded ones.\\
+\textbf{Derivation:} Verifies FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4.
+
+\item \testdef{T.FR.KR.4.2}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} A member has uploaded an item.\\
+\textbf{Input:} The uploader edits the item, another member attempts to edit it,
+and an executive archives it. The repository's storage is then made unavailable,
+and a member uploads a file.\\
+\textbf{Output:} Each change asks for confirmation first, and the other member's
+edit is refused. The archived item no longer appears in search results but can
+still be opened. The failed upload shows an error message.\\
+\textbf{Derivation:} Verifies FR-KR-5, SR-KR-2, SR-KR-5.
+
+\end{enumerate}
+
+\subsubsection{Model Analysis System (S.2.5)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.MA.5.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Team member logged in.\\
+\textbf{Input:} User uploads invalid and corrupted model files, then a reference
+STEP model with known properties, confirms the import summary, and rotates,
+zooms, and pans the 3D view.\\
+\textbf{Output:} Invalid files are rejected with the reason. The import summary
+shows extracted properties that match the reference model's known values before
+any analysis is run. The 3D view responds to each interaction and matches the
+model in CAD. A model that exceeds the processing time limit is stopped with a
+message.\\
+\textbf{Derivation:} Verifies FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3.
+
+\item \testdef{T.FR.MA.5.2}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Two teams exist, with no current models.\\
+\textbf{Input:} A team member uploads a current model. A teammate, a member of the
+other team, and a former team member try to open it. An executive then archives
+the season's models, and a general member browses past designs.\\
+\textbf{Output:} Only the teammate can open the current model. After archiving, it
+becomes a past design recording its year and team, which every member can view
+and filter but not modify.\\
+\textbf{Derivation:} Verifies FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6.
+
+\end{enumerate}
+
+\subsubsection{Performance Analysis System (S.2.5.1)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.PA.6.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} A reference model whose failure load can be calculated
+by hand is stored, with two material data sets.\\
+\textbf{Input:} User runs a performance analysis of the reference model with
+each material set, then with the calculation service unavailable.\\
+\textbf{Output:} The failure load and load-to-mass ratio match the values
+calculated by hand using SRS S.7.2, and change with the selected material set.
+The assumptions and limitations are shown with the results. When the service is
+unavailable, an error is shown instead of an estimate.\\
+\textbf{Derivation:} Verifies FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4,
+SR-PA-1.
+
+\end{enumerate}
+
+\subsubsection{Rule Compliance System (S.2.5.2)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.RC.7.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Executive logged in. Test models stored that pass, violate,
+and sit exactly at the competition rule limits.\\
+\textbf{Input:} The executive imports and edits a rule set for a competition
+year. A member then runs a compliance check on each test model.\\
+\textbf{Output:} The rule set is stored under its year with the edits applied.
+Each rule passes or fails as given by SRS S.7.3, and each failure shows the
+measured and allowed values. Rules that cannot be checked from the model are
+listed as manual checks.\\
+\textbf{Derivation:} Verifies FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5.
+
+\end{enumerate}
+
+\subsubsection{Material Testing Manager (S.2.6)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.MT.8.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Material test results from a previous year are stored.\\
+\textbf{Input:} User enters test results through the form, and imports a file
+that includes invalid rows. User views the comparison with the previous year,
+and an executive flags one result as invalid.\\
+\textbf{Output:} Valid results are stored, and wood results require a grain
+orientation. Invalid rows are rejected and identified. The comparison statistics
+match values calculated by hand, and the material properties are recomputed
+without the flagged result, which remains stored.\\
+\textbf{Derivation:} Verifies FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5,
+SR-MT-2.
+
+\end{enumerate}
+
+\subsubsection{Knowledge Transfer Manager (S.2.7)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.KT.9.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Executive logged in.\\
+\textbf{Input:} The executive opens their exit document template, saves a draft,
+and submits it, first with a reference to an item that does not exist, then with
+valid references. Another executive views the outstanding exit documents.\\
+\textbf{Output:} A template exists for each position, and the draft keeps its
+content. The invalid reference is rejected. The valid submission is published
+only once the repository confirms it was saved, and it can then be found by
+search. The outstanding list no longer includes the executive.\\
+\textbf{Derivation:} Verifies FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2,
+SR-KT-5.
+
+\item \testdef{T.FR.KT.9.2}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} An executive holds a position with a role record.\\
+\textbf{Input:} The executive and another member each try to update the role
+record. The executive's account is then archived, first without a successor,
+then after a successor is assigned.\\
+\textbf{Output:} Only the executive's update is saved. Archiving is blocked until a
+successor is assigned, after which the successor can update the role record.\\
+\textbf{Derivation:} Verifies FR-KT-3, FR-KT-4, SR-KT-3.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
@@ -345,10 +510,50 @@ How test will be performed:
 
 ...
 
-\subsection{Traceability Between Test Cases and Requirements}
+\subsection{Traceability Between Test Cases and Requirements} \label{SecTraceability}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+\begin{table}[htbp]
+\centering
+\caption{Functional Requirement Traceability Matrix}
+\label{TblTraceFR}
+\begin{tabular}{|l|p{0.65\textwidth}|}
+\hline
+\textbf{Test Case ID} & \textbf{Requirements Verified}\\
+\hline
+\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3\\
+\hline
+\testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2, SR-WS-5\\
+\hline
+\testref{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2\\
+\hline
+\testref{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4\\
+\hline
+\testref{T.FR.KR.4.1} & FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4\\
+\hline
+\testref{T.FR.KR.4.2} & FR-KR-5, SR-KR-2, SR-KR-5\\
+\hline
+\testref{T.FR.MA.5.1} & FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3\\
+\hline
+\testref{T.FR.MA.5.2} & FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6\\
+\hline
+\testref{T.FR.PA.6.1} & FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4, SR-PA-1\\
+\hline
+\testref{T.FR.RC.7.1} & FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5\\
+\hline
+\testref{T.FR.MT.8.1} & FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5, SR-MT-2\\
+\hline
+\testref{T.FR.KT.9.1} & FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2, SR-KT-5\\
+\hline
+\testref{T.FR.KT.9.2} & FR-KT-3, FR-KT-4, SR-KT-3\\
+\hline
+\end{tabular}
+\end{table}
+
+The safety and security requirements that the Hazard Analysis Roadmap delays
+until after the capstone are not tested: SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1,
+SR-KT-4, SR-MT-1, and SR-MT-3.
+
+% Non-functional requirement traceability (Section 4.2 tests) to be added below.
 
 \section{Unit Test Description}
 
