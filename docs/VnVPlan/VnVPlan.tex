@@ -404,14 +404,17 @@ Below is a sketch of the unit tests that will be employed in this software proje
   appropriate specific modules can be verified by a non-testing based
   technique.  That can also be documented in this section.}
 
-  Below is a sketch of automated tests for the functional requirements.
-  First are the three major modules and below them are the auxiliary services.
-  For the first three tests, two phyla of tests shall be conducted, a depressed test with dummy data,
-  and an actual test with a real STP file. The former is be white box, as the input is artificial 
-  and the latter is black box, as the output is based on a bona fide STP file. Inputting artificial data
+  Below is a sketch of automated tests for the functional requirements. 
+  First are the three major modules and below them are the auxiliary services. \\
+
+  For the first two tests, two phyla of tests shall be conducted, depressed tests with dummy data,
+  and actual tests with a real STP file. The former are white box, as the input is artificial 
+  and the latter are black box, as the output is based on a bona fide STP file. Inputting artificial data
   is the domain of the developers for testing. A real user should input a raw STP file and see the output
   of the system's analysis of it, because calculating and inputting intermediate results an external
-  CAD library would do is highly error-prone.
+  CAD library would do is highly error-prone. \\
+
+
 
 \subsubsection{Bridge Failure Module}
 
@@ -448,6 +451,8 @@ BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMater
               &\equiv \text{false}
 \end{align*}
 
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
 \item{Artificial, Bridge Fails\\}
 
 Type: Automatic
@@ -470,9 +475,6 @@ BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMater
               &\equiv \text{true}
 \end{align*}
 
-
-
-
 How test will be performed: Through MsTest within the .NET solution used for implementation
 					
 \item{Natural}
@@ -484,13 +486,188 @@ Initial State: System requests an STP file that models a bridge
 Input: The STP file
 					
 Output: If there is an element $e$ where \\ 
-$\frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1$ \\
+\[frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1 \]
 $BridgeFailure \equiv true$. Otherwise, $BridgeFailure \equiv false$.
 
 Test Case Derivation: From the formalization in (S.7.2 (1)). The external CAD library will return
 $m_e = elementMaterial(e)$ and $\sigma_{API}(e)$ for each element present in the bridge model. The materials testing module
 will be invoked to find $\mu_{\text{strength}(m_e)}$. Then, this module will have gained its input to perform its calculations
 and will yield outputs consistent with the formula provided. For more information, see the above two artificial test cases. 
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+    
+\end{enumerate}
+
+\subsubsection{Rules Compliance Module}
+
+\wss{Include a blurb here to explain why the subsections below cover the module.
+  References to the MIS would be good.  You will want tests from a black box
+  perspective and from a white box perspective.  Explain to the reader how the
+  tests were selected.}
+
+This module determines whether a bridge complies with the rules for the Troitsky competition.
+Because the competition rules change each year, the fields denoting rule-based constraints are variable so they
+can be easily updated. 
+The examples below are illustrative of the test types, in reality
+there will be several for each type.
+
+For brevity, the rules are the same in all three test cases.
+The maximum weight is $7$ kg, the minimum length is $175$ m, the maximum length is $225$ m, 
+the minimum width is $45$ m, the maximum width is $60$ m and the minimum clearance height is
+$45$ m. Furthermore, let an $iB$ (in bounds) function be defined as
+
+\[
+  iB(val, lower, upper) \equiv lower \le val \land val \le upper
+\]
+
+Lastly, variables shall be in the form of $qualQty$ where $qual \in \text{(val, min, max)}$ and 
+$Qty \in \text{(Wt, Ln, Wd, Ht)}$. The variable shall be understood as "the $qual$ for the $Qty$".
+The items in the $qual$ (qualifiers) set are short for value, minimum and maximum respectively,
+while the items in the $Qty$ (quantities) set are short for weight, length, width and height respectively.
+If no qualifier is there (e.g. $Ln$), an implicit qualifier of $val$ shall be assumed.
+
+\begin{enumerate}
+
+\item{Artificial, Rules Compliant\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data for an STP model to analyze.
+					
+Input: This bridge weighs $5$ kg, has a length of $200$ m, a width of $50$ m and a clearance height of $50$ m. 
+					
+Output: $isValid \equiv true$
+
+Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+\begin{align*}
+isValid &\equiv iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \; \land \\ 
+        & \qquad iB(Wd, minWd, maxWd) \land Ht < maxHt \\
+        &\equiv iB(5, 0, 7) \land iB(175, 200, 225) \land iB(45, 50, 60) \land 45 \le 50 \\
+        &\equiv true \land true \land true \land true \\
+        &\equiv true \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Artificial, Rules Non-Compliant\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data for an STP model to analyze.
+					
+Input: This bridge weighs $5$ kg, has a length of $200$ m, a width of $61$ m and a clearance height of $50$ m. 
+					
+Output: $isValid \equiv false$
+
+Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+\begin{align*}
+isValid &\equiv iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \; \land \\ 
+        & \qquad iB(Wd, minWd, maxWd) \land Ht < maxHt \\
+        &\equiv iB(5, 0, 7) \land iB(175, 200, 225) \land iB(45, 61, 60) \land 45 \le 50 \\
+        &\equiv true \land true \land false \land true \\
+        &\equiv false \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+					
+\item{Natural}
+
+Type: Automatic
+					
+Initial State: System requests an STP file that models a bridge
+					
+Input: The STP file
+					
+Output: If,
+\[iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \land iB(Wd, minWd, maxWd) \land Ht < maxHt \]
+$isValid \equiv true$. Otherwise, $isValid \equiv false$.
+
+Test Case Derivation: From the formalization in (S.7.2 (2)). The external CAD library will return
+the bridge's weight, length width and height. Then, this module will have gained its input to perform its calculations
+and will yield outputs consistent with the formula provided. For more information, see the above two artificial test cases. 
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+    
+\end{enumerate}
+
+\subsubsection{Bridge Scoring Module}
+
+\wss{Include a blurb here to explain why the subsections below cover the module.
+  References to the MIS would be good.  You will want tests from a black box
+  perspective and from a white box perspective.  Explain to the reader how the
+  tests were selected.}
+
+This module determines the score of a bridge. The score is based on the formula in SRS section S.7.3 (3).
+
+For brevity, there will be two hard constraints, two objectives and two soft constraints. As the real calculations required
+to determine these values are yet to be decided, a natural unit test would be inappropriate. The score shall not be less
+than zero. In all three test cases, $w_1$ = 5, $w_2$ = 3, $p_1$ = 400, and $p_2$ = 200. See S.7.3 for the meanings of
+the abbreviations used here.
+
+\begin{enumerate}
+
+\item{Violates Hard Constraint\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data to run scoring module.
+					
+Input: $r_1 = 0$, $r_2 = 1$, $s_1 = 100$, $s_2 = 50$, $b_1 = 0$, $b_2$ = 1.
+					
+Output: $W = 0$
+
+Test Case Derivation: 
+
+\begin{align*}
+W &= max(r_1r_2(w_1s_1 + w_2s_2 - (b_1p_1 + b_2p_2)), 0) \\
+  &= max(0(1)(5*100 + 3*50 - (0*400 + 1*200)), 0) \\
+  &= max(0(450), 0) \\
+  &= 0 \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Normal \\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data to run scoring module.
+					
+Input: $r_1 = 1$, $r_2 = 1$, $s_1 = 100$, $s_2 = 50$, $b_1 = 0$, $b_2$ = 1.
+					
+Output: $W = 450$
+
+Test Case Derivation: 
+
+\begin{align*}
+W &= max(r_1r_2(w_1s_1 + w_2s_2 - (b_1p_1 + b_2p_2)), 0) \\
+  &= max(1(1)(5*100 + 3*50 - (0*400 + 1*200)), 0) \\
+  &= max(1(450), 0) \\
+  &= 450 \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Below Floor of Zero\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data to run scoring module.
+					
+Input: $r_1 = 0$, $r_2 = 1$, $s_1 = 50$, $s_2 = 100$, $b_1 = 1$, $b_2$ = 1.
+					
+Output: $W = 0$
+
+Test Case Derivation: 
+
+\begin{align*}
+W &= max(r_1r_2(w_1s_1 + w_2s_2 - (b_1p_1 + b_2p_2)), 0) \\
+  &= max(1(1)(5*50 + 3*100 - (1*400 + 1*200)), 0) \\
+  &= max(1(-50), 0) \\
+  &= 0 \\
+\end{align*}
 
 How test will be performed: Through MsTest within the .NET solution used for implementation
     
