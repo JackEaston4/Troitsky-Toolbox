@@ -16,8 +16,23 @@ permissions:
 
 jobs:
   build:
+  
     runs-on: ubuntu-latest
+
     steps:
+      - name: Restore cached TeX packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-tex-${{ hashFiles('.github/workflows/latex-pages.yml') }}
+
+      - name: Rebuild TeX format files
+        run: |
+          sudo mktexlsr
+          sudo updmap-sys >/dev/null
+          sudo fmtutil-sys --all >/dev/null || true
       - name: Checkout repo
         uses: actions/checkout@v5
         with:
