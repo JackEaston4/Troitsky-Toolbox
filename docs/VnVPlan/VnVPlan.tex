@@ -387,14 +387,15 @@ Below is a sketch of the unit tests that will be employed in this software proje
   scope of this project; rather, they shall be shown to be accurate by comparing results against the current standards
   process Troitsky uses and deeming it satisfactory if they are the same for several STP files, including
   files purposely hidden from the training data. The last three modules shall be verified through unit testing, having
-  been formalized in the SRS (see S.7).
+  been formalized in the SRS (see S.7). \\
 
   The other services are the log-in, the materials testing database, the knowledge repository
-   (both adding new files and searching existing files),
+  (both adding new files and searching existing files),
   and the knowledge transfer service to facilitate the creation of transition documents. All these tasks will
   contain are a login suite, CRUD (create, read, update, delete) operations for a database or a shared file store, 
   a form to submit information, and a naive search engine (a simple LIKE-based search is almost certainly sufficient for now). 
-  These problems are not novel and be quickly implemented and verified.
+  These problems are not novel and be quickly implemented and verified. \\
+  
   Therefore, while unit testing should exist for them, a few will suffice for each. Therefore, the vast majority of unit testing should
   be directed at the last three sub-modules of the model analysis service.
 
@@ -413,6 +414,7 @@ Below is a sketch of the unit tests that will be employed in this software proje
   is the domain of the developers for testing. A real user should input a raw STP file and see the output
   of the system's analysis of it, because calculating and inputting intermediate results an external
   CAD library would do is highly error-prone. \\
+
 
 
 
