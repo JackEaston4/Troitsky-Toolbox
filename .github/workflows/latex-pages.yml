@@ -16,8 +16,11 @@ permissions:
 
 jobs:
   build:
+  
     runs-on: ubuntu-latest
+
     steps:
+      
       - name: Checkout repo
         uses: actions/checkout@v5
         with:
@@ -89,6 +92,19 @@ jobs:
         with:
           packages: texlive-latex-extra texlive-science texlive-fonts-extra texlive-fonts-recommended texlive-latex-recommended lmodern pandoc
           version: 1.1
+      - name: Restore cached TeX packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives
+            /var/lib/apt/lists
+          key: ${{ runner.os }}-tex-${{ hashFiles('.github/workflows/latex-pages.yml') }}
+
+      - name: Rebuild TeX format files
+        run: |
+          sudo mktexlsr
+          sudo updmap-sys >/dev/null
+          sudo fmtutil-sys --all >/dev/null || true
       - name: Verify the TeX toolchain is usable
         run: |
           # A restored cache that skipped texlive's postinst would leave
