@@ -18,17 +18,6 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Install TeX Live and pandoc
-        run: |
-          sudo apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            texlive-latex-extra \
-            texlive-science \
-            texlive-fonts-extra \
-            texlive-fonts-recommended \
-            texlive-latex-recommended \
-            lmodern \
-            pandoc
       - name: Checkout repo
         uses: actions/checkout@v5
         with:
