@@ -309,7 +309,7 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Webserver}
+\subsubsection{4.2.1 Webserver}
 \paragraph{Communication Encryption}
 
 \begin{enumerate}
@@ -322,23 +322,39 @@ Initial State: Troitsky Toolbox webserver is active and able to receive packets.
 					
 Input/Condition: Packet is received.
 					
-Output/Result: Acceptation or rejection of the packet.
+Output/Result: Packet reject or negotiated.
 					
-How test will be performed: Tools like Nmap or, Qualys SSL Labas, will scan the packet and observe the encryption protocol 
+How test will be performed: Tools like Nmap or, Qualys SSL Labs, will scan the packet and observe the encryption protocol and cyphers. Only negotiate with packets that have secure and modern protocols (TLS 1.2 \& 1.3), reject older protocols (SSLv3, TLS 1.0, \& TLS 1.1) and weak cyphers (RC4, DES, or NULL) 
 					
-\item{test-id2\\}
+\item{T-NFR-WS-2-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Automatic.
 					
-Initial State: 
+Initial State: Webserver is running and currently stable
 					
-Input: 
+Input: Updated system code
 					
-Output: 
+Output: CI/CD test pass or fail
 					
-How test will be performed: 
-
+How test will be performed: Scripts written to assert
+\begin{enumerate}
+  \item Requests to \texttt{http://...} results in a redirect to \texttt{https://...}
+  \item Requests to \texttt{https://...} succeeds and returns a 200 OK
+  \item A request using a deliberately downgrade TLS version throws a connection reset/SSL handshake error. 
 \end{enumerate}
+\item{T-NFR-WS-2-3\\}
+
+Type: Dynamic
+
+Initial State: Webserver is running and currently stable
+
+Input: Webserver Address.
+
+Output: Potential vulnerabilities.
+
+How test will be preformed: Using a tool like the Open Worldwide Application Security Project (OWASP) Zed Attack Proxy (ZAP) will actively probe a running web server to find vulnerabilities, including broken or missing encryption.
+\end{enumerate}
+
 
 \subsubsection{Area of Testing2}
 
