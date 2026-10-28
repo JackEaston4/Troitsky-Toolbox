@@ -416,7 +416,7 @@ Below is a sketch of the unit tests that will be employed in this software proje
   of the system's analysis of it, because calculating and inputting intermediate results an external
   CAD library would do is highly error-prone. \\
 
-  Per the straightforwardness of the auxiliary services above, each service shall contain no more than two (2) examples, 
+  Due to the straightforwardness of the auxiliary services above, each service shall contain no more than two (2) examples, 
   of unit tests. There may be more in the actual unit testing suite, but this document serves as a sketch, not
   a complete guide, for the suite.
 
@@ -744,24 +744,24 @@ tests shall be used.
 
 \begin{enumerate}
 
-\item{Results Submission\\}
+\item{Results Submission, Group\\}
 
 Type: Manual, Dynamic
 					
 Initial State: User on materials testing page and may submit a materials test
 					
-Input: A materials testing result (containing a material and its strength)
+Input: An spreadsheet-style document (.csv or .xslx) containing materials testing results (each containing a material and its strength)
 					
-Output: The result is stored as reliable materials testing result. User recieves confirmation of sucessful submission.
+Output: The results are stored as reliable materials testing results. User recieves confirmation of sucessful submission.
 
 Test Case Derivation: 
 
 \begin{itemize}
   \item User clicks "Add Materials Test Result" button
-  \item Graphical user interface (GUI) opens, prompting the user to enter the material and its observed strength
-  \item User submits results through the GUI
+  \item Graphical user interface (GUI) opens, prompting the upload the spreadsheet-style document
+  \item User uploads the document and submits it
   \item System normalizes the submitted data to obtain values used to add to the materials testing database
-  \item System adds a new row to the database containg the obtained values and the reliable flag set to true
+  \item System adds new rows to the database containg the obtained values and the reliable flag set to true
   \item System recieves confiramation from the database that the row was added successfully
   \item User recieves confirmation from the system the materials test was submitted successfully
 \end{itemize}
@@ -939,36 +939,28 @@ How test will be performed: Manually, through the front end.
 \wss{These tests may involve collecting performance data from previously
   mentioned functional tests.}
 
-\subsubsection{Module ?}
+Most information to satisfy the non-functional requirements come from the functional tests above.
+Timing requirements shall be handled by timekeeping and recording a fail if the test goes overtime, even if it
+the desired result is ultimately obtained. The remaining tests are written below
+
+\subsubsection{Module Analysis}
+
+Unlike the counterpart subsections in the functional unit section, this is tested as one unit
+because the user will evaluate all its submodules in one action.
 		
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{Timing\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+Type: Manual, Dynamic
 					
-Initial State: 
+Initial State: User on model analysis page
 					
-Input/Condition: 
+Input/Condition: The STP file of a bridge model.
 					
-Output/Result: 
+Output/Result: Whether the bridge will fail, whether the bridge is rules compliant and its score.
 					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
+How test will be performed: Manual
 
 \subsubsection{Module ?}
 
