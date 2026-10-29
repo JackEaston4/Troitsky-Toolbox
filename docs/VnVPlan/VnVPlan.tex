@@ -238,11 +238,15 @@ the contents of the subsections.}
 \newcommand{\testref}[1]{\hyperlink{test:#1}{#1}}
 
 The tests below are categorized by the components defined in Section S.2 of the
-SRS \citep{SRS}, so that every functional requirement is covered. Each test is a
-system-level test of the deployed system, following a workflow that a club
-member performs through the Toolbox Web App, and verifies several related
+SRS \citep{TroitskySRS}, so that every functional requirement is covered. Each
+test is a system-level test of the deployed system, following a workflow that a
+club member performs through the Toolbox Web App, and verifies several related
 requirements. The tests also verify the functional safety and security
-requirements that the Hazard Analysis Roadmap plans for the capstone.
+requirements that the Hazard Analysis Roadmap \citep{TroitskyHazardAnalysis}
+plans for the capstone. Together, they verify the model analysis correctness,
+data integrity, and access control identified as primary objectives in the
+Objectives section, while functional usability is assessed by the non-functional
+tests and the winter usability report.
 
 \subsubsection{Web Server (S.2.1)}
 
@@ -347,8 +351,8 @@ still be opened. The failed upload shows an error message.\\
 STEP model with known properties, confirms the import summary, and rotates,
 zooms, and pans the 3D view.\\
 \textbf{Output:} Invalid files are rejected with the reason. The import summary
-shows extracted properties that match the reference model's known values before
-any analysis is run. The 3D view responds to each interaction and matches the
+shows extracted properties, including the model's dimensions and mass, that
+match the reference model's known values before any analysis is run. The 3D view responds to each interaction and matches the
 model in CAD. A model that exceeds the processing time limit is stopped with a
 message.\\
 \textbf{Derivation:} Verifies FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3.
@@ -375,11 +379,12 @@ and filter but not modify.\\
 \textbf{Initial State:} A reference model whose failure load can be calculated
 by hand is stored, with two material data sets.\\
 \textbf{Input:} User runs a performance analysis of the reference model with
-each material set, then with the calculation service unavailable.\\
+each material set, then with the calculation failing or returning an invalid
+value.\\
 \textbf{Output:} The failure load and load-to-mass ratio match the values
 calculated by hand using SRS S.7.2, and change with the selected material set.
-The assumptions and limitations are shown with the results. When the service is
-unavailable, an error is shown instead of an estimate.\\
+The assumptions and limitations are shown with the results. When the calculation
+fails or returns an invalid value, an error is shown instead of an estimate.\\
 \textbf{Derivation:} Verifies FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4,
 SR-PA-1.
 
@@ -431,11 +436,14 @@ SR-MT-2.
 \textbf{Initial State:} Executive logged in.\\
 \textbf{Input:} The executive opens their exit document template, saves a draft,
 and submits it, first with a reference to an item that does not exist, then with
-valid references. Another executive views the outstanding exit documents.\\
+valid references while the repository is unable to save it, then with valid
+references while the repository is available. Another executive views the
+outstanding exit documents.\\
 \textbf{Output:} A template exists for each position, and the draft keeps its
-content. The invalid reference is rejected. The valid submission is published
-only once the repository confirms it was saved, and it can then be found by
-search. The outstanding list no longer includes the executive.\\
+content. The invalid reference is rejected. While the repository cannot save
+it, the document is not marked as published and the executive is told. Once
+saved, it is published and can be found by search, and the outstanding list no
+longer includes the executive.\\
 \textbf{Derivation:} Verifies FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2,
 SR-KT-5.
 
@@ -443,10 +451,11 @@ SR-KT-5.
 \textbf{Control:} Manual\\
 \textbf{Initial State:} An executive holds a position with a role record.\\
 \textbf{Input:} The executive and another member each try to update the role
-record. The executive's account is then archived, first without a successor,
+record. The executive's account is then deactivated, first without a successor,
 then after a successor is assigned.\\
-\textbf{Output:} Only the executive's update is saved. Archiving is blocked until a
-successor is assigned, after which the successor can update the role record.\\
+\textbf{Output:} Only the executive's update is saved. Deactivation is blocked
+until a successor is assigned, after which the successor can update the role
+record.\\
 \textbf{Derivation:} Verifies FR-KT-3, FR-KT-4, SR-KT-3.
 
 \end{enumerate}
@@ -549,9 +558,14 @@ How test will be performed:
 \end{tabular}
 \end{table}
 
-The safety and security requirements that the Hazard Analysis Roadmap delays
-until after the capstone are not tested: SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1,
-SR-KT-4, SR-MT-1, and SR-MT-3.
+FR-KT-5 is a Could requirement in SRS S.5, implemented only if time allows, so
+its part of \testref{T.FR.KT.9.1} is performed only if it is implemented.
+
+SR-SYS-1 to SR-SYS-3 constrain how the system is built and deployed rather than
+its behaviour, so they are verified as part of implementation verification
+rather than by system tests. The safety and security requirements that the
+Hazard Analysis Roadmap delays until after the capstone are not tested:
+SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1, SR-KT-4, SR-MT-1, and SR-MT-3.
 
 % Non-functional requirement traceability (Section 4.2 tests) to be added below.
 
