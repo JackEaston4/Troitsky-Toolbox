@@ -21,6 +21,10 @@
         "**/HazardAnalysis.aux": true,
         "**/HazardAnalysis.log": true,
         "**/HazardAnalysis.gz": true,
-        "**/HazardAnalysis.out": true
+        "**/HazardAnalysis.out": true,
+        "**/VnVPlan.aux": true,
+        "**/VnVPlan.log": true,
+        "**/VnVPlan.gz": true,
+        "**/VnVPlan.out": true
     }
 }
