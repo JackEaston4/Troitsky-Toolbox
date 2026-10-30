@@ -31,7 +31,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+October 27, 2026 & 1.0 & Notes\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -90,49 +90,96 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+The Troitsky Toolbox project seeks to create a centralized information repository and a collection of software
+services that provide technical support for the McMaster Troitsky club. These services ensure information transfer 
+between years and teams, and facilitate support and onboarding for new members. Served as a web application, 
+accessible by all current club members, the services provided will simplify the technical components of the bridge 
+design process, decreasing the barrier to becoming a competitive team. 
+
+One of the primary services in the toolbox is the model analysis service, which allows teams to load STEP files of their bridge 
+designs and perform basic analysis on the models. This service will provide teams with a simplified analysis of their design, when compared to 
+external static model analysis software, and will integrate with the material testing component and the rule compliance checker to provide a more specified analysis given the 
+build material properties and current competition rules. Services regarding the information repository will include the ability to search through past designs and load them into 
+the model analysis service, allowing teams to upload their designs with exit documentation and providing customized material testing result upload features. A knowledge transfer 
+service collects executive handoff documents so that club knowledge carries over between years.
+In managing the toolbox access, role-based access control (RBAC) will be integrated to ensure that information is kept within the club, limiting access, and allowing executive members 
+the ability to manage club users.
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+The primary objective of the verification and validation plan is to outline the approach to ensure that the Troitsky Toolbox 
+project will meet the requirements outlined in the software requirements specification. This plan will help to build 
+confidence in the correctness, reliability and safety of the system, focusing verification on high-risk points and safety-critical concerns 
+outlined in the hazard analysis.
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+The V\&V plan will primarily focus on these system objectives outlined below. There are also goals outlined that have been deemed 
+out of scope for the current development cycle, but will be outlined in documentation as goals for future year development.
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+\subsubsection{Primary Objectives}
+\begin{itemize}
+
+  \item \textbf{Adequate model analysis correctness:} Testing the correctness of the model analysis service is vital to the usability of the toolbox, as, without 
+  ensured correctness, teams will not be able to rely on the results. These results will not only be used by teams in the bridge design process, but will also 
+  guide them in making estimates of their bridge's weight and ultimate load capacity.
+  
+  \item \textbf{Data integrity and persistence:} The system must ensure data integrity and security in the knowledge repository. The repository will 
+  serve as the club's main data storage and information transfer, so losing data would be a critical concern and would defeat the project's purpose.
+  
+  \item \textbf{Access control:} The RBAC in the club will maintain data privacy both between teams and outside of the club. Testing 
+  this access control will provide confidence to teams when storing current bridge designs in the system, and ensure that executive and exit documentation is private to the club. 
+  
+  \item \textbf{Demonstrating functional usability:} The functional usability of the system determines if it will be fully integrated into the club's organization and 
+  individual McMaster teams' bridge design and development process.
+   
+\end{itemize}
+
+\subsubsection{Out-of-Scope Objectives}
+\begin{itemize}
+  
+  \item \textbf{Industry standard static model analysis performance:} The model analysis service is intentionally designed to provide a simplified approximation of static model 
+  analysis, so its accuracy will have a larger tolerance than industry-standard tools and will not aim to match established services.
+
+  \item \textbf{Full year competition testing:} The toolbox testing will not include an end-to-end full-year competition evaluation within the current development cycle. This would require a usable product 
+  from the beginning of the school term, allowing teams to use the service throughout their full design process.
+\end{itemize}
+
+\subsubsection{Assumptions}
+There is an assumption of the correctness of external libraries (BFE.NET, IxMilia.Step, occt-import-js, three.js,
+SQL Server) used. It is assumed that they are verified by their maintainers; only our
+integration with them is tested.
 
 \subsection{Custom Documents}
 
-\wss{Summarize the CDs (Custom Documents) that were tackled by this project.  CDs 
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  CDs should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your CDs (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+\subsubsection{Fall - Interviews}
+
+The primary CD for the fall term development is interviews conducted with core stakeholders: experienced Troitsky club members and executives. These semi-structured interviews will 
+help outline expectations and prioritization of services from knowledgeable members. These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
+toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members.
+
+In addition to the core interviews for the fall CD, a survey has been performed to begin the requirements elicitation process. The \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/SurveyDesign.md}{survey design record} and \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/Troitsky%20Toolbox%20%E2%80%94%20Member%20Needs%20%26%20Service%20Priority%20Survey.csv}{raw data} are stored in the project repository, and the results were used in the SRS \citep{TroitskySRS} to 
+outline the priority of services and core issues members are currently facing.
+
+\subsubsection{Winter - Usability Report}
+
+The CD completed in the winter term will be a usability report, allowing for a more complete assessment of the functional usability of the toolbox. 
+This round of testing will be performed with a more complete iteration of the product, allowing for more complete analysis of different system services' usability. 
+Users will be gathered spanning different experience levels, both in club experience and technical experience (modelling), creating valuable data about the system's performance. 
+Specific user functions will be tested, with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task.
+
+This CD will further strengthen the V\&V of the system, ensuring that complete functional and non-functional requirements come together into a fully usable service.
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+\begin{enumerate}
+  \item \textbf{Software Requirements Specification \citep{TroitskySRS}:} The SRS defines the functional and non-functional requirements for the Troitsky Toolbox, and is referenced in the V\&V plan as 
+  the standard the system wishes to meet. The requirements set the goals for the testing areas, identifying the importance of different services, which is then reflected in the testing performed for those 
+  given systems.
 
-\citet{SRS}
+  \item \textbf{Hazard Analysis \citep{TroitskyHazardAnalysis}:} The hazard analysis provides information regarding the primary risks and failure points of the system, pointing to the components that will require 
+  more in-depth and complex system testing. The hazard analysis also defines safety requirements for the system which are referenced in the V\&V plan specifically with regard to system safety and 
+  access control correctness. 
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+\end{enumerate}
 
 \section{Plan}
 
