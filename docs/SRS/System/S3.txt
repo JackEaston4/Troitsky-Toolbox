@@ -4,9 +4,12 @@ This system requires several software interfaces, including:
 
 \begin{itemize}
     \item An RESTful API (application programming interface), which shall enable users to communicate
-    with the backend through the frontend and alter it when permitted and desired.
+    with the backend through the frontend and alter it when permitted and desired. The REST functions are
+    GET for retrieving a resource, POST for creating a new resource, PUT for replacing an existing resource,
+    PATCH for partially updating an existing resource, and DELETE to delete an existing resource.
     \item External static modelling libraries, which shall perform technical engineering calculations
-    on given inputs, both on calculations necessary to score \term{step}{STP} models and inputs for materials testing.
+    on inputted STP \term{step}{STP} models, yielding outputs that serve as inputs for the internal \term{step}{STP} model
+    scoring calculations.
     \item A robust external server which holds the entire swath of data this toolbox relies on, including
     \term{step}{STP} files, material testing inputs, documents containing non-technical club knowledge and roles for user accounts.
     \item Some aid to login. This may be an entire external login service or merely a cryptographic hash function which 

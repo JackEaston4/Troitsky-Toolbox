@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -11,6 +12,9 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+
+\usepackage[latin]{babel}
+
 
 \input{../Comments.text}
 \input{../Common.text}
@@ -185,11 +189,50 @@ This CD will further strengthen the V\&V of the system, ensuring that complete f
 \wss{Introduce this section.  You can provide a roadmap of the sections to
   come.}
 
+  This sections contains the grand plan to verify and validate this project's documents and implemenation. It outlines 
+  the team, how every document, including this one will be verified, how the implemenation will be verified,
+  automated testing technology that will be used, how assumptions will be verified, and how contents, both
+  internal and external will be validated.
+
+
+
 \subsection{Verification and Validation Team}
 
 \wss{Your teammates.  Maybe your supervisor.
   You should do more than list names.  You should say what each person's role is
   for the project's verification.  A table is a good way to summarize this information.}
+
+This project is immense and requires a lot of work to verify and validate. 
+Peer review will be a guiding principle to catch individual errors and therefore, peer subject matter expertise shall
+be used instead of quality assurer and subject matter expertised being fused into one person.
+ The following table shows the division of labour:
+
+\begin{center}
+  \begin{hyphenrules}{nohyphenation}
+    \begin{tabularx}{\linewidth} {
+    |>{\hsize=.5\hsize}X|% 10% of 4\hsize 
+    >{\hsize=.5\hsize}X|% 30% of 4\hsize
+    >{\hsize=2\hsize}X|% 30% of 4\hsize 
+  }
+\hline
+Name & Project Role & VnV Responsibilities \\
+ \hline
+Mason Azzopardi & Project Supervisor, Back-end Developer & As project supervisor, he shall oversee all the work and guide the team to success. As a back-end developer, he shall serve as the secondary back-end expert to aid VnV related to the back-end.  \\ 
+\hline
+Pedro Azevedo & Troitsky Liason, Front-end Developer & As Troitsky liason, he shall be the primary point of contact between this team and members of the Troitsky club. As front-end developer, he shall serve as the front-end expert to VnV related to the front-end.   \\ 
+\hline
+Jack Easton & Back-end Developer & Serve as the primary back-end expert to aid VnV related to the back-end. \\
+\hline
+Melvin Mokhtari & Teaching Assistant & Answer administrative questions and provide feedback on course expectations and grading. \\
+\hline
+Michael Roberts & Quality Assurer & Spearhead VnV efforts. Consult with subject matter experts to draw on their expertise. Develop a robust testing suite to verify the project and consult with Troitsky Club members, especially the club president, to validate the project. \\
+\hline
+Isabella Vescio & Supervisor & An \textit{ex officio} role stemming from her role as Troitsky Club President, she shall provide feedback so the project fits the needs and desires of the Troitsky Club. She shall involve other club members in the process as needed to assist her in this task.  \\
+ \hline
+\end{tabularx}
+  \end{hyphenrules}
+
+\end{center}
 
 \subsection{SRS Verification}
 
@@ -205,14 +248,33 @@ issue tracker?}
 
 \wss{Maybe create an SRS checklist?}
 
+The Software Requirements Specifications shall be verified in the following ways. In case mistakes are found or improvements are suggested, as they inevitably will, corrections will be made and the corrections shall be reviewed again.
+The above process is an iterative process and shall only terminate when the portion is deemed satisfactory.
+
+\begin{itemize}
+    \item \textbf{Checklist:} Two checklists shall be developed by the Quality Assurer to verify the requirements, one for each requirement and one for the document as a whole. The former checklist shall be explicitly evaluated on each requirement to determine its quality, and will include qualities like unambiguity, verfiability, traceability, and correct spelling and grammar. The latter shall cover the pitfalls a granular analysis cannot cover, including internal consistency, completeness and documented modifiability.
+    \item \textbf{Internal Peer Review:} Each portion of the document, especially each requirement shall be reviewed by a different group member than its author. The whole document shall be reviewed through a group-wide read-through of the document at a meeting.
+    \item \textbf{Troitsky Review:} The Troitsky Club is our client and its members are frequently available in order for us to seek their feedback. While showing them the SRS is a fool's errand, all assumptions baked into the document shall be verified by club members through asking if the assumption is true in non-technical language they can easily understand. 
+    \item \textbf{External Peer Review:} Other capstone groups will raise issues regarding our SRS through GitHub issues. We shall address those issues, and either incorporate their feedback or dismiss it after determining their suggestion is wrong or not necessary.
+    \item \textbf{Instructional Review:} The instructional team, primarily our assigned Teaching Assistant, will look over, comment upon, and grade the SRS. We shall seek to incorporate their feedback into our work.
+\end{itemize}
+
 \subsection{Design Verification}
 
 \wss{Plans for design verification}
 
 \wss{The review will include reviews by your classmates}
-
 \wss{Create a checklists?}
 
+The design shall stem from the requirements and shall be verified in the ways below. The verification shall be an iterative process and shall continue until the design
+is determined to fulfill the needs of the project.
+
+\begin{itemize}
+  \item \textbf{Unified Modelling Language Diagrams:} All designs shall be converted from text into corresponding UML diagrams, which will facilitate verification. Many errors will be caught and fixed at the translation stage.
+  \item \textbf{Interview Peer Review:} All designs and associated commentary shall be carefully reviewed by a different group member than the design and commentary writer. Feasability, proper decomposition, and other design principles (especially the SOLID principles) shall be guiding lights. The full list shall be contained in a checklist that the Quality Assurer will develop.
+  \item \textbf{Assumption Verification:} All newly-encountered assumptions shall not be silently implemented into the design. Rather, they shall be verified by the Troitsky club.
+  \item \textbf{External Review:} The group and TA assigned to peer review us shall review our design after submission and provide feedback. Furthermore, meetings with the TA will be utilized to gain more suggestions.
+\end{itemize}
 \subsection{Verification and Validation Plan Verification}
 
 \wss{The verification and validation plan is an artifact that should also be
@@ -221,6 +283,20 @@ verified.  Techniques for this include review and mutation testing.}
 \wss{The review will include reviews by your classmates}
 
 \wss{Create a checklists?}
+
+This document shall be verified in the ways outlined below. All errors and weaknesses discovered through this iterative process shall
+be fixed and improved, respectively. This process shall only terminate when all errors are fixed and all weaknesses are either fixed or shown to be infeasible to fix.
+
+\begin{itemize}
+  \item \textbf{Internal Peer Review:} All sections shall be reviewed by a different team member than its author.
+  \item \textbf{Mutation Testing:} To prevent a lazy approval, authors shall deliberately shall write at least one error in their section. Therefore, if the peer is lazy and approves a section without checking it, the author can adjure the reviewer to review the section again.
+  \item \textbf{Assumption Verification:} Any new assumption that is absent from previous documents shall be verified by the Troitsky Club, lest the assumption is wrong.
+  \item \textbf{Final Group Read-Through:} Before submission, this document shall be read through in a group meeting to catch holistic errors, such as contradiction, spelling and grammar errors, missing links, and incompleteness.
+  \item \textbf{External Review:} We will recieve feedback, including issues from the external peer reviewing group in addition to grades and comments from the marking TA.
+\end{itemize}
+
+While certain verification is impossible because any verification would require its own verification,
+near-certainty will suffice if this document is faithfully followed.
 
 \subsection{Implementation Verification}
 
@@ -234,6 +310,28 @@ verified.  Techniques for this include review and mutation testing.}
 \wss{The final class presentation in CAS 741 could be used as a code
 walkthrough.  There is also a possibility of using the final presentation (in
 CAS741) for a partial usability survey.}
+
+The implemenation shall be throughly tested to find syntactic errors, semantic errors and weaknesses to be strengthened.
+Due to our meticulous development plan, requirements document, and design documents, test-driven development is an excellent choice.
+The Quality Assurer shall write these tests, drawing on his colleagues' expertise for guidance. Testing the formalized portions is low-hanging fruit,
+and the remaining functions will be demecrated in the design process. Of course, TDD will not catch everything so additional unit tests will be necessary
+after the code is written to test more cases and fill in any omissions in the pre-written. The requirements shall play a paramount role in determining the
+content of the tests. To verify the fulfillment of the requirements, each functional requirement and each objective non-functional requirement
+shall have at least one test verifying it. The remaining non-functional requirements will be qualitatively verified through the Quality Assurer and the Troitsky Club.
+
+The above covers unit testing. Once the unit tests are complete and have all passed, integration and system testing shall begin. When possible, they should
+be written with a unit testing framework, the only difference being the test tests multiple systems and is thus an integration test. However,
+much of integration testing and virtually all of system testing cannot be verified automatically and must be verified manually through the Quality Assurer
+running the program and deeming it satisfactory. The number of parts tested for integration testing shall initially be small and incrementally rise.
+The last stage, will be testing the entire system (i.e. system testing).
+
+After system testing succeeds, acceptance testing shall be done by demonstrating the software suite to the Troitsky club.
+Once they accept our demonstration, our suite is fit for release.
+
+Testing is an iterative process; failures must be corrected and resubmitted. Any tests under the unit testing framework may 
+run automatically. However, all other previous tests must be redone unless the test tests non-critical parts only and that
+it is painstakingly obvious that the correction did not impact the test.
+
 
 \subsection{Automated Testing and Verification Tools}
 
@@ -251,6 +349,14 @@ that document.}
 
 \wss{The details of this section will likely evolve as you get closer to the
   implementation.}
+
+  As stated in the Development Plan (see Expected Technology section), unit testing shall occur through an establshed
+  C\# unit testing tool, namely \href{https://learn.microsoft.com/en-us/visualstudio/test/getting-started-with-unit-testing?view=visualstudio&tabs=dotnet%2Cmstest}{MS Test}.
+  Code overage of tests shall be determined by \href{https://github.com/coverlet-coverage/coverlet}{Coverlet}, an establshed testing tool.
+  Both are open-source projects of the .NET validation.
+
+  Linting shall be done with \href{https://github.com/lucaspimentel/cslint}{CS Lint}, freely available under the MIT license.
+  See the Development Plan (ibid.).
 
 \subsection{Software Validation}
 
@@ -271,6 +377,30 @@ The feedback from your supervisor will be very useful for improving your project
 as a Rev 0 demo for the supervisor.}
 
 \wss{This section might reference back to the SRS verification section.}
+
+As stated in the SRS (see S.1), our software suite shall contain one main tasks, model analysis. 
+and many auxiliary tasks, namely a materials testing suite, a login suite, a knowledge repository (this includes both file upload and file search), and knowledge transfer tool and a broker to
+coordinate user tasks. \\
+
+The main tasks are currently done by hand or through the graphical user interface of computer-aided design software  (see SRS G.2).
+All calculations done by this software project shall be validated through ensuring the answers obtained from the use of this software
+and the current methods are the same. Many models will be used in this process and our software and the current methods must yield the same
+results for each one. To prevent overfitting to our training data, some models shall be hidden during development and debugging and only
+utilized during testing. The number of models is to be determined, although the number of training models shall not exceed the number of test models
+and five of each is the current forecastedamount. \\
+
+The auxiliary tasks shall be validated as follows:
+
+\begin{itemize}
+  \item The \textbf{login suite} shall be validated against Troitsky's current list of members and their roles.
+  \item The \textbf{knowledge transfer tool} shall be validated against Troitsky's current mechanism for creating transition documents. The club may want to alter the process for the current process is quite informal, and any alterations requests shall be meticulously followed.
+  \item The \textbf{knowledge repository}, the \textbf{materials testing suite}, and \textbf{toolbox broker} are new capabilities which have no benchmark to validate against.
+\end{itemize}
+
+We are lucky to benefit from our primary stakeholder being almost available to us. Frequent consultation and demonstration
+shall be utilized to gather their feedback. Because they are our client, they will be eager to answer our questions about this
+project within reason. Before our first release, there shall be an extensive demonstration of our work before the Troitsky club,
+where we will recieve their feedback and make corrections based on it.
 
 \section{System Tests}
 
