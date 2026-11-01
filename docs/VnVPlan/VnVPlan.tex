@@ -143,7 +143,7 @@ how they relate to your VnV efforts.}
   come.}
 
   This sections contains the grand plan to verify and validate this project's documents and implemenation. It outlines 
-  the team, how every document, including this one will be verified, how the implemenation will be verified,
+  the team, how every document, including this on, will be verified, how the implemenation will be verified,
   automated testing technology that will be used, how assumptions will be verified, and how contents, both
   internal and external will be validated.
 
@@ -228,7 +228,7 @@ is determined to fulfill the needs of the project.
 
 \begin{itemize}
   \item \textbf{Unified Modelling Language Diagrams:} All designs shall be converted from text into corresponding UML diagrams, which will facilitate verification. Many errors will be caught and fixed at the translation stage.
-  \item \textbf{Interview Peer Review:} All designs and associated commentary shall be carefully reviewed by a different group member than the design and commentary writer. Feasability, proper decomposition, and other design principles (especially the SOLID principles) shall be guiding lights. The full list shall be contained in a checklist that the Quality Assurer will develop.
+  \item \textbf{Internal Peer Review:} All designs and associated commentary shall be carefully reviewed by a different group member than the design and commentary writer. Feasability, proper decomposition, and other design principles (especially the SOLID principles) shall be guiding lights. The full list shall be contained in a checklist that the Quality Assurer will develop.
   \item \textbf{Assumption Verification:} All newly-encountered assumptions shall not be silently implemented into the design. Rather, they shall be verified by the Troitsky club.
   \item \textbf{External Review:} The group and TA assigned to peer review us shall review our design after submission and provide feedback. Furthermore, meetings with the TA will be utilized to gain more suggestions.
 \end{itemize}
@@ -269,10 +269,10 @@ walkthrough.  There is also a possibility of using the final presentation (in
 CAS741) for a partial usability survey.}
 
 The implemenation shall be throughly tested to find syntactic errors, semantic errors and weaknesses to be strengthened.
-Due to our meticulous development plan, requirements document, and design documents, test-driven development is an excellent choice.
+Due to our meticulous development plan, requirements document, and design documents, test-driven development (TDD) is an excellent choice.
 The Quality Assurer shall write these tests, drawing on his colleagues' expertise for guidance. Testing the formalized portions is low-hanging fruit,
 and the remaining functions will be demecrated in the design process. Of course, TDD will not catch everything so additional unit tests will be necessary
-after the code is written to test more cases and fill in any omissions in the pre-written. The requirements shall play a paramount role in determining the
+after the code is written to test more cases and fill in any omissions in the pre-written tests. The requirements shall play a paramount role in determining the
 content of the tests. To verify the fulfillment of the requirements, each functional requirement and each objective non-functional requirement
 shall have at least one test verifying it. The remaining non-functional requirements will be qualitatively verified through the Quality Assurer and the Troitsky Club.
 
@@ -309,7 +309,7 @@ that document.}
 
   As stated in the Development Plan (see Expected Technology section), unit testing shall occur through an establshed
   C\# unit testing tool, namely \href{https://learn.microsoft.com/en-us/visualstudio/test/getting-started-with-unit-testing?view=visualstudio&tabs=dotnet%2Cmstest}{MS Test}.
-  Code overage of tests shall be determined by \href{https://github.com/coverlet-coverage/coverlet}{Coverlet}, an establshed testing tool.
+  Code coverage of tests shall be determined by \href{https://github.com/coverlet-coverage/coverlet}{Coverlet}, an establshed testing tool.
   Both are open-source projects of the .NET validation.
 
   Linting shall be done with \href{https://github.com/lucaspimentel/cslint}{CS Lint}, freely available under the MIT license.
