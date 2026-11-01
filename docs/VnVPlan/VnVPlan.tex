@@ -377,6 +377,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: Load the server with MIN\_CONCURRENT\_USERS as bots taking random actions at an average pace.
 
   Output/Result: Maximum, minimum, and average server response time for each bot, and whether or not if falls below the MAX\_BROKER\_OVERHEAD, for the routing time.
+
+  How test will be performed: Load the server with MIN\_CONCURRENT\_USERS as bots taking random actions at an average pace, broker response time is recorded for every action and then maximum, minimum, and average response time for each bot is calculated and returned. Warnings are issued if any values fall above MAX\_BROKER\_OVERHEAD.
 \end{enumerate}
 
 \subsubsection{Access Control System}
@@ -386,13 +388,62 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   
   Type: Automatic
 
-  Initial State: 
+  Initial State: Webserver is running and currently stable
+
+  Input/Condition: Updates to the Access Control System is pushed to the project.
+
+  Output/Result: Password hashing is accurate and secure.
+
+  How test will be preformed:  
+  \begin{enumerate}
+    \item Create a new test user with a known password (e.g., TestPassword123!). Query the database table where users are stored.
+    \item Create two users with the same password, query the database for both users.
+  \end{enumerate}
+
+
   
   \item T-NFR-AC-1/2-2
   
+  Type: Automatic
+
+  Initial State: A user is actively logged into the system with a specific role and is currently interacting with data they are authorized to see.
+
+  Input/Condition: While the user is still active, an administrator alters the user’s role, which removes their permission to view the data they were just interacting with.
+
+  Output/Result: \\ \texttt{Pass:} The system denies access on the user’s very next action without requiring them to log out and log back in.\\ \texttt{Fail:} The user is still able to view/edit the restricted data, or the system waits for a session timeout/re-login before enforcing the new role.
+
+  How test will be preformed:
+  \begin{enumerate}
+    \item A script logs into the system as a test user and confirms they can access a restricted feature
+    \item A separate admin process changes the test user's role in the system
+    \item Without logging out the test user immediately attempts to use the restricted feature again.
+    \item Script observes the systems response to ensure access is instantly blocked.
+  \end{enumerate}
 \end{enumerate}
 
+\subsubsection{Toolbox Broker}
+\paragraph{Extensibility}
+\begin{enumerate}
+  \item T-NF-TB-1-1
+  
+  Type: Automatic / Manual 
 
+  Initial State: he Toolbox Broker is running normally and successfully routing requests to existing, standard services. A new, isolated "mock" service has been created but is not yet known to the system.
+
+  Input/Condition: The new mock service is registered with the toolboc broker
+
+  Output/Result: \\
+  \texttt{Pass:} Broker successfully routes the request to the new service and returns the response, with no older services function being compromised.\\
+  \texttt{Fail:} Broker fails to find new service or existing services are broken by the addition of the mock service.
+
+  How test will be preformed:
+  \begin{enumerate}
+    \item A script or test deploys a mock service
+    \item The mock service is registered with the Broker at run time.
+    \item A test request is sent to the new service to confirm it connects.
+    \item A test request is sent to existing services to ensure backward compatibility and system stability remain intact.
+  \end{enumerate}
+\end{enumerate}
 \subsection{Traceability Between Test Cases and Requirements}
 
 \wss{Provide a table that shows which test cases are supporting which
