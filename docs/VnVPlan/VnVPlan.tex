@@ -292,9 +292,8 @@ accessible after logout.\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} An executive is logged in.\\
 \textbf{Input:} The executive creates an account three times: with a password
-one character shorter than \const{password\_min\_length}, with an entry of
-\const{password\_blocklist}, and with a password of lowercase letters only and
-\const{password\_max\_length} characters. The executive then changes the
+one character shorter than \const{password\_min\_length}, with an entry from
+\const{password\_blocklist}, and with a password consisting solely of lowercase letters and exactly \const{password\_max\_length} characters long. The executive then changes the
 account's role and team, ends its session from the server side, and deactivates
 it.\\
 \textbf{Output:} The first two passwords are rejected, with a message stating
@@ -492,7 +491,7 @@ Another executive then views the outstanding exit documents.\\
 \textbf{Output:} A template exists for each executive position and for team
 leads, and the draft keeps its content. The invalid reference is rejected. While
 the database is stopped, the document is not marked as published and the
-executive is told. Once saved, it is published and can be found by search, and
+executive is notified. Once saved, it is published and can be found by search, and
 the outstanding list no longer includes the executive.\\
 \textbf{Derivation:} Verifies FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2,
 SR-KT-5.
