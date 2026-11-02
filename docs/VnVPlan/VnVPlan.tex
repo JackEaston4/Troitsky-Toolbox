@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -11,9 +12,30 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{amsmath}
+
+\usepackage[english]{babel}
+
 
 \input{../Comments.text}
 \input{../Common.text}
+
+% Tables: xltabular keeps a table where it is written and lets it break across
+% pages. L{width} and Y are ragged-right versions of p{width} and X, so long
+% words do not stretch or overflow the cells.
+\usepackage{longtable}
+\usepackage{xltabular}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% \testdef marks where a test is defined; \testref links to it.
+\newcommand{\testdef}[1]{\hypertarget{test:#1}{#1}}
+\newcommand{\testref}[1]{\hyperlink{test:#1}{#1}}
+% \cname typesets a symbolic constant, allowing line breaks after underscores;
+% \const also links it to the Symbolic Parameters appendix. \cname is robust so
+% that it can be used in captions.
+\DeclareRobustCommand{\cname}[1]{{\renewcommand{\_}{\textunderscore\allowbreak}\textsc{#1}}}
+\newcommand{\const}[1]{\hyperref[SecSymbolicParameters]{\cname{#1}}}
 
 \begin{document}
 
@@ -214,11 +236,54 @@ executives. For this testing, experience will be separated both at the club and 
 \wss{Introduce this section.  You can provide a roadmap of the sections to
   come.}
 
+  This sections contains the grand plan to verify and validate this project's documents and implemenation. It outlines 
+  the team, how every document, including this on, will be verified, how the implemenation will be verified,
+  automated testing technology that will be used, how assumptions will be verified, and how contents, both
+  internal and external will be validated.
+
+  Artificial intelligence (AI) shall be liberally employed to help us brainstorm additional ways to 
+  verify and validate all documents. However, AI frequently hallucinates and thus cannot validate or 
+  verify anything itself.
+
+
+
 \subsection{Verification and Validation Team}
 
 \wss{Your teammates.  Maybe your supervisor.
   You should do more than list names.  You should say what each person's role is
   for the project's verification.  A table is a good way to summarize this information.}
+
+This project is immense and requires a lot of work to verify and validate. 
+Peer review will be a guiding principle to catch individual errors and therefore, peer subject matter expertise shall
+be used instead of quality assurer and subject matter expertised being fused into one person.
+ The following table shows the division of labour:
+
+\begin{center}
+  \begin{hyphenrules}{nohyphenation}
+    \begin{tabularx}{\linewidth} {
+    |>{\hsize=.5\hsize}X|% 10% of 4\hsize 
+    >{\hsize=.5\hsize}X|% 30% of 4\hsize
+    >{\hsize=2\hsize}X|% 30% of 4\hsize 
+  }
+\hline
+Name & Project Role & VnV Responsibilities \\
+ \hline
+Mason Azzopardi & Project Supervisor, Back-end Developer & As project supervisor, he shall oversee all the work and guide the team to success. As a back-end developer, he shall serve as the secondary back-end expert to aid VnV related to the back-end.  \\ 
+\hline
+Pedro Azevedo & Troitsky Liason, Front-end Developer & As Troitsky liason, he shall be the primary point of contact between this team and members of the Troitsky club. As front-end developer, he shall serve as the front-end expert to VnV related to the front-end.   \\ 
+\hline
+Jack Easton & Back-end Developer & Serve as the primary back-end expert to aid VnV related to the back-end. \\
+\hline
+Melvin Mokhtari & Teaching Assistant & Answer administrative questions and provide feedback on course expectations and grading. \\
+\hline
+Michael Roberts & Quality Assurer & Spearhead VnV efforts. Consult with subject matter experts to draw on their expertise. Develop a robust testing suite to verify the project and consult with Troitsky Club members, especially the club president, to validate the project. \\
+\hline
+Isabella Vescio & Supervisor & An \textit{ex officio} role stemming from her role as Troitsky Club President, she shall provide feedback so the project fits the needs and desires of the Troitsky Club. She shall involve other club members in the process as needed to assist her in this task.  \\
+ \hline
+\end{tabularx}
+  \end{hyphenrules}
+
+\end{center}
 
 \subsection{SRS Verification}
 
@@ -234,14 +299,33 @@ issue tracker?}
 
 \wss{Maybe create an SRS checklist?}
 
+The Software Requirements Specifications shall be verified in the following ways. In case mistakes are found or improvements are suggested, as they inevitably will, corrections will be made and the corrections shall be reviewed again.
+The above process is an iterative process and shall only terminate when the portion is deemed satisfactory.
+
+\begin{itemize}
+    \item \textbf{Checklist:} Two checklists shall be developed by the Quality Assurer to verify the requirements, one for each requirement and one for the document as a whole. The former checklist shall be explicitly evaluated on each requirement to determine its quality, and will include qualities like unambiguity, verfiability, traceability, and correct spelling and grammar. The latter shall cover the pitfalls a granular analysis cannot cover, including internal consistency, completeness and documented modifiability.
+    \item \textbf{Internal Peer Review:} Each portion of the document, especially each requirement shall be reviewed by a different group member than its author. The whole document shall be reviewed through a group-wide read-through of the document at a meeting.
+    \item \textbf{Troitsky Review:} The Troitsky Club is our client and its members are frequently available in order for us to seek their feedback. While showing them the SRS is a fool's errand, all assumptions baked into the document shall be verified by club members through asking if the assumption is true in non-technical language they can easily understand. 
+    \item \textbf{External Peer Review:} Other capstone groups will raise issues regarding our SRS through GitHub issues. We shall address those issues, and either incorporate their feedback or dismiss it after determining their suggestion is wrong or not necessary.
+    \item \textbf{Instructional Review:} The instructional team, primarily our assigned Teaching Assistant, will look over, comment upon, and grade the SRS. We shall seek to incorporate their feedback into our work.
+\end{itemize}
+
 \subsection{Design Verification}
 
 \wss{Plans for design verification}
 
 \wss{The review will include reviews by your classmates}
-
 \wss{Create a checklists?}
 
+The design shall stem from the requirements and shall be verified in the ways below. The verification shall be an iterative process and shall continue until the design
+is determined to fulfill the needs of the project.
+
+\begin{itemize}
+  \item \textbf{Unified Modelling Language Diagrams:} All designs shall be converted from text into corresponding UML diagrams, which will facilitate verification. Many errors will be caught and fixed at the translation stage.
+  \item \textbf{Internal Peer Review:} All designs and associated commentary shall be carefully reviewed by a different group member than the design and commentary writer. Feasability, proper decomposition, and other design principles (especially the SOLID principles) shall be guiding lights. The full list shall be contained in a checklist that the Quality Assurer will develop.
+  \item \textbf{Assumption Verification:} All newly-encountered assumptions shall not be silently implemented into the design. Rather, they shall be verified by the Troitsky club.
+  \item \textbf{External Review:} The group and TA assigned to peer review us shall review our design after submission and provide feedback. Furthermore, meetings with the TA will be utilized to gain more suggestions.
+\end{itemize}
 \subsection{Verification and Validation Plan Verification}
 
 \wss{The verification and validation plan is an artifact that should also be
@@ -250,6 +334,20 @@ verified.  Techniques for this include review and mutation testing.}
 \wss{The review will include reviews by your classmates}
 
 \wss{Create a checklists?}
+
+This document shall be verified in the ways outlined below. All errors and weaknesses discovered through this iterative process shall
+be fixed and improved, respectively. This process shall only terminate when all errors are fixed and all weaknesses are either fixed or shown to be infeasible to fix.
+
+\begin{itemize}
+  \item \textbf{Internal Peer Review:} All sections shall be reviewed by a different team member than its author.
+  \item \textbf{Mutation Testing:} To prevent a lazy approval, authors shall deliberately shall write at least one error in their section. Therefore, if the peer is lazy and approves a section without checking it, the author can adjure the reviewer to review the section again.
+  \item \textbf{Assumption Verification:} Any new assumption that is absent from previous documents shall be verified by the Troitsky Club, lest the assumption is wrong.
+  \item \textbf{Final Group Read-Through:} Before submission, this document shall be read through in a group meeting to catch holistic errors, such as contradiction, spelling and grammar errors, missing links, and incompleteness.
+  \item \textbf{External Review:} We will recieve feedback, including issues from the external peer reviewing group in addition to grades and comments from the marking TA.
+\end{itemize}
+
+While certain verification is impossible because any verification would require its own verification,
+near-certainty will suffice if this document is faithfully followed.
 
 \subsection{Implementation Verification}
 
@@ -263,6 +361,28 @@ verified.  Techniques for this include review and mutation testing.}
 \wss{The final class presentation in CAS 741 could be used as a code
 walkthrough.  There is also a possibility of using the final presentation (in
 CAS741) for a partial usability survey.}
+
+The implemenation shall be throughly tested to find syntactic errors, semantic errors and weaknesses to be strengthened.
+Due to our meticulous development plan, requirements document, and design documents, test-driven development (TDD) is an excellent choice.
+The Quality Assurer shall write these tests, drawing on his colleagues' expertise for guidance. Testing the formalized portions is low-hanging fruit,
+and the remaining functions will be demecrated in the design process. Of course, TDD will not catch everything so additional unit tests will be necessary
+after the code is written to test more cases and fill in any omissions in the pre-written tests. The requirements shall play a paramount role in determining the
+content of the tests. To verify the fulfillment of the requirements, each functional requirement and each objective non-functional requirement
+shall have at least one test verifying it. The remaining non-functional requirements will be qualitatively verified through the Quality Assurer and the Troitsky Club.\\
+
+The above covers unit testing. Once the unit tests are complete and have all passed, integration and system testing shall begin. When possible, they should
+be written with a unit testing framework, the only difference being the test tests multiple systems and is thus an integration test. However,
+much of integration testing and virtually all of system testing cannot be verified automatically and must be verified manually through the Quality Assurer
+running the program and deeming it satisfactory. The number of parts tested for integration testing shall initially be small and incrementally rise.
+The last stage, will be testing the entire system (i.e. system testing).\\
+
+After system testing succeeds, acceptance testing shall be done by demonstrating the software suite to the Troitsky club.
+Once they accept our demonstration, our suite is fit for release.\\
+
+Testing is an iterative process; failures must be corrected and resubmitted. Any tests under the unit testing framework may 
+run automatically. However, all other previous tests must be redone unless the test tests non-critical parts only and that
+it is painstakingly obvious that the correction did not impact the test.
+
 
 \subsection{Automated Testing and Verification Tools}
 
@@ -280,6 +400,14 @@ that document.}
 
 \wss{The details of this section will likely evolve as you get closer to the
   implementation.}
+
+  As stated in the Development Plan (see Expected Technology section), unit testing shall occur through an establshed
+  C\# unit testing tool, namely \href{https://learn.microsoft.com/en-us/visualstudio/test/getting-started-with-unit-testing?view=visualstudio&tabs=dotnet%2Cmstest}{MS Test}.
+  Code coverage of tests shall be determined by \href{https://github.com/coverlet-coverage/coverlet}{Coverlet}, an establshed testing tool.
+  Both are open-source projects of the .NET validation.
+
+  Linting shall be done with \href{https://github.com/lucaspimentel/cslint}{CS Lint}, freely available under the MIT license.
+  See the Development Plan (ibid.).
 
 \subsection{Software Validation}
 
@@ -301,66 +429,296 @@ as a Rev 0 demo for the supervisor.}
 
 \wss{This section might reference back to the SRS verification section.}
 
+As stated in the SRS (see S.1), our software suite shall contain one main tasks, model analysis. 
+and many auxiliary tasks, namely a materials testing suite, a login suite, a knowledge repository (this includes both file upload and file search), and knowledge transfer tool and a broker to
+coordinate user tasks. \\
+
+The main tasks are currently done by hand or through the graphical user interface of computer-aided design software  (see SRS G.2).
+All calculations done by this software project shall be validated through ensuring the answers obtained from the use of this software
+and the current methods are the same. Many models will be used in this process and our software and the current methods must yield the same
+results for each one. To prevent overfitting to our training data, some models shall be hidden during development and debugging and only
+utilized during testing. The number of models is to be determined, although the number of training models shall not exceed the number of test models
+and five of each is the current forecasted amount. \\
+
+The auxiliary tasks shall be validated as follows:
+
+\begin{itemize}
+  \item The \textbf{login suite} shall be validated against Troitsky's current list of members and their roles.
+  \item The \textbf{knowledge transfer tool} shall be validated against Troitsky's current mechanism for creating transition documents. The club may want to alter the process for the current process is quite informal, and any alterations requests shall be meticulously followed.
+  \item The \textbf{knowledge repository}, the \textbf{materials testing suite}, and \textbf{toolbox broker} are new capabilities which have no benchmark to validate against.
+\end{itemize}
+
+We are lucky to benefit from our primary stakeholder being almost available to us. Frequent consultation and demonstration
+shall be utilized to gather their feedback. Because they are our client, they will be eager to answer our questions about this
+project within reason. Before our first release, there shall be an extensive demonstration of our work before the Troitsky club,
+where we will recieve their feedback and make corrections based on it.
+
 \section{System Tests}
 
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
-\subsection{Tests for Functional Requirements}
+\subsection{Tests for Functional Requirements} \label{SecFRTests}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+The tests below are categorized by the components defined in Section S.2 of the
+SRS \citep{TroitskySRS}, so that every functional requirement is covered. Each
+test is a system-level test of the deployed system, following a workflow that a
+club member performs through the Toolbox Web App, and verifies several related
+requirements. The tests also verify the functional safety and security
+requirements that the Hazard Analysis Roadmap \citep{TroitskyHazardAnalysis}
+plans for the capstone. Together, they verify the model analysis correctness,
+data integrity, and access control identified as primary objectives in the
+Objectives section, while functional usability is assessed by the non-functional
+tests and the winter usability report.
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+Inputs and expected outputs refer to the symbolic constants of
+Table~\ref{TblSymbolicConstants} and the test data of Table~\ref{TblTestData}
+(Symbolic Parameters appendix), shown in \textsc{small capitals}. Tests whose
+outputs are numerical or follow from a formula are automated, so that they can be
+repeated on every change; tests that depend on what a member sees on screen are
+manual.
 
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+\subsubsection{Web Server (S.2.1)}
 
 \begin{enumerate}
 
-\item{test-id1\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
+\item \testdef{T.FR.WS.1.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} System deployed. User not logged in.\\
+\textbf{Input:} User opens the public landing page, then attempts to open the
+Knowledge Repository. User then logs in with valid credentials, opens the
+Knowledge Repository, and logs out.\\
+\textbf{Output:} The landing page is shown without logging in. The Knowledge
+Repository redirects to the login page until the user logs in, and is no longer
+accessible after logout.\\
+\textbf{Derivation:} Verifies FR-WS-1, FR-WS-2, FR-WS-3.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Access Control System (S.2.2)}
 
-...
+\begin{enumerate}
+
+\item \testdef{T.FR.AC.2.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} An executive is logged in.\\
+\textbf{Input:} The executive creates an account three times: with a password
+one character shorter than \const{password\_min\_length}, with an entry from
+\const{password\_blocklist}, and with a password consisting solely of lowercase letters and exactly \const{password\_max\_length} characters long. The executive then changes the
+account's role and team, ends its session from the server side, and deactivates
+it.\\
+\textbf{Output:} The first two passwords are rejected, with a message stating
+that the password is too short or too common. The third is accepted, since no
+composition rules apply. The account always has exactly one role and at most one
+team. Ending the session logs the user out, and the deactivated account cannot
+log in.\\
+\textbf{Derivation:} Verifies FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2,
+SR-WS-5.
+
+\item \testdef{T.FR.AC.2.2}\\
+\textbf{Control:} Automatic\\
+\textbf{Initial State:} One account for each role of FR-AC-2, on two different
+teams. Each team has a current bridge model.\\
+\textbf{Input:} A script requests, as each account, member management, team
+assignment, rule configuration, season archiving, test result review, and each
+team's current model.\\
+\textbf{Output:} Member management, team assignment, and rule configuration are
+allowed only for executives and maintainers; season archiving and test result
+review only for executives; and a team's current model only for members of that
+team. Every other request is refused with an error and changes nothing.\\
+\textbf{Derivation:} Verifies FR-AC-3, FR-AC-6, FR-BR-2.
+
+\end{enumerate}
+
+\subsubsection{Toolbox Broker (S.2.3)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.BR.3.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} System has just been started. User logged in.\\
+\textbf{Input:} User opens each tool. The Material Testing Manager is then
+stopped, and the user requests it, then searches the Knowledge Repository.\\
+\textbf{Output:} Every tool opens. The request to the stopped service returns an
+error message within \const{broker\_timeout} instead of hanging, and the search
+returns its results.\\
+\textbf{Derivation:} Verifies FR-BR-1, FR-BR-3, FR-BR-4.
+
+\end{enumerate}
+
+\subsubsection{Knowledge Repository (S.2.4)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.KR.4.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} User logged in. Repository contains items with known
+metadata.\\
+\textbf{Input:} User uploads one file of each type in \const{common\_file\_types},
+each with a title, a category from \const{category\_list}, a year, a team, and
+tags. User then makes three uploads that each break one metadata rule: no title,
+a category not in \const{category\_list}, and no year. Finally, the user searches
+by keyword, filters by category, year, team, and tag, previews a file of each
+type in \const{preview\_file\_types}, and downloads every uploaded file.\\
+\textbf{Output:} Valid uploads are stored with their metadata. Each of the three
+invalid uploads is rejected, with a message naming the field. Searches and
+filters return exactly the items that match them, previews display in the
+browser, and each downloaded file has the same SHA-256 hash as the uploaded
+file.\\
+\textbf{Derivation:} Verifies FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4.
+
+\item \testdef{T.FR.KR.4.2}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} A member has uploaded an item.\\
+\textbf{Input:} The uploader edits the item, another member attempts to edit it,
+and an executive archives it. The repository's database server is then stopped,
+and a member uploads a file.\\
+\textbf{Output:} Each change asks for confirmation first, and the other member's
+edit is refused. The archived item no longer appears in search results but can
+still be opened. The failed upload shows an error message, and the file is not
+listed once the database is restarted.\\
+\textbf{Derivation:} Verifies FR-KR-5, SR-KR-2, SR-KR-5.
+
+\end{enumerate}
+
+\subsubsection{Model Analysis System (S.2.5)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.MA.5.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Team member logged in. \const{mat\_set\_a} is stored.\\
+\textbf{Input:} User uploads three invalid files: a PDF renamed with a
+\texttt{.step} extension, a STEP file with a header but no geometry, and
+\const{ref\_model} truncated to half its size. User then uploads
+\const{ref\_model} with \const{mat\_set\_a} selected, confirms the import
+summary, and rotates, zooms, and pans the 3D view. Finally, with
+\const{ma\_timeout} set to \const{ma\_timeout\_test} in the test deployment, the
+user uploads \const{ref\_model} again.\\
+\textbf{Output:} Each invalid file is rejected, with a message stating that it is
+not a STEP file or contains no readable geometry. Before any analysis, the import
+summary shows the dimensions of \const{ref\_model} within
+\const{dimension\_tolerance} and its mass within \const{calc\_tolerance} of the
+values in Table~\ref{TblTestData}. The 3D view responds to each interaction and
+matches the model in CAD. The last upload stops after \const{ma\_timeout\_test}
+with a message that the time limit was exceeded, and no model is stored.\\
+\textbf{Derivation:} Verifies FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3.
+
+\item \testdef{T.FR.MA.5.2}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Two teams exist, with no current models.\\
+\textbf{Input:} A team member uploads \const{ref\_model} as a current model. A
+teammate, a member of the other team, and a former team member try to open it.
+An executive then archives the season's models, and a general member browses
+past designs.\\
+\textbf{Output:} Only the teammate can open the current model. After archiving, it
+becomes a past design recording its year and team, which every member can view
+and filter but not modify.\\
+\textbf{Derivation:} Verifies FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6.
+
+\end{enumerate}
+
+\subsubsection{Performance Analysis System (S.2.5.1)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.PA.6.1}\\
+\textbf{Control:} Automatic (results) and Manual (displayed assumptions)\\
+\textbf{Initial State:} \const{ref\_model}, \const{mat\_set\_a}, and
+\const{mat\_set\_b} are stored.\\
+\textbf{Input:} A performance analysis of \const{ref\_model} is run with
+\const{mat\_set\_a}, then with \const{mat\_set\_b}, then with the calculation
+library made to return a non-finite stress.\\
+\textbf{Output:} For each material set, the failure load and load-to-mass ratio
+are within \const{calc\_tolerance} of the expected values in
+Table~\ref{TblTestData}, and the result names the material set used. The
+assumptions and limitations are shown with the results. For the non-finite
+stress, an error is shown instead of an estimate.\\
+\textbf{Derivation:} Verifies FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4,
+SR-PA-1. Expected values follow from SRS S.7.2, as derived in
+Table~\ref{TblTestData}.
+
+\end{enumerate}
+
+\subsubsection{Rule Compliance System (S.2.5.2)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.RC.7.1}\\
+\textbf{Control:} Manual (rule set editing) and Automatic (compliance checks)\\
+\textbf{Initial State:} Executive logged in. The compliance models of
+Table~\ref{TblComplianceModels} are stored.\\
+\textbf{Input:} The executive imports \const{ruleset\_test}, adds a rule, edits
+its limit, and removes it. A script then runs a compliance check of each
+compliance model against \const{ruleset\_test}.\\
+\textbf{Output:} The rule set is stored under its year, and after each edit lists
+exactly the expected rules. \const{rc\_pass} and \const{rc\_limit} pass every
+rule, and each other compliance model fails only the rule it is named for,
+showing its measured value and the allowed range. The materials rule is listed
+as a manual check for every model.\\
+\textbf{Derivation:} Verifies FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5.
+Expected results follow from the \texttt{RuleComplianceCheck} predicate of SRS
+S.7.3, whose limits are inclusive.
+
+\end{enumerate}
+
+\subsubsection{Material Testing Manager (S.2.6)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.MT.8.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} \const{mat\_set\_b} is stored as the previous year's
+results.\\
+\textbf{Input:} User enters the first specimen of \const{mat\_set\_a} through the
+form, first without a grain orientation, then with it. User imports the remaining
+specimens of \const{mat\_set\_a} from \const{mt\_import\_file}, which also
+contains four invalid rows. User views the comparison with \const{mat\_set\_b},
+and an executive flags the 840~N specimen of \const{mat\_set\_a} as invalid.\\
+\textbf{Output:} The entry without a grain orientation is rejected, and the second
+is stored. The four invalid rows are rejected, each identified by its row and
+field, and the valid rows are stored. The comparison shows the mean and sample
+standard deviation of each set given in Table~\ref{TblTestData}. After flagging,
+the strength of \const{mat\_set\_a} is recomputed to the flagged value in
+Table~\ref{TblTestData}, and the flagged specimen remains stored, marked
+invalid.\\
+\textbf{Derivation:} Verifies FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5,
+SR-MT-2.
+
+\end{enumerate}
+
+\subsubsection{Knowledge Transfer Manager (S.2.7)}
+
+\begin{enumerate}
+
+\item \testdef{T.FR.KT.9.1}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} Executive logged in. A past design is stored.\\
+\textbf{Input:} The executive opens their exit document template, saves a draft,
+and submits it three times: with a reference to a model identifier that does not
+exist, with a reference to the stored past design while the repository's
+database server is stopped, and with the same reference once it is restarted.
+Another executive then views the outstanding exit documents.\\
+\textbf{Output:} A template exists for each executive position and for team
+leads, and the draft keeps its content. The invalid reference is rejected. While
+the database is stopped, the document is not marked as published and the
+executive is notified. Once saved, it is published and can be found by search, and
+the outstanding list no longer includes the executive.\\
+\textbf{Derivation:} Verifies FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2,
+SR-KT-5.
+
+\item \testdef{T.FR.KT.9.2}\\
+\textbf{Control:} Manual\\
+\textbf{Initial State:} An executive holds a position with a role record.\\
+\textbf{Input:} The executive and another member each try to update the role
+record. The executive's account is then deactivated, first without a successor,
+then after a successor is assigned.\\
+\textbf{Output:} Only the executive's update is saved. Deactivation is blocked
+until a successor is assigned, after which the successor can update the role
+record.\\
+\textbf{Derivation:} Verifies FR-KT-3, FR-KT-4, SR-KT-3.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
@@ -385,46 +743,602 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+\subsubsection{Webserver}
+\paragraph{Communication Encryption}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T-NFR-WS-2-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Automatic
 					
-Initial State: 
+Initial State: Troitsky Toolbox webserver is active and able to receive packets.
 					
-Input/Condition: 
+Input/Condition: A script inputs logs into the webserver and makes 1000 requests to the webserver, half with secure protocols half with insecure.
 					
-Output/Result: 
+Output/Result: \\
+\texttt{Pass:} All modern and secure protocols and encryptions are negotiated and all outdated and insecure protocols are rejected.\\
+\texttt{Fail:} Any modern and secure protocols and encryptions are rejected or outdated and insecure protocols are negotiated.
 					
-How test will be performed: 
+How the test will be performed: Tools like Nmap or, Qualys SSL Labs, will scan the packet and observe the encryption protocol and cyphers. Only negotiate with packets that have secure and modern protocols (TLS 1.2 \& 1.3), reject older protocols (SSLv3, TLS 1.0, \& TLS 1.1) and weak cyphers (RC4, DES, or NULL) 
 					
-\item{test-id2\\}
+\item{T-NFR-WS-2-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Automatic.
 					
-Initial State: 
+Initial State: Webserver is running and currently stable
 					
-Input: 
+Input/Condition: Updated system code
 					
-Output: 
+Output/Result: CI/CD test pass or fail
 					
-How test will be performed: 
+How the test will be performed: Scripts written to assert
+\begin{enumerate}
+  \item Requests to \texttt{http://...} results in a redirect to \texttt{https://...}
+  \item Requests to \texttt{https://...} succeeds and returns a 200 OK
+  \item A request using a deliberately downgrade TLS version throws a connection reset/SSL handshake error. 
+\end{enumerate}
+\item{T-NFR-WS-2-3\\}
 
+Type: Dynamic
+
+Initial State: Webserver is running and currently stable
+
+Input/Condition: Webserver Address.
+
+Output/Result: Potential vulnerabilities like broken or missing encryptions.
+
+How test will be preformed: Using a tool like the Open Worldwide Application Security Project (OWASP) Zed Attack Proxy (ZAP) will actively probe a running web server to find vulnerabilities, including broken or missing encryption.
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
 
-...
+\paragraph{Webserver Timeout}
+\begin{enumerate}
+  \item T-NFR-WS-3-1
 
-\subsection{Traceability Between Test Cases and Requirements}
+  Type: Automatic
+
+  Initial State: There are currently uses with sessions open in the web server
+
+  Input/Condition: Test users has been detected as inactive.
+
+  Output/Result: \\
+  \texttt{Pass:} The test user is inactive for 30 minutes (SESSION\_TIMEOUT) and they are timed out.\\
+  \texttt{Fail:} The test user is inactive for 30 minutes and isn't timed out or they are inactive for less than 30 minutes and are timed out.
+
+
+  How the test will be performed: 
+  \begin{enumerate}
+    \item A script will have 100 test users log into the toolbox and be inactive
+    \item The script will read the WebServer logs and start a secondary timer for each user when the Webserver starts the inactivity timer for each user.
+    \item Half the test users will remain inactive for over 30 minutes and the other half will randomly become active before the 30 minute window (with a few users designed to become active at edge cases like the start of the inactivity timer and the end.).
+    \item The script pauses each users secondary timer when they are timed out or become active.
+    \item The test passes if all secondary timers align with the 30 minute inactivity timeout window.
+  \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Access Control System}
+\paragraph{Security Credential and Role Alteration Ensurance}
+\begin{enumerate}
+  \item T-NFR-AC-1/2-1
+  
+  Type: Automatic
+
+  Initial State: Webserver is running and currently stable
+
+  Input/Condition: Updates to the Access Control System is pushed to the project.
+
+  Output/Result:\\
+  \texttt{Pass:} Sample passwords are stored in the correct positions within the hash table\\
+  \texttt{Fail:} Sample password are stored in the incorrect positions within the hash table or don't exist within the hash table.
+
+  How test will be preformed:  
+  \begin{enumerate}
+    \item Create a new test user with a known password (e.g., TestPassword123!). Query the database table where users are stored.
+    \item Create two users with the same password, query the database for both users.
+  \end{enumerate}
+
+
+  
+  \item T-NFR-AC-1/2-2
+  
+  Type: Automatic
+
+  Initial State: A user is actively logged into the system with a specific role and is currently interacting with data they are authorized to see.
+
+  Input/Condition: While the user is still active, an administrator alters the user’s role, which removes their permission to view the data they were just interacting with.
+
+  Output/Result: \\ \texttt{Pass:} The system denies access on the user’s very next action without requiring them to log out and log back in.\\ \texttt{Fail:} The user is still able to view/edit the restricted data, or the system waits for a session timeout/re-login before enforcing the new role.
+
+  How test will be preformed:
+  \begin{enumerate}
+    \item A script logs into the system as a test user and confirms they can access a restricted feature
+    \item A separate admin process changes the test user's role in the system
+    \item Without logging out the test user immediately attempts to use the restricted feature again.
+    \item Script observes the systems response to ensure access is instantly blocked.
+  \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Toolbox Broker}
+\paragraph{Extensibility and Overhead Management}
+\begin{enumerate}
+  \item T-NFR-TB-1-1
+  
+  Type: Automatic / Manual 
+
+  Initial State: The Toolbox Broker is running normally and successfully routing requests to existing, standard services. A new, isolated "mock" service has been created but is not yet known to the system.
+
+  Input/Condition: The new mock service is registered with the Toolbox Broker
+
+  Output/Result: \\
+  \texttt{Pass:} Broker successfully routes the request to the new service and returns the response, with no older services function being compromised.\\
+  \texttt{Fail:} Broker fails to find new service or existing services are broken by the addition of the mock service.
+
+  How test will be preformed:
+  \begin{enumerate}
+    \item A script or test deploys a mock service
+    \item The mock service is registered with the Broker at run time.
+    \item A test request is sent to the new service to confirm it connects.
+    \item A test request is sent to existing services to ensure backward compatibility and system stability remain intact.
+  \end{enumerate}
+  \item T-NFR-TB-2-1
+  
+  Type: Automatic
+
+  Initial State: The Toolbox Broker and a target services are running under normal system conditions.
+
+  Input/Condition: A script sends a batch of requests directly to the target service to establish a baseline response time. Then it sends an identical batch of requests to the same service but routes them through the Toolbox Broker.
+
+  Output/Results:\\
+  \texttt{Pass:} The difference between the  baseline response time and the broker response time is strictly MAX\_BROKER\_OVERHEAD (100 ms) or less for all test requests.\\
+  \texttt{Fail:} The presence of the broker delays the requests by more than 100ms
+  How the test will be preformed:
+  \begin{enumerate}
+    \item An automate script sends 1000 requests directly to a test service and records the average response time
+    \item The script sends 1000 identical requests through the toolbox broker to the same test service and records the average response time.
+    \item The scrip then calculates $direct\_request\_time - broker\_request\_time$ for every request.
+    \item The test pass if every calculation is below 100ms.
+  \end{enumerate}
+\end{enumerate}
+\paragraph{Request Logging}
+\begin{enumerate}
+  \item T-NFR-TB-3-1: 
+  Type: Automatic
+
+  Initial State:The Toolbox Broker is running, and its logging mechanism is accessible and at a known starting point.
+  
+  Input/Condition: A specific, authenticated user intentionally triggers two distinct actions through the Broker: one request that is known to succeed (e.g., fetching a public list) and one request that is known to fail (e.g., attempting an invalid or unauthorized operation)
+
+  Output/Result: \\
+  \texttt{Pass:} The Broker's log output displays two new distinct entries. Each entry explicitly contains: the user identifier, the operation requested, a timestamp, and a clear success/fail boolean or status code.\\
+  \texttt{Fail:} No logs are generated, or the logs are missing one of the four required pieces of information (e.g., it logs the error but forgets to log who triggered it).
+
+  How the test will be preformed:
+  \begin{enumerate}
+    \item A script authenticates the test user
+    \item The script sends a valid and invalid request
+    \item The script reads the brokers logs
+    \item The script parses the most recent log entries and asserts that all four required fields (Member, Operation, Time, Success/Failure Status) are present and correctly recorded for both the successful and failed attempts.
+  \end{enumerate}
+\end{enumerate}
+\subsubsection{Knowledge Repository}
+
+\paragraph{Search Responsiveness}
+\begin{enumerate}
+  \item{T-NFR-KR-1-1\\}
+  
+  Type: Automatic (Performance)
+
+  Initial State: The Knowledge Repository database is populated with 10,000 mock items (documents, bridge models, test results).
+
+  Input/Condition: An automated script sends varied search queries (by keyword, year, team, tag) to the repository.
+
+  Output/Result: \\
+  \texttt{Pass:} All search results are returned and displayed to the client in under 2.0 seconds (MAX\_SEARCH\_TIME).\\
+  \texttt{Fail:} Any search query takes longer than 2.0 seconds.
+
+  How the test will be performed: A load-testing script  will fire a suite of search queries against the API. The script will measure the round-trip time from request to response payload delivery and assert it falls below the threshold.
+\end{enumerate}
+
+\paragraph{Data Durability and External Backup}
+\begin{enumerate}
+  \item{T-NFR-KR-2-1\\}
+  
+  Type: Automatic / Manual (Infrastructure)
+
+  Initial State: The Knowledge Repository contains newly uploaded files and database records. The backup schedule is active.
+
+  Input/Condition: The BACKUP\_INTERVAL (7 days) passes, triggering an automated backup. A catastrophic server failure is then simulated by wiping the active database.
+
+  Output/Result: \\
+  \texttt{Pass:} A full backup exists on an isolated, external platform, and the system can be fully restored with no more than 7 days of data lost.\\
+  \texttt{Fail:} The backup fails to trigger, is stored on the same vulnerable server, or fails restoration.
+
+  How the test will be performed: The DevOps/infrastructure pipeline will verify the backup cron job executes. A developer will manually trigger a restoration in a staging environment using the external backup file to ensure data integrity is intact.
+\end{enumerate}
+
+
+\subsubsection{Model Analysis System}
+
+\paragraph{Strict STEP File Upload}
+\begin{enumerate}
+  \item{T-NFR-MA-1-1\\}
+  
+  Type: Automatic
+
+  Initial State: The user is on the model upload page.
+
+  Input/Condition: The user attempts to upload a valid STEP file, an invalid .stl file, and a malicious executable disguised as STEP.exe.
+
+  Output/Result: \\
+  \texttt{Pass:} The \texttt{.stp} file is accepted. The other formats are strictly rejected by the server with a clear error message.\\
+  \texttt{Fail:} The system accepts non-STEP files or crashes attempting to parse them.
+
+  How the test will be performed: An API testing script will Post various file types and extensions to the upload endpoint and assert the HTTP response codes (200 OK for STEP, 400/415 for others).
+\end{enumerate}
+
+\paragraph{3D Visualization Load Time}
+\begin{enumerate}
+  \item{T-NFR-MA-2-1\\}
+  
+  Type: Automatic (Performance)
+
+  Initial State: A valid, typical club bridge STEP file is stored in the repository.
+
+  Input/Condition: The user clicks to view the 3D visualization of the model. 
+
+  Output/Result: \\
+  \texttt{Pass:} The interactive 3D model fully renders in the browser in under 30 seconds (MAX\_MODEL\_LOAD\_TIME).\\
+  \texttt{Fail:} The model takes longer than 30 seconds to render or hangs indefinitely.
+
+  How the test will be performed: A browser automation tool (like Selenium or Playwright) will click the model link, start a timer, and stop the timer when the 3D canvas object registers as fully loaded and interactive.
+\end{enumerate}
+
+\paragraph{Extraction Accuracy}
+\begin{enumerate}
+  \item{T-NFR-MA-3-1\\}
+  
+  Type: Automatic
+
+  Initial State: A standardized test STEP file with exact, mathematically known dimensions is uploaded.
+
+  Input/Condition: The Model Analysis System parses the file and extracts its dimensions.
+
+  Output/Result: \\
+  \texttt{Pass:} The extracted dimensions match the source model to within a 0.5 mm tolerance (DIMENSION\_TOLERANCE).\\
+  \texttt{Fail:} The dimensions deviate by more than 0.5 mm.
+
+  How the test will be performed: A unit/integration test will pass the specific STEP file to the parsing library, retrieve the output data struct, and assert the length/width/height values fall within actual value $\pm$ 0.5mm.
+\end{enumerate}
+
+
+\subsubsection{Performance Analysis System}
+
+\paragraph{Estimate Accuracy}
+\begin{enumerate}
+  \item{T-NFR-PA-1-1\\}
+  
+  Type: Automatic (Algorithm Validation)
+
+  Initial State: The system holds STEP models of past club bridges, alongside the actual recorded failure loads from past competitions.
+
+  Input/Condition: The Performance Analysis System runs a failure load estimate on the historical models.
+
+  Output/Result: \\
+  \texttt{Pass:} The estimated failure load is within 25\% (FAILURE\_LOAD\_TOLERANCE) of the real-world recorded value.\\
+  \texttt{Fail:} The estimate diverges by more than 25\%.
+
+  How the test will be performed: A validation script will run the FEA algorithm against a suite of 5-10 historical bridge models. It will compare the output to the known real-world data and calculate the percentage error.
+\end{enumerate}
+
+\paragraph{Computation Time}
+\begin{enumerate}
+  \item{T-NFR-PA-2-1\\}
+  
+  Type: Automatic (Performance)
+
+  Initial State: A typical club bridge model is loaded.
+
+  Input/Condition: The user triggers the performance analysis.
+
+  Output/Result: \\
+  \texttt{Pass:} The analysis completes and returns the failure load and metrics in under 30 seconds (MAX\_ANALYSIS\_TIME).\\
+  \texttt{Fail:} The computation exceeds 30 seconds.
+
+  How the test will be performed: An automated script triggers the analysis API and measures the response time.
+\end{enumerate}
+
+\paragraph{Extensibility of Metrics}
+\begin{enumerate}
+  \item{T-NFR-PA-3-1\\}
+  
+  Type: Manual (Architecture check)
+
+  Initial State: The PA system codebase is open in a development environment.
+
+  Input/Condition: A developer registers a new dummy metric calculation (e.g., "Bridge Flexibility Score") in the codebase.
+
+  Output/Result: \\
+  \texttt{Pass:} The new metric appears in the output payload without requiring alterations to the core code calculating Failure Load or Load-to-Mass ratio.\\
+  \texttt{Fail:} Modifying/adding a metric breaks existing metric outputs.
+
+  How the test will be performed: Verified via Code Review and unit tests during the addition of a new metric to ensure the Open/Closed Principle of software architecture is maintained.
+\end{enumerate}
+
+
+\subsubsection{Rule Compliance System}
+
+\paragraph{Check Correctness (No False Passes)}
+\begin{enumerate}
+  \item{T-NFR-RC-1-1\\}
+  
+  Type: Automatic
+
+  Initial State: A test suite of bridge models exists. Some are perfectly compliant, others have specific, known rule violations (e.g., too heavy, clearance too low).
+
+  Input/Condition: The Rule Compliance System evaluates the entire suite against the active rule set.
+
+  Output/Result: \\
+  \texttt{Pass:} Every single non-compliant bridge is correctly flagged as a Fail.\\
+  \texttt{Fail:} The system gives a false pass to a bridge that violates a rule. 
+
+  How the test will be performed: The CI/CD pipeline runs a script passing the test suite through the compliance engine. The test asserts that the output array of the non-compliant models strictly contains \texttt{isValid: false}.
+\end{enumerate}
+
+\paragraph{Rule Updatability (No Code Changes)}
+\begin{enumerate}
+  \item{T-NFR-RC-2-1\\}
+  
+  Type: Manual
+
+  Initial State: The system is live. An executive user is logged in.
+
+  Input/Condition: The competition releases a new rule. The executive updates this value via the application UI.
+
+  Output/Result: \\
+  \texttt{Pass:} The new rule is applied instantly to the next model evaluated. No source code modification, recompilation, or server restart was required.\\
+  \texttt{Fail:} A developer is required to change the rule in the codebase.
+
+  How the test will be performed: A tester logs in as an Executive, navigates to the Rules configuration page, alters a parameter, saves, and immediately runs a compliance check to verify the new parameter is actively enforced.
+\end{enumerate}
+
+
+\subsubsection{Material Testing Manager}
+
+\paragraph{Result Import and Export}
+\begin{enumerate}
+  \item{T-NFR-MT-1-1\\}
+  
+  Type: Automatic
+
+  Initial State: The user is on the Material Testing interface.
+
+  Input/Condition: The user uploads a standardized CSV containing 100 rows of test data. Later, the user clicks "Export to CSV".
+
+  Output/Result: \\
+  \texttt{Pass:} The file imports successfully with all 100 rows accurately reflected in the database. The exported CSV matches the data exactly.\\
+  \texttt{Fail:} The import fails, truncates data, or locks the data inside the system preventing export.
+
+  How the test will be performed: A script uploads a mock CSV, queries the DB to verify row count and data integrity, then hits the export API endpoint and compares the downloaded file's checksum/content against the original.
+\end{enumerate}
+
+\paragraph{Traceability}
+\begin{enumerate}
+  \item{T-NFR-MT-2-1\\}
+  
+  Type: Automatic
+
+  Initial State: Material properties have been aggregated from a batch of test results.
+
+  Input/Condition: A user queries the aggregated material property (e.g., Average Glue Strength).
+
+  Output/Result: \\
+  \texttt{Pass:} The returned data payload includes direct database references/links to the exact individual test result IDs used to calculate that average.\\
+  \texttt{Fail:} The aggregate is presented as a static number with no link to its raw source data.
+
+  How the test will be performed: An API test requests an aggregated property and asserts that the response JSON contains a source\_test\_ids array connecting it to the raw entries.
+\end{enumerate}
+
+
+\subsubsection{Knowledge Transfer Manager}
+
+\paragraph{Findability}
+\begin{enumerate}
+  \item{T-NFR-KT-1-1\\}
+  
+  Type: Manual (Usability)
+
+  Initial State: A brand new user (simulating a new executive) logs into the system for the first time.
+
+  Input/Condition: The user is tasked with finding the role record for the "VP of Design".
+
+  Output/Result: \\
+  \texttt{Pass:} The user successfully navigates the UI and opens the document in under 2 minutes (MAX\_ROLE\_SEARCH\_TIME).\\
+  \texttt{Fail:} The user takes longer than 2 minutes or gives up.
+
+  How the test will be performed: Conducted during the Winter CD Usability Testing phase. A tester observes a user with a stopwatch to measure the time to successful task completion.
+\end{enumerate}
+
+\paragraph{Longevity (PDF Export)}
+\begin{enumerate}
+  \item{T-NFR-KT-2-1\\}
+  
+  Type: Automatic
+
+  Initial State: A completed exit document exists in the system.
+
+  Input/Condition: The user clicks "Export to PDF".
+
+  Output/Result: \\
+  \texttt{Pass:} The server generates and downloads a \texttt{.pdf} file containing the document's text and metadata cleanly formatted.\\
+  \texttt{Fail:} The export fails or produces an unreadable file.
+
+  How the test will be performed: An automated script calls the PDF generation endpoint, checks the response header for application/pdf, and validates the file size is $> 0$ bytes.
+\end{enumerate}
+
+
+\subsubsection{System-Wide Requirements}
+
+\paragraph{Browser Support}
+\begin{enumerate}
+  \item{T-NFR-SYS-1-1\\}
+  
+  Type: Manual / Automated (Cross-Browser)
+
+  Initial State: The web application is deployed to a staging environment.
+
+  Input/Condition: A script (or tester) executes the core workflows (Login, Upload Model, Run Analysis) on the latest versions of Chrome, Firefox, Edge, and Safari.
+
+  Output/Result: \\
+  \texttt{Pass:} The application functions perfectly on all 4 browsers with no broken layouts or JS errors.\\
+  \texttt{Fail:} A core feature fails to execute on one or more of the specified browsers.
+
+  How the test will be performed: End to end testing framework configured to run the test suite across multiple browser engines. 
+\end{enumerate}
+
+\paragraph{Capacity and Concurrency}
+\begin{enumerate}
+  \item{T-NFR-SYS-2-1\\}
+  
+  Type: Automatic (Stress Test)
+
+  Initial State: The application is running under normal conditions.
+
+  Input/Condition: 50 simulated users (MIN\_CONCURRENT\_USERS) log in and perform varied tasks (searching, uploading, routing requests) simultaneously.
+
+  Output/Result: \\
+  \texttt{Pass:} All requests succeed, response times stay within their defined limits, and no thread-safety/concurrency errors occur.\\
+  \texttt{Fail:} The server crashes, drops requests, or exhibits race conditions.
+
+  How the test will be performed: A load testing tool spins up 50 concurrent virtual users. The script asserts zero 500-level HTTP errors and verifies that user data does not bleed between active sessions.
+\end{enumerate}
+
+\paragraph{Service Independence}
+\begin{enumerate}
+  \item{T-NFR-SYS-3-1\\}
+  
+  Type: Automatic (Chaos Testing)
+
+  Initial State: All services are running normally.
+
+  Input/Condition: The Model Analysis System container is deliberately crashed/taken offline. A user then attempts to search the Knowledge Repository.
+
+  Output/Result: \\
+  \texttt{Pass:} The Knowledge Repository returns search results normally. The broker gracefully handles the MA failure by returning an isolated error for MA tasks only.\\
+  \texttt{Fail:} The whole application goes down or the broker hangs indefinitely.
+
+  How the test will be performed: A CI/CD script kills the MA service process, then sends HTTP GET requests to the KR service and asserts a \texttt{200 OK} response.
+\end{enumerate}
+
+\paragraph{Maintainability}
+\begin{enumerate}
+  \item{T-NFR-SYS-4-1\\}
+  
+  Type: Manual (Developer Onboarding)
+
+  Initial State: A new Software Subteam recruit has just been granted repository access.
+
+  Input/Condition: The recruit follows the documentation (e.g., \texttt{README.md}, Docker setup guides) to build the app locally, write a minor UI text change, and deploy it.
+
+  Output/Result: \\
+  \texttt{Pass:} The new member successfully completes the full cycle in under 1 week (MAX\_ONBOARDING\_TIME) with minimal external help.\\
+  \texttt{Fail:} Documentation is missing, outdated, or the environment is too complex to set up within a week.
+
+  How the test will be performed: A real-world onboarding trial where a new CAS student is timed and monitored while setting up the project using only the written documentation.
+\end{enumerate}
+
+
+
+\subsection{Traceability Between Test Cases and Requirements} \label{SecTraceability}
 
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
+\begin{table}[htbp]
+\centering
+\caption{Traceability between System Tests, SRS NFRs, and Hazard Analysis Requirements}
+\label{tab:nfr_test_traceability}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Test Case ID} & \textbf{SRS Requirement} & \textbf{Hazard Analysis Requirement} \\ \hline
+T-NFR-WS-2-1 & NFR-WS-2 & N/A \\ \hline
+T-NFR-WS-2-2 & NFR-WS-2 & N/A \\ \hline
+T-NFR-WS-2-3 & NFR-WS-2 & N/A \\ \hline
+T-NFR-WS-3-1 & NFR-WS-3 & N/A \\ \hline
+T-NFR-AC-1/2-1 & NFR-AC-1, NFR-AC-2 & NA \\ \hline
+T-NFR-AC-1/2-2 & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
+T-NFR-TB-1-1 & NFR-TB-1 & N/A\\ \hline
+T-NFR-TB-2-1 & NFR-TB-2 & N/A \\ \hline
+T-NFR-TB-3-1 & NFR-TB-3 & N/A \\ \hline
+T-NFR-KR-1-1 & NFR-KR-1 & N/A \\ \hline
+T-NFR-KR-2-1 & NFR-KR-2 & SR-KR-1 (External Backup) \\ \hline
+T-NFR-MA-1-1 & NFR-MA-1 & N/A \\ \hline
+T-NFR-MA-2-1 & NFR-MA-2 & N/A \\ \hline
+T-NFR-MA-3-1 & NFR-MA-3 & N/A \\ \hline
+T-NFR-PA-1-1 & NFR-PA-1 & N/A \\ \hline
+T-NFR-PA-2-1 & NFR-PA-2 & N/A \\ \hline
+T-NFR-PA-3-1 & NFR-PA-3 & N/A \\ \hline
+T-NFR-RC-1-1 & NFR-RC-1 & N/A \\ \hline
+T-NFR-RC-2-1 & NFR-RC-2 & N/A \\ \hline
+T-NFR-MT-1-1 & NFR-MT-1, NFR-MT-3 & N/A \\ \hline
+T-NFR-MT-2-1 & NFR-MT-2 & N/A \\ \hline
+T-NFR-KT-1-1 & NFR-KT-1 & N/A \\ \hline
+T-NFR-KT-2-1 & NFR-KT-2 & N/A \\ \hline
+T-NFR-SYS-1-1 & NFR-SYS-1 & N/A \\ \hline
+T-NFR-SYS-2-1 & NFR-SYS-2 & SR-WS-3 (Thread Safety) \\ \hline
+T-NFR-SYS-3-1 & NFR-SYS-3 & N/A \\ \hline
+T-NFR-SYS-4-1 & NFR-SYS-4 & SR-WS-1 (Code Testing) \\ \hline
+\end{tabularx}
+\end{table}
+\begin{xltabular}{\textwidth}{|L{3cm}|Y|}
+\caption{Functional Requirement Traceability Matrix}
+\label{TblTraceFR}\\
+\hline
+\textbf{Test Case ID} & \textbf{Requirements Verified}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Requirements Verified}\\
+\hline
+\endhead
+\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3\\
+\hline
+\testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2, SR-WS-5\\
+\hline
+\testref{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2\\
+\hline
+\testref{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4\\
+\hline
+\testref{T.FR.KR.4.1} & FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4\\
+\hline
+\testref{T.FR.KR.4.2} & FR-KR-5, SR-KR-2, SR-KR-5\\
+\hline
+\testref{T.FR.MA.5.1} & FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3\\
+\hline
+\testref{T.FR.MA.5.2} & FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6\\
+\hline
+\testref{T.FR.PA.6.1} & FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4, SR-PA-1\\
+\hline
+\testref{T.FR.RC.7.1} & FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5\\
+\hline
+\testref{T.FR.MT.8.1} & FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5, SR-MT-2\\
+\hline
+\testref{T.FR.KT.9.1} & FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2, SR-KT-5\\
+\hline
+\testref{T.FR.KT.9.2} & FR-KT-3, FR-KT-4, SR-KT-3\\
+\hline
+\end{xltabular}
+
+FR-KT-5 is a Could requirement in SRS S.5, implemented only if time allows, so
+its part of \testref{T.FR.KT.9.1} is performed only if it is implemented.
+
+SR-SYS-1 to SR-SYS-3 constrain how the system is built and deployed rather than
+its behaviour, so they are verified as part of implementation verification
+rather than by system tests. The safety and security requirements that the
+Hazard Analysis Roadmap delays until after the capstone are not tested:
+SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1, SR-KT-4, SR-MT-1, and SR-MT-3.
+
+% Non-functional requirement traceability (Section 4.2 tests) to be added below.
 
 \section{Unit Test Description}
 
@@ -442,13 +1356,32 @@ and as many tests as needed for edge cases.  Rather than create the details of t
 and output here, you could point to the unit testing code.  For this to work, you code 
 needs to be well-documented, with meaningful names for all of the tests.}
 
+Unit tests are an integral part of the verification of the implementation of this project.
+Below is a sketch of the unit tests that will be employed in this software project. 
+
+
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
+  The crown jewel of this project is the model analysis, because all other services offered are pretty simple.
+  The model analysis service contains five (5) modules: (a) an upload module to upload the STEP file,
+  (b) an external computer-aided design (CAD) module to perform technical engineering calculations, (c) the bridge failure
+  module, (d) the rule compliance module, and (e) the scoring module. The upload module is very straightforward; it can be done with standard file integrity testing. The validation of the calculations of the external CAD module is beyond the software
+  scope of this project; rather, they shall be shown to be accurate by comparing results against the current standards
+  process Troitsky uses and deeming it satisfactory if they are the same for several STEP files, including
+  files purposely hidden from the training data. The last three modules shall be verified through unit testing, having
+  been formalized in the SRS (see S.7). \\
+
+  The other services are the log-in, the materials testing database, the knowledge repository
+  (both adding new files and searching existing files),
+  and the knowledge transfer service to facilitate the creation of transition documents. All these tasks will
+  contain are a login suite, page rendering, role-based access control, CRUD (create, read, update, delete) operations for
+   a database or a shared file store, 
+  a form to submit information, and a naive search engine (a simple LIKE-based search is almost certainly sufficient for now). 
+  These problems are not novel and be quickly implemented and verified. \\
+  
+  Therefore, while unit testing should exist for them, a few will suffice for each. 
+  Therefore, the vast majority of unit testing should
+  be directed at the last three sub-modules of the model analysis service.
 
 \subsection{Tests for Functional Requirements}
 
@@ -456,52 +1389,529 @@ needs to be well-documented, with meaningful names for all of the tests.}
   appropriate specific modules can be verified by a non-testing based
   technique.  That can also be documented in this section.}
 
-\subsubsection{Module 1}
+  Below is a sketch of automated tests for the functional requirements. 
+  First are the three major modules and below them are the auxiliary services. \\
+
+  For the first two tests, two phyla of tests shall be conducted, depressed tests with dummy data,
+  and actual tests with a real STEP file. The former are white box, as the input is artificial 
+  and the latter are black box, as the output is based on a bona fide STEP file. Inputting artificial data
+  is the domain of the developers for testing. A real user should input a raw STEP file and see the output
+  of the system's analysis of it, because calculating and inputting intermediate results an external
+  CAD library would do is highly error-prone. \\
+
+  Due to the straightforwardness of the auxiliary services above, each service shall contain no more than two (2) examples, 
+  of unit tests. There may be more in the actual unit testing suite, but this document serves as a sketch, not
+  a complete guide, for the suite.
+
+
+
+\subsubsection{Bridge Failure Module}
 
 \wss{Include a blurb here to explain why the subsections below cover the module.
   References to the MIS would be good.  You will want tests from a black box
   perspective and from a white box perspective.  Explain to the reader how the
   tests were selected.}
 
+This module determines whether a bridge fails, i.e., whether there is an element in the bridge whose
+factor of safety is less than one. The examples below are illustrative of the test types, in reality
+there will be several for each type.
+
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{Artificial, Bridge Succeeds\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+Type: Automatic
 					
-Initial State: 
+Initial State: System requests artificial data for an STEP model to analyze.
 					
-Input: 
+Input: This bridge contains two elements. Element $e_a$ is of a material $m_a$ where $\mu_{strength}(m_a) = 5$ and 
+$\sigma_{API}(e_a) = 4 $ and Element $e_b$ is of a material $m_b$ where $\mu_{strength}(m_b) = 3$ and 
+$\sigma_{API}(e_b) = 2 $.
 					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Output: $BridgeFailure \equiv false$
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+\begin{align*}
+BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1) \\
+              &\equiv \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_a))}{\sigma_{\text{API}}(e_a)} < 1 \; \lor \; \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_b))}{\sigma_{\text{API}}(e_b)} < 1 \\
+              &\equiv \frac{5}{4} < 1 \; \lor \; \frac{3}{2} < 1 \\
+              &\equiv \text{false} \lor \text{false} \\
+              &\equiv \text{false}
+\end{align*}
 
-\item{...\\}
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Artificial, Bridge Fails\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data for an STEP model to analyze.
+					
+Input: This bridge contains two elements. Element $e_a$ is of a material $m_a$ where $\mu_{strength}(m_a) = 5$ and 
+$\sigma_{API}(e_a) = 4 $ and Element $e_b$ is of a material $m_b$ where $\mu_{strength}(m_b) = 3$ and 
+$\sigma_{API}(e_b) = 4 $.
+					
+Output: $BridgeFailure \equiv true$
+
+Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+\begin{align*}
+BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1) \\
+              &\equiv \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_a))}{\sigma_{\text{API}}(e_a)} < 1 \; \lor \; \frac{\mu_{\text{strength}}(\text{elementMaterial}(e_b))}{\sigma_{\text{API}}(e_b)} < 1 \\
+              &\equiv \frac{5}{4} < 1 \; \lor \; \frac{3}{4} < 1 \\
+              &\equiv \text{false} \lor \text{true} \\
+              &\equiv \text{true}
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+					
+\item{Natural}
+
+Type: Automatic
+					
+Initial State: System requests an STEP file that models a bridge
+					
+Input: The STEP file
+					
+Output: If there is an element $e$ where \\ 
+\[frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1 \]
+$BridgeFailure \equiv true$. Otherwise, $BridgeFailure \equiv false$.
+
+Test Case Derivation: From the formalization in (S.7.2 (1)). The external CAD library will return
+$m_e = elementMaterial(e)$ and $\sigma_{API}(e)$ for each element present in the bridge model. The materials testing module
+will be invoked to find $\mu_{\text{strength}(m_e)}$. Then, this module will have gained its input to perform its calculations
+and will yield outputs consistent with the formula provided. For more information, see the above two artificial test cases. 
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
     
 \end{enumerate}
 
-\subsubsection{Module 2}
+\subsubsection{Rules Compliance Module}
 
-...
+\wss{Include a blurb here to explain why the subsections below cover the module.
+  References to the MIS would be good.  You will want tests from a black box
+  perspective and from a white box perspective.  Explain to the reader how the
+  tests were selected.}
+
+This module determines whether a bridge complies with the rules for the Troitsky competition.
+Because the competition rules change each year, the fields denoting rule-based constraints are variable so they
+can be easily updated. 
+The examples below are illustrative of the test types, in reality
+there will be several for each type.
+
+For brevity, the example rules are the same in all three test cases.
+The maximum weight is $7$ kg, the minimum length is $175$ m, the maximum length is $225$ m, 
+the minimum width is $45$ m, the maximum width is $60$ m and the minimum clearance height is
+$45$ m. Furthermore, let an $iB$ (in bounds) function be defined as
+
+\[
+  iB(val, lower, upper) \equiv lower \le val \land val \le upper
+\]
+
+Lastly, variables shall be in the form of $qualQty$ where $qual \in \text{(val, min, max)}$ and 
+$Qty \in \text{(Wt, Ln, Wd, Ht)}$. The variable shall be understood as "the $qual$ for the $Qty$".
+The items in the $qual$ (qualifiers) set are short for value, minimum and maximum respectively,
+while the items in the $Qty$ (quantities) set are short for weight, length, width and height respectively.
+If no qualifier is there (e.g. $Ln$), an implicit qualifier of $val$ shall be assumed.
+
+\begin{enumerate}
+
+\item{Artificial, Rules Compliant\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data for an STEP model to analyze.
+					
+Input: This bridge weighs $5$ kg, has a length of $200$ m, a width of $50$ m and a clearance height of $50$ m. 
+					
+Output: $isValid \equiv true$
+
+Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+\begin{align*}
+isValid &\equiv iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \; \land \\ 
+        & \qquad iB(Wd, minWd, maxWd) \land Ht < maxHt \\
+        &\equiv iB(5, 0, 7) \land iB(175, 200, 225) \land iB(45, 50, 60) \land 45 \le 50 \\
+        &\equiv true \land true \land true \land true \\
+        &\equiv true \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Artificial, Rules Non-Compliant\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data for an STEP model to analyze.
+					
+Input: This bridge weighs $5$ kg, has a length of $200$ m, a width of $61$ m and a clearance height of $50$ m. 
+					
+Output: $isValid \equiv false$
+
+Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+\begin{align*}
+isValid &\equiv iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \; \land \\ 
+        & \qquad iB(Wd, minWd, maxWd) \land Ht < maxHt \\
+        &\equiv iB(5, 0, 7) \land iB(175, 200, 225) \land iB(45, 61, 60) \land 45 \le 50 \\
+        &\equiv true \land true \land false \land true \\
+        &\equiv false \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+					
+\item{Natural}
+
+Type: Automatic
+					
+Initial State: System requests an STEP file that models a bridge
+					
+Input: The STEP file
+					
+Output: If,
+\[iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \land iB(Wd, minWd, maxWd) \land Ht < maxHt \]
+$isValid \equiv true$. Otherwise, $isValid \equiv false$.
+
+Test Case Derivation: From the formalization in (S.7.2 (2)). The external CAD library will return
+the bridge's weight, length width and height. Then, this module will have gained its input to perform its calculations
+and will yield outputs consistent with the formula provided. For more information, see the above two artificial test cases. 
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+    
+\end{enumerate}
+
+\subsubsection{Bridge Scoring Module}
+
+\wss{Include a blurb here to explain why the subsections below cover the module.
+  References to the MIS would be good.  You will want tests from a black box
+  perspective and from a white box perspective.  Explain to the reader how the
+  tests were selected.}
+
+This module determines the score of a bridge. The score is based on the formula in SRS section S.7.3 (3).
+
+For brevity, there will be two hard constraints, two objectives and two soft constraints. As the real calculations required
+to determine these values are yet to be decided, a natural unit test would be inappropriate. The score shall not be less
+than zero. In all three test cases, $w_1$ = 5, $w_2$ = 3, $p_1$ = 400, and $p_2$ = 200. See S.7.3 for the meanings of
+the abbreviations used here.
+
+\begin{enumerate}
+
+\item{Violates Hard Constraint\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data to run scoring module.
+					
+Input: $r_1 = 0$, $r_2 = 1$, $s_1 = 100$, $s_2 = 50$, $b_1 = 0$, $b_2$ = 1.
+					
+Output: $W = 0$
+
+Test Case Derivation: 
+
+\begin{align*}
+W &= max(r_1r_2(w_1s_1 + w_2s_2 - (b_1p_1 + b_2p_2)), 0) \\
+  &= max(0(1)(5*100 + 3*50 - (0*400 + 1*200)), 0) \\
+  &= max(0(450), 0) \\
+  &= 0 \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Normal \\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data to run scoring module.
+					
+Input: $r_1 = 1$, $r_2 = 1$, $s_1 = 100$, $s_2 = 50$, $b_1 = 0$, $b_2$ = 1.
+					
+Output: $W = 450$
+
+Test Case Derivation: 
+
+\begin{align*}
+W &= max(r_1r_2(w_1s_1 + w_2s_2 - (b_1p_1 + b_2p_2)), 0) \\
+  &= max(1(1)(5*100 + 3*50 - (0*400 + 1*200)), 0) \\
+  &= max(1(450), 0) \\
+  &= 450 \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Below Floor of Zero\\}
+
+Type: Automatic
+					
+Initial State: System requests artificial data to run scoring module.
+					
+Input: $r_1 = 0$, $r_2 = 1$, $s_1 = 50$, $s_2 = 100$, $b_1 = 1$, $b_2$ = 1.
+					
+Output: $W = 0$
+
+Test Case Derivation: 
+
+\begin{align*}
+W &= max(r_1r_2(w_1s_1 + w_2s_2 - (b_1p_1 + b_2p_2)), 0) \\
+  &= max(1(1)(5*50 + 3*100 - (1*400 + 1*200)), 0) \\
+  &= max(1(-50), 0) \\
+  &= 0 \\
+\end{align*}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+    
+\end{enumerate}
+
+\subsubsection{Log-in}
+
+This module handles an attempt by any person to demonstrate they are the person associated with
+a given user account. Because single sign-on (SSO) shall be employed, the system shall recieve
+a confirmation a user is the owner of a specific email address, almost always a McMaster one, not a username
+and password.
+
+\begin{enumerate}
+
+\item{Successful Attempt\\}
+
+Type: Automatic
+					
+Initial State: Session not logged in
+					
+Input: SSO confirmation of an email that matches an active account in system
+					
+Output: Session logged in as that account
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item System performs parametrized query on the Users database looking for user accounts that match the inputted confirmation's email
+  \item System finds one active account in the system that fits the query
+  \item System logs in session with that active account
+\end{itemize}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+
+\item{Failed Attempt\\}
+
+Type: Automatic
+					
+Initial State: Session not logged in
+					
+Input: SSO confirmation of an email that does not match an active account in system
+					
+Output: Session not logged in, error message shown to user
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item System performs parametrized query on the Users database looking for user accounts that match the inputted confirmation's email
+  \item System finds no active accounts that fit the query
+  \item System displays error message to user, session remains not logged in
+\end{itemize}
+
+How test will be performed: Through MsTest within the .NET solution used for implementation
+    
+\end{enumerate}
+
+\subsubsection{Materials Testing}
+
+This module stores the results of materials tests manually done by club members to test the strength of a given 
+material. Any authorized user shall be able to submit a test result and it shall be presumed to be reliable.
+However an executive user may mark the test unreliable, which will exclude it from all future materials analysis calculations
+as long as it marked as unreliable. 
+
+Automatic tests are a poor fit here because the bulk of the work is to convert a user request into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+
+\begin{enumerate}
+
+\item{Results Submission, Group\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User on materials testing page and may submit a materials test
+					
+Input: An spreadsheet-style document (.csv or .xslx) containing materials testing results (each containing a material and its strength)
+					
+Output: The results are stored as reliable materials testing results. User recieves confirmation of sucessful submission.
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks "Add Materials Test Result" button
+  \item Graphical user interface (GUI) opens, prompting the upload the spreadsheet-style document
+  \item User uploads the document and submits it
+  \item System normalizes the submitted data to obtain values used to add to the materials testing database
+  \item System adds new rows to the database containg the obtained values and the reliable flag set to true
+  \item System recieves confiramation from the database that the row was added successfully
+  \item User recieves confirmation from the system the materials test was submitted successfully
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+
+\item{Test Marked as Unreliable}
+
+Type: Manual
+					
+Initial State: User on materials testing page and may deem a test unreliable
+					
+Input: The test a user deems unreliable
+					
+Output: The test is marked unreliable; user recieves corresponding confirmation
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks "Mark Test Unreliable" button
+  \item System displays list of materials tests submitted, in an order descending by date.
+  \item User picks the test they have judged to be unreliable from the menu.
+  \item The user clicks the "Mark Unreliable" button. 
+  \item A confirm dialog opens, and the user selects the "Yes, I am sure" button. The dialog closes.
+  \item The system submits a query to the materials testing database to mark the picked test unreliable.
+  \item The database marks that test unreliable and sends a confirmation to the system. 
+  \item The system tells the user through an on-screen message that the test (with a brief description of it) was successfully marked unreliable.
+\end{itemize}
+
+How test will be performed: Manually, through the front-end
+    
+\end{enumerate}
+
+\subsubsection{Knowledge Repository}
+
+This module contains the club-wide document share and lets users add documents to it, alter or delete their own documents
+or any document as an executive, and search, preview and download documents. There is a role-based access system based on
+account classification, so not all users may see every document added to the document share.
+
+
+Automatic tests are a poor fit here because the bulk of the work is to convert a user request into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+\begin{enumerate}
+
+\item{Alter Document\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User is logged in and on the knowledge repository page. They also may perform their desired action.
+					
+Input: The document name, the action, and the contents if the action is not delete.
+					
+Output: The action is done to the document with the inputted name, adding the contents to the document if the action was not delete.
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks one of the following buttons: (a) "Add Document", (b) "Replace Document", (c) "Edit Document" or (d) "Delete Document.
+  \item If the button clicked is (a) or (b):
+  \begin{itemize}
+    \item A dialog opens, with an empty markdown textbox and a button to open an upload wizard.
+    \item The user uploads a document from the upload wizard. 
+    \item Alternatively, the user adds to the markdown textbox.
+    \item The user clicks the corresponding submit button, submitting their desired input to the system.
+  \end{itemize}
+  \item If the button clicked is (c):
+  \begin{itemize}
+      \item A dialog opens with a markdown textbox containing the existing markdown document.
+      \item The user edits the document to their heart's desire.
+      \item The user submits the document.
+  \end{itemize}
+  \item If the user clicks button (d), the request is submitted directly.
+  \item The system request the drive fulfill the request. The drive does and confirms it to the system.
+  \item The system displays a confirmation message to the user.
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+
+\item{Obtain Document}
+
+Type: Manual
+					
+Initial State: User on knowledge repository page and access a document
+					
+Input: The document name
+					
+Output: The user gains access to document, with a preview (unlessit cannot be done) and a download option
+
+Test Case Derivation: 
+
+\begin{itemize}
+  \item User clicks "Search for Document" button
+  \item User enters suitable query to search bar.
+  \item User hits "Search" and results are returned in declining likeness to the query.
+  \item The user selects their desired document. 
+  \item A new page opens with the preview. The user is also presented with a button they may click if they wish to download the document.
+\end{itemize}
+
+How test will be performed: Manually, through the front-end
+    
+\end{enumerate}
+
+\subsubsection{Knowledge Transfer}
+
+This module tracks whether a user may leave the club soon. If so, the module will give them an alert
+on their user homepage, prompting them to fill out their transition document. The module then takes input
+through a form. Once the user submits it, the system adds it to the knowledge repository.
+
+Automatic tests are a poor fit here because the bulk of the work is to convert user-entered text into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+\begin{enumerate}
+
+\item{Submit Transfer Document\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User is logged in and may leave the club soon
+					
+Input: The text entered into each input field of the tranfer form 
+					
+Output: The text is converted into one easy-to-read document, which is added to the knowledge repository.
+
+\begin{itemize}
+  \item User finds alert "Make Transition Document" on user homepage.
+  \item User clicks the alert, opening up the transition document form
+  \item The user fills out the form and submits it
+  \item The system converts it into an easily readable and understandable document
+  \item The system uploads the document to the knowledge repository.
+  \item Once recieving a confirmation of success, it displays a "form successfully submitted" message to the user
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+    
+\end{enumerate}
+
+\subsubsection{Toolbox Broker}
+
+This module fashions and displays the homepage. It furthermore transfers the user from the home page to the pages
+for every other module they can access, besides the public logged out module.
+
+Automatic tests are a poor fit here because the bulk of the work is to convert a user request into a format the 
+database uses, not re-confirming the abilities of a highly reliable industry-standard database. Thus, manual
+tests shall be used.
+
+\begin{enumerate}
+
+\item{Go to Service\\}
+
+Type: Manual, Dynamic
+					
+Initial State: User is logged in and is on home page. They may access the page they desire to access.
+					
+Input: The user clicks the buttton corresponding to their desired action.
+					
+Output: The system displays the page for their desired action.
+
+\begin{itemize}
+  \item The user clicks the button
+  \item The system opens up the corresponding page
+\end{itemize}
+
+How test will be performed: Manually, through the front end. 
+    
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
@@ -512,44 +1922,40 @@ How test will be performed:
 \wss{These tests may involve collecting performance data from previously
   mentioned functional tests.}
 
-\subsubsection{Module ?}
+Most information to satisfy the non-functional requirements come from the functional tests above.
+Timing requirements shall be handled by timekeeping and recording a fail if the test goes overtime, even if it
+the desired result is ultimately obtained. Logging will be a byproduct of the functional tests, and some requirements,
+like weekly backup, cannot be effectively unit tested. One additional test is required, and it is detailed below.
+
+\subsubsection{Module Analysis}
+
+Unlike the counterpart subsections in the functional unit section, this is tested as one unit
+because the user will evaluate all its submodules in one action.
 		
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{Timing\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+Type: Manual, Dynamic
 					
-Initial State: 
+Initial State: User on model analysis page
 					
-Input/Condition: 
+Input/Condition: The STEP file of a bridge model.
 					
-Output/Result: 
+Output/Result: Whether the bridge will fail, whether the bridge is rules compliant and its score.
 					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+How test will be performed: Manual, Dynamic
 
 \end{enumerate}
 
-\subsubsection{Module ?}
-
-...
 
 \subsection{Traceability Between Test Cases and Modules}
 
-\wss{Provide evidence that all modules have been considered.}
+See the subsection foreword above. The crown jewel of this service, model analysis, is throughly tested;
+upload through the sole non-functional unit test, the three calculation sub-mdoules are formalized and tested
+through their formalizations, while the external CAD software library's accuracy is assumed.
+For each auxiliary module listed above, which contains every service this system calls for, there is at least one
+functional unit test case.
 				
 \bibliographystyle{plainnat}
 
@@ -561,10 +1967,162 @@ How test will be performed:
 
 This is where you can place additional information.
 
-\subsection{Symbolic Parameters}
+\subsection{Symbolic Parameters} \label{SecSymbolicParameters}
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
+Constants already defined in Appendix A.1 of the SRS \citep{TroitskySRS} keep the
+same name and value. Table~\ref{TblSymbolicConstants} lists the constants used
+by the system tests for functional requirements, Table~\ref{TblTestData} the
+test data they use and its expected results, and
+Table~\ref{TblComplianceModels} the models used to test rule compliance.
+
+{\small
+\begin{xltabular}{\textwidth}{|L{3.5cm}|L{2.5cm}|Y|}
+\caption{Symbolic constants used by the system tests for functional
+requirements}
+\label{TblSymbolicConstants}\\
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Rationale (test cases)}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Rationale (test cases)}\\
+\hline
+\endhead
+\cname{password\_min\_length} & 15 characters & Minimum length of a
+single-factor password in NIST SP 800-63B-4 \citep{NIST80063B4}, required by
+SR-AC-2 (T.FR.AC.2.1).\\
+\hline
+\cname{password\_max\_length} & 64 characters & NIST SP 800-63B-4 recommends
+permitting passwords of at least 64 characters, so long passwords must not be
+rejected or truncated (T.FR.AC.2.1).\\
+\hline
+\cname{password\_blocklist} & List of commonly used, expected, or compromised
+passwords & Required by NIST SP 800-63B-4. The test uses an entry of at least
+\cname{password\_min\_length} characters, so that it can only be rejected for
+being on the list (T.FR.AC.2.1).\\
+\hline
+\cname{common\_file\_types} & PDF, DOCX, XLSX, CSV, PPTX, PNG, JPG, STEP & The
+types of club material in the rationale of FR-KR-2: documents, spreadsheets,
+slides, photos of joints, and CAD models (T.FR.KR.4.1).\\
+\hline
+\cname{preview\_file\_types} & PDF, PNG, JPG & Displayed natively by every
+browser of NFR-SYS-1, so FR-KR-4 needs no conversion (T.FR.KR.4.1).\\
+\hline
+\cname{category\_list} & Design, Materials, Construction, Competition, Reports,
+Administration & The standardized category list of SR-KR-4, covering the content
+types of FR-KR-1. To be confirmed with the Troitsky club (T.FR.KR.4.1).\\
+\hline
+\cname{broker\_timeout} & 10~s & The limit for keeping a user's attention on a
+task \citep[ch.~5]{Nielsen1993}, as used for the time constants of SRS A.1.
+After it, the broker reports the service as unavailable (FR-BR-4)
+(T.FR.BR.3.1).\\
+\hline
+\cname{ma\_timeout} & 120~s & Time limit of SR-MA-3. Four times
+\cname{max\_model\_load\_time} (30~s, SRS A.1), so that a typical club model
+never reaches it (T.FR.MA.5.1).\\
+\hline
+\cname{ma\_timeout\_test} & 1~s & Value of \cname{ma\_timeout} in the test
+deployment, so that the timeout can be tested with \cname{ref\_model} instead of
+a very large model (T.FR.MA.5.1).\\
+\hline
+\cname{calc\_tolerance} & 1\% relative error & \cname{ref\_model} is statically
+determinate, so a linear-static analysis should match the hand calculation apart
+from rounding. Unlike \cname{failure\_load\_tolerance} (25\%, SRS A.1), it does
+not compare estimates with real bridges (T.FR.MA.5.1, T.FR.PA.6.1).\\
+\hline
+\cname{dimension\_tolerance} & 0.5~mm & Defined in SRS A.1 for NFR-MA-3
+(T.FR.MA.5.1).\\
+\hline
+\end{xltabular}
+}
+
+{\small
+\begin{xltabular}{\textwidth}{|L{2.4cm}|Y|L{4.0cm}|}
+\caption{Test data for the system tests for functional requirements}
+\label{TblTestData}\\
+\hline
+\textbf{Item} & \textbf{Definition} & \textbf{Expected values}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Item} & \textbf{Definition} & \textbf{Expected values}\\
+\hline
+\endhead
+\cname{ref\_model} & STEP model of a king post truss with members of
+2~mm~$\times$~10~mm cross-section ($A = 20$~mm$^2$): a bottom chord of two
+200~mm members, two 250~mm diagonals to an apex 150~mm above mid-span, and a
+150~mm vertical post. Pinned at one end, on a roller at the other, and loaded at
+the bottom node at mid-span. & Length 400~mm, height 150~mm, width 10~mm, total
+member length 1050~mm, volume 21\,000~mm$^3$.\\
+\hline
+\cname{mat\_set\_a} & Current year: five tension specimens of
+2~mm~$\times$~10~mm cross-section, grain parallel to the load, failing at 760,
+800, 820, 780, and 840~N. Density 0.50~g/cm$^3$. & Strengths 38, 40, 41, 39,
+42~MPa; mean 40.0~MPa; sample standard deviation 1.58~MPa. With the 840~N
+specimen flagged: mean 39.5~MPa.\\
+\hline
+\cname{mat\_set\_b} & Previous year: five specimens as above, failing at 680,
+720, 760, 700, and 740~N. Density 0.50~g/cm$^3$. & Strengths 34, 36, 38, 35,
+37~MPa; mean 36.0~MPa; sample standard deviation 1.58~MPa.\\
+\hline
+Analysis of \cname{ref\_model} & The post carries the full load $P$ in tension
+(the diagonals carry $0.83P$ and the chord $0.67P$), so by SRS S.7.2 the post
+fails first, when $P / A = \mu_{strength}$, giving
+$P_{fail} = \mu_{strength} \cdot A$. Mass is the volume times the density:
+21~cm$^3 \times 0.50$~g/cm$^3$. & Mass 10.5~g. With \cname{mat\_set\_a}: failure
+load 800~N, load-to-mass ratio 76.2~N/g. With \cname{mat\_set\_b}: 720~N,
+68.6~N/g.\\
+\hline
+\cname{mt\_import\_file} & CSV file in the standardized template of NFR-MT-1,
+containing specimens 2 to 5 of \cname{mat\_set\_a} and four invalid rows: a
+missing applied load, a thickness of $-2$~mm, an applied load of $-50$~N, and a
+width of 0~mm. & Specimens 2 to 5 stored; the four invalid rows rejected.\\
+\hline
+\cname{ruleset\_test} & Rule set for a test competition year, with values chosen
+for testing only: mass $\leq$ 750~g; length from 900 to 1100~mm; width from 100
+to 200~mm; clearance height $\geq$ 150~mm; and a materials rule (popsicle
+sticks, toothpicks, white glue, and dental floss only) that cannot be checked
+from a model. & See Table~\ref{TblComplianceModels}.\\
+\hline
+\end{xltabular}
+}
+
+{\small
+\begin{xltabular}{\textwidth}{|L{2.3cm}|L{1.2cm}|L{1.5cm}|L{1.4cm}|L{1.9cm}|Y|}
+\caption{Compliance models for \cname{ruleset\_test}. Their geometry is exact,
+so the extracted values equal those listed.}
+\label{TblComplianceModels}\\
+\hline
+\textbf{Model} & \textbf{Mass (g)} & \textbf{Length (mm)} & \textbf{Width (mm)}
+& \textbf{Clearance (mm)} & \textbf{Expected result}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Model} & \textbf{Mass (g)} & \textbf{Length (mm)} & \textbf{Width (mm)}
+& \textbf{Clearance (mm)} & \textbf{Expected result}\\
+\hline
+\endhead
+\cname{rc\_pass} & 500 & 1000 & 150 & 200 & Passes every rule\\
+\hline
+\cname{rc\_limit} & 750 & 1100 & 100 & 150 & Passes every rule (limits are
+inclusive)\\
+\hline
+\cname{rc\_heavy} & 760 & 1000 & 150 & 200 & Fails mass only\\
+\hline
+\cname{rc\_long} & 500 & 1110 & 150 & 200 & Fails length only\\
+\hline
+\cname{rc\_short} & 500 & 890 & 150 & 200 & Fails length only\\
+\hline
+\cname{rc\_wide} & 500 & 1000 & 210 & 200 & Fails width only\\
+\hline
+\cname{rc\_narrow} & 500 & 1000 & 90 & 200 & Fails width only\\
+\hline
+\cname{rc\_low} & 500 & 1000 & 150 & 140 & Fails clearance only\\
+\hline
+\end{xltabular}
+}
 
 \subsection{Member Needs Survey}
 \label{app:member-survey}
@@ -814,7 +2372,7 @@ whether material was generated by a human or an AI system.}
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
 
-\input{../Reflection.text}
+
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
@@ -831,4 +2389,23 @@ graduate attribute of Lifelong Learning.
   member pursue, and why did they make this choice?
 \end{enumerate}
 
+\subsection*{Mason Azzopardi}
+\begin{enumerate}
+ \item Group communication and work delegation; soon after the SRS deliverable we were able to get int a meeting and go through the rubrics for this submission and split up the work.
+ All group members were active in the team chat and were on time for every meeting they attended. Also throughout defining the System NFR Tests, 
+ I made sure to keep track of every NFR and SR that I was basing them off of so creating the traceability matrix went much easier than similar matrices have gone in the past
+ \item The main pain points for me were framing the tests in a concrete manner, I had a general Idea of what I wanted them to test and how I wanted that to be accomplished, but to actually put that to paper in a concrete and understandable manner was harder than expected.
+ \item I need a much stronger understanding of unit tests and how to implement them, I have very little background and will need to do a large review on .NET testing frameworks for C\#.
+ \item I could read through .NET documentation or go through a online course like \href{https://www.coursera.org/learn/packt-complete-guide-to-unit-testing-in-net-core-nunit-and-xunit-zyjqm}{this one}. I will probably take a online course as I learn better through practice and interaction rather than just reading documentation.
+\end{enumerate}
+
+
+
+\subsection*{Jack Easton}
+\begin{enumerate}
+  \item During the writing of this deliverable. I feel our team was able to find our flow together more easily. Since we have multiple deliverables under our belt at this point, we had a very solid shared team understanding. This allowed for a straightforward collaboration process where each member clearly could understand what each part of the system needed to do and how it needed to be tested.
+  \item For this deliverable, it was particularly difficult to approach the system tests of the functional and non-functional requirements. This is just due to the large number identified in the SRS and Hazard Analysis. Ensuring all requirements were covered and appropriately assessed was quite time consuming. However, our team came goether well to ensure correctness and that all of these requirements were covered.
+  \item I think personally I need to become more farmiliar with specific testing tools used in industry that we could adopt in this project. I do not have very much complex experience with dedicated static checkers, linters, or dynamic testing tools. I think that learning how to use these well would be invaluable in the verification and validation of this project.
+  \item For me, I plan to dive into researching tools and standards that are used in industry and figure out how to apply and use them in our project. I think also hands-on tinkering with these tools would provide the best learning for me and give me the confidence to use these tools well.
+\end{enumerate}
 \end{document}
