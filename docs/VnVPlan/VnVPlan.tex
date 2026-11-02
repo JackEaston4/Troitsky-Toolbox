@@ -489,7 +489,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} All search results are returned and displayed to the client in under 2.0 seconds (MAX\_SEARCH\_TIME).\\
   \texttt{Fail:} Any search query takes longer than 2.0 seconds.
 
-  How the test will be performed: A load-testing script (e.g., JMeter or Locust) will fire a suite of search queries against the API. The script will measure the round-trip time from request to response payload delivery and assert it falls below the threshold.
+  How the test will be performed: A load-testing script  will fire a suite of search queries against the API. The script will measure the round-trip time from request to response payload delivery and assert it falls below the threshold.
 \end{enumerate}
 
 \paragraph{Data Durability and External Backup}
@@ -520,13 +520,13 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The user is on the model upload page.
 
-  Input/Condition: The user attempts to upload a valid \texttt{.stp} file, an invalid \texttt{.stl} file, and a malicious executable disguised as \texttt{.stp.exe}.
+  Input/Condition: The user attempts to upload a valid STEP file, an invalid .stl file, and a malicious executable disguised as STEP.exe.
 
   Output/Result: \\
   \texttt{Pass:} The \texttt{.stp} file is accepted. The other formats are strictly rejected by the server with a clear error message.\\
   \texttt{Fail:} The system accepts non-STEP files or crashes attempting to parse them.
 
-  How the test will be performed: An API testing script will POST various file MIME types and extensions to the upload endpoint and assert the HTTP response codes (200 OK for STEP, 400/415 for others).
+  How the test will be performed: An API testing script will Post various file types and extensions to the upload endpoint and assert the HTTP response codes (200 OK for STEP, 400/415 for others).
 \end{enumerate}
 
 \paragraph{3D Visualization Load Time}
@@ -631,8 +631,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: The Rule Compliance System evaluates the entire suite against the active rule set.
 
   Output/Result: \\
-  \texttt{Pass:} Every single non-compliant bridge is correctly flagged as a "Fail".\\
-  \texttt{Fail:} The system gives a "False Pass" to a bridge that violates a rule. 
+  \texttt{Pass:} Every single non-compliant bridge is correctly flagged as a Fail.\\
+  \texttt{Fail:} The system gives a false pass to a bridge that violates a rule. 
 
   How the test will be performed: The CI/CD pipeline runs a script passing the test suite through the compliance engine. The test asserts that the output array of the non-compliant models strictly contains \texttt{isValid: false}.
 \end{enumerate}
@@ -645,7 +645,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The system is live. An executive user is logged in.
 
-  Input/Condition: The competition releases a new rule (e.g., max mass changed from 2kg to 1.5kg). The executive updates this value via the application UI.
+  Input/Condition: The competition releases a new rule. The executive updates this value via the application UI.
 
   Output/Result: \\
   \texttt{Pass:} The new rule is applied instantly to the next model evaluated. No source code modification, recompilation, or server restart was required.\\
@@ -688,7 +688,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} The returned data payload includes direct database references/links to the exact individual test result IDs used to calculate that average.\\
   \texttt{Fail:} The aggregate is presented as a static number with no link to its raw source data.
 
-  How the test will be performed: An API test requests an aggregated property and asserts that the response JSON contains a \texttt{source\_test\_ids} array connecting it to the raw entries.
+  How the test will be performed: An API test requests an aggregated property and asserts that the response JSON contains a source\_test\_ids array connecting it to the raw entries.
 \end{enumerate}
 
 
@@ -725,7 +725,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} The server generates and downloads a \texttt{.pdf} file containing the document's text and metadata cleanly formatted.\\
   \texttt{Fail:} The export fails or produces an unreadable file.
 
-  How the test will be performed: An automated script calls the PDF generation endpoint, checks the response header for \texttt{application/pdf}, and validates the file size is $> 0$ bytes.
+  How the test will be performed: An automated script calls the PDF generation endpoint, checks the response header for application/pdf, and validates the file size is $> 0$ bytes.
 \end{enumerate}
 
 
@@ -745,7 +745,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} The application functions perfectly on all 4 browsers with no broken layouts or JS errors.\\
   \texttt{Fail:} A core feature fails to execute on one or more of the specified browsers.
 
-  How the test will be performed: E2E testing framework (like Cypress or Selenium) configured to run the test suite across multiple browser engines. 
+  How the test will be performed: End to end testing framework configured to run the test suite across multiple browser engines. 
 \end{enumerate}
 
 \paragraph{Capacity and Concurrency}
@@ -762,7 +762,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} All requests succeed, response times stay within their defined limits, and no thread-safety/concurrency errors occur.\\
   \texttt{Fail:} The server crashes, drops requests, or exhibits race conditions.
 
-  How the test will be performed: A load testing tool (JMeter) spins up 50 concurrent virtual users. The script asserts zero 500-level HTTP errors and verifies that user data does not bleed between active sessions.
+  How the test will be performed: A load testing tool spins up 50 concurrent virtual users. The script asserts zero 500-level HTTP errors and verifies that user data does not bleed between active sessions.
 \end{enumerate}
 
 \paragraph{Service Independence}
