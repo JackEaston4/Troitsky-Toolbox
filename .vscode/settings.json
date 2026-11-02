@@ -22,5 +22,8 @@
         "**/HazardAnalysis.log": true,
         "**/HazardAnalysis.gz": true,
         "**/HazardAnalysis.out": true
-    }
+    },
+    "cSpell.words": [
+        "occt"
+    ]
 }

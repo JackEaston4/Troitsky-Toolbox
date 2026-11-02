@@ -1,7 +1,6 @@
 # Troitsky Toolbox — Member Needs & Service Priority Survey
 
-Methodology record for the first survye conducted, collecting general member needs and service priority. 
-This will be used in addition to complete interviews, to comprise the Fall CD (Interviews)
+Methodology record for the first survey conducted, collecting general member needs and service priority. This will be used in addition to complete interviews, to comprise the Fall CD (Interviews)
 
 Methodology record for the instrument as actually administered. This file is the source
 for SRS section **P.7 (Requirements process and report)** and for the CD-Fall

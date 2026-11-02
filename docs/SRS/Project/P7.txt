@@ -112,17 +112,3 @@ Important Questions to Ask:
 \item When taking your position, what would you have liked to have seen within a \term{handoff-document}{transition document}?
 \item How would you go about outlining the duties of a software development and support team?
 \end{itemize}
-
-\subsubsection*{McMaster CAS Students}
-McMaster \term{cas}{CAS} students are needed for the Software Development Team; 
-they will maintain and expand the toolbox. The challenge of this project is the maintainability and expandability of the code, so we must have an understanding of how future software teams are set up so that we can prepare documentation accordingly. To ease the burden on them, we must elicit preferred documentation formats.
-Some questions we would like to ask are:
-\begin{itemize}
-    \item When working with a system you did not develop yourself, rate(1-5) how helpful you find these documentation formats.
-    \begin{itemize}
-        \item  Markdown or other lightweight markup languages for README files.
-        \item Inline Documentation (Javadoc, Doxygen, XML Doc Comments, JSDoc, Docstrings)
-        \item Collaborative Wiki Formats, think online library documentation.
-        \item Modelling and Visual Formats (PlantUML, C4 Model)
-    \end{itemize}
-\end{itemize}
