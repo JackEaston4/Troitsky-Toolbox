@@ -320,9 +320,11 @@ Type: Automatic
 					
 Initial State: Troitsky Toolbox webserver is active and able to receive packets.
 					
-Input/Condition: Packet is received.
+Input/Condition: A script inputs logs into the webserver and makes 1000 requests to the webserver, half with secure protocols half with insecure.
 					
-Output/Result: Packet reject or negotiated.
+Output/Result: \\
+\texttt{Pass:} All modern and secure protocols and encryptions are negotiated and all outdated and insecure protocols are rejected.\\
+\texttt{Fail:} Any modern and secure protocols and encryptions are rejected or outdated and insecure protocols are negotiated.
 					
 How the test will be performed: Tools like Nmap or, Qualys SSL Labs, will scan the packet and observe the encryption protocol and cyphers. Only negotiate with packets that have secure and modern protocols (TLS 1.2 \& 1.3), reject older protocols (SSLv3, TLS 1.0, \& TLS 1.1) and weak cyphers (RC4, DES, or NULL) 
 					
@@ -364,11 +366,21 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: There are currently uses with sessions open in the web server
 
-  Input/Condition: User has been detected as inactive
+  Input/Condition: Test users has been detected as inactive.
 
-  Output/Result: If inactivity is long enough the users session is ended.
+  Output/Result: \\
+  \texttt{Pass:} The test user is inactive for 30 minutes (SESSION\_TIMEOUT) and they are timed out.\\
+  \texttt{Fail:} The test user is inactive for 30 minutes and isn't timed out or they are inactive for less than 30 minutes and are timed out.
 
-  How test will ve performed: If a user has had 0 input into the site for 5 minutes and inactivity timer is started, which after 30 mins of inactivity will end in a session timeout.
+
+  How the test will be performed: 
+  \begin{enumerate}
+    \item A script will have 100 test users log into the toolbox and be inactive
+    \item The script will read the WebServer logs and start a secondary timer for each user when the Webserver starts the inactivity timer for each user.
+    \item Half the test users will remain inactive for over 30 minutes and the other half will randomly become active before the 30 minute window (with a few users designed to become active at edge cases like the start of the inactivity timer and the end.).
+    \item The script pauses each users secondary timer when they are timed out or become active.
+    \item The test passes if all secondary timers align with the 30 minute inactivity timeout window.
+  \end{enumerate}
 \end{enumerate}
 
 \subsubsection{Access Control System}
@@ -382,7 +394,9 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Input/Condition: Updates to the Access Control System is pushed to the project.
 
-  Output/Result: Password hashing is accurate and secure.
+  Output/Result:\\
+  \texttt{Pass:} Sample passwords are stored in the correct positions within the hash table\\
+  \texttt{Fail:} Sample password are stored in the incorrect positions within the hash table or don't exist within the hash table.
 
   How test will be preformed:  
   \begin{enumerate}
@@ -414,7 +428,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \subsubsection{Toolbox Broker}
 \paragraph{Extensibility and Overhead Management}
 \begin{enumerate}
-  \item T-NF-TB-1-1
+  \item T-NFR-TB-1-1
   
   Type: Automatic / Manual 
 
@@ -433,7 +447,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
     \item A test request is sent to the new service to confirm it connects.
     \item A test request is sent to existing services to ensure backward compatibility and system stability remain intact.
   \end{enumerate}
-  \item T-NF-TB-2-1
+  \item T-NFR-TB-2-1
   
   Type: Automatic
 
@@ -454,7 +468,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \end{enumerate}
 \paragraph{Request Logging}
 \begin{enumerate}
-  \item T-NF-TB-3-1: 
+  \item T-NFR-TB-3-1: 
   Type: Automatic
 
   Initial State:The Toolbox Broker is running, and its logging mechanism is accessible and at a known starting point.
@@ -813,6 +827,15 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \begin{tabularx}{\textwidth}{|l|X|X|}
 \hline
 \textbf{Test Case ID} & \textbf{SRS Requirement} & \textbf{Hazard Analysis Requirement} \\ \hline
+T-NFR-WS-2-1 & NFR-WS-2 & N/A \\ \hline
+T-NFR-WS-2-2 & NFR-WS-2 & N/A \\ \hline
+T-NFR-WS-2-3 & NFR-WS-2 & N/A \\ \hline
+T-NFR-WS-3-1 & NFR-WS-3 & N/A \\ \hline
+T-NFR-AC-1/2-1 & NFR-AC-1, NFR-AC-2 & NA \\ \hline
+T-NFR-AC-1/2-2 & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
+T-NFR-TB-1-1 & NFR-TB-1 & N/A\\ \hline
+T-NFR-TB-2-1 & NFR-TB-2 & N/A \\ \hline
+T-NFR-TB-3-1 & NFR-TB-3 & N/A \\ \hline
 T-NFR-KR-1-1 & NFR-KR-1 & N/A \\ \hline
 T-NFR-KR-2-1 & NFR-KR-2 & SR-KR-1 (External Backup) \\ \hline
 T-NFR-MA-1-1 & NFR-MA-1 & N/A \\ \hline
