@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{float}
 \usepackage{hyperref}
 
 \hypersetup{
@@ -173,7 +174,7 @@ integration with them is tested.
 
 \subsubsection{SRS - Requirements Elicitation Survey}
 
-In addition to the core interviews for the fall CD, a survey was performed to aid and help justify the requirements elicitation process, specifically with regards to the prioritization of included services within the SRS \citep{TroitskySRS}.
+A survey was performed to aid and help justify the requirements elicitation process, specifically with regards to the prioritization of included services within the SRS \citep{TroitskySRS}.
 The \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/SurveyDesign.md}{survey design report} and 
 \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/Troitsky%20Toolbox%20%E2%80%94%20Member%20Needs%20%26%20Service%20Priority%20Survey.csv}{collected raw data} 
 are stored in the project repository, under the interview CD folder.
@@ -186,12 +187,7 @@ The questions are listed in Appendix~\ref{app:member-survey}.
 
 The primary CD for the fall term development is interviews conducted with core stakeholders: experienced Troitsky club members and executives. These semi-structured interviews will 
 help outline expectations and prioritization of services from knowledgeable members. These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
-toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members.
-
-\paragraph{Interview participants} Focus on more experienced members, who have a better understanding of the club and competition needs. Executives, team captains and coaches 
-will be focused as they bring different perspectives tha the services wishes to support.
-
-\paragraph{Role in V\&V} The interviews will primarily validate the decision made in the SRS, helping identity any differences between assumptions made and true user requirements. The interviews will also 
+toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members. The interviews will primarily validate the decision made in the SRS, helping identity any differences between assumptions made and true user requirements. The interviews will also 
 help identify what data is able to be collected, checking with experienced members who have years of personal and team data collected. 
 
 \paragraph{Timeline} A scheduling tool link will be sent out November 3rd, 2026, used to collect possible times for the interviews with the selected members. 
@@ -204,14 +200,8 @@ The interviews will be scheduled for before the CD-Fall deadline of 16 November 
 The CD completed in the winter term will be a usability report, allowing for a more complete assessment of the functional usability of the toolbox. 
 This round of testing will be performed with a more complete iteration of the product, allowing for more complete analysis of different system services' usability. 
 Users will be gathered spanning different experience levels, both in club experience and technical experience (modelling), creating valuable data about the system's performance. 
-Specific user functions will be tested, with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task.
-
-This CD will further strengthen the V\&V of the system, ensuring that complete functional and non-functional requirements come together into a fully usable service.
-
-\paragraph{Participants} Club members with different levels of club and modelling experience, grouped as new members, experienced members, and
-executives. For this testing, experience will be separated both at the club and modelling/technical experience level, ensuring that individual bias is taken into account for usability. 
-
-\paragraph{Role in V\&V} The usability test validates the usability requirements, and ensures that core user experiences/features are covered.
+Specific user functions will be tested, with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task. This CD will 
+further strengthen the V\&V of the system, ensuring that complete functional and non-functional requirements come together into a fully usable service.
 
 \paragraph{Timeline} Testing takes place after the Rev 0 presentations (1--11 February 2027) and before the final demonstrations
 (15--21 March 2027).
@@ -2127,9 +2117,7 @@ inclusive)\\
 \subsection{Member Needs Survey}
 \label{app:member-survey}
 
-The following questions were administered to McMaster Troitsky Club members
-through an anonymous Google Forms survey between 7 and 15 October 2026
-($n = 20$). The questions are listed as administered; the results are reported
+The questions are listed as administered; the results are reported
 in SRS Section P.7.1 \citep{TroitskySRS}.
 
 \begin{enumerate}
@@ -2175,15 +2163,13 @@ in SRS Section P.7.1 \citep{TroitskySRS}.
 \subsection{Stakeholder Interview Guide}
 \label{app:interview-guide}
 
-The Fall CD interviews will be semi-structured, with questions tailored primarily to experienced members, and additionally to specific roles (executives, team captains, and coaches).
-The questions outlined below are designed to solidify the requirements elicitation process, and ensure that the SRS requirements are validated against stakeholder needs. Interviews will 
-be around 10-15 minutes long, and conducted with 2-3 participants at a time, allowing for both discussion and individual responses. No names will be recorded, only information regarding 
-the background of the members, and transcripts will be anonymized before being reported in the repository. The interview guide is intended to be flexible allowing for experienced members to direct 
+The Fall CD interviews will be semi-structured, with questions tailored primarily to experienced members, and additionally to specific roles. Interviews will 
+be around 10--15 minutes long, and conducted with 2--3 participants at a time, allowing for both discussion and individual responses. No names will be recorded, only information regarding 
+the background of the members, and transcripts will be anonymized before being reported in the repository. 
+
+The interview guide is intended to be flexible allowing for experienced members to direct 
 the discussion to areas they feel are important, while still ensuring that core concerns are addressed. As many of the interviewed members will be a part of many of these user groups, certain interviews will cover 
 multiple question sets.
-
-Before each interview, participants give informed consent: they will have purpose of the interview described, informed that participation is voluntary and that they
-may skip any question or stop at any time, and focusing on protecting their privacy.
 
 \paragraph{All participants, General Questions}
 \begin{enumerate}
@@ -2216,11 +2202,12 @@ may skip any question or stop at any time, and focusing on protecting their priv
 \subsection{Usability Test Plan and Survey}
 \label{app:usability}
 
-\paragraph{Goals and measures} The usability test is quantitative and qualitative, measuring the usability goals in
+\paragraph{Goals and measures}\mbox{}\\
+The usability test is quantitative and qualitative, measuring the usability goals in
 Table~\ref{tab:usability-goals} with some valuable quantitative data (completion, time, errors, and ratings), while also addressing 
 the problems behind them.
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \caption{Usability goals and measures}
 \label{tab:usability-goals}
@@ -2239,28 +2226,17 @@ Memorability & The recall of certain system properties between tasks\\
 \end{tabularx}
 \end{table}
 
-\paragraph{Participants} Participants are grouped by experience level, both in club experience and modelling/technical experience, 
+\paragraph{Participants}\mbox{}\\
+Participants are grouped by experience level, both in club experience and modelling/technical experience, 
 to ensure that individual bias is taken into account for usability. The groups are:
 \begin{itemize}
-  \item New members (0-1 years in the club) and no modelling experience
+  \item New members (0--1 years in the club) and no modelling experience
   \item Experienced members (2+ years in the club) and some modelling experience
   \item Executives and technically experienced members (2+ years in the club) and modelling experience
 \end{itemize}
 
-\paragraph{General Usability Testing Format}
-\begin{enumerate}
-  \item The participant is given a brief introduction to the toolbox and explained the procedure and purpose of the usability testing,
-    and gives informed consent: participation is voluntary, the participant may stop at any time, and no names are recorded.
-  \item The participant completes the pre-test questionnaire, gathering user information.
-  \item The participant completes the tasks outlined in Table~\ref{tab:usability-tasks}.
-  \item After each task, the participant answers the post-task question, recording the time and any additional notes on each task.
-  \item After all tasks, the participant completes the post-test questionnaire.
-\end{enumerate}
-
-If a second round is run with the same participants, the order of the tasks is changed between rounds to account for
-learning effects.
-
-\paragraph{Pre-test questionnaire} These repeat questions 1--3 of the member
+\paragraph{Pre-test questionnaire}\mbox{}\\
+These repeat questions 1--3 of the initial member requirements elicitation
 survey, focusing on gathering only user information important to generalizing 
 their test results, adjusting for experience levels.
 \begin{enumerate}
@@ -2271,9 +2247,10 @@ their test results, adjusting for experience levels.
     Experience modelling in and out of class]}
 \end{enumerate}
 
-\paragraph{Tasks} Tasks follow the usage scenarios in SRS Section G.5.
+\paragraph{Tasks}\mbox{}\\
+Tasks follow the usage scenarios in SRS Section G.5.
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \caption{Usability test tasks}
 \label{tab:usability-tasks}
@@ -2304,12 +2281,14 @@ UT-7 & Upload a provided material test file. & The data is stored with the
 \end{tabularx}
 \end{table}
 
-\paragraph{Post-task question} Overall, how difficult or easy was this task?
+\paragraph{Post-task question}\mbox{}\\
+Overall, how difficult or easy was this task?
 \textbf{[1 = very difficult, 5 = very easy]} What would you adjust from the workflow to make 
 this task easier?
 
-\paragraph{Post-test questionnaire} The questionnaire begins with instructions, ensuring users understand the rating system, 
-1(strongly disagree) to 5 (strongly agree), or N/A if it does not apply to the tasks you completed.
+\paragraph{Post-test questionnaire}\mbox{}\\
+The questionnaire begins with instructions, ensuring users understand the rating system, 
+1 (strongly disagree) to 5 (strongly agree), or N/A if it does not apply to the tasks you completed.
 \begin{enumerate}
   \item The Toolbox did what I expected it to do in each task. [Effectiveness]
   \item I could complete the tasks without unnecessary steps. [Efficiency]
@@ -2319,11 +2298,12 @@ this task easier?
   \item I would remember how to do these tasks the next time I use the Toolbox. [Memorability]
   \item I could tell which units the analysis results were given in. [SR-MA-2]
   \item I understood what the failure load estimate assumes about my bridge. [FR-PA-4]
-  \item What was the most confusing part of the Toolbox? \textbf{[Paragraph]}
-  \item If you could change one thing about the Toolbox, what would it be? \textbf{[Paragraph]}
+  \item What was the most confusing part of the Toolbox?
+  \item If you could change one thing about the Toolbox, what would it be?
 \end{enumerate}
 
-\paragraph{Analysis} Each observed problem is assessed by the gulf it brings attention to, either the gulf of execution or the gulf of evaluation, 
+\paragraph{Analysis}\mbox{}\\
+Each observed problem is assessed by the gulf it brings attention to, either the gulf of execution or the gulf of evaluation, 
 helping to identify the underlying causes, and by the Norman design principle
 it violates or promotes (discoverability, feedback, mapping, constraints, affordance, signifiers, or
 conceptual model).
