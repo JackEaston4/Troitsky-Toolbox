@@ -346,7 +346,7 @@ User password leak & A malicious party may use a legitimate user's account & Poo
 weak passwords & M & L & Enforce password length and blocklist checks; deactivate a compromised account until
 the member changes their password & FR-AC-4, SR-AC-2 & H-AC-2\\
 \cmidrule(l){1-8}
-Forgot password & User cannot log in & User forgot their password & L & H & Allow a privileged member to reset
+Password unknown to user & User cannot log in & User forgot password & L & H & Allow a privileged member to reset
 the member's password & \textit{None} & H-AC-3\\
 \cmidrule(l){1-8}
 Right not granted & User cannot perform a necessary function & User not given the required role & L & M &
@@ -405,9 +405,9 @@ Exposure of sensitive club information & If stored as plain-text onboarding docs
 \cmidrule(l){1-8}
 Partial transaction or distributed state failure & KT states that documentation exists within the KR when in fact it doesn't & When a transition document is completed the KT registers the completion but the handoff to the KR fails. & H & L & Have the KR send an acknowledgement  & FR-BR-4, SR-KT-5 & H-KT-6 \\
 \rowcolor{gray!25}\multicolumn{8}{l}{\rule{0pt}{2.6ex}\textbf{System-Wide (SYS)} --- SRS S.2.8}\\*
-Compilation error due to dependency update & Project does not compile & A third-party dependency is updated, and the functions used from it are degraded & H & L & Research and review the dependencies the Troitsky Toolbox will rely on, and confirm that they receive quality updates and that the core functionality the Toolbox depends on will remain available& SR-SYS-1 & H-SYS-1\\
+Dependency-related compilation error & Software does not work & A third-party dependency is updated, and the functions used from it are degraded & H & L & Research and review the dependencies the Troitsky Toolbox will rely on, and confirm that they receive quality updates and that the core functionality the Toolbox depends on will remain available& SR-SYS-1 & H-SYS-1\\
 \cmidrule(l){1-8}
-Code deployed without testing or review & Faults and errors in the deployed product & Lack of testing and review & H & M & Use a CI/CD pipeline for standardized testing, along with an outlined code review procedure to reduce the overhead of reviews & SR-SYS-2 & H-SYS-2\\
+Miscallaneous faults and errors & Software does not work & Bad development practices lead to production update without testing and review & H & M & Use a CI/CD pipeline for standardized testing, along with an outlined code review procedure to reduce the overhead of reviews & SR-SYS-2 & H-SYS-2\\
 \cmidrule(l){1-8}
 Software abandonment & Toolbox becomes unusable after the initial capstone team leaves & The initial capstone team leaves a project that is too difficult for the remaining software subteam to maintain & H & M & Document every part of the development process, have multiple pieces of documentation for all critical system components, and train replacements before the initial capstone team graduates & NFR-SYS-4, SR-SYS-3 &  H-SYS-3\\
 \end{longtable}}
