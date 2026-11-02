@@ -719,8 +719,7 @@ be involved? Be specific.}
 
 \begin{enumerate}
 
-\item{T-NFR-WS-2-1\\}
-
+\item \testdef{T.NFR.WS.2.1}\\
 Type: Automatic
 					
 Initial State: Troitsky Toolbox webserver is active and able to receive packets.
@@ -733,8 +732,7 @@ Output/Result: \\
 					
 How the test will be performed: Tools like Nmap or, Qualys SSL Labs, will scan the packet and observe the encryption protocol and cyphers. Only negotiate with packets that have secure and modern protocols (TLS 1.2 \& 1.3), reject older protocols (SSLv3, TLS 1.0, \& TLS 1.1) and weak cyphers (RC4, DES, or NULL) 
 					
-\item{T-NFR-WS-2-2\\}
-
+\item \testdef{T.NFR.WS.2.2}\\
 Type: Automatic.
 					
 Initial State: Webserver is running and currently stable
@@ -749,8 +747,8 @@ How the test will be performed: Scripts written to assert
   \item Requests to \texttt{https://...} succeeds and returns a 200 OK
   \item A request using a deliberately downgrade TLS version throws a connection reset/SSL handshake error. 
 \end{enumerate}
-\item{T-NFR-WS-2-3\\}
 
+\item \testdef{T.NFR.WS.2.3}\\
 Type: Dynamic
 
 Initial State: Webserver is running and currently stable
@@ -765,8 +763,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Webserver Timeout}
 \begin{enumerate}
-  \item T-NFR-WS-3-1
-
+  \item \testdef{T.NFR.WS.3.1}\\
   Type: Automatic
 
   Initial State: There are currently uses with sessions open in the web server
@@ -791,8 +788,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \subsubsection{Access Control System}
 \paragraph{Security Credential and Role Alteration Ensurance}
 \begin{enumerate}
-  \item T-NFR-AC-1/2-1
-  
+  \item \testdef{T.NFR.AC.1.1}\\
   Type: Automatic
 
   Initial State: Webserver is running and currently stable
@@ -811,8 +807,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 
   
-  \item T-NFR-AC-1/2-2
-  
+  \item \testdef{T.NFR.AC.1.2}\\
   Type: Automatic
 
   Initial State: A user is actively logged into the system with a specific role and is currently interacting with data they are authorized to see.
@@ -833,8 +828,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \subsubsection{Toolbox Broker}
 \paragraph{Extensibility and Overhead Management}
 \begin{enumerate}
-  \item T-NFR-TB-1-1
-  
+  \item \testdef{T.NFR.TB.1.1}\\
   Type: Automatic / Manual 
 
   Initial State: The Toolbox Broker is running normally and successfully routing requests to existing, standard services. A new, isolated "mock" service has been created but is not yet known to the system.
@@ -852,8 +846,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
     \item A test request is sent to the new service to confirm it connects.
     \item A test request is sent to existing services to ensure backward compatibility and system stability remain intact.
   \end{enumerate}
-  \item T-NFR-TB-2-1
   
+  \item \testdef{T.NFR.TB.2.1}\\
   Type: Automatic
 
   Initial State: The Toolbox Broker and a target services are running under normal system conditions.
@@ -863,6 +857,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Output/Results:\\
   \texttt{Pass:} The difference between the  baseline response time and the broker response time is strictly MAX\_BROKER\_OVERHEAD (100 ms) or less for all test requests.\\
   \texttt{Fail:} The presence of the broker delays the requests by more than 100ms
+  
   How the test will be preformed:
   \begin{enumerate}
     \item An automate script sends 1000 requests directly to a test service and records the average response time
@@ -873,7 +868,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \end{enumerate}
 \paragraph{Request Logging}
 \begin{enumerate}
-  \item T-NFR-TB-3-1: 
+  \item \testdef{T.NFR.TB.3.1}\\
   Type: Automatic
 
   Initial State:The Toolbox Broker is running, and its logging mechanism is accessible and at a known starting point.
@@ -896,8 +891,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Search Responsiveness}
 \begin{enumerate}
-  \item{T-NFR-KR-1-1\\}
-  
+  \item \testdef{T.NFR.KR.1.1}\\
   Type: Automatic (Performance)
 
   Initial State: The Knowledge Repository database is populated with 10,000 mock items (documents, bridge models, test results).
@@ -913,8 +907,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Data Durability and External Backup}
 \begin{enumerate}
-  \item{T-NFR-KR-2-1\\}
-  
+  \item \testdef{T.NFR.KR.2.1}\\
   Type: Automatic / Manual (Infrastructure)
 
   Initial State: The Knowledge Repository contains newly uploaded files and database records. The backup schedule is active.
@@ -933,8 +926,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Strict STEP File Upload}
 \begin{enumerate}
-  \item{T-NFR-MA-1-1\\}
-  
+  \item \testdef{T.NFR.MA.1.1}\\
   Type: Automatic
 
   Initial State: The user is on the model upload page.
@@ -950,8 +942,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{3D Visualization Load Time}
 \begin{enumerate}
-  \item{T-NFR-MA-2-1\\}
-  
+  \item \testdef{T.NFR.MA.2.1}\\
   Type: Automatic (Performance)
 
   Initial State: A valid, typical club bridge STEP file is stored in the repository.
@@ -967,8 +958,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Extraction Accuracy}
 \begin{enumerate}
-  \item{T-NFR-MA-3-1\\}
-  
+  \item \testdef{T.NFR.MA.3.1}\\
   Type: Automatic
 
   Initial State: A standardized test STEP file with exact, mathematically known dimensions is uploaded.
@@ -987,8 +977,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Estimate Accuracy}
 \begin{enumerate}
-  \item{T-NFR-PA-1-1\\}
-  
+  \item \testdef{T.NFR.PA.1.1}\\
   Type: Automatic (Algorithm Validation)
 
   Initial State: The system holds STEP models of past club bridges, alongside the actual recorded failure loads from past competitions.
@@ -1004,8 +993,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Computation Time}
 \begin{enumerate}
-  \item{T-NFR-PA-2-1\\}
-  
+  \item \testdef{T.NFR.PA.2.1}\\
   Type: Automatic (Performance)
 
   Initial State: A typical club bridge model is loaded.
@@ -1021,8 +1009,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Extensibility of Metrics}
 \begin{enumerate}
-  \item{T-NFR-PA-3-1\\}
-  
+  \item \testdef{T.NFR.PA.3.1}\\
   Type: Manual (Architecture check)
 
   Initial State: The PA system codebase is open in a development environment.
@@ -1041,8 +1028,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Check Correctness (No False Passes)}
 \begin{enumerate}
-  \item{T-NFR-RC-1-1\\}
-  
+  \item \testdef{T.NFR.RC.1.1}\\
   Type: Automatic
 
   Initial State: A test suite of bridge models exists. Some are perfectly compliant, others have specific, known rule violations (e.g., too heavy, clearance too low).
@@ -1058,8 +1044,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Rule Updatability (No Code Changes)}
 \begin{enumerate}
-  \item{T-NFR-RC-2-1\\}
-  
+  \item \testdef{T.NFR.RC.2.1}\\
   Type: Manual
 
   Initial State: The system is live. An executive user is logged in.
@@ -1078,8 +1063,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Result Import and Export}
 \begin{enumerate}
-  \item{T-NFR-MT-1-1\\}
-  
+  \item \testdef{T.NFR.MT.1.1}\\
   Type: Automatic
 
   Initial State: The user is on the Material Testing interface.
@@ -1095,8 +1079,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Traceability}
 \begin{enumerate}
-  \item{T-NFR-MT-2-1\\}
-  
+  \item \testdef{T.NFR.MT.2.1}\\
   Type: Automatic
 
   Initial State: Material properties have been aggregated from a batch of test results.
@@ -1115,8 +1098,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Findability}
 \begin{enumerate}
-  \item{T-NFR-KT-1-1\\}
-  
+  \item \testdef{T.NFR.KT.1.1}\\
   Type: Manual (Usability)
 
   Initial State: A brand new user (simulating a new executive) logs into the system for the first time.
@@ -1132,8 +1114,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Longevity (PDF Export)}
 \begin{enumerate}
-  \item{T-NFR-KT-2-1\\}
-  
+  \item \testdef{T.NFR.KT.2.1}\\
   Type: Automatic
 
   Initial State: A completed exit document exists in the system.
@@ -1152,8 +1133,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Browser Support}
 \begin{enumerate}
-  \item{T-NFR-SYS-1-1\\}
-  
+  \item \testdef{T.NFR.SYS.1.1}\\
   Type: Manual / Automated (Cross-Browser)
 
   Initial State: The web application is deployed to a staging environment.
@@ -1169,8 +1149,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Capacity and Concurrency}
 \begin{enumerate}
-  \item{T-NFR-SYS-2-1\\}
-  
+  \item \testdef{T.NFR.SYS.2.1}\\
   Type: Automatic (Stress Test)
 
   Initial State: The application is running under normal conditions.
@@ -1186,8 +1165,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Service Independence}
 \begin{enumerate}
-  \item{T-NFR-SYS-3-1\\}
-  
+  \item \testdef{T.NFR.SYS.3.1}\\
   Type: Automatic (Chaos Testing)
 
   Initial State: All services are running normally.
@@ -1203,8 +1181,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \paragraph{Maintainability}
 \begin{enumerate}
-  \item{T-NFR-SYS-4-1\\}
-  
+  \item \testdef{T.NFR.SYS.4.1}\\
   Type: Manual (Developer Onboarding)
 
   Initial State: A new Software Subteam recruit has just been granted repository access.
@@ -1224,80 +1201,57 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
-\begin{table}[htbp]
-\centering
-\caption{Traceability between System Tests, SRS NFRs, and Hazard Analysis Requirements}
-\label{tab:nfr_test_traceability}
+
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|l|X|X|}
+\begin{xltabular}{\textwidth}{|l|X|X|}
+\caption{Traceability between System Tests, SRS Requirements, and Hazard Analysis Requirements}
+\label{tab:system_test_traceability}\\
 \hline
 \textbf{Test Case ID} & \textbf{SRS Requirement} & \textbf{Hazard Analysis Requirement} \\ \hline
-T-NFR-WS-2-1 & NFR-WS-2 & N/A \\ \hline
-T-NFR-WS-2-2 & NFR-WS-2 & N/A \\ \hline
-T-NFR-WS-2-3 & NFR-WS-2 & N/A \\ \hline
-T-NFR-WS-3-1 & NFR-WS-3 & N/A \\ \hline
-T-NFR-AC-1/2-1 & NFR-AC-1, NFR-AC-2 & NA \\ \hline
-T-NFR-AC-1/2-2 & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
-T-NFR-TB-1-1 & NFR-TB-1 & N/A\\ \hline
-T-NFR-TB-2-1 & NFR-TB-2 & N/A \\ \hline
-T-NFR-TB-3-1 & NFR-TB-3 & N/A \\ \hline
-T-NFR-KR-1-1 & NFR-KR-1 & N/A \\ \hline
-T-NFR-KR-2-1 & NFR-KR-2 & SR-KR-1 (External Backup) \\ \hline
-T-NFR-MA-1-1 & NFR-MA-1 & N/A \\ \hline
-T-NFR-MA-2-1 & NFR-MA-2 & N/A \\ \hline
-T-NFR-MA-3-1 & NFR-MA-3 & N/A \\ \hline
-T-NFR-PA-1-1 & NFR-PA-1 & N/A \\ \hline
-T-NFR-PA-2-1 & NFR-PA-2 & N/A \\ \hline
-T-NFR-PA-3-1 & NFR-PA-3 & N/A \\ \hline
-T-NFR-RC-1-1 & NFR-RC-1 & N/A \\ \hline
-T-NFR-RC-2-1 & NFR-RC-2 & N/A \\ \hline
-T-NFR-MT-1-1 & NFR-MT-1, NFR-MT-3 & N/A \\ \hline
-T-NFR-MT-2-1 & NFR-MT-2 & N/A \\ \hline
-T-NFR-KT-1-1 & NFR-KT-1 & N/A \\ \hline
-T-NFR-KT-2-1 & NFR-KT-2 & N/A \\ \hline
-T-NFR-SYS-1-1 & NFR-SYS-1 & N/A \\ \hline
-T-NFR-SYS-2-1 & NFR-SYS-2 & SR-WS-3 (Thread Safety) \\ \hline
-T-NFR-SYS-3-1 & NFR-SYS-3 & N/A \\ \hline
-T-NFR-SYS-4-1 & NFR-SYS-4 & SR-WS-1 (Code Testing) \\ \hline
-\end{tabularx}
-\end{table}
-\begin{xltabular}{\textwidth}{|L{3cm}|Y|}
-\caption{Functional Requirement Traceability Matrix}
-\label{TblTraceFR}\\
-\hline
-\textbf{Test Case ID} & \textbf{Requirements Verified}\\
-\hline
 \endfirsthead
 \hline
-\textbf{Test Case ID} & \textbf{Requirements Verified}\\
-\hline
+\textbf{Test Case ID} & \textbf{SRS Requirement} & \textbf{Hazard Analysis Requirement} \\ \hline
 \endhead
-\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3\\
-\hline
-\testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2, SR-WS-5\\
-\hline
-\testref{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2\\
-\hline
-\testref{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4\\
-\hline
-\testref{T.FR.KR.4.1} & FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4\\
-\hline
-\testref{T.FR.KR.4.2} & FR-KR-5, SR-KR-2, SR-KR-5\\
-\hline
-\testref{T.FR.MA.5.1} & FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3\\
-\hline
-\testref{T.FR.MA.5.2} & FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6\\
-\hline
-\testref{T.FR.PA.6.1} & FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4, SR-PA-1\\
-\hline
-\testref{T.FR.RC.7.1} & FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5\\
-\hline
-\testref{T.FR.MT.8.1} & FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5, SR-MT-2\\
-\hline
-\testref{T.FR.KT.9.1} & FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2, SR-KT-5\\
-\hline
-\testref{T.FR.KT.9.2} & FR-KT-3, FR-KT-4, SR-KT-3\\
-\hline
+\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3 & N/A \\ \hline
+\testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5 & SR-AC-2, SR-WS-5 \\ \hline
+\testref{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2 & N/A \\ \hline
+\testref{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4 & N/A \\ \hline
+\testref{T.FR.KR.4.1} & FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4 & SR-KR-4 \\ \hline
+\testref{T.FR.KR.4.2} & FR-KR-5 & SR-KR-2, SR-KR-5 \\ \hline
+\testref{T.FR.MA.5.1} & FR-MA-1, FR-MA-2, FR-MA-3 & SR-MA-1, SR-MA-3 \\ \hline
+\testref{T.FR.MA.5.2} & FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6 & N/A \\ \hline
+\testref{T.FR.PA.6.1} & FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4 & SR-PA-1 \\ \hline
+\testref{T.FR.RC.7.1} & FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5 & N/A \\ \hline
+\testref{T.FR.MT.8.1} & FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5 & SR-MT-2 \\ \hline
+\testref{T.FR.KT.9.1} & FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5 & SR-KT-2, SR-KT-5 \\ \hline
+\testref{T.FR.KT.9.2} & FR-KT-3, FR-KT-4 & SR-KT-3 \\ \hline
+\testref{T.NFR.WS.2.1} & NFR-WS-2 & N/A \\ \hline
+\testref{T.NFR.WS.2.2} & NFR-WS-2 & N/A \\ \hline
+\testref{T.NFR.WS.2.3} & NFR-WS-2 & N/A \\ \hline
+\testref{T.NFR.WS.3.1} & NFR-WS-3 & N/A \\ \hline
+\testref{T.NFR.AC.1.1} & NFR-AC-1, NFR-AC-2 & N/A \\ \hline
+\testref{T.NFR.AC.1.2} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
+\testref{T.NFR.TB.1.1} & NFR-TB-1 & N/A\\ \hline
+\testref{T.NFR.TB.2.1} & NFR-TB-2 & N/A \\ \hline
+\testref{T.NFR.TB.3.1} & NFR-TB-3 & N/A \\ \hline
+\testref{T.NFR.KR.1.1} & NFR-KR-1 & N/A \\ \hline
+\testref{T.NFR.KR.2.1} & NFR-KR-2 & SR-KR-1 (External Backup) \\ \hline
+\testref{T.NFR.MA.1.1} & NFR-MA-1 & N/A \\ \hline
+\testref{T.NFR.MA.2.1} & NFR-MA-2 & N/A \\ \hline
+\testref{T.NFR.MA.3.1} & NFR-MA-3 & N/A \\ \hline
+\testref{T.NFR.PA.1.1} & NFR-PA-1 & N/A \\ \hline
+\testref{T.NFR.PA.2.1} & NFR-PA-2 & N/A \\ \hline
+\testref{T.NFR.PA.3.1} & NFR-PA-3 & N/A \\ \hline
+\testref{T.NFR.RC.1.1} & NFR-RC-1 & N/A \\ \hline
+\testref{T.NFR.RC.2.1} & NFR-RC-2 & N/A \\ \hline
+\testref{T.NFR.MT.1.1} & NFR-MT-1, NFR-MT-3 & N/A \\ \hline
+\testref{T.NFR.MT.2.1} & NFR-MT-2 & N/A \\ \hline
+\testref{T.NFR.KT.1.1} & NFR-KT-1 & N/A \\ \hline
+\testref{T.NFR.KT.2.1} & NFR-KT-2 & N/A \\ \hline
+\testref{T.NFR.SYS.1.1} & NFR-SYS-1 & N/A \\ \hline
+\testref{T.NFR.SYS.2.1} & NFR-SYS-2 & SR-WS-3 (Thread Safety) \\ \hline
+\testref{T.NFR.SYS.3.1} & NFR-SYS-3 & N/A \\ \hline
+\testref{T.NFR.SYS.4.1} & NFR-SYS-4 & SR-WS-1 (Code Testing) \\ \hline
 \end{xltabular}
 
 FR-KT-5 is a Could requirement in SRS S.5, implemented only if time allows, so
@@ -1308,9 +1262,6 @@ its behaviour, so they are verified as part of implementation verification
 rather than by system tests. The safety and security requirements that the
 Hazard Analysis Roadmap delays until after the capstone are not tested:
 SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1, SR-KT-4, SR-MT-1, and SR-MT-3.
-
-% Non-functional requirement traceability (Section 4.2 tests) to be added below.
-
 \section{Unit Test Description}
 
 \wss{This section should not be filled in until after the MIS (detailed design
