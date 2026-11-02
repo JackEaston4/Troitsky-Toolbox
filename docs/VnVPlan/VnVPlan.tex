@@ -15,6 +15,23 @@
 \input{../Comments.text}
 \input{../Common.text}
 
+% Tables: xltabular keeps a table where it is written and lets it break across
+% pages. L{width} and Y are ragged-right versions of p{width} and X, so long
+% words do not stretch or overflow the cells.
+\usepackage{longtable}
+\usepackage{xltabular}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% \testdef marks where a test is defined; \testref links to it.
+\newcommand{\testdef}[1]{\hypertarget{test:#1}{#1}}
+\newcommand{\testref}[1]{\hyperlink{test:#1}{#1}}
+% \cname typesets a symbolic constant, allowing line breaks after underscores;
+% \const also links it to the Symbolic Parameters appendix. \cname is robust so
+% that it can be used in captions.
+\DeclareRobustCommand{\cname}[1]{{\renewcommand{\_}{\textunderscore\allowbreak}\textsc{#1}}}
+\newcommand{\const}[1]{\hyperref[SecSymbolicParameters]{\cname{#1}}}
+
 \begin{document}
 
 \title{System Verification and Validation Plan for \progname{}} 
@@ -232,11 +249,6 @@ the contents of the subsections.}
 
 \subsection{Tests for Functional Requirements} \label{SecFRTests}
 
-% \testdef marks where a test is defined; \testref links to it from the
-% traceability table in Section~\ref{SecTraceability}.
-\newcommand{\testdef}[1]{\hypertarget{test:#1}{#1}}
-\newcommand{\testref}[1]{\hyperlink{test:#1}{#1}}
-
 The tests below are categorized by the components defined in Section S.2 of the
 SRS \citep{TroitskySRS}, so that every functional requirement is covered. Each
 test is a system-level test of the deployed system, following a workflow that a
@@ -248,6 +260,13 @@ data integrity, and access control identified as primary objectives in the
 Objectives section, while functional usability is assessed by the non-functional
 tests and the winter usability report.
 
+Inputs and expected outputs refer to the symbolic constants of
+Table~\ref{TblSymbolicConstants} and the test data of Table~\ref{TblTestData}
+(Symbolic Parameters appendix), shown in \textsc{small capitals}. Tests whose
+outputs are numerical or follow from a formula are automated, so that they can be
+repeated on every change; tests that depend on what a member sees on screen are
+manual.
+
 \subsubsection{Web Server (S.2.1)}
 
 \begin{enumerate}
@@ -255,12 +274,12 @@ tests and the winter usability report.
 \item \testdef{T.FR.WS.1.1}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} System deployed. User not logged in.\\
-\textbf{Input:} User opens the public landing page, then attempts to open a club
-service. User then logs in with valid credentials, uses the service, and logs
-out.\\
-\textbf{Output:} The landing page is shown without logging in. The club service
-redirects to the login page until the user logs in, and is no longer accessible
-after logout.\\
+\textbf{Input:} User opens the public landing page, then attempts to open the
+Knowledge Repository. User then logs in with valid credentials, opens the
+Knowledge Repository, and logs out.\\
+\textbf{Output:} The landing page is shown without logging in. The Knowledge
+Repository redirects to the login page until the user logs in, and is no longer
+accessible after logout.\\
 \textbf{Derivation:} Verifies FR-WS-1, FR-WS-2, FR-WS-3.
 
 \end{enumerate}
@@ -272,26 +291,31 @@ after logout.\\
 \item \testdef{T.FR.AC.2.1}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} An executive is logged in.\\
-\textbf{Input:} The executive creates an account, first with a password that does
-not meet the password requirements, then with one that does. The executive
-changes the account's role and team, ends its session from the server side, and
-deactivates it.\\
-\textbf{Output:} The invalid password is rejected with the reason. The account
-always has exactly one role and at most one team. Ending the session logs the
-user out, and the deactivated account cannot log in.\\
+\textbf{Input:} The executive creates an account three times: with a password
+one character shorter than \const{password\_min\_length}, with an entry of
+\const{password\_blocklist}, and with a password of lowercase letters only and
+\const{password\_max\_length} characters. The executive then changes the
+account's role and team, ends its session from the server side, and deactivates
+it.\\
+\textbf{Output:} The first two passwords are rejected, with a message stating
+that the password is too short or too common. The third is accepted, since no
+composition rules apply. The account always has exactly one role and at most one
+team. Ending the session logs the user out, and the deactivated account cannot
+log in.\\
 \textbf{Derivation:} Verifies FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2,
 SR-WS-5.
 
 \item \testdef{T.FR.AC.2.2}\\
 \textbf{Control:} Automatic\\
-\textbf{Initial State:} One account for each role, on two different teams. Each
-team has a current bridge model.\\
-\textbf{Input:} Each account requests each restricted operation (member
-management, rule configuration, season archiving, test result review) and each
+\textbf{Initial State:} One account for each role of FR-AC-2, on two different
+teams. Each team has a current bridge model.\\
+\textbf{Input:} A script requests, as each account, member management, team
+assignment, rule configuration, season archiving, test result review, and each
 team's current model.\\
-\textbf{Output:} Each request is allowed only for the roles that the SRS permits.
-Refused requests show an error and change nothing. Only members of a team can
-access its current models.\\
+\textbf{Output:} Member management, team assignment, and rule configuration are
+allowed only for executives and maintainers; season archiving and test result
+review only for executives; and a team's current model only for members of that
+team. Every other request is refused with an error and changes nothing.\\
 \textbf{Derivation:} Verifies FR-AC-3, FR-AC-6, FR-BR-2.
 
 \end{enumerate}
@@ -303,10 +327,11 @@ access its current models.\\
 \item \testdef{T.FR.BR.3.1}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} System has just been started. User logged in.\\
-\textbf{Input:} User opens each tool. One service is then stopped, and the user
-requests that service and another tool.\\
-\textbf{Output:} Every tool opens. The stopped service returns an error message
-instead of hanging, while the other tool keeps working.\\
+\textbf{Input:} User opens each tool. The Material Testing Manager is then
+stopped, and the user requests it, then searches the Knowledge Repository.\\
+\textbf{Output:} Every tool opens. The request to the stopped service returns an
+error message within \const{broker\_timeout} instead of hanging, and the search
+returns its results.\\
 \textbf{Derivation:} Verifies FR-BR-1, FR-BR-3, FR-BR-4.
 
 \end{enumerate}
@@ -319,23 +344,29 @@ instead of hanging, while the other tool keeps working.\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} User logged in. Repository contains items with known
 metadata.\\
-\textbf{Input:} User uploads files of common types with metadata, and one file
-without the required metadata. User then searches and filters the repository,
-previews a file, and downloads one.\\
-\textbf{Output:} Valid uploads are stored with their metadata, and the upload
-without required metadata is rejected with a message. Searches return exactly
-the matching items, and downloaded files are identical to the uploaded ones.\\
+\textbf{Input:} User uploads one file of each type in \const{common\_file\_types},
+each with a title, a category from \const{category\_list}, a year, a team, and
+tags. User then makes three uploads that each break one metadata rule: no title,
+a category not in \const{category\_list}, and no year. Finally, the user searches
+by keyword, filters by category, year, team, and tag, previews a file of each
+type in \const{preview\_file\_types}, and downloads every uploaded file.\\
+\textbf{Output:} Valid uploads are stored with their metadata. Each of the three
+invalid uploads is rejected, with a message naming the field. Searches and
+filters return exactly the items that match them, previews display in the
+browser, and each downloaded file has the same SHA-256 hash as the uploaded
+file.\\
 \textbf{Derivation:} Verifies FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4.
 
 \item \testdef{T.FR.KR.4.2}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} A member has uploaded an item.\\
 \textbf{Input:} The uploader edits the item, another member attempts to edit it,
-and an executive archives it. The repository's storage is then made unavailable,
+and an executive archives it. The repository's database server is then stopped,
 and a member uploads a file.\\
 \textbf{Output:} Each change asks for confirmation first, and the other member's
 edit is refused. The archived item no longer appears in search results but can
-still be opened. The failed upload shows an error message.\\
+still be opened. The failed upload shows an error message, and the file is not
+listed once the database is restarted.\\
 \textbf{Derivation:} Verifies FR-KR-5, SR-KR-2, SR-KR-5.
 
 \end{enumerate}
@@ -346,23 +377,30 @@ still be opened. The failed upload shows an error message.\\
 
 \item \testdef{T.FR.MA.5.1}\\
 \textbf{Control:} Manual\\
-\textbf{Initial State:} Team member logged in.\\
-\textbf{Input:} User uploads invalid and corrupted model files, then a reference
-STEP model with known properties, confirms the import summary, and rotates,
-zooms, and pans the 3D view.\\
-\textbf{Output:} Invalid files are rejected with the reason. The import summary
-shows extracted properties, including the model's dimensions and mass, that
-match the reference model's known values before any analysis is run. The 3D view responds to each interaction and matches the
-model in CAD. A model that exceeds the processing time limit is stopped with a
-message.\\
+\textbf{Initial State:} Team member logged in. \const{mat\_set\_a} is stored.\\
+\textbf{Input:} User uploads three invalid files: a PDF renamed with a
+\texttt{.step} extension, a STEP file with a header but no geometry, and
+\const{ref\_model} truncated to half its size. User then uploads
+\const{ref\_model} with \const{mat\_set\_a} selected, confirms the import
+summary, and rotates, zooms, and pans the 3D view. Finally, with
+\const{ma\_timeout} set to \const{ma\_timeout\_test} in the test deployment, the
+user uploads \const{ref\_model} again.\\
+\textbf{Output:} Each invalid file is rejected, with a message stating that it is
+not a STEP file or contains no readable geometry. Before any analysis, the import
+summary shows the dimensions of \const{ref\_model} within
+\const{dimension\_tolerance} and its mass within \const{calc\_tolerance} of the
+values in Table~\ref{TblTestData}. The 3D view responds to each interaction and
+matches the model in CAD. The last upload stops after \const{ma\_timeout\_test}
+with a message that the time limit was exceeded, and no model is stored.\\
 \textbf{Derivation:} Verifies FR-MA-1, FR-MA-2, FR-MA-3, SR-MA-1, SR-MA-3.
 
 \item \testdef{T.FR.MA.5.2}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} Two teams exist, with no current models.\\
-\textbf{Input:} A team member uploads a current model. A teammate, a member of the
-other team, and a former team member try to open it. An executive then archives
-the season's models, and a general member browses past designs.\\
+\textbf{Input:} A team member uploads \const{ref\_model} as a current model. A
+teammate, a member of the other team, and a former team member try to open it.
+An executive then archives the season's models, and a general member browses
+past designs.\\
 \textbf{Output:} Only the teammate can open the current model. After archiving, it
 becomes a past design recording its year and team, which every member can view
 and filter but not modify.\\
@@ -375,18 +413,20 @@ and filter but not modify.\\
 \begin{enumerate}
 
 \item \testdef{T.FR.PA.6.1}\\
-\textbf{Control:} Manual\\
-\textbf{Initial State:} A reference model whose failure load can be calculated
-by hand is stored, with two material data sets.\\
-\textbf{Input:} User runs a performance analysis of the reference model with
-each material set, then with the calculation failing or returning an invalid
-value.\\
-\textbf{Output:} The failure load and load-to-mass ratio match the values
-calculated by hand using SRS S.7.2, and change with the selected material set.
-The assumptions and limitations are shown with the results. When the calculation
-fails or returns an invalid value, an error is shown instead of an estimate.\\
+\textbf{Control:} Automatic (results) and Manual (displayed assumptions)\\
+\textbf{Initial State:} \const{ref\_model}, \const{mat\_set\_a}, and
+\const{mat\_set\_b} are stored.\\
+\textbf{Input:} A performance analysis of \const{ref\_model} is run with
+\const{mat\_set\_a}, then with \const{mat\_set\_b}, then with the calculation
+library made to return a non-finite stress.\\
+\textbf{Output:} For each material set, the failure load and load-to-mass ratio
+are within \const{calc\_tolerance} of the expected values in
+Table~\ref{TblTestData}, and the result names the material set used. The
+assumptions and limitations are shown with the results. For the non-finite
+stress, an error is shown instead of an estimate.\\
 \textbf{Derivation:} Verifies FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4,
-SR-PA-1.
+SR-PA-1. Expected values follow from SRS S.7.2, as derived in
+Table~\ref{TblTestData}.
 
 \end{enumerate}
 
@@ -395,16 +435,20 @@ SR-PA-1.
 \begin{enumerate}
 
 \item \testdef{T.FR.RC.7.1}\\
-\textbf{Control:} Manual\\
-\textbf{Initial State:} Executive logged in. Test models stored that pass, violate,
-and sit exactly at the competition rule limits.\\
-\textbf{Input:} The executive imports and edits a rule set for a competition
-year. A member then runs a compliance check on each test model.\\
-\textbf{Output:} The rule set is stored under its year with the edits applied.
-Each rule passes or fails as given by SRS S.7.3, and each failure shows the
-measured and allowed values. Rules that cannot be checked from the model are
-listed as manual checks.\\
+\textbf{Control:} Manual (rule set editing) and Automatic (compliance checks)\\
+\textbf{Initial State:} Executive logged in. The compliance models of
+Table~\ref{TblComplianceModels} are stored.\\
+\textbf{Input:} The executive imports \const{ruleset\_test}, adds a rule, edits
+its limit, and removes it. A script then runs a compliance check of each
+compliance model against \const{ruleset\_test}.\\
+\textbf{Output:} The rule set is stored under its year, and after each edit lists
+exactly the expected rules. \const{rc\_pass} and \const{rc\_limit} pass every
+rule, and each other compliance model fails only the rule it is named for,
+showing its measured value and the allowed range. The materials rule is listed
+as a manual check for every model.\\
 \textbf{Derivation:} Verifies FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5.
+Expected results follow from the \texttt{RuleComplianceCheck} predicate of SRS
+S.7.3, whose limits are inclusive.
 
 \end{enumerate}
 
@@ -414,14 +458,20 @@ listed as manual checks.\\
 
 \item \testdef{T.FR.MT.8.1}\\
 \textbf{Control:} Manual\\
-\textbf{Initial State:} Material test results from a previous year are stored.\\
-\textbf{Input:} User enters test results through the form, and imports a file
-that includes invalid rows. User views the comparison with the previous year,
-and an executive flags one result as invalid.\\
-\textbf{Output:} Valid results are stored, and wood results require a grain
-orientation. Invalid rows are rejected and identified. The comparison statistics
-match values calculated by hand, and the material properties are recomputed
-without the flagged result, which remains stored.\\
+\textbf{Initial State:} \const{mat\_set\_b} is stored as the previous year's
+results.\\
+\textbf{Input:} User enters the first specimen of \const{mat\_set\_a} through the
+form, first without a grain orientation, then with it. User imports the remaining
+specimens of \const{mat\_set\_a} from \const{mt\_import\_file}, which also
+contains four invalid rows. User views the comparison with \const{mat\_set\_b},
+and an executive flags the 840~N specimen of \const{mat\_set\_a} as invalid.\\
+\textbf{Output:} The entry without a grain orientation is rejected, and the second
+is stored. The four invalid rows are rejected, each identified by its row and
+field, and the valid rows are stored. The comparison shows the mean and sample
+standard deviation of each set given in Table~\ref{TblTestData}. After flagging,
+the strength of \const{mat\_set\_a} is recomputed to the flagged value in
+Table~\ref{TblTestData}, and the flagged specimen remains stored, marked
+invalid.\\
 \textbf{Derivation:} Verifies FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5,
 SR-MT-2.
 
@@ -433,17 +483,17 @@ SR-MT-2.
 
 \item \testdef{T.FR.KT.9.1}\\
 \textbf{Control:} Manual\\
-\textbf{Initial State:} Executive logged in.\\
+\textbf{Initial State:} Executive logged in. A past design is stored.\\
 \textbf{Input:} The executive opens their exit document template, saves a draft,
-and submits it, first with a reference to an item that does not exist, then with
-valid references while the repository is unable to save it, then with valid
-references while the repository is available. Another executive views the
-outstanding exit documents.\\
-\textbf{Output:} A template exists for each position, and the draft keeps its
-content. The invalid reference is rejected. While the repository cannot save
-it, the document is not marked as published and the executive is told. Once
-saved, it is published and can be found by search, and the outstanding list no
-longer includes the executive.\\
+and submits it three times: with a reference to a model identifier that does not
+exist, with a reference to the stored past design while the repository's
+database server is stopped, and with the same reference once it is restarted.
+Another executive then views the outstanding exit documents.\\
+\textbf{Output:} A template exists for each executive position and for team
+leads, and the draft keeps its content. The invalid reference is rejected. While
+the database is stopped, the document is not marked as published and the
+executive is told. Once saved, it is published and can be found by search, and
+the outstanding list no longer includes the executive.\\
 \textbf{Derivation:} Verifies FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5, SR-KT-2,
 SR-KT-5.
 
@@ -521,14 +571,17 @@ How test will be performed:
 
 \subsection{Traceability Between Test Cases and Requirements} \label{SecTraceability}
 
-\begin{table}[htbp]
-\centering
+\begin{xltabular}{\textwidth}{|L{3cm}|Y|}
 \caption{Functional Requirement Traceability Matrix}
-\label{TblTraceFR}
-\begin{tabular}{|l|p{0.65\textwidth}|}
+\label{TblTraceFR}\\
 \hline
 \textbf{Test Case ID} & \textbf{Requirements Verified}\\
 \hline
+\endfirsthead
+\hline
+\textbf{Test Case ID} & \textbf{Requirements Verified}\\
+\hline
+\endhead
 \testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3\\
 \hline
 \testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5, SR-AC-2, SR-WS-5\\
@@ -555,8 +608,7 @@ How test will be performed:
 \hline
 \testref{T.FR.KT.9.2} & FR-KT-3, FR-KT-4, SR-KT-3\\
 \hline
-\end{tabular}
-\end{table}
+\end{xltabular}
 
 FR-KT-5 is a Could requirement in SRS S.5, implemented only if time allows, so
 its part of \testref{T.FR.KT.9.1} is performed only if it is implemented.
@@ -704,10 +756,162 @@ How test will be performed:
 
 This is where you can place additional information.
 
-\subsection{Symbolic Parameters}
+\subsection{Symbolic Parameters} \label{SecSymbolicParameters}
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
+Constants already defined in Appendix A.1 of the SRS \citep{TroitskySRS} keep the
+same name and value. Table~\ref{TblSymbolicConstants} lists the constants used
+by the system tests for functional requirements, Table~\ref{TblTestData} the
+test data they use and its expected results, and
+Table~\ref{TblComplianceModels} the models used to test rule compliance.
+
+{\small
+\begin{xltabular}{\textwidth}{|L{3.5cm}|L{2.5cm}|Y|}
+\caption{Symbolic constants used by the system tests for functional
+requirements}
+\label{TblSymbolicConstants}\\
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Rationale (test cases)}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Constant} & \textbf{Value} & \textbf{Rationale (test cases)}\\
+\hline
+\endhead
+\cname{password\_min\_length} & 15 characters & Minimum length of a
+single-factor password in NIST SP 800-63B-4 \citep{NIST80063B4}, required by
+SR-AC-2 (T.FR.AC.2.1).\\
+\hline
+\cname{password\_max\_length} & 64 characters & NIST SP 800-63B-4 recommends
+permitting passwords of at least 64 characters, so long passwords must not be
+rejected or truncated (T.FR.AC.2.1).\\
+\hline
+\cname{password\_blocklist} & List of commonly used, expected, or compromised
+passwords & Required by NIST SP 800-63B-4. The test uses an entry of at least
+\cname{password\_min\_length} characters, so that it can only be rejected for
+being on the list (T.FR.AC.2.1).\\
+\hline
+\cname{common\_file\_types} & PDF, DOCX, XLSX, CSV, PPTX, PNG, JPG, STEP & The
+types of club material in the rationale of FR-KR-2: documents, spreadsheets,
+slides, photos of joints, and CAD models (T.FR.KR.4.1).\\
+\hline
+\cname{preview\_file\_types} & PDF, PNG, JPG & Displayed natively by every
+browser of NFR-SYS-1, so FR-KR-4 needs no conversion (T.FR.KR.4.1).\\
+\hline
+\cname{category\_list} & Design, Materials, Construction, Competition, Reports,
+Administration & The standardized category list of SR-KR-4, covering the content
+types of FR-KR-1. To be confirmed with the Troitsky club (T.FR.KR.4.1).\\
+\hline
+\cname{broker\_timeout} & 10~s & The limit for keeping a user's attention on a
+task \citep[ch.~5]{Nielsen1993}, as used for the time constants of SRS A.1.
+After it, the broker reports the service as unavailable (FR-BR-4)
+(T.FR.BR.3.1).\\
+\hline
+\cname{ma\_timeout} & 120~s & Time limit of SR-MA-3. Four times
+\cname{max\_model\_load\_time} (30~s, SRS A.1), so that a typical club model
+never reaches it (T.FR.MA.5.1).\\
+\hline
+\cname{ma\_timeout\_test} & 1~s & Value of \cname{ma\_timeout} in the test
+deployment, so that the timeout can be tested with \cname{ref\_model} instead of
+a very large model (T.FR.MA.5.1).\\
+\hline
+\cname{calc\_tolerance} & 1\% relative error & \cname{ref\_model} is statically
+determinate, so a linear-static analysis should match the hand calculation apart
+from rounding. Unlike \cname{failure\_load\_tolerance} (25\%, SRS A.1), it does
+not compare estimates with real bridges (T.FR.MA.5.1, T.FR.PA.6.1).\\
+\hline
+\cname{dimension\_tolerance} & 0.5~mm & Defined in SRS A.1 for NFR-MA-3
+(T.FR.MA.5.1).\\
+\hline
+\end{xltabular}
+}
+
+{\small
+\begin{xltabular}{\textwidth}{|L{2.4cm}|Y|L{4.0cm}|}
+\caption{Test data for the system tests for functional requirements}
+\label{TblTestData}\\
+\hline
+\textbf{Item} & \textbf{Definition} & \textbf{Expected values}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Item} & \textbf{Definition} & \textbf{Expected values}\\
+\hline
+\endhead
+\cname{ref\_model} & STEP model of a king post truss with members of
+2~mm~$\times$~10~mm cross-section ($A = 20$~mm$^2$): a bottom chord of two
+200~mm members, two 250~mm diagonals to an apex 150~mm above mid-span, and a
+150~mm vertical post. Pinned at one end, on a roller at the other, and loaded at
+the bottom node at mid-span. & Length 400~mm, height 150~mm, width 10~mm, total
+member length 1050~mm, volume 21\,000~mm$^3$.\\
+\hline
+\cname{mat\_set\_a} & Current year: five tension specimens of
+2~mm~$\times$~10~mm cross-section, grain parallel to the load, failing at 760,
+800, 820, 780, and 840~N. Density 0.50~g/cm$^3$. & Strengths 38, 40, 41, 39,
+42~MPa; mean 40.0~MPa; sample standard deviation 1.58~MPa. With the 840~N
+specimen flagged: mean 39.5~MPa.\\
+\hline
+\cname{mat\_set\_b} & Previous year: five specimens as above, failing at 680,
+720, 760, 700, and 740~N. Density 0.50~g/cm$^3$. & Strengths 34, 36, 38, 35,
+37~MPa; mean 36.0~MPa; sample standard deviation 1.58~MPa.\\
+\hline
+Analysis of \cname{ref\_model} & The post carries the full load $P$ in tension
+(the diagonals carry $0.83P$ and the chord $0.67P$), so by SRS S.7.2 the post
+fails first, when $P / A = \mu_{strength}$, giving
+$P_{fail} = \mu_{strength} \cdot A$. Mass is the volume times the density:
+21~cm$^3 \times 0.50$~g/cm$^3$. & Mass 10.5~g. With \cname{mat\_set\_a}: failure
+load 800~N, load-to-mass ratio 76.2~N/g. With \cname{mat\_set\_b}: 720~N,
+68.6~N/g.\\
+\hline
+\cname{mt\_import\_file} & CSV file in the standardized template of NFR-MT-1,
+containing specimens 2 to 5 of \cname{mat\_set\_a} and four invalid rows: a
+missing applied load, a thickness of $-2$~mm, an applied load of $-50$~N, and a
+width of 0~mm. & Specimens 2 to 5 stored; the four invalid rows rejected.\\
+\hline
+\cname{ruleset\_test} & Rule set for a test competition year, with values chosen
+for testing only: mass $\leq$ 750~g; length from 900 to 1100~mm; width from 100
+to 200~mm; clearance height $\geq$ 150~mm; and a materials rule (popsicle
+sticks, toothpicks, white glue, and dental floss only) that cannot be checked
+from a model. & See Table~\ref{TblComplianceModels}.\\
+\hline
+\end{xltabular}
+}
+
+{\small
+\begin{xltabular}{\textwidth}{|L{2.3cm}|L{1.2cm}|L{1.5cm}|L{1.4cm}|L{1.9cm}|Y|}
+\caption{Compliance models for \cname{ruleset\_test}. Their geometry is exact,
+so the extracted values equal those listed.}
+\label{TblComplianceModels}\\
+\hline
+\textbf{Model} & \textbf{Mass (g)} & \textbf{Length (mm)} & \textbf{Width (mm)}
+& \textbf{Clearance (mm)} & \textbf{Expected result}\\
+\hline
+\endfirsthead
+\hline
+\textbf{Model} & \textbf{Mass (g)} & \textbf{Length (mm)} & \textbf{Width (mm)}
+& \textbf{Clearance (mm)} & \textbf{Expected result}\\
+\hline
+\endhead
+\cname{rc\_pass} & 500 & 1000 & 150 & 200 & Passes every rule\\
+\hline
+\cname{rc\_limit} & 750 & 1100 & 100 & 150 & Passes every rule (limits are
+inclusive)\\
+\hline
+\cname{rc\_heavy} & 760 & 1000 & 150 & 200 & Fails mass only\\
+\hline
+\cname{rc\_long} & 500 & 1110 & 150 & 200 & Fails length only\\
+\hline
+\cname{rc\_short} & 500 & 890 & 150 & 200 & Fails length only\\
+\hline
+\cname{rc\_wide} & 500 & 1000 & 210 & 200 & Fails width only\\
+\hline
+\cname{rc\_narrow} & 500 & 1000 & 90 & 200 & Fails width only\\
+\hline
+\cname{rc\_low} & 500 & 1000 & 150 & 140 & Fails clearance only\\
+\hline
+\end{xltabular}
+}
 
 \subsection{Usability Survey Questions?}
 
