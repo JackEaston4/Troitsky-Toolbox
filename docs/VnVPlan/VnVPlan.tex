@@ -499,10 +499,10 @@ file.\\
 \item \testdef{T.FR.KR.4.2}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} A member has uploaded an item.\\
-\textbf{Input:} The uploader edits the item, another member attempts to edit it,
-and an executive archives it. The repository's database server is then stopped,
+\textbf{Input:} The uploader edits the item. Another non-executive member attempts to edit it.
+Afterwars, an executive archives it. The repository's database server is then stopped,
 and a member uploads a file.\\
-\textbf{Output:} Each change asks for confirmation first, and the other member's
+\textbf{Output:} Each change asks for confirmation first. The other member's
 edit is refused. The archived item no longer appears in search results but can
 still be opened. The failed upload shows an error message, and the file is not
 listed once the database is restarted.\\
@@ -2215,6 +2215,10 @@ The questionnaire begins with instructions, ensuring users understand the rating
   \item I would remember how to do these tasks the next time I use the Toolbox. [Memorability]
   \item I could tell which units the analysis results were given in. [SR-MA-2]
   \item I understood what the failure load estimate assumes about my bridge. [FR-PA-4]
+\end{enumerate}
+
+The questionnaire closes with two open-ended questions.
+\begin{enumerate}
   \item What was the most confusing part of the Toolbox?
   \item If you could change one thing about the Toolbox, what would it be?
 \end{enumerate}
@@ -2232,7 +2236,7 @@ conceptual models).
 \subsection{AI Tools Used}
 
 AI tools that were used were standard chatbots, including Claude, Gemini and ChatGPT. 
-Primarily using Opus 5.5 for general formatting and grammar checking throughout the document.
+Opus 5.5 was heavily used for general formatting, spell-checking and grammar checking throughout the document.
 
 \subsection{How and Where Used}
 
