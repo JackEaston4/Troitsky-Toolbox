@@ -58,30 +58,14 @@ Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
 
-~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
 
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
 
-\listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
@@ -96,17 +80,13 @@ in.}
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
-
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+
+ 
 
 \section{General Information}
 
@@ -223,8 +203,7 @@ further strengthen the V\&V of the system, ensuring that complete functional and
 
 \section{Plan}
 
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
+
 
   This sections contains the grand plan to verify and validate this project's documents and implemenation. It outlines 
   the team, how every document, including this on, will be verified, how the implemenation will be verified,
@@ -238,10 +217,6 @@ further strengthen the V\&V of the system, ensuring that complete functional and
 
 
 \subsection{Verification and Validation Team}
-
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
 
 This project is immense and requires a lot of work to verify and validate. 
 Peer review will be a guiding principle to catch individual errors and therefore, peer subject matter expertise shall
@@ -277,17 +252,9 @@ Isabella Vescio & Supervisor & An \textit{ex officio} role stemming from her rol
 
 \subsection{SRS Verification}
 
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
 
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
 
-\wss{Maybe create an SRS checklist?}
+
 
 The Software Requirements Specifications shall be verified in the following ways. In case mistakes are found or improvements are suggested, as they inevitably will, corrections will be made and the corrections shall be reviewed again.
 The above process is an iterative process and shall only terminate when the portion is deemed satisfactory.
@@ -302,10 +269,7 @@ The above process is an iterative process and shall only terminate when the port
 
 \subsection{Design Verification}
 
-\wss{Plans for design verification}
 
-\wss{The review will include reviews by your classmates}
-\wss{Create a checklists?}
 
 The design shall stem from the requirements and shall be verified in the ways below. The verification shall be an iterative process and shall continue until the design
 is determined to fulfill the needs of the project.
@@ -318,12 +282,9 @@ is determined to fulfill the needs of the project.
 \end{itemize}
 \subsection{Verification and Validation Plan Verification}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
 
-\wss{The review will include reviews by your classmates}
 
-\wss{Create a checklists?}
+
 
 This document shall be verified in the ways outlined below. All errors and weaknesses discovered through this iterative process shall
 be fixed and improved, respectively. This process shall only terminate when all errors are fixed and all weaknesses are either fixed or shown to be infeasible to fix.
@@ -341,12 +302,7 @@ near-certainty will suffice if this document is faithfully followed.
 
 \subsection{Implementation Verification}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
 
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
 
 The implemenation shall be throughly tested to find syntactic errors, semantic errors and weaknesses to be strengthened.
 Due to our meticulous development plan, requirements document, and design documents, test-driven development (TDD) is an excellent choice.
@@ -372,20 +328,6 @@ it is painstakingly obvious that the correction did not impact the test.
 
 \subsection{Automated Testing and Verification Tools}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
-
-\wss{If you have already done this in the development plan, you can point to
-that document.}
-
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
 
   As stated in the Development Plan (see Expected Technology section), unit testing shall occur through an establshed
   C\# unit testing tool, namely \href{https://learn.microsoft.com/en-us/visualstudio/test/getting-started-with-unit-testing?view=visualstudio&tabs=dotnet%2Cmstest}{MS Test}.
@@ -397,23 +339,6 @@ that document.}
 
 \subsection{Software Validation}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
 
 As stated in the SRS (see S.1), our software suite shall contain one main tasks, model analysis. 
 and many auxiliary tasks, namely a materials testing suite, a login suite, a knowledge repository (this includes both file upload and file search), and knowledge transfer tool and a broker to
@@ -1271,19 +1196,7 @@ implemented.
 
 \section{Unit Test Description}
 
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
 
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
 
 Unit tests are an integral part of the verification of the implementation of this project.
 Below is a sketch of the unit tests that will be employed in this software project. 
@@ -1314,9 +1227,7 @@ Below is a sketch of the unit tests that will be employed in this software proje
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+
 
   Below is a sketch of automated tests for the functional requirements. 
   First are the three major modules and below them are the auxiliary services. \\
@@ -1336,10 +1247,6 @@ Below is a sketch of the unit tests that will be employed in this software proje
 
 \subsubsection{Bridge Failure Module}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
 
 This module determines whether a bridge fails, i.e., whether there is an element in the bridge whose
 factor of safety is less than one. The examples below are illustrative of the test types, in reality
@@ -1359,7 +1266,7 @@ $\sigma_{API}(e_b) = 2 $.
 					
 Output: $BridgeFailure \equiv false$
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: 
 
 \begin{align*}
 BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1) \\
@@ -1383,7 +1290,7 @@ $\sigma_{API}(e_b) = 4 $.
 					
 Output: $BridgeFailure \equiv true$
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: 
 
 \begin{align*}
 BridgeFailure &\equiv (\exists e: \frac{\mu_{\text{strength}}(\text{elementMaterial}(e))}{\sigma_{\text{API}}(e)} < 1) \\
@@ -1418,11 +1325,6 @@ How test will be performed: Through MsTest within the .NET solution used for imp
 
 \subsubsection{Rules Compliance Module}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
 This module determines whether a bridge complies with the rules for the Troitsky competition.
 Because the competition rules change each year, the fields denoting rule-based constraints are variable so they
 can be easily updated. 
@@ -1456,7 +1358,7 @@ Input: This bridge weighs $5$ kg, has a length of $200$ m, a width of $50$ m and
 					
 Output: $isValid \equiv true$
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: 
 
 \begin{align*}
 isValid &\equiv iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \; \land \\ 
@@ -1478,7 +1380,7 @@ Input: This bridge weighs $5$ kg, has a length of $200$ m, a width of $61$ m and
 					
 Output: $isValid \equiv false$
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: 
 
 \begin{align*}
 isValid &\equiv iB(Wt, 0, maxWt) \land iB(Ln, minLn, maxLn) \; \land \\ 
@@ -1512,10 +1414,7 @@ How test will be performed: Through MsTest within the .NET solution used for imp
 
 \subsubsection{Bridge Scoring Module}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+
 
 This module determines the score of a bridge. The score is based on the formula in SRS section S.7.3 (3).
 
@@ -1844,12 +1743,6 @@ How test will be performed: Manually, through the front end.
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
 
 Most information to satisfy the non-functional requirements come from the functional tests above.
 Timing requirements shall be handled by timekeeping and recording a fail if the test goes overtime, even if it
@@ -2349,7 +2242,7 @@ content that was not understood and verified individually.
 
 \section{Appendix --- Reflection}
 
-\wss{This section is not required for CAS 741}
+
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
