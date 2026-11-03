@@ -426,8 +426,10 @@ where we will recieve their feedback and make corrections based on it.
 
 \section{System Tests}
 
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
+This section describes the system tests of the Troitsky Toolbox. The tests for
+functional requirements are given in Section~\ref{SecFRTests}, and the tests for
+non-functional requirements in Section~\ref{SecNFRTests}. Section~\ref{SecTraceability}
+traces each test to the SRS and Hazard Analysis requirements it verifies.
 
 \subsection{Tests for Functional Requirements} \label{SecFRTests}
 
@@ -462,7 +464,7 @@ Knowledge Repository, and logs out.\\
 \textbf{Output:} The landing page is shown without logging in. The Knowledge
 Repository redirects to the login page until the user logs in, and is no longer
 accessible after logout.\\
-\textbf{Derivation:} Verifies FR-WS-1, FR-WS-2, FR-WS-3.
+\textbf{Derivation:} Verifies FR-WS-1, FR-WS-2, FR-WS-3, NFR-WS-1.
 
 \end{enumerate}
 
@@ -691,28 +693,13 @@ record.\\
 
 \end{enumerate}
 
-\subsection{Tests for Nonfunctional Requirements}
+\subsection{Tests for Nonfunctional Requirements} \label{SecNFRTests}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
-
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
-
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
-
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
+The tests below are categorized by the components defined in Section S.2 of the
+SRS \citep{TroitskySRS}, and each verifies the non-functional requirement named
+by its test case ID. Thresholds refer to the symbolic constants of
+Table~\ref{TblSymbolicConstants} (Symbolic Parameters appendix), which keep the
+names and values of SRS Appendix A.1.
 
 \subsubsection{Webserver}
 \paragraph{Communication Encryption}
@@ -724,13 +711,13 @@ Type: Automatic
 					
 Initial State: Troitsky Toolbox webserver is active and able to receive packets.
 					
-Input/Condition: A script inputs logs into the webserver and makes 1000 requests to the webserver, half with secure protocols half with insecure.
+Input/Condition: A script makes \const{request\_sample\_size} requests to the webserver, half with secure protocols and half with insecure ones.
 					
 Output/Result: \\
 \texttt{Pass:} All modern and secure protocols and encryptions are negotiated and all outdated and insecure protocols are rejected.\\
 \texttt{Fail:} Any modern and secure protocols and encryptions are rejected or outdated and insecure protocols are negotiated.
 					
-How the test will be performed: Tools like Nmap or, Qualys SSL Labs, will scan the packet and observe the encryption protocol and cyphers. Only negotiate with packets that have secure and modern protocols (TLS 1.2 \& 1.3), reject older protocols (SSLv3, TLS 1.0, \& TLS 1.1) and weak cyphers (RC4, DES, or NULL) 
+How the test will be performed: Tools like Nmap or Qualys SSL Labs will scan the packets and observe the encryption protocols and ciphers. The webserver must only negotiate \const{secure\_protocols}, and must reject \const{insecure\_protocols} and \const{weak\_ciphers}.
 					
 \item \testdef{T.NFR.WS.2.2}\\
 Type: Automatic.
@@ -745,7 +732,7 @@ How the test will be performed: Scripts written to assert
 \begin{enumerate}
   \item Requests to \texttt{http://...} results in a redirect to \texttt{https://...}
   \item Requests to \texttt{https://...} succeeds and returns a 200 OK
-  \item A request using a deliberately downgrade TLS version throws a connection reset/SSL handshake error. 
+  \item A request using a deliberately downgraded TLS version from \const{insecure\_protocols} throws a connection reset/SSL handshake error.
 \end{enumerate}
 
 \item \testdef{T.NFR.WS.2.3}\\
@@ -757,7 +744,7 @@ Input/Condition: Webserver Address.
 
 Output/Result: Potential vulnerabilities like broken or missing encryptions.
 
-How test will be preformed: Using a tool like the Open Worldwide Application Security Project (OWASP) Zed Attack Proxy (ZAP) will actively probe a running web server to find vulnerabilities, including broken or missing encryption.
+How the test will be performed: A tool like the Open Worldwide Application Security Project (OWASP) Zed Attack Proxy (ZAP) will actively probe a running web server to find vulnerabilities, including broken or missing encryption.
 \end{enumerate}
 
 
@@ -766,22 +753,21 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \item \testdef{T.NFR.WS.3.1}\\
   Type: Automatic
 
-  Initial State: There are currently uses with sessions open in the web server
+  Initial State: There are currently users with sessions open in the web server.
 
-  Input/Condition: Test users has been detected as inactive.
+  Input/Condition: Test users have been detected as inactive.
 
   Output/Result: \\
-  \texttt{Pass:} The test user is inactive for 30 minutes (SESSION\_TIMEOUT) and they are timed out.\\
-  \texttt{Fail:} The test user is inactive for 30 minutes and isn't timed out or they are inactive for less than 30 minutes and are timed out.
+  \texttt{Pass:} A test user who is inactive for \const{session\_timeout} is timed out.\\
+  \texttt{Fail:} A test user who is inactive for \const{session\_timeout} isn't timed out, or a user inactive for less than \const{session\_timeout} is timed out.
 
-
-  How the test will be performed: 
+  How the test will be performed:
   \begin{enumerate}
-    \item A script will have 100 test users log into the toolbox and be inactive
-    \item The script will read the WebServer logs and start a secondary timer for each user when the Webserver starts the inactivity timer for each user.
-    \item Half the test users will remain inactive for over 30 minutes and the other half will randomly become active before the 30 minute window (with a few users designed to become active at edge cases like the start of the inactivity timer and the end.).
-    \item The script pauses each users secondary timer when they are timed out or become active.
-    \item The test passes if all secondary timers align with the 30 minute inactivity timeout window.
+    \item A script will have \const{session\_test\_users} test users log into the toolbox and be inactive.
+    \item The script will read the Web Server logs and start a secondary timer for each user when the Web Server starts the inactivity timer for that user.
+    \item Half the test users will remain inactive for longer than \const{session\_timeout} and the other half will randomly become active before it ends (with a few users designed to become active at edge cases, like the start and the end of the inactivity timer).
+    \item The script pauses each user's secondary timer when they are timed out or become active.
+    \item The test passes if all secondary timers align with the \const{session\_timeout} inactivity window.
   \end{enumerate}
 \end{enumerate}
 
@@ -799,7 +785,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} Sample passwords are stored in the correct positions within the hash table\\
   \texttt{Fail:} Sample password are stored in the incorrect positions within the hash table or don't exist within the hash table.
 
-  How test will be preformed:  
+  How the test will be performed:
   \begin{enumerate}
     \item Create a new test user with a known password (e.g., TestPassword123!). Query the database table where users are stored.
     \item Create two users with the same password, query the database for both users.
@@ -816,7 +802,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Output/Result: \\ \texttt{Pass:} The system denies access on the user’s very next action without requiring them to log out and log back in.\\ \texttt{Fail:} The user is still able to view/edit the restricted data, or the system waits for a session timeout/re-login before enforcing the new role.
 
-  How test will be preformed:
+  How the test will be performed:
   \begin{enumerate}
     \item A script logs into the system as a test user and confirms they can access a restricted feature
     \item A separate admin process changes the test user's role in the system
@@ -828,10 +814,10 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \subsubsection{Toolbox Broker}
 \paragraph{Extensibility and Overhead Management}
 \begin{enumerate}
-  \item \testdef{T.NFR.TB.1.1}\\
+  \item \testdef{T.NFR.BR.1.1}\\
   Type: Automatic / Manual 
 
-  Initial State: The Toolbox Broker is running normally and successfully routing requests to existing, standard services. A new, isolated "mock" service has been created but is not yet known to the system.
+  Initial State: The Toolbox Broker is running normally and successfully routing requests to existing, standard services. A new, isolated ``mock'' service has been created but is not yet known to the system.
 
   Input/Condition: The new mock service is registered with the Toolbox Broker
 
@@ -839,7 +825,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} Broker successfully routes the request to the new service and returns the response, with no older services function being compromised.\\
   \texttt{Fail:} Broker fails to find new service or existing services are broken by the addition of the mock service.
 
-  How test will be preformed:
+  How the test will be performed:
   \begin{enumerate}
     \item A script or test deploys a mock service
     \item The mock service is registered with the Broker at run time.
@@ -847,31 +833,31 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
     \item A test request is sent to existing services to ensure backward compatibility and system stability remain intact.
   \end{enumerate}
   
-  \item \testdef{T.NFR.TB.2.1}\\
+  \item \testdef{T.NFR.BR.2.1}\\
   Type: Automatic
 
-  Initial State: The Toolbox Broker and a target services are running under normal system conditions.
+  Initial State: The Toolbox Broker and a target service are running under normal system conditions.
 
   Input/Condition: A script sends a batch of requests directly to the target service to establish a baseline response time. Then it sends an identical batch of requests to the same service but routes them through the Toolbox Broker.
 
-  Output/Results:\\
-  \texttt{Pass:} The difference between the  baseline response time and the broker response time is strictly MAX\_BROKER\_OVERHEAD (100 ms) or less for all test requests.\\
-  \texttt{Fail:} The presence of the broker delays the requests by more than 100ms
-  
-  How the test will be preformed:
+  Output/Result:\\
+  \texttt{Pass:} The broker response time exceeds the baseline response time by no more than \const{max\_broker\_overhead} for all test requests.\\
+  \texttt{Fail:} The presence of the broker delays a request by more than \const{max\_broker\_overhead}.
+
+  How the test will be performed:
   \begin{enumerate}
-    \item An automate script sends 1000 requests directly to a test service and records the average response time
-    \item The script sends 1000 identical requests through the toolbox broker to the same test service and records the average response time.
-    \item The scrip then calculates $direct\_request\_time - broker\_request\_time$ for every request.
-    \item The test pass if every calculation is below 100ms.
+    \item An automated script sends \const{request\_sample\_size} requests directly to a test service and records the response time of each.
+    \item The script sends \const{request\_sample\_size} identical requests through the Toolbox Broker to the same test service and records the response time of each.
+    \item The script then calculates $broker\_request\_time - direct\_request\_time$ for every request.
+    \item The test passes if every difference is at most \const{max\_broker\_overhead}.
   \end{enumerate}
 \end{enumerate}
 \paragraph{Request Logging}
 \begin{enumerate}
-  \item \testdef{T.NFR.TB.3.1}\\
+  \item \testdef{T.NFR.BR.3.1}\\
   Type: Automatic
 
-  Initial State:The Toolbox Broker is running, and its logging mechanism is accessible and at a known starting point.
+  Initial State: The Toolbox Broker is running, and its logging mechanism is accessible and at a known starting point.
   
   Input/Condition: A specific, authenticated user intentionally triggers two distinct actions through the Broker: one request that is known to succeed (e.g., fetching a public list) and one request that is known to fail (e.g., attempting an invalid or unauthorized operation)
 
@@ -879,11 +865,11 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \texttt{Pass:} The Broker's log output displays two new distinct entries. Each entry explicitly contains: the user identifier, the operation requested, a timestamp, and a clear success/fail boolean or status code.\\
   \texttt{Fail:} No logs are generated, or the logs are missing one of the four required pieces of information (e.g., it logs the error but forgets to log who triggered it).
 
-  How the test will be preformed:
+  How the test will be performed:
   \begin{enumerate}
-    \item A script authenticates the test user
-    \item The script sends a valid and invalid request
-    \item The script reads the brokers logs
+    \item A script authenticates the test user.
+    \item The script sends a valid and an invalid request.
+    \item The script reads the broker's logs.
     \item The script parses the most recent log entries and asserts that all four required fields (Member, Operation, Time, Success/Failure Status) are present and correctly recorded for both the successful and failed attempts.
   \end{enumerate}
 \end{enumerate}
@@ -894,15 +880,15 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   \item \testdef{T.NFR.KR.1.1}\\
   Type: Automatic (Performance)
 
-  Initial State: The Knowledge Repository database is populated with 10,000 mock items (documents, bridge models, test results).
+  Initial State: The Knowledge Repository database is populated with \const{max\_repository\_items} mock items (documents, bridge models, test results).
 
   Input/Condition: An automated script sends varied search queries (by keyword, year, team, tag) to the repository.
 
   Output/Result: \\
-  \texttt{Pass:} All search results are returned and displayed to the client in under 2.0 seconds (MAX\_SEARCH\_TIME).\\
-  \texttt{Fail:} Any search query takes longer than 2.0 seconds.
+  \texttt{Pass:} All search results are returned and displayed to the client within \const{max\_search\_time}.\\
+  \texttt{Fail:} Any search query takes longer than \const{max\_search\_time}.
 
-  How the test will be performed: A load-testing script  will fire a suite of search queries against the API. The script will measure the round-trip time from request to response payload delivery and assert it falls below the threshold.
+  How the test will be performed: A load-testing script will fire a suite of search queries against the API. The script will measure the round-trip time from request to response payload delivery and assert it falls below the threshold.
 \end{enumerate}
 
 \paragraph{Data Durability and External Backup}
@@ -912,10 +898,10 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The Knowledge Repository contains newly uploaded files and database records. The backup schedule is active.
 
-  Input/Condition: The BACKUP\_INTERVAL (7 days) passes, triggering an automated backup. A catastrophic server failure is then simulated by wiping the active database.
+  Input/Condition: The \const{backup\_interval} passes, triggering an automated backup. A catastrophic server failure is then simulated by wiping the active database.
 
   Output/Result: \\
-  \texttt{Pass:} A full backup exists on an isolated, external platform, and the system can be fully restored with no more than 7 days of data lost.\\
+  \texttt{Pass:} A full backup exists on an isolated, external platform, and the system can be fully restored with no more than \const{backup\_interval} of data lost.\\
   \texttt{Fail:} The backup fails to trigger, is stored on the same vulnerable server, or fails restoration.
 
   How the test will be performed: The DevOps/infrastructure pipeline will verify the backup cron job executes. A developer will manually trigger a restoration in a staging environment using the external backup file to ensure data integrity is intact.
@@ -950,8 +936,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: The user clicks to view the 3D visualization of the model. 
 
   Output/Result: \\
-  \texttt{Pass:} The interactive 3D model fully renders in the browser in under 30 seconds (MAX\_MODEL\_LOAD\_TIME).\\
-  \texttt{Fail:} The model takes longer than 30 seconds to render or hangs indefinitely.
+  \texttt{Pass:} The interactive 3D model fully renders in the browser within \const{max\_model\_load\_time}.\\
+  \texttt{Fail:} The model takes longer than \const{max\_model\_load\_time} to render or hangs indefinitely.
 
   How the test will be performed: A browser automation tool (like Selenium or Playwright) will click the model link, start a timer, and stop the timer when the 3D canvas object registers as fully loaded and interactive.
 \end{enumerate}
@@ -966,10 +952,10 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: The Model Analysis System parses the file and extracts its dimensions.
 
   Output/Result: \\
-  \texttt{Pass:} The extracted dimensions match the source model to within a 0.5 mm tolerance (DIMENSION\_TOLERANCE).\\
-  \texttt{Fail:} The dimensions deviate by more than 0.5 mm.
+  \texttt{Pass:} The extracted dimensions match the source model to within \const{dimension\_tolerance}.\\
+  \texttt{Fail:} The dimensions deviate by more than \const{dimension\_tolerance}.
 
-  How the test will be performed: A unit/integration test will pass the specific STEP file to the parsing library, retrieve the output data struct, and assert the length/width/height values fall within actual value $\pm$ 0.5mm.
+  How the test will be performed: A unit/integration test will pass the specific STEP file to the parsing library, retrieve the output data struct, and assert the length/width/height values fall within the actual value $\pm$ \const{dimension\_tolerance}.
 \end{enumerate}
 
 
@@ -985,10 +971,10 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: The Performance Analysis System runs a failure load estimate on the historical models.
 
   Output/Result: \\
-  \texttt{Pass:} The estimated failure load is within 25\% (FAILURE\_LOAD\_TOLERANCE) of the real-world recorded value.\\
-  \texttt{Fail:} The estimate diverges by more than 25\%.
+  \texttt{Pass:} The estimated failure load is within \const{failure\_load\_tolerance} of the real-world recorded value.\\
+  \texttt{Fail:} The estimate diverges by more than \const{failure\_load\_tolerance}.
 
-  How the test will be performed: A validation script will run the FEA algorithm against a suite of 5-10 historical bridge models. It will compare the output to the known real-world data and calculate the percentage error.
+  How the test will be performed: A validation script will run the FEA algorithm against a suite of \const{historical\_model\_count} historical bridge models. It will compare the output to the known real-world data and calculate the percentage error.
 \end{enumerate}
 
 \paragraph{Computation Time}
@@ -1001,8 +987,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: The user triggers the performance analysis.
 
   Output/Result: \\
-  \texttt{Pass:} The analysis completes and returns the failure load and metrics in under 30 seconds (MAX\_ANALYSIS\_TIME).\\
-  \texttt{Fail:} The computation exceeds 30 seconds.
+  \texttt{Pass:} The analysis completes and returns the failure load and metrics within \const{max\_analysis\_time}.\\
+  \texttt{Fail:} The computation exceeds \const{max\_analysis\_time}.
 
   How the test will be performed: An automated script triggers the analysis API and measures the response time.
 \end{enumerate}
@@ -1014,7 +1000,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The PA system codebase is open in a development environment.
 
-  Input/Condition: A developer registers a new dummy metric calculation (e.g., "Bridge Flexibility Score") in the codebase.
+  Input/Condition: A developer registers a new dummy metric calculation (e.g., ``Bridge Flexibility Score'') in the codebase.
 
   Output/Result: \\
   \texttt{Pass:} The new metric appears in the output payload without requiring alterations to the core code calculating Failure Load or Load-to-Mass ratio.\\
@@ -1068,10 +1054,10 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The user is on the Material Testing interface.
 
-  Input/Condition: The user uploads a standardized CSV containing 100 rows of test data. Later, the user clicks "Export to CSV".
+  Input/Condition: The user uploads a standardized CSV containing \const{mt\_bulk\_rows} rows of test data. Later, the user clicks ``Export to CSV''.
 
   Output/Result: \\
-  \texttt{Pass:} The file imports successfully with all 100 rows accurately reflected in the database. The exported CSV matches the data exactly.\\
+  \texttt{Pass:} The file imports successfully with all \const{mt\_bulk\_rows} rows accurately reflected in the database. The exported CSV matches the data exactly.\\
   \texttt{Fail:} The import fails, truncates data, or locks the data inside the system preventing export.
 
   How the test will be performed: A script uploads a mock CSV, queries the DB to verify row count and data integrity, then hits the export API endpoint and compares the downloaded file's checksum/content against the original.
@@ -1103,11 +1089,11 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: A brand new user (simulating a new executive) logs into the system for the first time.
 
-  Input/Condition: The user is tasked with finding the role record for the "VP of Design".
+  Input/Condition: The user is tasked with finding the role record for the ``VP of Design''.
 
   Output/Result: \\
-  \texttt{Pass:} The user successfully navigates the UI and opens the document in under 2 minutes (MAX\_ROLE\_SEARCH\_TIME).\\
-  \texttt{Fail:} The user takes longer than 2 minutes or gives up.
+  \texttt{Pass:} The user successfully navigates the UI and opens the document within \const{max\_role\_search\_time}.\\
+  \texttt{Fail:} The user takes longer than \const{max\_role\_search\_time} or gives up.
 
   How the test will be performed: Conducted during the Winter CD Usability Testing phase. A tester observes a user with a stopwatch to measure the time to successful task completion.
 \end{enumerate}
@@ -1119,7 +1105,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: A completed exit document exists in the system.
 
-  Input/Condition: The user clicks "Export to PDF".
+  Input/Condition: The user clicks ``Export to PDF''.
 
   Output/Result: \\
   \texttt{Pass:} The server generates and downloads a \texttt{.pdf} file containing the document's text and metadata cleanly formatted.\\
@@ -1138,10 +1124,10 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The web application is deployed to a staging environment.
 
-  Input/Condition: A script (or tester) executes the core workflows (Login, Upload Model, Run Analysis) on the latest versions of Chrome, Firefox, Edge, and Safari.
+  Input/Condition: A script (or tester) executes the core workflows (Login, Upload Model, Run Analysis) on the current versions of each of \const{supported\_browsers}.
 
   Output/Result: \\
-  \texttt{Pass:} The application functions perfectly on all 4 browsers with no broken layouts or JS errors.\\
+  \texttt{Pass:} The application functions perfectly on all \const{supported\_browsers} with no broken layouts or JS errors.\\
   \texttt{Fail:} A core feature fails to execute on one or more of the specified browsers.
 
   How the test will be performed: End to end testing framework configured to run the test suite across multiple browser engines. 
@@ -1154,13 +1140,13 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
   Initial State: The application is running under normal conditions.
 
-  Input/Condition: 50 simulated users (MIN\_CONCURRENT\_USERS) log in and perform varied tasks (searching, uploading, routing requests) simultaneously.
+  Input/Condition: \const{min\_concurrent\_users} simulated users log in and perform varied tasks (searching, uploading, routing requests) simultaneously.
 
   Output/Result: \\
   \texttt{Pass:} All requests succeed, response times stay within their defined limits, and no thread-safety/concurrency errors occur.\\
   \texttt{Fail:} The server crashes, drops requests, or exhibits race conditions.
 
-  How the test will be performed: A load testing tool spins up 50 concurrent virtual users. The script asserts zero 500-level HTTP errors and verifies that user data does not bleed between active sessions.
+  How the test will be performed: A load testing tool spins up \const{min\_concurrent\_users} concurrent virtual users. The script asserts zero 500-level HTTP errors and verifies that user data does not bleed between active sessions.
 \end{enumerate}
 
 \paragraph{Service Independence}
@@ -1189,8 +1175,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
   Input/Condition: The recruit follows the documentation (e.g., \texttt{README.md}, Docker setup guides) to build the app locally, write a minor UI text change, and deploy it.
 
   Output/Result: \\
-  \texttt{Pass:} The new member successfully completes the full cycle in under 1 week (MAX\_ONBOARDING\_TIME) with minimal external help.\\
-  \texttt{Fail:} Documentation is missing, outdated, or the environment is too complex to set up within a week.
+  \texttt{Pass:} The new member successfully completes the full cycle within \const{max\_onboarding\_time} with minimal external help.\\
+  \texttt{Fail:} Documentation is missing, outdated, or the environment is too complex to set up within \const{max\_onboarding\_time}.
 
   How the test will be performed: A real-world onboarding trial where a new CAS student is timed and monitored while setting up the project using only the written documentation.
 \end{enumerate}
@@ -1199,8 +1185,8 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 
 \subsection{Traceability Between Test Cases and Requirements} \label{SecTraceability}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+Table~\ref{tab:system_test_traceability} lists the SRS requirements and Hazard
+Analysis requirements verified by each system test.
 
 \renewcommand{\arraystretch}{1.2}
 \begin{xltabular}{\textwidth}{|l|X|X|}
@@ -1212,7 +1198,7 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \hline
 \textbf{Test Case ID} & \textbf{SRS Requirement} & \textbf{Hazard Analysis Requirement} \\ \hline
 \endhead
-\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3 & N/A \\ \hline
+\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3, NFR-WS-1 & N/A \\ \hline
 \testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5 & SR-AC-2, SR-WS-5 \\ \hline
 \testref{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2 & N/A \\ \hline
 \testref{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4 & N/A \\ \hline
@@ -1229,13 +1215,13 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \testref{T.NFR.WS.2.2} & NFR-WS-2 & N/A \\ \hline
 \testref{T.NFR.WS.2.3} & NFR-WS-2 & N/A \\ \hline
 \testref{T.NFR.WS.3.1} & NFR-WS-3 & N/A \\ \hline
-\testref{T.NFR.AC.1.1} & NFR-AC-1, NFR-AC-2 & N/A \\ \hline
+\testref{T.NFR.AC.1.1} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
 \testref{T.NFR.AC.1.2} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
-\testref{T.NFR.TB.1.1} & NFR-TB-1 & N/A\\ \hline
-\testref{T.NFR.TB.2.1} & NFR-TB-2 & N/A \\ \hline
-\testref{T.NFR.TB.3.1} & NFR-TB-3 & N/A \\ \hline
+\testref{T.NFR.BR.1.1} & NFR-BR-1 & N/A \\ \hline
+\testref{T.NFR.BR.2.1} & NFR-BR-2 & N/A \\ \hline
+\testref{T.NFR.BR.3.1} & NFR-BR-3 & N/A \\ \hline
 \testref{T.NFR.KR.1.1} & NFR-KR-1 & N/A \\ \hline
-\testref{T.NFR.KR.2.1} & NFR-KR-2 & SR-KR-1 (External Backup) \\ \hline
+\testref{T.NFR.KR.2.1} & NFR-KR-2 & N/A \\ \hline
 \testref{T.NFR.MA.1.1} & NFR-MA-1 & N/A \\ \hline
 \testref{T.NFR.MA.2.1} & NFR-MA-2 & N/A \\ \hline
 \testref{T.NFR.MA.3.1} & NFR-MA-3 & N/A \\ \hline
@@ -1249,19 +1235,23 @@ How test will be preformed: Using a tool like the Open Worldwide Application Sec
 \testref{T.NFR.KT.1.1} & NFR-KT-1 & N/A \\ \hline
 \testref{T.NFR.KT.2.1} & NFR-KT-2 & N/A \\ \hline
 \testref{T.NFR.SYS.1.1} & NFR-SYS-1 & N/A \\ \hline
-\testref{T.NFR.SYS.2.1} & NFR-SYS-2 & SR-WS-3 (Thread Safety) \\ \hline
+\testref{T.NFR.SYS.2.1} & NFR-SYS-2 & SR-WS-3 \\ \hline
 \testref{T.NFR.SYS.3.1} & NFR-SYS-3 & N/A \\ \hline
-\testref{T.NFR.SYS.4.1} & NFR-SYS-4 & SR-WS-1 (Code Testing) \\ \hline
+\testref{T.NFR.SYS.4.1} & NFR-SYS-4 & SR-WS-1 \\ \hline
 \end{xltabular}
 
 FR-KT-5 is a Could requirement in SRS S.5, implemented only if time allows, so
 its part of \testref{T.FR.KT.9.1} is performed only if it is implemented.
 
-SR-SYS-1 to SR-SYS-3 constrain how the system is built and deployed rather than
-its behaviour, so they are verified as part of implementation verification
-rather than by system tests. The safety and security requirements that the
-Hazard Analysis Roadmap delays until after the capstone are not tested:
-SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1, SR-KT-4, SR-MT-1, and SR-MT-3.
+SR-WS-2 and SR-SYS-1 to SR-SYS-3 constrain how the system is built and deployed
+rather than its behaviour, so they are verified as part of implementation
+verification rather than by system tests. The safety and security requirements
+that the Hazard Analysis Roadmap delays until after the capstone are not tested:
+SR-WS-4, SR-KR-1, SR-KR-3, SR-MA-2, SR-RC-1, SR-KT-1, SR-KT-4, SR-MT-1, and
+SR-MT-3. Since SR-KR-1 is delayed, the check in \testref{T.NFR.KR.2.1} that the
+backup is stored on an external platform is performed only if it is
+implemented.
+
 \section{Unit Test Description}
 
 \wss{This section should not be filled in until after the MIS (detailed design
@@ -1895,14 +1885,13 @@ The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
 Constants already defined in Appendix A.1 of the SRS \citep{TroitskySRS} keep the
 same name and value. Table~\ref{TblSymbolicConstants} lists the constants used
-by the system tests for functional requirements, Table~\ref{TblTestData} the
-test data they use and its expected results, and
+by the system tests, Table~\ref{TblTestData} the test data used by the system
+tests for functional requirements and its expected results, and
 Table~\ref{TblComplianceModels} the models used to test rule compliance.
 
 {\small
 \begin{xltabular}{\textwidth}{|L{3.5cm}|L{2.5cm}|Y|}
-\caption{Symbolic constants used by the system tests for functional
-requirements}
+\caption{Symbolic constants used by the system tests}
 \label{TblSymbolicConstants}\\
 \hline
 \textbf{Constant} & \textbf{Value} & \textbf{Rationale (test cases)}\\
@@ -1955,7 +1944,68 @@ from rounding. Unlike \cname{failure\_load\_tolerance} (25\%, SRS A.1), it does
 not compare estimates with real bridges (T.FR.MA.5.1, T.FR.PA.6.1).\\
 \hline
 \cname{dimension\_tolerance} & 0.5~mm & Defined in SRS A.1 for NFR-MA-3
-(T.FR.MA.5.1).\\
+(T.FR.MA.5.1, T.NFR.MA.3.1).\\
+\hline
+\cname{session\_timeout} & 30 minutes & Defined in SRS A.1 for NFR-WS-3
+(T.NFR.WS.3.1).\\
+\hline
+\cname{max\_broker\_overhead} & 100~ms & Defined in SRS A.1 for NFR-BR-2
+(T.NFR.BR.2.1).\\
+\hline
+\cname{max\_search\_time} & 2~s & Defined in SRS A.1 for NFR-KR-1
+(T.NFR.KR.1.1).\\
+\hline
+\cname{max\_repository\_items} & 10,000 items & Defined in SRS A.1 for NFR-KR-1
+(T.NFR.KR.1.1).\\
+\hline
+\cname{backup\_interval} & 7 days & Defined in SRS A.1 for NFR-KR-2
+(T.NFR.KR.2.1).\\
+\hline
+\cname{max\_model\_load\_time} & 30~s & Defined in SRS A.1 for NFR-MA-2
+(T.NFR.MA.2.1).\\
+\hline
+\cname{failure\_load\_tolerance} & 25\% & Defined in SRS A.1 for NFR-PA-1
+(T.NFR.PA.1.1).\\
+\hline
+\cname{max\_analysis\_time} & 30~s & Defined in SRS A.1 for NFR-PA-2
+(T.NFR.PA.2.1).\\
+\hline
+\cname{max\_role\_search\_time} & 2 minutes & Defined in SRS A.1 for NFR-KT-1
+(T.NFR.KT.1.1).\\
+\hline
+\cname{min\_concurrent\_users} & 50 members & Defined in SRS A.1 for NFR-SYS-2
+(T.NFR.SYS.2.1).\\
+\hline
+\cname{max\_onboarding\_time} & 1 week & Defined in SRS A.1 for NFR-SYS-4
+(T.NFR.SYS.4.1).\\
+\hline
+\cname{supported\_browsers} & Google Chrome, Mozilla Firefox, Microsoft Edge,
+Safari & The browsers listed in NFR-SYS-1 (T.NFR.SYS.1.1).\\
+\hline
+\cname{secure\_protocols} & TLS 1.2, TLS 1.3 & The TLS versions currently
+considered secure for the HTTPS connections of NFR-WS-2 (T.NFR.WS.2.1,
+T.NFR.WS.2.2).\\
+\hline
+\cname{insecure\_protocols} & SSLv3, TLS 1.0, TLS 1.1 & Outdated protocol
+versions that must be rejected for NFR-WS-2 (T.NFR.WS.2.1, T.NFR.WS.2.2).\\
+\hline
+\cname{weak\_ciphers} & RC4, DES, NULL & Weak cipher suites that must be
+rejected for NFR-WS-2 (T.NFR.WS.2.1).\\
+\hline
+\cname{request\_sample\_size} & 1000 requests & Number of requests sent by the
+automated encryption and performance tests, so that occasional slow or
+mis-negotiated requests are observed (T.NFR.WS.2.1, T.NFR.BR.2.1).\\
+\hline
+\cname{session\_test\_users} & 100 users & Number of simulated users in the
+session expiry test, so that both the expired and the reactivated groups include
+edge cases (T.NFR.WS.3.1).\\
+\hline
+\cname{mt\_bulk\_rows} & 100 rows & Number of rows in the CSV file used to test
+import and export (T.NFR.MT.1.1).\\
+\hline
+\cname{historical\_model\_count} & 5--10 models & Number of past club bridges
+with recorded failure loads used to validate the failure load estimate
+(T.NFR.PA.1.1).\\
 \hline
 \end{xltabular}
 }
