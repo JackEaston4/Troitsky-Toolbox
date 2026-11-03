@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{float}
 \usepackage{hyperref}
 
 \hypersetup{
@@ -171,23 +172,41 @@ integration with them is tested.
 
 \subsection{Custom Documents}
 
+\subsubsection{SRS - Requirements Elicitation Survey}
+
+A survey was performed to aid and help justify the requirements elicitation process, specifically with regards to the prioritization of included services within the SRS \citep{TroitskySRS}.
+The \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/SurveyDesign.md}{survey design report} and 
+\href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/Troitsky%20Toolbox%20%E2%80%94%20Member%20Needs%20%26%20Service%20Priority%20Survey.csv}{collected raw data} 
+are stored in the project repository, under the interview CD folder.
+
+\paragraph{Member survey} The survey was an anonymous, 11-question Google Forms survey sent through the club's communication channels, collecting responses 
+between the 7th and 15th of October 2026, totalling 20 responses. The survey analysis was done in the SRS \citep{TroitskySRS}, reporting on the results and implications from member responses. 
+The questions are listed in Appendix~\ref{app:member-survey}.
+
 \subsubsection{Fall - Interviews}
 
 The primary CD for the fall term development is interviews conducted with core stakeholders: experienced Troitsky club members and executives. These semi-structured interviews will 
 help outline expectations and prioritization of services from knowledgeable members. These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
-toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members.
+toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members. The interviews will primarily validate the decisions made in the SRS, helping identify any differences between assumptions made and true user requirements. The interviews will also 
+help identify what data is able to be collected, checking with experienced members who have years of personal and team data collected. 
 
-In addition to the core interviews for the fall CD, a survey has been performed to begin the requirements elicitation process. The \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/SurveyDesign.md}{survey design record} and \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/Troitsky%20Toolbox%20%E2%80%94%20Member%20Needs%20%26%20Service%20Priority%20Survey.csv}{raw data} are stored in the project repository, and the results were used in the SRS \citep{TroitskySRS} to 
-outline the priority of services and core issues members are currently facing.
+\paragraph{Timeline} A scheduling tool link will be sent out November 3rd, 2026, used to collect possible times for the interviews with the selected members. 
+The interviews will be scheduled for before the CD-Fall deadline of 16 November 2026.
+
+\paragraph{Interview format} The interview guide is given in Appendix~\ref{app:interview-guide}.
 
 \subsubsection{Winter - Usability Report}
 
 The CD completed in the winter term will be a usability report, allowing for a more complete assessment of the functional usability of the toolbox. 
 This round of testing will be performed with a more complete iteration of the product, allowing for more complete analysis of different system services' usability. 
 Users will be gathered spanning different experience levels, both in club experience and technical experience (modelling), creating valuable data about the system's performance. 
-Specific user functions will be tested, with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task.
+Specific user functions will be tested, with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task. This CD will 
+further strengthen the V\&V of the system, ensuring that complete functional and non-functional requirements come together into a fully usable service.
 
-This CD will further strengthen the V\&V of the system, ensuring that complete functional and non-functional requirements come together into a fully usable service.
+\paragraph{Timeline} Testing takes place after the Rev 0 presentations (1--11 February 2027) and before the final demonstrations
+(15--21 March 2027).
+
+\paragraph{Test format} The procedure, tasks, and questionnaires are given in Appendix~\ref{app:usability}.
 
 \subsection{Relevant Documentation}
 
@@ -328,10 +347,6 @@ near-certainty will suffice if this document is faithfully followed.
 \wss{In this section you would also give any details of any plans for static
   verification of the implementation.  Potential techniques include code
   walkthroughs, code inspection, static analyzers, etc.}
-
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
 
 The implemenation shall be throughly tested to find syntactic errors, semantic errors and weaknesses to be strengthened.
 Due to our meticulous development plan, requirements document, and design documents, test-driven development (TDD) is an excellent choice.
@@ -694,6 +709,8 @@ record.\\
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements} \label{SecNFRTests}
+
+See Appendix~\ref{app:usability} for the usability test plan, tasks, and questionnaires.
 
 The tests below are categorized by the components defined in Section S.2 of the
 SRS \citep{TroitskySRS}, and each verifies the non-functional requirement named
@@ -2096,9 +2113,204 @@ inclusive)\\
 \end{xltabular}
 }
 
-\subsection{Usability Survey Questions?}
+\subsection{Member Needs Survey}
+\label{app:member-survey}
 
-\wss{This is a section that would be appropriate for some projects.}
+The questions are listed as administered; the results are reported
+in SRS Section P.7.1 \citep{TroitskySRS}.
+
+\begin{enumerate}
+  \item How many years of experience do you have in Troitsky? \textbf{[0--5]}
+  \item What is your current role(s)? \textbf{[Team/General Member, Team Captain,
+    Coach, Executive Member]}
+  \item What is your modelling experience? \textbf{[None, Through some courses,
+    Experience modelling in and out of class]}
+  \item How valuable would you find an entry-level modelling service, implementing
+    simple load testing and weak point analysis? \textbf{[1--5]}
+  \item Rate (1--5) how valuable you would find having this information easily
+    accessible, regarding past McMaster Troitsky data. \textbf{[Bridge modelling
+    file, Joint construction data, Manufacturing information, Past team results,
+    Past technical presentation material]}
+  \item How does your team store data? \textbf{[Microsoft Teams, Google Drive,
+    Individual people hold files, Discord, Email, Other]}
+  \item What has been one of the most frustrating parts of your time in the club,
+    outside of actually building the bridge? \textbf{[Paragraph]}
+  \item Rate these features on how useful you would find them. \textbf{[Would not
+    use, Slightly useful, Useful, Very useful, Club needs this]}
+  \begin{enumerate}
+    \item[A.] Searchable archive of past bridge designs
+    \item[B.] Database of material testing results (stick strength, glue, floss, etc.)
+    \item[C.] Bridge weight estimator from a submitted model
+    \item[D.] Structural efficiency calculation
+    \item[E.] Ultimate load and failure point prediction
+    \item[F.] Upload and visualize a team's bridge model in the browser
+    \item[G.] Exit documents / role handover records for executive positions
+    \item[H.] Onboarding guide and training material for new members
+    \item[I.] Private workspace for each team's own files and data
+    \item[J.] Competition rules and regulations reference
+    \item[K.] Club announcements and general information page
+  \end{enumerate}
+  \item If we could deliver only 3 of these, which would you choose?
+    \textbf{[A--K, up to 3]}
+  \item Would you want your team files, results and progress to be available for
+    future teams to learn from? \textbf{[Yes, No, Maybe]}
+  \item If you could go back to being a new member, or if you're currently a new
+    member, what tutorials would you want access to? \textbf{[Modelling software,
+    Manufacturing, Slab building, Team organization, Other; select 2]}
+\end{enumerate}
+
+\subsection{Stakeholder Interview Guide}
+\label{app:interview-guide}
+
+The Fall CD interviews will be semi-structured, with questions tailored primarily to experienced members, and additionally to specific roles. Interviews will 
+be around 10--15 minutes long, and conducted with 2--3 participants at a time, allowing for both discussion and individual responses. No names will be recorded, only information regarding 
+the background of the members, and transcripts will be anonymized before being reported in the repository. 
+
+The interview guide is intended to be flexible allowing for experienced members to direct 
+the discussion to areas they feel are important, while still ensuring that core concerns are addressed. As many of the interviewed members will be a part of many of these user groups, certain interviews will cover 
+multiple question sets.
+
+\paragraph{All participants, General Questions}
+\begin{enumerate}
+  \item What is your role in the club, and how many years have you been involved?
+  \item Which tools do your teams use to design, analyze, and store their bridges?
+  \item What were the largest challenges you faced when you first joined the club?
+\end{enumerate}
+
+\paragraph{Executives}
+\begin{enumerate}
+  \item What information regarding the club administration is most important to consolidate?
+  \item When you first became an executive, what were your largest difficulties?
+  \item How would you like to see the software sub team integrated into the club administration?
+\end{enumerate}
+
+\paragraph{Team captains and experienced members}
+\begin{enumerate}
+  \item What tool have you found is the most accurate and useful in predicting your bridge's performance?
+  \item How close to a model estimate do you expect your bridge's performance to be, including uncertainties? [\texttt{FAILURE\_LOAD\_TOLERANCE}]
+  \item What are the most common reasons for bridge failures in your experience?
+  \item Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox?
+\end{enumerate}
+
+\paragraph{Closing, All participants}
+\begin{enumerate}
+  \item Is there anything about the club's information or tools that we did not ask about?
+  \item Are there any items that you feel are important to include in the Toolbox that we have not discussed?
+\end{enumerate}
+
+\subsection{Usability Test Plan and Survey}
+\label{app:usability}
+
+\paragraph{Goals and measures}\mbox{}\\
+The usability test is quantitative and qualitative, measuring the usability goals in
+Table~\ref{tab:usability-goals} with some valuable quantitative data (completion, time, errors, and ratings), while also addressing 
+the problems behind them.
+
+\begin{table}[H]
+\centering
+\caption{Usability goals and measures}
+\label{tab:usability-goals}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+\textbf{Goal} & \textbf{Measure} & \textbf{Target} \\
+\midrule
+Effectiveness & Task completion rate (Success rate) for UT-1 to UT-7 & $\geq$ 80\% per task \\
+Efficiency & Time on task, including UT-3 against researched and assumed \texttt{MAX\_ROLE\_SEARCH\_TIME} (NFR-KT-1) & UT-3 within the time limit for all new members \\
+Safety & Errors or missteps per task, including ability to recover & All errors recoverable without help \\
+Utility & User workarounds or alternative approaches & Recorded; no target \\
+Learnability & Completion and time for all members, with a focus on new club members & New-member completion rate within 10\% of experienced members \\
+Memorability & The recall of certain system properties between tasks & Mean post-test Q6 rating $\geq$ 4 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Participants}\mbox{}\\
+Participants are recruited to cover both club experience and modelling or technical experience,
+recorded through the pre-test questionnaire, to ensure that individual bias is taken into account for usability.
+Between 6 and 9 participants will be recruited, covering:
+\begin{itemize}
+  \item \textbf{Club experience:} at least two new members (0--1 years) and at least
+    two experienced members (2+ years), including at least one executive for UT-4.
+  \item \textbf{Modelling experience:} at least two participants with no modelling
+    experience and at least two with modelling experience outside of class.
+\end{itemize}
+One participant may count toward several of these minimums.
+
+\paragraph{Pre-test questionnaire}\mbox{}\\
+These repeat questions 1--3 of the initial member requirements elicitation
+survey, focusing on gathering only user information important to generalizing 
+their test results, adjusting for experience levels.
+\begin{enumerate}
+  \item How many years of experience do you have in Troitsky? \textbf{[0--5]}
+  \item What is your current role(s)? \textbf{[Team/General Member, Team Captain,
+    Coach, Executive Member]}
+  \item What is your modelling experience? \textbf{[None, Through some courses,
+    Experience modelling in and out of class]}
+\end{enumerate}
+
+\paragraph{Tasks}\mbox{}\\
+Tasks follow the usage scenarios in SRS Section G.5.
+
+\begin{table}[H]
+\centering
+\caption{Usability test tasks}
+\label{tab:usability-tasks}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.9cm}
+  >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X
+  >{\raggedright\arraybackslash}p{2.1cm}}
+\toprule
+\textbf{ID} & \textbf{Task} & \textbf{Success criterion} & \textbf{Traces to} \\
+\midrule
+UT-1 & Find a past bridge design from a given year and open it in the model
+  viewer. & The correct design is displayed. & G.5 Scenario 1 \\
+UT-2 & Upload a provided document to the knowledge repository. & The document is
+  stored with a title, category, and year. & G.5 Scenario 2, SR-KR-4 \\
+UT-3 & Find the role record for a given executive position. & The correct record
+  is opened within \texttt{MAX\_ROLE\_SEARCH\_TIME}. & NFR-KT-1, T-NFR-KT-1-1 \\
+UT-4 & (Executives only) Fill in a transition document for your role. & The
+  document is saved and listed under the role. & G.5 Scenario 3 \\
+UT-5 & Run a performance analysis on a provided STEP file and report the
+  estimated failure load. & The participant states the value with the correct
+  units. & G.5 Scenario 4, FR-PA-1, SR-MA-2 \\
+UT-6 & Run a rule compliance check on a provided STEP file that breaks one rule.
+  & The participant names the rule that fails. & G.5 Scenario 5, FR-RC-4 \\
+UT-7 & Upload a provided material test file. & The data is stored with the
+  correct units selected. & G.5 Scenario 6, SR-MT-1 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Post-task questions}\mbox{}\\
+After each task the participant answers:
+\begin{enumerate}
+  \item Overall, how difficult or easy was this task? \textbf{[1 = very difficult, 5 = very easy]}
+  \item What would you change about the workflow to make this task easier? \textbf{[Open]}
+\end{enumerate}
+
+\paragraph{Post-test questionnaire}\mbox{}\\
+The questionnaire begins with instructions, ensuring users understand the rating system, 
+1 (strongly disagree) to 5 (strongly agree), or N/A if it does not apply to the tasks you completed.
+\begin{enumerate}
+  \item The Toolbox did what I expected it to do in each task. [Effectiveness]
+  \item I could complete the tasks without unnecessary steps. [Efficiency]
+  \item When I made a mistake, I could easily recover from it. [Safety]
+  \item The Toolbox had all the functions I needed for these tasks. [Utility]
+  \item I could learn to use the Toolbox without help. [Learnability]
+  \item I would remember how to do these tasks the next time I use the Toolbox. [Memorability]
+  \item I could tell which units the analysis results were given in. [SR-MA-2]
+  \item I understood what the failure load estimate assumes about my bridge. [FR-PA-4]
+  \item What was the most confusing part of the Toolbox?
+  \item If you could change one thing about the Toolbox, what would it be?
+\end{enumerate}
+
+\paragraph{Analysis}\mbox{}\\
+Each observed problem is assessed by either the gulf of execution or the gulf of evaluation, 
+helping to identify the underlying causes, and by the Norman design principle
+it violates or promotes (discoverability, feedback, mapping, constraints, affordance, signifiers, or
+conceptual models).
 
 \newpage{}
 
