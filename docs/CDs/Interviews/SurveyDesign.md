@@ -1,10 +1,9 @@
 # Troitsky Toolbox — Member Needs & Service Priority Survey
 
-Methodology record for the first survey conducted, collecting general member needs and service priority. This will be used in addition to complete interviews, to comprise the Fall CD (Interviews)
-
-Methodology record for the instrument as actually administered. This file is the source
-for SRS section **P.7 (Requirements process and report)** and for the CD-Fall
-User/Stakeholder/Client interview report.
+Methodology record for the first survey, as actually administered, collecting general
+member needs and service priorities. Together with the stakeholder interviews it makes up
+the Fall CD (Interviews), and it is the source for SRS section **P.7 (Requirements
+process and report)**.
 
 Instrument: Google Forms, titled *Troitsky Toolbox — Member Needs & Service Priority Survey*. 11 questions, anonymous.
 
@@ -20,7 +19,7 @@ Instrument: Google Forms, titled *Troitsky Toolbox — Member Needs & Service Pr
   is disabled in the form. Response limiting, which would require sign-in and therefore
   identify respondents, is disabled.
 
-Some questions used to generalize studetn club experience used, while not directly identifiable to the student.
+Some questions collect general club experience so results can be grouped, without identifying individual students.
 
 ## 2. The Survey
 

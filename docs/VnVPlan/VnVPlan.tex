@@ -187,7 +187,7 @@ The questions are listed in Appendix~\ref{app:member-survey}.
 
 The primary CD for the fall term development is interviews conducted with core stakeholders: experienced Troitsky club members and executives. These semi-structured interviews will 
 help outline expectations and prioritization of services from knowledgeable members. These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
-toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members. The interviews will primarily validate the decision made in the SRS, helping identity any differences between assumptions made and true user requirements. The interviews will also 
+toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members. The interviews will primarily validate the decisions made in the SRS, helping identify any differences between assumptions made and true user requirements. The interviews will also 
 help identify what data is able to be collected, checking with experienced members who have years of personal and team data collected. 
 
 \paragraph{Timeline} A scheduling tool link will be sent out November 3rd, 2026, used to collect possible times for the interviews with the selected members. 
@@ -347,10 +347,6 @@ near-certainty will suffice if this document is faithfully followed.
 \wss{In this section you would also give any details of any plans for static
   verification of the implementation.  Potential techniques include code
   walkthroughs, code inspection, static analyzers, etc.}
-
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
 
 The implemenation shall be throughly tested to find syntactic errors, semantic errors and weaknesses to be strengthened.
 Due to our meticulous development plan, requirements document, and design documents, test-driven development (TDD) is an excellent choice.
@@ -723,8 +719,7 @@ the quality for different inputs.  For instance, you could measure speed versus
 the problem size.  The output of the test isn't pass/fail, but rather a summary
 table or graph.}
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+See Appendix~\ref{app:usability} for the usability test plan, tasks, and questionnaires.
 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 format for the tests given below.}
@@ -2212,28 +2207,31 @@ the problems behind them.
 \caption{Usability goals and measures}
 \label{tab:usability-goals}
 \small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} >{\raggedright\arraybackslash}X}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{3.6cm}}
 \toprule
-\textbf{Goal} & \textbf{Measure} \\
+\textbf{Goal} & \textbf{Measure} & \textbf{Target} \\
 \midrule
-Effectiveness & Task completion rate (Success rate) for UT-1 to UT-7\\
-Efficiency & Time on task, including UT-3 against researched and assumed \texttt{MAX\_ROLE\_SEARCH\_TIME} (NFR-KT-1)\\
-Safety & Errors or missteps per task, including ability to recover \\
-Utility & User workarounds or alternative approaches\\
-Learnability & Completion and time for all members, with a focus on new club members\\
-Memorability & The recall of certain system properties between tasks\\
+Effectiveness & Task completion rate (Success rate) for UT-1 to UT-7 & $\geq$ 80\% per task \\
+Efficiency & Time on task, including UT-3 against researched and assumed \texttt{MAX\_ROLE\_SEARCH\_TIME} (NFR-KT-1) & UT-3 within the time limit for all new members \\
+Safety & Errors or missteps per task, including ability to recover & All errors recoverable without help \\
+Utility & User workarounds or alternative approaches & Recorded; no target \\
+Learnability & Completion and time for all members, with a focus on new club members & New-member completion rate within 10\% of experienced members \\
+Memorability & The recall of certain system properties between tasks & Mean post-test Q6 rating $\geq$ 4 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{Participants}\mbox{}\\
-Participants are grouped by experience level, both in club experience and modelling/technical experience, 
-to ensure that individual bias is taken into account for usability. The groups are:
+Participants are recruited to cover both club experience and modelling or technical experience,
+recorded through the pre-test questionnaire, to ensure that individual bias is taken into account for usability.
+Between 6 and 9 participants will be recruited, covering:
 \begin{itemize}
-  \item New members (0--1 years in the club) and no modelling experience
-  \item Experienced members (2+ years in the club) and some modelling experience
-  \item Executives and technically experienced members (2+ years in the club) and modelling experience
+  \item \textbf{Club experience:} at least two new members (0--1 years) and at least
+    two experienced members (2+ years), including at least one executive for UT-4.
+  \item \textbf{Modelling experience:} at least two participants with no modelling
+    experience and at least two with modelling experience outside of class.
 \end{itemize}
+One participant may count toward several of these minimums.
 
 \paragraph{Pre-test questionnaire}\mbox{}\\
 These repeat questions 1--3 of the initial member requirements elicitation
@@ -2267,7 +2265,7 @@ UT-1 & Find a past bridge design from a given year and open it in the model
 UT-2 & Upload a provided document to the knowledge repository. & The document is
   stored with a title, category, and year. & G.5 Scenario 2, SR-KR-4 \\
 UT-3 & Find the role record for a given executive position. & The correct record
-  is opened within \texttt{MAX\_ROLE\_SEARCH\_TIME}. & NFR-KT-1 \\
+  is opened within \texttt{MAX\_ROLE\_SEARCH\_TIME}. & NFR-KT-1, T-NFR-KT-1-1 \\
 UT-4 & (Executives only) Fill in a transition document for your role. & The
   document is saved and listed under the role. & G.5 Scenario 3 \\
 UT-5 & Run a performance analysis on a provided STEP file and report the
@@ -2281,10 +2279,12 @@ UT-7 & Upload a provided material test file. & The data is stored with the
 \end{tabularx}
 \end{table}
 
-\paragraph{Post-task question}\mbox{}\\
-Overall, how difficult or easy was this task?
-\textbf{[1 = very difficult, 5 = very easy]} What would you adjust from the workflow to make 
-this task easier?
+\paragraph{Post-task questions}\mbox{}\\
+After each task the participant answers:
+\begin{enumerate}
+  \item Overall, how difficult or easy was this task? \textbf{[1 = very difficult, 5 = very easy]}
+  \item What would you change about the workflow to make this task easier? \textbf{[Open]}
+\end{enumerate}
 
 \paragraph{Post-test questionnaire}\mbox{}\\
 The questionnaire begins with instructions, ensuring users understand the rating system, 
