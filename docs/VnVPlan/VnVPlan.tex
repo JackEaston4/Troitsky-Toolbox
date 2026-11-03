@@ -29,14 +29,25 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
-% \testdef marks where a test is defined; \testref links to it.
-\newcommand{\testdef}[1]{\hypertarget{test:#1}{#1}}
+% --- Hyperlinking (anchors use \detokenize so names may contain \_) ---
+% \testdef: test definition, links to its traceability row (\testrow), which
+% links back; \testref: any other mention, links to the definition.
+\newcommand{\testdef}[1]{\leavevmode\hypertarget{test:#1}{}\hyperlink{trace:#1}{#1}}
+\newcommand{\testrow}[1]{\leavevmode\hypertarget{trace:#1}{}\hyperlink{test:#1}{#1}}
 \newcommand{\testref}[1]{\hyperlink{test:#1}{#1}}
 % \cname typesets a symbolic constant, allowing line breaks after underscores;
-% \const also links it to the Symbolic Parameters appendix. \cname is robust so
-% that it can be used in captions.
+% it is robust so that it can be used in captions. \constdef: table entry,
+% links to the first use (\constfirst), which links back; \constentry: table
+% entry with no use in the text; \const: any other use, links to the entry.
 \DeclareRobustCommand{\cname}[1]{{\renewcommand{\_}{\textunderscore\allowbreak}\textsc{#1}}}
-\newcommand{\const}[1]{\hyperref[SecSymbolicParameters]{\cname{#1}}}
+\newcommand{\constdef}[1]{\leavevmode\hypertarget{const:\detokenize{#1}}{}\hyperlink{constfirst:\detokenize{#1}}{\cname{#1}}}
+\newcommand{\constentry}[1]{\leavevmode\hypertarget{const:\detokenize{#1}}{}\cname{#1}}
+\newcommand{\constfirst}[1]{\leavevmode\hypertarget{constfirst:\detokenize{#1}}{}\hyperlink{const:\detokenize{#1}}{\cname{#1}}}
+\newcommand{\const}[1]{\hyperlink{const:\detokenize{#1}}{\cname{#1}}}
+% \utdef: usability task row; \utref: mention, links to the row.
+\newcommand{\utdef}[1]{\leavevmode\hypertarget{ut:#1}{}#1}
+\newcommand{\utref}[1]{\hyperlink{ut:#1}{#1}}
+% --- end hyperlinking ---
 
 \begin{document}
 
@@ -80,6 +91,10 @@ Date 2 & 1.1 & Notes\\
   \bottomrule
 \end{tabular}\\
 
+Terms and acronyms not listed above are defined in the glossary and acronym
+table of the SRS, Section E.1 \citep{TroitskySRS}, available in the
+\href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/pdfs/SRS/SRS.pdf}{project
+repository}.
 
 \newpage
 
@@ -416,8 +431,8 @@ accessible after logout.\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} An executive is logged in.\\
 \textbf{Input:} The executive creates an account three times: with a password
-one character shorter than \const{password\_min\_length}, with an entry from
-\const{password\_blocklist}, and with a password consisting solely of lowercase letters and exactly \const{password\_max\_length} characters long. The executive then changes the
+one character shorter than \constfirst{password\_min\_length}, with an entry from
+\constfirst{password\_blocklist}, and with a password consisting solely of lowercase letters and exactly \constfirst{password\_max\_length} characters long. The executive then changes the
 account's role and team, ends its session from the server side, and deactivates
 it.\\
 \textbf{Output:} The first two passwords are rejected, with a message stating
@@ -453,7 +468,7 @@ team. Every other request is refused with an error and changes nothing.\\
 \textbf{Input:} User opens each tool. The Material Testing Manager is then
 stopped, and the user requests it, then searches the Knowledge Repository.\\
 \textbf{Output:} Every tool opens. The request to the stopped service returns an
-error message within \const{broker\_timeout} instead of hanging, and the search
+error message within \constfirst{broker\_timeout} instead of hanging, and the search
 returns its results.\\
 \textbf{Derivation:} Verifies FR-BR-1, FR-BR-3, FR-BR-4.
 
@@ -467,12 +482,12 @@ returns its results.\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} User logged in. Repository contains items with known
 metadata.\\
-\textbf{Input:} User uploads one file of each type in \const{common\_file\_types},
-each with a title, a category from \const{category\_list}, a year, a team, and
+\textbf{Input:} User uploads one file of each type in \constfirst{common\_file\_types},
+each with a title, a category from \constfirst{category\_list}, a year, a team, and
 tags. User then makes three uploads that each break one metadata rule: no title,
 a category not in \const{category\_list}, and no year. Finally, the user searches
 by keyword, filters by category, year, team, and tag, previews a file of each
-type in \const{preview\_file\_types}, and downloads every uploaded file.\\
+type in \constfirst{preview\_file\_types}, and downloads every uploaded file.\\
 \textbf{Output:} Valid uploads are stored with their metadata. Each of the three
 invalid uploads is rejected, with a message naming the field. Searches and
 filters return exactly the items that match them, previews display in the
@@ -500,18 +515,18 @@ listed once the database is restarted.\\
 
 \item \testdef{T.FR.MA.5.1}\\
 \textbf{Control:} Manual\\
-\textbf{Initial State:} Team member logged in. \const{mat\_set\_a} is stored.\\
+\textbf{Initial State:} Team member logged in. \constfirst{mat\_set\_a} is stored.\\
 \textbf{Input:} User uploads three invalid files: a PDF renamed with a
 \texttt{.step} extension, a STEP file with a header but no geometry, and
-\const{ref\_model} truncated to half its size. User then uploads
+\constfirst{ref\_model} truncated to half its size. User then uploads
 \const{ref\_model} with \const{mat\_set\_a} selected, confirms the import
 summary, and rotates, zooms, and pans the 3D view. Finally, with
-\const{ma\_timeout} set to \const{ma\_timeout\_test} in the test deployment, the
+\constfirst{ma\_timeout} set to \constfirst{ma\_timeout\_test} in the test deployment, the
 user uploads \const{ref\_model} again.\\
 \textbf{Output:} Each invalid file is rejected, with a message stating that it is
 not a STEP file or contains no readable geometry. Before any analysis, the import
 summary shows the dimensions of \const{ref\_model} within
-\const{dimension\_tolerance} and its mass within \const{calc\_tolerance} of the
+\constfirst{dimension\_tolerance} and its mass within \constfirst{calc\_tolerance} of the
 values in Table~\ref{TblTestData}. The 3D view responds to each interaction and
 matches the model in CAD. The last upload stops after \const{ma\_timeout\_test}
 with a message that the time limit was exceeded, and no model is stored.\\
@@ -538,7 +553,7 @@ and filter but not modify.\\
 \item \testdef{T.FR.PA.6.1}\\
 \textbf{Control:} Automatic (results) and Manual (displayed assumptions)\\
 \textbf{Initial State:} \const{ref\_model}, \const{mat\_set\_a}, and
-\const{mat\_set\_b} are stored.\\
+\constfirst{mat\_set\_b} are stored.\\
 \textbf{Input:} A performance analysis of \const{ref\_model} is run with
 \const{mat\_set\_a}, then with \const{mat\_set\_b}, then with the calculation
 library made to return a non-finite stress.\\
@@ -561,11 +576,11 @@ Table~\ref{TblTestData}.
 \textbf{Control:} Manual (rule set editing) and Automatic (compliance checks)\\
 \textbf{Initial State:} Executive logged in. The compliance models of
 Table~\ref{TblComplianceModels} are stored.\\
-\textbf{Input:} The executive imports \const{ruleset\_test}, adds a rule, edits
+\textbf{Input:} The executive imports \constfirst{ruleset\_test}, adds a rule, edits
 its limit, and removes it. A script then runs a compliance check of each
 compliance model against \const{ruleset\_test}.\\
 \textbf{Output:} The rule set is stored under its year, and after each edit lists
-exactly the expected rules. \const{rc\_pass} and \const{rc\_limit} pass every
+exactly the expected rules. \constfirst{rc\_pass} and \constfirst{rc\_limit} pass every
 rule, and each other compliance model fails only the rule it is named for,
 showing its measured value and the allowed range. The materials rule is listed
 as a manual check for every model.\\
@@ -585,7 +600,7 @@ S.7.3, whose limits are inclusive.
 results.\\
 \textbf{Input:} User enters the first specimen of \const{mat\_set\_a} through the
 form, first without a grain orientation, then with it. User imports the remaining
-specimens of \const{mat\_set\_a} from \const{mt\_import\_file}, which also
+specimens of \const{mat\_set\_a} from \constfirst{mt\_import\_file}, which also
 contains four invalid rows. User views the comparison with \const{mat\_set\_b},
 and an executive flags the 840~N specimen of \const{mat\_set\_a} as invalid.\\
 \textbf{Output:} The entry without a grain orientation is rejected, and the second
@@ -653,13 +668,13 @@ Type: Automatic
 					
 Initial State: Troitsky Toolbox webserver is active and able to receive packets.
 					
-Input/Condition: A script makes \const{request\_sample\_size} requests to the webserver, half with secure protocols and half with insecure ones.
+Input/Condition: A script makes \constfirst{request\_sample\_size} requests to the webserver, half with secure protocols and half with insecure ones.
 					
 Output/Result: \\
 \texttt{Pass:} All modern and secure protocols and encryptions are negotiated and all outdated and insecure protocols are rejected.\\
 \texttt{Fail:} Any modern and secure protocols and encryptions are rejected or outdated and insecure protocols are negotiated.
 					
-How the test will be performed: Tools like Nmap or Qualys SSL Labs will scan the packets and observe the encryption protocols and ciphers. The webserver must only negotiate \const{secure\_protocols}, and must reject \const{insecure\_protocols} and \const{weak\_ciphers}.
+How the test will be performed: Tools like Nmap or Qualys SSL Labs will scan the packets and observe the encryption protocols and ciphers. The webserver must only negotiate \constfirst{secure\_protocols}, and must reject \constfirst{insecure\_protocols} and \constfirst{weak\_ciphers}.
 					
 \item \testdef{T.NFR.WS.2.2}\\
 Type: Automatic.
@@ -700,12 +715,12 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: Test users have been detected as inactive.
 
   Output/Result: \\
-  \texttt{Pass:} A test user who is inactive for \const{session\_timeout} is timed out.\\
+  \texttt{Pass:} A test user who is inactive for \constfirst{session\_timeout} is timed out.\\
   \texttt{Fail:} A test user who is inactive for \const{session\_timeout} isn't timed out, or a user inactive for less than \const{session\_timeout} is timed out.
 
   How the test will be performed:
   \begin{enumerate}
-    \item A script will have \const{session\_test\_users} test users log into the toolbox and be inactive.
+    \item A script will have \constfirst{session\_test\_users} test users log into the toolbox and be inactive.
     \item The script will read the Web Server logs and start a secondary timer for each user when the Web Server starts the inactivity timer for that user.
     \item Half the test users will remain inactive for longer than \const{session\_timeout} and the other half will randomly become active before it ends (with a few users designed to become active at edge cases, like the start and the end of the inactivity timer).
     \item The script pauses each user's secondary timer when they are timed out or become active.
@@ -783,7 +798,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: A script sends a batch of requests directly to the target service to establish a baseline response time. Then it sends an identical batch of requests to the same service but routes them through the Toolbox Broker.
 
   Output/Result:\\
-  \texttt{Pass:} The broker response time exceeds the baseline response time by no more than \const{max\_broker\_overhead} for all test requests.\\
+  \texttt{Pass:} The broker response time exceeds the baseline response time by no more than \constfirst{max\_broker\_overhead} for all test requests.\\
   \texttt{Fail:} The presence of the broker delays a request by more than \const{max\_broker\_overhead}.
 
   How the test will be performed:
@@ -822,12 +837,12 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   \item \testdef{T.NFR.KR.1.1}\\
   Type: Automatic (Performance)
 
-  Initial State: The Knowledge Repository database is populated with \const{max\_repository\_items} mock items (documents, bridge models, test results).
+  Initial State: The Knowledge Repository database is populated with \constfirst{max\_repository\_items} mock items (documents, bridge models, test results).
 
   Input/Condition: An automated script sends varied search queries (by keyword, year, team, tag) to the repository.
 
   Output/Result: \\
-  \texttt{Pass:} All search results are returned and displayed to the client within \const{max\_search\_time}.\\
+  \texttt{Pass:} All search results are returned and displayed to the client within \constfirst{max\_search\_time}.\\
   \texttt{Fail:} Any search query takes longer than \const{max\_search\_time}.
 
   How the test will be performed: A load-testing script will fire a suite of search queries against the API. The script will measure the round-trip time from request to response payload delivery and assert it falls below the threshold.
@@ -840,7 +855,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Initial State: The Knowledge Repository contains newly uploaded files and database records. The backup schedule is active.
 
-  Input/Condition: The \const{backup\_interval} passes, triggering an automated backup. A catastrophic server failure is then simulated by wiping the active database.
+  Input/Condition: The \constfirst{backup\_interval} passes, triggering an automated backup. A catastrophic server failure is then simulated by wiping the active database.
 
   Output/Result: \\
   \texttt{Pass:} A full backup exists on an isolated, external platform, and the system can be fully restored with no more than \const{backup\_interval} of data lost.\\
@@ -878,7 +893,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: The user clicks to view the 3D visualization of the model. 
 
   Output/Result: \\
-  \texttt{Pass:} The interactive 3D model fully renders in the browser within \const{max\_model\_load\_time}.\\
+  \texttt{Pass:} The interactive 3D model fully renders in the browser within \constfirst{max\_model\_load\_time}.\\
   \texttt{Fail:} The model takes longer than \const{max\_model\_load\_time} to render or hangs indefinitely.
 
   How the test will be performed: A browser automation tool (like Selenium or Playwright) will click the model link, start a timer, and stop the timer when the 3D canvas object registers as fully loaded and interactive.
@@ -913,10 +928,10 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: The Performance Analysis System runs a failure load estimate on the historical models.
 
   Output/Result: \\
-  \texttt{Pass:} The estimated failure load is within \const{failure\_load\_tolerance} of the real-world recorded value.\\
+  \texttt{Pass:} The estimated failure load is within \constfirst{failure\_load\_tolerance} of the real-world recorded value.\\
   \texttt{Fail:} The estimate diverges by more than \const{failure\_load\_tolerance}.
 
-  How the test will be performed: A validation script will run the FEA algorithm against a suite of \const{historical\_model\_count} historical bridge models. It will compare the output to the known real-world data and calculate the percentage error.
+  How the test will be performed: A validation script will run the FEA algorithm against a suite of \constfirst{historical\_model\_count} historical bridge models. It will compare the output to the known real-world data and calculate the percentage error.
 \end{enumerate}
 
 \paragraph{Computation Time}
@@ -929,7 +944,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: The user triggers the performance analysis.
 
   Output/Result: \\
-  \texttt{Pass:} The analysis completes and returns the failure load and metrics within \const{max\_analysis\_time}.\\
+  \texttt{Pass:} The analysis completes and returns the failure load and metrics within \constfirst{max\_analysis\_time}.\\
   \texttt{Fail:} The computation exceeds \const{max\_analysis\_time}.
 
   How the test will be performed: An automated script triggers the analysis API and measures the response time.
@@ -996,7 +1011,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Initial State: The user is on the Material Testing interface.
 
-  Input/Condition: The user uploads a standardized CSV containing \const{mt\_bulk\_rows} rows of test data. Later, the user clicks ``Export to CSV''.
+  Input/Condition: The user uploads a standardized CSV containing \constfirst{mt\_bulk\_rows} rows of test data. Later, the user clicks ``Export to CSV''.
 
   Output/Result: \\
   \texttt{Pass:} The file imports successfully with all \const{mt\_bulk\_rows} rows accurately reflected in the database. The exported CSV matches the data exactly.\\
@@ -1034,7 +1049,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: The user is tasked with finding the role record for the ``VP of Design''.
 
   Output/Result: \\
-  \texttt{Pass:} The user successfully navigates the UI and opens the document within \const{max\_role\_search\_time}.\\
+  \texttt{Pass:} The user successfully navigates the UI and opens the document within \constfirst{max\_role\_search\_time}.\\
   \texttt{Fail:} The user takes longer than \const{max\_role\_search\_time} or gives up.
 
   How the test will be performed: Conducted during the Winter CD Usability Testing phase. A tester observes a user with a stopwatch to measure the time to successful task completion.
@@ -1066,7 +1081,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Initial State: The web application is deployed to a staging environment.
 
-  Input/Condition: A script (or tester) executes the core workflows (Login, Upload Model, Run Analysis) on the current versions of each of \const{supported\_browsers}.
+  Input/Condition: A script (or tester) executes the core workflows (Login, Upload Model, Run Analysis) on the current versions of each of \constfirst{supported\_browsers}.
 
   Output/Result: \\
   \texttt{Pass:} The application functions perfectly on all \const{supported\_browsers} with no broken layouts or JS errors.\\
@@ -1082,7 +1097,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Initial State: The application is running under normal conditions.
 
-  Input/Condition: \const{min\_concurrent\_users} simulated users log in and perform varied tasks (searching, uploading, routing requests) simultaneously.
+  Input/Condition: \constfirst{min\_concurrent\_users} simulated users log in and perform varied tasks (searching, uploading, routing requests) simultaneously.
 
   Output/Result: \\
   \texttt{Pass:} All requests succeed, response times stay within their defined limits, and no thread-safety/concurrency errors occur.\\
@@ -1117,7 +1132,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   Input/Condition: The recruit follows the documentation (e.g., \texttt{README.md}, Docker setup guides) to build the app locally, write a minor UI text change, and deploy it.
 
   Output/Result: \\
-  \texttt{Pass:} The new member successfully completes the full cycle within \const{max\_onboarding\_time} with minimal external help.\\
+  \texttt{Pass:} The new member successfully completes the full cycle within \constfirst{max\_onboarding\_time} with minimal external help.\\
   \texttt{Fail:} Documentation is missing, outdated, or the environment is too complex to set up within \const{max\_onboarding\_time}.
 
   How the test will be performed: A real-world onboarding trial where a new CAS student is timed and monitored while setting up the project using only the written documentation.
@@ -1140,46 +1155,46 @@ Analysis requirements verified by each system test.
 \hline
 \textbf{Test Case ID} & \textbf{SRS Requirement} & \textbf{Hazard Analysis Requirement} \\ \hline
 \endhead
-\testref{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3, NFR-WS-1 & N/A \\ \hline
-\testref{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5 & SR-AC-2, SR-WS-5 \\ \hline
-\testref{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2 & N/A \\ \hline
-\testref{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4 & N/A \\ \hline
-\testref{T.FR.KR.4.1} & FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4 & SR-KR-4 \\ \hline
-\testref{T.FR.KR.4.2} & FR-KR-5 & SR-KR-2, SR-KR-5 \\ \hline
-\testref{T.FR.MA.5.1} & FR-MA-1, FR-MA-2, FR-MA-3 & SR-MA-1, SR-MA-3 \\ \hline
-\testref{T.FR.MA.5.2} & FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6 & N/A \\ \hline
-\testref{T.FR.PA.6.1} & FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4 & SR-PA-1 \\ \hline
-\testref{T.FR.RC.7.1} & FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5 & N/A \\ \hline
-\testref{T.FR.MT.8.1} & FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5 & SR-MT-2 \\ \hline
-\testref{T.FR.KT.9.1} & FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5 & SR-KT-2, SR-KT-5 \\ \hline
-\testref{T.FR.KT.9.2} & FR-KT-3, FR-KT-4 & SR-KT-3 \\ \hline
-\testref{T.NFR.WS.2.1} & NFR-WS-2 & N/A \\ \hline
-\testref{T.NFR.WS.2.2} & NFR-WS-2 & N/A \\ \hline
-\testref{T.NFR.WS.2.3} & NFR-WS-2 & N/A \\ \hline
-\testref{T.NFR.WS.3.1} & NFR-WS-3 & N/A \\ \hline
-\testref{T.NFR.AC.1.1} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
-\testref{T.NFR.AC.1.2} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
-\testref{T.NFR.BR.1.1} & NFR-BR-1 & N/A \\ \hline
-\testref{T.NFR.BR.2.1} & NFR-BR-2 & N/A \\ \hline
-\testref{T.NFR.BR.3.1} & NFR-BR-3 & N/A \\ \hline
-\testref{T.NFR.KR.1.1} & NFR-KR-1 & N/A \\ \hline
-\testref{T.NFR.KR.2.1} & NFR-KR-2 & N/A \\ \hline
-\testref{T.NFR.MA.1.1} & NFR-MA-1 & N/A \\ \hline
-\testref{T.NFR.MA.2.1} & NFR-MA-2 & N/A \\ \hline
-\testref{T.NFR.MA.3.1} & NFR-MA-3 & N/A \\ \hline
-\testref{T.NFR.PA.1.1} & NFR-PA-1 & N/A \\ \hline
-\testref{T.NFR.PA.2.1} & NFR-PA-2 & N/A \\ \hline
-\testref{T.NFR.PA.3.1} & NFR-PA-3 & N/A \\ \hline
-\testref{T.NFR.RC.1.1} & NFR-RC-1 & N/A \\ \hline
-\testref{T.NFR.RC.2.1} & NFR-RC-2 & N/A \\ \hline
-\testref{T.NFR.MT.1.1} & NFR-MT-1, NFR-MT-3 & N/A \\ \hline
-\testref{T.NFR.MT.2.1} & NFR-MT-2 & N/A \\ \hline
-\testref{T.NFR.KT.1.1} & NFR-KT-1 & N/A \\ \hline
-\testref{T.NFR.KT.2.1} & NFR-KT-2 & N/A \\ \hline
-\testref{T.NFR.SYS.1.1} & NFR-SYS-1 & N/A \\ \hline
-\testref{T.NFR.SYS.2.1} & NFR-SYS-2 & SR-WS-3 \\ \hline
-\testref{T.NFR.SYS.3.1} & NFR-SYS-3 & N/A \\ \hline
-\testref{T.NFR.SYS.4.1} & NFR-SYS-4 & SR-WS-1 \\ \hline
+\testrow{T.FR.WS.1.1} & FR-WS-1, FR-WS-2, FR-WS-3, NFR-WS-1 & N/A \\ \hline
+\testrow{T.FR.AC.2.1} & FR-AC-1, FR-AC-2, FR-AC-4, FR-AC-5 & SR-AC-2, SR-WS-5 \\ \hline
+\testrow{T.FR.AC.2.2} & FR-AC-3, FR-AC-6, FR-BR-2 & N/A \\ \hline
+\testrow{T.FR.BR.3.1} & FR-BR-1, FR-BR-3, FR-BR-4 & N/A \\ \hline
+\testrow{T.FR.KR.4.1} & FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4 & SR-KR-4 \\ \hline
+\testrow{T.FR.KR.4.2} & FR-KR-5 & SR-KR-2, SR-KR-5 \\ \hline
+\testrow{T.FR.MA.5.1} & FR-MA-1, FR-MA-2, FR-MA-3 & SR-MA-1, SR-MA-3 \\ \hline
+\testrow{T.FR.MA.5.2} & FR-MA-4, FR-MA-5, FR-MA-6, FR-AC-6 & N/A \\ \hline
+\testrow{T.FR.PA.6.1} & FR-PA-1, FR-PA-2, FR-PA-3, FR-PA-4, FR-MT-4 & SR-PA-1 \\ \hline
+\testrow{T.FR.RC.7.1} & FR-RC-1, FR-RC-2, FR-RC-3, FR-RC-4, FR-RC-5 & N/A \\ \hline
+\testrow{T.FR.MT.8.1} & FR-MT-1, FR-MT-2, FR-MT-3, FR-MT-4, FR-MT-5 & SR-MT-2 \\ \hline
+\testrow{T.FR.KT.9.1} & FR-KT-1, FR-KT-2, FR-KT-4, FR-KT-5 & SR-KT-2, SR-KT-5 \\ \hline
+\testrow{T.FR.KT.9.2} & FR-KT-3, FR-KT-4 & SR-KT-3 \\ \hline
+\testrow{T.NFR.WS.2.1} & NFR-WS-2 & N/A \\ \hline
+\testrow{T.NFR.WS.2.2} & NFR-WS-2 & N/A \\ \hline
+\testrow{T.NFR.WS.2.3} & NFR-WS-2 & N/A \\ \hline
+\testrow{T.NFR.WS.3.1} & NFR-WS-3 & N/A \\ \hline
+\testrow{T.NFR.AC.1.1} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
+\testrow{T.NFR.AC.1.2} & NFR-AC-1, NFR-AC-2 & SR-AC-1 \\ \hline
+\testrow{T.NFR.BR.1.1} & NFR-BR-1 & N/A \\ \hline
+\testrow{T.NFR.BR.2.1} & NFR-BR-2 & N/A \\ \hline
+\testrow{T.NFR.BR.3.1} & NFR-BR-3 & N/A \\ \hline
+\testrow{T.NFR.KR.1.1} & NFR-KR-1 & N/A \\ \hline
+\testrow{T.NFR.KR.2.1} & NFR-KR-2 & N/A \\ \hline
+\testrow{T.NFR.MA.1.1} & NFR-MA-1 & N/A \\ \hline
+\testrow{T.NFR.MA.2.1} & NFR-MA-2 & N/A \\ \hline
+\testrow{T.NFR.MA.3.1} & NFR-MA-3 & N/A \\ \hline
+\testrow{T.NFR.PA.1.1} & NFR-PA-1 & N/A \\ \hline
+\testrow{T.NFR.PA.2.1} & NFR-PA-2 & N/A \\ \hline
+\testrow{T.NFR.PA.3.1} & NFR-PA-3 & N/A \\ \hline
+\testrow{T.NFR.RC.1.1} & NFR-RC-1 & N/A \\ \hline
+\testrow{T.NFR.RC.2.1} & NFR-RC-2 & N/A \\ \hline
+\testrow{T.NFR.MT.1.1} & NFR-MT-1, NFR-MT-3 & N/A \\ \hline
+\testrow{T.NFR.MT.2.1} & NFR-MT-2 & N/A \\ \hline
+\testrow{T.NFR.KT.1.1} & NFR-KT-1 & N/A \\ \hline
+\testrow{T.NFR.KT.2.1} & NFR-KT-2 & N/A \\ \hline
+\testrow{T.NFR.SYS.1.1} & NFR-SYS-1 & N/A \\ \hline
+\testrow{T.NFR.SYS.2.1} & NFR-SYS-2 & SR-WS-3 \\ \hline
+\testrow{T.NFR.SYS.3.1} & NFR-SYS-3 & N/A \\ \hline
+\testrow{T.NFR.SYS.4.1} & NFR-SYS-4 & SR-WS-1 \\ \hline
 \end{xltabular}
 
 FR-KT-5 is a Could requirement in SRS S.5, implemented only if time allows, so
@@ -1811,111 +1826,111 @@ Table~\ref{TblComplianceModels} the models used to test rule compliance.
 \textbf{Constant} & \textbf{Value} & \textbf{Rationale (test cases)}\\
 \hline
 \endhead
-\cname{password\_min\_length} & 15 characters & Minimum length of a
+\constdef{password\_min\_length} & 15 characters & Minimum length of a
 single-factor password in NIST SP 800-63B-4 \citep{NIST80063B4}, required by
-SR-AC-2 (T.FR.AC.2.1).\\
+SR-AC-2 (\testref{T.FR.AC.2.1}).\\
 \hline
-\cname{password\_max\_length} & 64 characters & NIST SP 800-63B-4 recommends
+\constdef{password\_max\_length} & 64 characters & NIST SP 800-63B-4 recommends
 permitting passwords of at least 64 characters, so long passwords must not be
-rejected or truncated (T.FR.AC.2.1).\\
+rejected or truncated (\testref{T.FR.AC.2.1}).\\
 \hline
-\cname{password\_blocklist} & List of commonly used, expected, or compromised
+\constdef{password\_blocklist} & List of commonly used, expected, or compromised
 passwords & Required by NIST SP 800-63B-4. The test uses an entry of at least
-\cname{password\_min\_length} characters, so that it can only be rejected for
-being on the list (T.FR.AC.2.1).\\
+\const{password\_min\_length} characters, so that it can only be rejected for
+being on the list (\testref{T.FR.AC.2.1}).\\
 \hline
-\cname{common\_file\_types} & PDF, DOCX, XLSX, CSV, PPTX, PNG, JPG, STEP & The
+\constdef{common\_file\_types} & PDF, DOCX, XLSX, CSV, PPTX, PNG, JPG, STEP & The
 types of club material in the rationale of FR-KR-2: documents, spreadsheets,
-slides, photos of joints, and CAD models (T.FR.KR.4.1).\\
+slides, photos of joints, and CAD models (\testref{T.FR.KR.4.1}).\\
 \hline
-\cname{preview\_file\_types} & PDF, PNG, JPG & Displayed natively by every
-browser of NFR-SYS-1, so FR-KR-4 needs no conversion (T.FR.KR.4.1).\\
+\constdef{preview\_file\_types} & PDF, PNG, JPG & Displayed natively by every
+browser of NFR-SYS-1, so FR-KR-4 needs no conversion (\testref{T.FR.KR.4.1}).\\
 \hline
-\cname{category\_list} & Design, Materials, Construction, Competition, Reports,
+\constdef{category\_list} & Design, Materials, Construction, Competition, Reports,
 Administration & The standardized category list of SR-KR-4, covering the content
-types of FR-KR-1. To be confirmed with the Troitsky club (T.FR.KR.4.1).\\
+types of FR-KR-1. To be confirmed with the Troitsky club (\testref{T.FR.KR.4.1}).\\
 \hline
-\cname{broker\_timeout} & 10~s & The limit for keeping a user's attention on a
+\constdef{broker\_timeout} & 10~s & The limit for keeping a user's attention on a
 task \citep[ch.~5]{Nielsen1993}, as used for the time constants of SRS A.1.
 After it, the broker reports the service as unavailable (FR-BR-4)
-(T.FR.BR.3.1).\\
+(\testref{T.FR.BR.3.1}).\\
 \hline
-\cname{ma\_timeout} & 120~s & Time limit of SR-MA-3. Four times
-\cname{max\_model\_load\_time} (30~s, SRS A.1), so that a typical club model
-never reaches it (T.FR.MA.5.1).\\
+\constdef{ma\_timeout} & 120~s & Time limit of SR-MA-3. Four times
+\const{max\_model\_load\_time} (30~s, SRS A.1), so that a typical club model
+never reaches it (\testref{T.FR.MA.5.1}).\\
 \hline
-\cname{ma\_timeout\_test} & 1~s & Value of \cname{ma\_timeout} in the test
-deployment, so that the timeout can be tested with \cname{ref\_model} instead of
-a very large model (T.FR.MA.5.1).\\
+\constdef{ma\_timeout\_test} & 1~s & Value of \const{ma\_timeout} in the test
+deployment, so that the timeout can be tested with \const{ref\_model} instead of
+a very large model (\testref{T.FR.MA.5.1}).\\
 \hline
-\cname{calc\_tolerance} & 1\% relative error & \cname{ref\_model} is statically
+\constdef{calc\_tolerance} & 1\% relative error & \const{ref\_model} is statically
 determinate, so a linear-static analysis should match the hand calculation apart
-from rounding. Unlike \cname{failure\_load\_tolerance} (25\%, SRS A.1), it does
-not compare estimates with real bridges (T.FR.MA.5.1, T.FR.PA.6.1).\\
+from rounding. Unlike \const{failure\_load\_tolerance} (25\%, SRS A.1), it does
+not compare estimates with real bridges (\testref{T.FR.MA.5.1}, \testref{T.FR.PA.6.1}).\\
 \hline
-\cname{dimension\_tolerance} & 0.5~mm & Defined in SRS A.1 for NFR-MA-3
-(T.FR.MA.5.1, T.NFR.MA.3.1).\\
+\constdef{dimension\_tolerance} & 0.5~mm & Defined in SRS A.1 for NFR-MA-3
+(\testref{T.FR.MA.5.1}, \testref{T.NFR.MA.3.1}).\\
 \hline
-\cname{session\_timeout} & 30 minutes & Defined in SRS A.1 for NFR-WS-3
-(T.NFR.WS.3.1).\\
+\constdef{session\_timeout} & 30 minutes & Defined in SRS A.1 for NFR-WS-3
+(\testref{T.NFR.WS.3.1}).\\
 \hline
-\cname{max\_broker\_overhead} & 100~ms & Defined in SRS A.1 for NFR-BR-2
-(T.NFR.BR.2.1).\\
+\constdef{max\_broker\_overhead} & 100~ms & Defined in SRS A.1 for NFR-BR-2
+(\testref{T.NFR.BR.2.1}).\\
 \hline
-\cname{max\_search\_time} & 2~s & Defined in SRS A.1 for NFR-KR-1
-(T.NFR.KR.1.1).\\
+\constdef{max\_search\_time} & 2~s & Defined in SRS A.1 for NFR-KR-1
+(\testref{T.NFR.KR.1.1}).\\
 \hline
-\cname{max\_repository\_items} & 10,000 items & Defined in SRS A.1 for NFR-KR-1
-(T.NFR.KR.1.1).\\
+\constdef{max\_repository\_items} & 10,000 items & Defined in SRS A.1 for NFR-KR-1
+(\testref{T.NFR.KR.1.1}).\\
 \hline
-\cname{backup\_interval} & 7 days & Defined in SRS A.1 for NFR-KR-2
-(T.NFR.KR.2.1).\\
+\constdef{backup\_interval} & 7 days & Defined in SRS A.1 for NFR-KR-2
+(\testref{T.NFR.KR.2.1}).\\
 \hline
-\cname{max\_model\_load\_time} & 30~s & Defined in SRS A.1 for NFR-MA-2
-(T.NFR.MA.2.1).\\
+\constdef{max\_model\_load\_time} & 30~s & Defined in SRS A.1 for NFR-MA-2
+(\testref{T.NFR.MA.2.1}).\\
 \hline
-\cname{failure\_load\_tolerance} & 25\% & Defined in SRS A.1 for NFR-PA-1
-(T.NFR.PA.1.1).\\
+\constdef{failure\_load\_tolerance} & 25\% & Defined in SRS A.1 for NFR-PA-1
+(\testref{T.NFR.PA.1.1}).\\
 \hline
-\cname{max\_analysis\_time} & 30~s & Defined in SRS A.1 for NFR-PA-2
-(T.NFR.PA.2.1).\\
+\constdef{max\_analysis\_time} & 30~s & Defined in SRS A.1 for NFR-PA-2
+(\testref{T.NFR.PA.2.1}).\\
 \hline
-\cname{max\_role\_search\_time} & 2 minutes & Defined in SRS A.1 for NFR-KT-1
-(T.NFR.KT.1.1).\\
+\constdef{max\_role\_search\_time} & 2 minutes & Defined in SRS A.1 for NFR-KT-1
+(\testref{T.NFR.KT.1.1}).\\
 \hline
-\cname{min\_concurrent\_users} & 50 members & Defined in SRS A.1 for NFR-SYS-2
-(T.NFR.SYS.2.1).\\
+\constdef{min\_concurrent\_users} & 50 members & Defined in SRS A.1 for NFR-SYS-2
+(\testref{T.NFR.SYS.2.1}).\\
 \hline
-\cname{max\_onboarding\_time} & 1 week & Defined in SRS A.1 for NFR-SYS-4
-(T.NFR.SYS.4.1).\\
+\constdef{max\_onboarding\_time} & 1 week & Defined in SRS A.1 for NFR-SYS-4
+(\testref{T.NFR.SYS.4.1}).\\
 \hline
-\cname{supported\_browsers} & Google Chrome, Mozilla Firefox, Microsoft Edge,
-Safari & The browsers listed in NFR-SYS-1 (T.NFR.SYS.1.1).\\
+\constdef{supported\_browsers} & Google Chrome, Mozilla Firefox, Microsoft Edge,
+Safari & The browsers listed in NFR-SYS-1 (\testref{T.NFR.SYS.1.1}).\\
 \hline
-\cname{secure\_protocols} & TLS 1.2, TLS 1.3 & The TLS versions currently
-considered secure for the HTTPS connections of NFR-WS-2 (T.NFR.WS.2.1,
-T.NFR.WS.2.2).\\
+\constdef{secure\_protocols} & TLS 1.2, TLS 1.3 & The TLS versions currently
+considered secure for the HTTPS connections of NFR-WS-2 (\testref{T.NFR.WS.2.1},
+\testref{T.NFR.WS.2.2}).\\
 \hline
-\cname{insecure\_protocols} & SSLv3, TLS 1.0, TLS 1.1 & Outdated protocol
-versions that must be rejected for NFR-WS-2 (T.NFR.WS.2.1, T.NFR.WS.2.2).\\
+\constdef{insecure\_protocols} & SSLv3, TLS 1.0, TLS 1.1 & Outdated protocol
+versions that must be rejected for NFR-WS-2 (\testref{T.NFR.WS.2.1}, \testref{T.NFR.WS.2.2}).\\
 \hline
-\cname{weak\_ciphers} & RC4, DES, NULL & Weak cipher suites that must be
-rejected for NFR-WS-2 (T.NFR.WS.2.1).\\
+\constdef{weak\_ciphers} & RC4, DES, NULL & Weak cipher suites that must be
+rejected for NFR-WS-2 (\testref{T.NFR.WS.2.1}).\\
 \hline
-\cname{request\_sample\_size} & 1000 requests & Number of requests sent by the
+\constdef{request\_sample\_size} & 1000 requests & Number of requests sent by the
 automated encryption and performance tests, so that occasional slow or
-mis-negotiated requests are observed (T.NFR.WS.2.1, T.NFR.BR.2.1).\\
+mis-negotiated requests are observed (\testref{T.NFR.WS.2.1}, \testref{T.NFR.BR.2.1}).\\
 \hline
-\cname{session\_test\_users} & 100 users & Number of simulated users in the
+\constdef{session\_test\_users} & 100 users & Number of simulated users in the
 session expiry test, so that both the expired and the reactivated groups include
-edge cases (T.NFR.WS.3.1).\\
+edge cases (\testref{T.NFR.WS.3.1}).\\
 \hline
-\cname{mt\_bulk\_rows} & 100 rows & Number of rows in the CSV file used to test
-import and export (T.NFR.MT.1.1).\\
+\constdef{mt\_bulk\_rows} & 100 rows & Number of rows in the CSV file used to test
+import and export (\testref{T.NFR.MT.1.1}).\\
 \hline
-\cname{historical\_model\_count} & 5--10 models & Number of past club bridges
+\constdef{historical\_model\_count} & 5--10 models & Number of past club bridges
 with recorded failure loads used to validate the failure load estimate
-(T.NFR.PA.1.1).\\
+(\testref{T.NFR.PA.1.1}).\\
 \hline
 \end{xltabular}
 }
@@ -1932,37 +1947,37 @@ with recorded failure loads used to validate the failure load estimate
 \textbf{Item} & \textbf{Definition} & \textbf{Expected values}\\
 \hline
 \endhead
-\cname{ref\_model} & STEP model of a king post truss with members of
+\constdef{ref\_model} & STEP model of a king post truss with members of
 2~mm~$\times$~10~mm cross-section ($A = 20$~mm$^2$): a bottom chord of two
 200~mm members, two 250~mm diagonals to an apex 150~mm above mid-span, and a
 150~mm vertical post. Pinned at one end, on a roller at the other, and loaded at
 the bottom node at mid-span. & Length 400~mm, height 150~mm, width 10~mm, total
 member length 1050~mm, volume 21\,000~mm$^3$.\\
 \hline
-\cname{mat\_set\_a} & Current year: five tension specimens of
+\constdef{mat\_set\_a} & Current year: five tension specimens of
 2~mm~$\times$~10~mm cross-section, grain parallel to the load, failing at 760,
 800, 820, 780, and 840~N. Density 0.50~g/cm$^3$. & Strengths 38, 40, 41, 39,
 42~MPa; mean 40.0~MPa; sample standard deviation 1.58~MPa. With the 840~N
 specimen flagged: mean 39.5~MPa.\\
 \hline
-\cname{mat\_set\_b} & Previous year: five specimens as above, failing at 680,
+\constdef{mat\_set\_b} & Previous year: five specimens as above, failing at 680,
 720, 760, 700, and 740~N. Density 0.50~g/cm$^3$. & Strengths 34, 36, 38, 35,
 37~MPa; mean 36.0~MPa; sample standard deviation 1.58~MPa.\\
 \hline
-Analysis of \cname{ref\_model} & The post carries the full load $P$ in tension
+Analysis of \const{ref\_model} & The post carries the full load $P$ in tension
 (the diagonals carry $0.83P$ and the chord $0.67P$), so by SRS S.7.2 the post
 fails first, when $P / A = \mu_{strength}$, giving
 $P_{fail} = \mu_{strength} \cdot A$. Mass is the volume times the density:
-21~cm$^3 \times 0.50$~g/cm$^3$. & Mass 10.5~g. With \cname{mat\_set\_a}: failure
-load 800~N, load-to-mass ratio 76.2~N/g. With \cname{mat\_set\_b}: 720~N,
+21~cm$^3 \times 0.50$~g/cm$^3$. & Mass 10.5~g. With \const{mat\_set\_a}: failure
+load 800~N, load-to-mass ratio 76.2~N/g. With \const{mat\_set\_b}: 720~N,
 68.6~N/g.\\
 \hline
-\cname{mt\_import\_file} & CSV file in the standardized template of NFR-MT-1,
-containing specimens 2 to 5 of \cname{mat\_set\_a} and four invalid rows: a
+\constdef{mt\_import\_file} & CSV file in the standardized template of NFR-MT-1,
+containing specimens 2 to 5 of \const{mat\_set\_a} and four invalid rows: a
 missing applied load, a thickness of $-2$~mm, an applied load of $-50$~N, and a
 width of 0~mm. & Specimens 2 to 5 stored; the four invalid rows rejected.\\
 \hline
-\cname{ruleset\_test} & Rule set for a test competition year, with values chosen
+\constdef{ruleset\_test} & Rule set for a test competition year, with values chosen
 for testing only: mass $\leq$ 750~g; length from 900 to 1100~mm; width from 100
 to 200~mm; clearance height $\geq$ 150~mm; and a materials rule (popsicle
 sticks, toothpicks, white glue, and dental floss only) that cannot be checked
@@ -1986,22 +2001,22 @@ so the extracted values equal those listed.}
 & \textbf{Clearance (mm)} & \textbf{Expected result}\\
 \hline
 \endhead
-\cname{rc\_pass} & 500 & 1000 & 150 & 200 & Passes every rule\\
+\constdef{rc\_pass} & 500 & 1000 & 150 & 200 & Passes every rule\\
 \hline
-\cname{rc\_limit} & 750 & 1100 & 100 & 150 & Passes every rule (limits are
+\constdef{rc\_limit} & 750 & 1100 & 100 & 150 & Passes every rule (limits are
 inclusive)\\
 \hline
-\cname{rc\_heavy} & 760 & 1000 & 150 & 200 & Fails mass only\\
+\constentry{rc\_heavy} & 760 & 1000 & 150 & 200 & Fails mass only\\
 \hline
-\cname{rc\_long} & 500 & 1110 & 150 & 200 & Fails length only\\
+\constentry{rc\_long} & 500 & 1110 & 150 & 200 & Fails length only\\
 \hline
-\cname{rc\_short} & 500 & 890 & 150 & 200 & Fails length only\\
+\constentry{rc\_short} & 500 & 890 & 150 & 200 & Fails length only\\
 \hline
-\cname{rc\_wide} & 500 & 1000 & 210 & 200 & Fails width only\\
+\constentry{rc\_wide} & 500 & 1000 & 210 & 200 & Fails width only\\
 \hline
-\cname{rc\_narrow} & 500 & 1000 & 90 & 200 & Fails width only\\
+\constentry{rc\_narrow} & 500 & 1000 & 90 & 200 & Fails width only\\
 \hline
-\cname{rc\_low} & 500 & 1000 & 150 & 140 & Fails clearance only\\
+\constentry{rc\_low} & 500 & 1000 & 150 & 140 & Fails clearance only\\
 \hline
 \end{xltabular}
 }
@@ -2080,7 +2095,7 @@ multiple question sets.
 \paragraph{Team captains and experienced members}
 \begin{enumerate}
   \item What tool have you found is the most accurate and useful in predicting your bridge's performance?
-  \item How close to a model estimate do you expect your bridge's performance to be, including uncertainties? [\texttt{FAILURE\_LOAD\_TOLERANCE}]
+  \item How close to a model estimate do you expect your bridge's performance to be, including uncertainties? [\const{failure\_load\_tolerance}]
   \item What are the most common reasons for bridge failures in your experience?
   \item Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox?
 \end{enumerate}
@@ -2108,8 +2123,8 @@ the problems behind them.
 \toprule
 \textbf{Goal} & \textbf{Measure} & \textbf{Target} \\
 \midrule
-Effectiveness & Task completion rate (Success rate) for UT-1 to UT-7 & $\geq$ 80\% per task \\
-Efficiency & Time on task, including UT-3 against researched and assumed \texttt{MAX\_ROLE\_SEARCH\_TIME} (NFR-KT-1) & UT-3 within the time limit for all new members \\
+Effectiveness & Task completion rate (Success rate) for \utref{UT-1} to \utref{UT-7} & $\geq$ 80\% per task \\
+Efficiency & Time on task, including \utref{UT-3} against researched and assumed \const{max\_role\_search\_time} (NFR-KT-1) & \utref{UT-3} within the time limit for all new members \\
 Safety & Errors or missteps per task, including ability to recover & All errors recoverable without help \\
 Utility & User workarounds or alternative approaches & Recorded; no target \\
 Learnability & Completion and time for all members, with a focus on new club members & New-member completion rate within 10\% of experienced members \\
@@ -2124,7 +2139,7 @@ recorded through the pre-test questionnaire, to ensure that individual bias is t
 Between 6 and 9 participants will be recruited, covering:
 \begin{itemize}
   \item \textbf{Club experience:} at least two new members (0--1 years) and at least
-    two experienced members (2+ years), including at least one executive for UT-4.
+    two experienced members (2+ years), including at least one executive for \utref{UT-4}.
   \item \textbf{Modelling experience:} at least two participants with no modelling
     experience and at least two with modelling experience outside of class.
 \end{itemize}
@@ -2157,20 +2172,20 @@ Tasks follow the usage scenarios in SRS Section G.5.
 \toprule
 \textbf{ID} & \textbf{Task} & \textbf{Success criterion} & \textbf{Traces to} \\
 \midrule
-UT-1 & Find a past bridge design from a given year and open it in the model
+\utdef{UT-1} & Find a past bridge design from a given year and open it in the model
   viewer. & The correct design is displayed. & G.5 Scenario 1 \\
-UT-2 & Upload a provided document to the knowledge repository. & The document is
+\utdef{UT-2} & Upload a provided document to the knowledge repository. & The document is
   stored with a title, category, and year. & G.5 Scenario 2, SR-KR-4 \\
-UT-3 & Find the role record for a given executive position. & The correct record
-  is opened within \texttt{MAX\_ROLE\_SEARCH\_TIME}. & NFR-KT-1, T-NFR-KT-1-1 \\
-UT-4 & (Executives only) Fill in a transition document for your role. & The
+\utdef{UT-3} & Find the role record for a given executive position. & The correct record
+  is opened within \const{max\_role\_search\_time}. & NFR-KT-1, \testref{T.NFR.KT.1.1} \\
+\utdef{UT-4} & (Executives only) Fill in a transition document for your role. & The
   document is saved and listed under the role. & G.5 Scenario 3 \\
-UT-5 & Run a performance analysis on a provided STEP file and report the
+\utdef{UT-5} & Run a performance analysis on a provided STEP file and report the
   estimated failure load. & The participant states the value with the correct
   units. & G.5 Scenario 4, FR-PA-1, SR-MA-2 \\
-UT-6 & Run a rule compliance check on a provided STEP file that breaks one rule.
+\utdef{UT-6} & Run a rule compliance check on a provided STEP file that breaks one rule.
   & The participant names the rule that fails. & G.5 Scenario 5, FR-RC-4 \\
-UT-7 & Upload a provided material test file. & The data is stored with the
+\utdef{UT-7} & Upload a provided material test file. & The data is stored with the
   correct units selected. & G.5 Scenario 6, SR-MT-1 \\
 \bottomrule
 \end{tabularx}
