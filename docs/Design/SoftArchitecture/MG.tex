@@ -130,58 +130,76 @@ potential readers of this document are as follows:
   decomposition, and flexibility of the design.
 \end{itemize}
 
-The rest of the document is organized as follows. Section
-\ref{SecChange} lists the anticipated and unlikely changes of the software
-requirements. Section \ref{SecMH} summarizes the module decomposition that
-was constructed according to the likely changes. Section \ref{SecConnection}
-specifies the connections between the software requirements and the
-modules. Section \ref{SecMD} gives a detailed description of the
-modules. Section \ref{SecTM} includes two traceability matrices. One checks
-the completeness of the design against the requirements provided in the SRS. The
-other shows the relation between anticipated changes and the modules. Section
-\ref{SecUse} describes the use relation between modules.
+The rest of the document is organized as follows.
+Section \ref{SecChange} lists the anticipated and unlikely changes of the softwarerequirements.
+Section \ref{SecMH} summarizes the module decomposition that was constructed according to the likely changes.
+Section \ref{SecConnection} specifies the connections between the software requirements and the modules.
+Section \ref{SecMD} gives a detailed description of the modules.
+Section \ref{SecTM} includes two traceability matrices. One checksthe completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules.
+Section \ref{SecUse} describes the use relation between modules. 
+Section \ref{SecUI} presents the design of the user interfaces. 
+Section \ref{SecComm} describes the design of the communication protocols.
+Section \ref{SecDB} summarizes the database design.
+Section \ref{SecTimeline} outlines the schedule of tasks and the team members responsible for them.
+Finally, Section \ref{SecAI} discloses the use of generative AI tools in the preparation of this document.
+
+
+
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
-
-This section lists possible changes to the system. According to the likeliness
-of the change, the possible changes are classified into two
-categories. Anticipated changes are listed in Section \ref{SecAchange}, and
-unlikely changes are listed in Section \ref{SecUchange}.
+This section lists possible changes to the system. According to the likeliness of the change, the possible changes are classified into two categories. Anticipated changes are listed in Section \ref{SecAchange}, and unlikely changes are listed in Section \ref{SecUchange}.
 
 \subsection{Anticipated Changes} \label{SecAchange}
-
-Anticipated changes are the source of the information that is to be hidden
-inside the modules. Ideally, changing one of the anticipated changes will only
-require changing the one module that hides the associated decision. The approach
-adapted here is called design for
-change.
+Anticipated changes are the source of the information that is to be hidden inside the modules. Ideally, changing one of the anticipated changes will only require changing the one module that hides the associated decision. The approach adopted here is called design for change. Some anticipated changes affect more than one module; these cases are identified in the traceability matrix in Section \ref{SecTM}.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:]
+  The hosting platform and deployment configuration of the system. This may change from a cloud service to a university server depending on the club's budget and the servers available to it.
+\item[\refstepcounter{acnum} \actheacnum \label{acRules}:]
+  The competition rule set. The rules are revised and republished before each year's competition.
+\item[\refstepcounter{acnum} \actheacnum \label{acModelInput}:]
+  The library used to read STEP files and the club conventions for how bridge models are exported. The library may be replaced if it cannot read all club exports, and the export conventions may be refined as teams adopt them.
+\item[\refstepcounter{acnum} \actheacnum \label{acAnalysis}:]
+  The structural analysis method and the set of performance metrics computed for a bridge. These will be iterated on to improve the accuracy of predictions, and new metrics will be added as the club identifies what is useful to teams.
+\item[\refstepcounter{acnum} \actheacnum \label{acMaterial}:]
+  The template for material test files and the method used to derive material properties from test results. These may change as the club adjusts its testing procedures or starts using new materials and suppliers.
+\item[\refstepcounter{acnum} \actheacnum \label{acUI}:]
+  The layout and design of the Toolbox Web App, including the library used to display 3D models. This will likely change based on user feedback to improve usability.
+\item[\refstepcounter{acnum} \actheacnum \label{acServices}:]
+  The set of tools offered by the Toolbox. Future software subteam members are expected to add new tools as the club's needs grow.
+\item[\refstepcounter{acnum} \actheacnum \label{acDB}:]
+  The database technology, schema, and backup strategy. The schema will grow as new tools and types of content are added, and the technology may change with the hosting platform.
+\item[\refstepcounter{acnum} \actheacnum \label{acAuth}:]
+  The authentication mechanism used to sign members in. This may be replaced by an external sign-in provider, such as McMaster single sign-on, to simplify account management.
+\item[\refstepcounter{acnum} \actheacnum \label{acHandoff}:]
+  The structure and templates of handoff documents. Executives are expected to refine these each year based on what incoming members found useful.
+\item[\refstepcounter{acnum} \actheacnum \label{acSearch}:]
+  The search strategy used to find content in the Knowledge Repository. This may need to change to keep searches fast as the amount of stored content grows.
 \end{description}
-
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
 
 \subsection{Unlikely Changes} \label{SecUchange}
-
-The module design should be as general as possible. However, a general system is
-more complex. Sometimes this complexity is not necessary. Fixing some design
-decisions at the system architecture stage can simplify the software design. If
-these decision should later need to be changed, then many parts of the design
-will potentially need to be modified. Hence, it is not intended that these
-decisions will be changed.
+The module design should be as general as possible. However, a general system is more complex. Sometimes this complexity is not necessary. Fixing some design decisions at the system architecture stage can simplify the software design. If these decisions should later need to be changed, then many parts of the design will potentially need to be modified. Hence, it is not intended that these decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:]
+  Input/Output devices (Input: keyboard, mouse, and file upload; Output: screen and downloaded files). Members interact with the system only through a web browser on a computer.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPlatform}:]
+  Delivery as a web application for desktop browsers. Mobile devices are not supported, as the main tasks, such as uploading CAD models, are done on a computer.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucBroker}:]
+  The broker-based architecture, in which all communication between services passes through the Toolbox Broker. This is fundamental to letting tools be added without modifying existing services.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucStack}:]
+  The back-end technology stack of C\# on .NET. Changing it would require rewriting most of the system, and it was chosen to be maintainable by future subteam members.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucModelFormat}:]
+  STEP as the only accepted bridge model format. STEP is supported by all the modelling software the club's teams currently use.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucCompetition}:]
+  The overall format of the Troitsky competition. Individual rules change each year, but bridges are expected to remain built from the same materials and tested the same way.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucRoles}:]
+  The club roles on which access control is based. The club's organizational structure is not expected to change often.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucUsers}:]
+  Current club members as the only users of the system's services. Past members and the public have access only to the public landing page.
 \end{description}
+
+
 
 \section{Module Hierarchy} \label{SecMH}
 
@@ -361,6 +379,15 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \label{TblACT}
 \end{table}
 
+% TODO (when writing this matrix): Section 4.1 states that anticipated changes
+% affecting more than one module are identified here. The ACs were consolidated
+% (e.g. acModelInput = STEP library + export conventions, acAnalysis = solver +
+% metrics, acMaterial = test template + property derivation, acUI = layout + 3D
+% viewer, acDB = database + schema + backups), so some will map to several
+% modules. Add a short paragraph below Table TblACT listing each AC that maps to
+% more than one module and why (MG checklist: one-to-one mapping, or explain the
+% exceptions).
+
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
 In this section, the uses hierarchy between modules is
@@ -392,30 +419,32 @@ arrows in the diagram typically correspond to the presence of import statement.}
 
 %\section*{References}
 
-\section{User Interfaces}
+\section{User Interfaces} \label{SecUI}
 
 \wss{Design of user interface for software and hardware.  Attach an appendix if
 needed. Drawings, Sketches, Figma}
 
-\section{Design of Communication Protocols}
+\section{Design of Communication Protocols} \label{SecComm}
 
-\wss{If there is communication between hardware and software, it may be necessary 
-to explain the design of the communication protocol.  This section should be filled 
-in with NA if it is not appropriate for a given project.}
+\wss{If there is communication between hardware and software, it may be necessary to explain the design of the communication protocol.  This section should be filled in with NA if it is not appropriate for a given project.}
 
-\section{Database Design}
+N/A. The Troitsky Toolbox is a web application with no custom hardware
+components, so there is no hardware-software communication protocol to design.
+
+
+\section{Database Design} \label{SecDB}
 
 \wss{If a database is a significant component of the project, the database
 design should be summarized here.  This section should be filled in with NA if
 it is not appropriate for a given project.}
 
-\section{Timeline}
+\section{Timeline} \label{SecTimeline}
 
 \wss{Schedule of tasks and who is responsible}
 
 \wss{You can point to GitHub if this information is included there}
 
-\section{Generative AI Use Disclosure}
+\section{Generative AI Use Disclosure} \label{SecAI}
 
 \wss{ChatGPT (version 5) was used to brainstorm ideas for the template for this disclose section.}
 
