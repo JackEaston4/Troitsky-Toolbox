@@ -1,0 +1,87 @@
+@* Import summary of a loaded model (SR-MA-1): what the system read, in mm, so the
+   member can confirm it matches their CAD model before relying on it. *@
+
+<h2>@(Inspection.ProductName ?? Inspection.FileName)</h2>
+<p class="tt-muted">
+    @Inspection.FileName · @FormatBytes(Inspection.SizeBytes)
+    @if (Inspection.OriginatingSystem is { } sys)
+    {
+        <span> · from @sys</span>
+    }
+</p>
+
+<h3>Dimensions <span class="tt-unit">mm</span></h3>
+<table class="tt-table">
+    <tr><th>X (width)</th><td>@Mm(Measurements.Size[0])</td></tr>
+    <tr><th>Y (height)</th><td>@Mm(Measurements.Size[1])</td></tr>
+    <tr><th>Z (length)</th><td>@Mm(Measurements.Size[2])</td></tr>
+    <tr><th>Longest side</th><td>@Mm(Measurements.Size.Max())</td></tr>
+</table>
+<p class="tt-note">Axis-aligned bounding box in the model's own coordinates. Grid squares are @Mm(Measurements.GridCellMm) mm.</p>
+
+<h3>Volume and mass</h3>
+<table class="tt-table">
+    <tr><th>Volume</th><td>@N(Measurements.VolumeMm3 / 1000, 2) cm³ <span class="tt-muted">(@N(Measurements.VolumeMm3, 0) mm³)</span></td></tr>
+    <tr><th>Surface area</th><td>@N(Measurements.SurfaceAreaMm2 / 100, 2) cm²</td></tr>
+    <tr>
+        <th>Density</th>
+        <td>
+            <input class="tt-num" type="number" step="0.01" min="0" @bind="Density" @bind:event="oninput" /> g/cm³
+            <div class="tt-muted tt-small">@(Inspection.DensityGPerCm3 is null ? "Not stored in file; enter the material density." : $"Read from file: {N(Inspection.DensityGPerCm3.Value, 3)} g/cm³")</div>
+        </td>
+    </tr>
+    <tr><th>Mass</th><td><strong>@(Density is > 0 ? $"{N(Measurements.VolumeMm3 / 1000 * Density.Value, 2)} g" : "—")</strong></td></tr>
+    <tr><th>Centre of mass</th><td>(@string.Join(", ", Measurements.Centroid.Select(c => Mm(c)))) mm</td></tr>
+</table>
+@if (!Measurements.Closed)
+{
+    <p class="tt-warn">The surface is not closed, so volume, mass and centre of mass may be wrong.</p>
+}
+
+<h3>Model</h3>
+<table class="tt-table">
+    <tr><th>Solids</th><td>@Inspection.SolidCount</td></tr>
+    <tr><th>Faces</th><td>@Inspection.FaceCount</td></tr>
+    <tr><th>Surface types</th><td>@string.Join(", ", Inspection.SurfaceTypes.Select(kv => $"{Pretty(kv.Key)} {kv.Value}"))</td></tr>
+    <tr><th>Source units</th><td>@(Inspection.LengthUnit ?? "not declared")</td></tr>
+    <tr><th>Mesh</th><td>@N(Measurements.Triangles, 0) triangles · @(Measurements.Closed ? "closed" : "open")</td></tr>
+</table>
+
+@if (Timings is { } t)
+{
+    <h3>Load time</h3>
+    <table class="tt-table">
+        <tr><th>Total</th><td><strong>@N(t.TotalMs / 1000, 2) s</strong> <span class="@(t.TotalMs / 1000 <= MaxLoadSeconds ? "tt-ok" : "tt-bad")">(target ≤ @MaxLoadSeconds s)</span></td></tr>
+        <tr><th>Server check</th><td>@N(t.ServerMs, 0) ms</td></tr>
+        <tr><th>Tessellation</th><td>@N(t.TessellateMs, 0) ms</td></tr>
+        <tr><th>Measure + render</th><td>@N(t.MeasureMs + t.RenderMs, 0) ms</td></tr>
+    </table>
+}
+
+@code {
+    [Parameter, EditorRequired] public required StepInspection Inspection { get; set; }
+    [Parameter, EditorRequired] public required MeshMeasurements Measurements { get; set; }
+    [Parameter] public LoadTimings? Timings { get; set; }
+    [Parameter] public double MaxLoadSeconds { get; set; }
+
+    private double? Density { get; set; }
+    private StepInspection? _densitySource;
+
+    protected override void OnParametersSet()
+    {
+        // Reset the density only when a different model is loaded.
+        if (!ReferenceEquals(_densitySource, Inspection))
+        {
+            _densitySource = Inspection;
+            Density = Inspection.DensityGPerCm3;
+        }
+    }
+
+    private static string N(double v, int digits) => v.ToString("N" + digits, CultureInfo.InvariantCulture);
+    private static string Mm(double v) => N(Math.Abs(v) < 0.005 ? 0 : v, 2);
+
+    private static string FormatBytes(long b) => b < 1024 * 1024 ? $"{N(b / 1024.0, 0)} KB" : $"{N(b / 1024.0 / 1024.0, 1)} MB";
+
+    private static string Pretty(string surface) =>
+        CultureInfo.InvariantCulture.TextInfo.ToTitleCase(surface.Replace("_SURFACE", "").Replace('_', ' ').ToLowerInvariant());
+}
