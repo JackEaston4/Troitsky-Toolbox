@@ -97,11 +97,11 @@ software.  A module is a work assignment for a programmer or programming
 team~\citep{ParnasEtAl1984}.  We advocate a decomposition
 based on the principle of information hiding~\citep{Parnas1972a}.  This
 principle supports design for change, because the ``secrets'' that each module
-hides represent likely future changes.  Design for change is valuable in SC,
-where modifications are frequent, especially during initial development as the
-solution space is explored.  
+hides represent likely future changes.  Design for change is valuable for the
+Troitsky Toolbox, which will be maintained by successive members of the club's
+software subteam as competition rules change each year and new tools are added.
 
-Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
+Our design follows the rules laid out by \citet{ParnasEtAl1984}, as follows:
 \begin{itemize}
 \item System details that are likely to change independently should be the
   secrets of separate modules.
@@ -117,9 +117,10 @@ designers and maintainers to easily identify the parts of the software.  The
 potential readers of this document are as follows:
 
 \begin{itemize}
-\item New project members: This document can be a guide for a new project member
-  to easily understand the overall structure and quickly find the
-  relevant modules they are searching for.
+\item New software subteam members: This document can be a guide for a new
+  member of the club's software subteam taking over maintenance of the Toolbox
+  to easily understand the overall structure and quickly find the relevant
+  modules they are searching for.
 \item Maintainers: The hierarchical structure of the module guide improves the
   maintainers' understanding when they need to make changes to the system. It is
   important for a maintainer to update the relevant sections of the document
@@ -131,11 +132,11 @@ potential readers of this document are as follows:
 \end{itemize}
 
 The rest of the document is organized as follows.
-Section \ref{SecChange} lists the anticipated and unlikely changes of the softwarerequirements.
-Section \ref{SecMH} summarizes the module decomposition that was constructed according to the likely changes.
+Section \ref{SecChange} lists the anticipated and unlikely changes of the software requirements.
+Section \ref{SecMH} summarizes the module decomposition that was constructed according to the anticipated changes.
 Section \ref{SecConnection} specifies the connections between the software requirements and the modules.
 Section \ref{SecMD} gives a detailed description of the modules.
-Section \ref{SecTM} includes two traceability matrices. One checksthe completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules.
+Section \ref{SecTM} includes two traceability matrices. One checks the completeness of the design against the requirements provided in the SRS. The other shows the relation between anticipated changes and the modules.
 Section \ref{SecUse} describes the use relation between modules. 
 Section \ref{SecUI} presents the design of the user interfaces. 
 Section \ref{SecComm} describes the design of the communication protocols.
@@ -387,6 +388,9 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 % modules. Add a short paragraph below Table TblACT listing each AC that maps to
 % more than one module and why (MG checklist: one-to-one mapping, or explain the
 % exceptions).
+% TODO: The Introduction says Section \ref{SecTM} "includes two traceability
+% matrices". If an Unlikely Changes -> Modules table is added (as in Becca's
+% MG), update that sentence in the Introduction.
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
