@@ -38,13 +38,13 @@
             {
                 <div class="tt-overlay"><div class="tt-spinner"></div>@_status</div>
             }
-            else if (_result is not { Ok: true })
+            else if (_result is not ViewerResult.Success)
             {
                 <div class="tt-overlay tt-hint">Load a STEP (.stp / .step) model to view it.</div>
             }
         </div>
 
-        @if (_result?.Ok == true)
+        @if (_result is ViewerResult.Success)
         {
             <div class="tt-viewbar">
                 <span>Drag to rotate · Scroll to zoom · Right-drag to pan</span>
@@ -58,16 +58,16 @@
     </section>
 
     <aside class="tt-panel">
-        @if (_result is { Ok: false })
+        @if (_result is ViewerResult.Failure failure)
         {
             <div class="tt-error" role="alert">
                 <strong>File rejected</strong>
-                <p>@_result.Error</p>
+                <p>@failure.Message</p>
             </div>
         }
-        else if (_result is { Ok: true, Measurements: { } m, Inspection: { } info })
+        else if (_result is ViewerResult.Success success)
         {
-            <ModelSummaryPanel Inspection="info" Measurements="m" Timings="_result.Timings"
+            <ModelSummaryPanel Inspection="success.Inspection" Measurements="success.Measurements" Timings="success.Timings"
                                MaxLoadSeconds="MaxModelLoadSeconds" />
         }
         else
@@ -114,23 +114,24 @@
         StateHasChanged();
     });
 
-    private Task LoadFile() => Run(v => v.InvokeAsync<ViewerResult>("loadFromInput", _host, _fileInput));
+    private Task LoadFile() => Run(v => v.InvokeAsync<ViewerInteropResult>("loadFromInput", _host, _fileInput));
 
     private Task LoadSample() => _sample is null ? Task.CompletedTask
-        : Run(v => v.InvokeAsync<ViewerResult>("loadSample", _host, _sample));
+        : Run(v => v.InvokeAsync<ViewerInteropResult>("loadSample", _host, _sample));
 
-    private async Task Run(Func<IJSObjectReference, ValueTask<ViewerResult>> load)
+    private async Task Run(Func<IJSObjectReference, ValueTask<ViewerInteropResult>> load)
     {
         if (_viewer is null) return;
         _busy = true;
         _status = "Reading file…";
         try
         {
-            _result = await load(_viewer);
+            var response = await load(_viewer);
+            _result = response?.ToViewerResult() ?? new ViewerResult.Failure("The viewer returned no result.");
         }
         catch (JSException ex)
         {
-            _result = new ViewerResult(false, ex.Message, null, null, null);
+            _result = new ViewerResult.Failure(ex.Message);
         }
         finally
         {

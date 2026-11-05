@@ -30,9 +30,12 @@ public static class ModelEndpoints
                 content = buffer.ToArray();
 
                 var result = await Task.Run(() => StepInspector.Inspect(content, Path.GetFileName(name), linked.Token), linked.Token);
-                return result.IsValid
-                    ? Results.Ok(result.Inspection)
-                    : Problem(result.Error!);
+                return result switch
+                {
+                    StepInspectionResult.Success success => Results.Ok(success.Inspection),
+                    StepInspectionResult.Failure failure => Problem(failure.Error),
+                    _ => throw new InvalidOperationException("Unknown STEP inspection result.")
+                };
             }
             catch (OperationCanceledException) when (timeout.IsCancellationRequested)
             {

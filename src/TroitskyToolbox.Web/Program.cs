@@ -9,9 +9,12 @@ builder.Services.AddRazorComponents()
     .AddCircuitOptions(o => o.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(3));
 
 var modelSection = builder.Configuration.GetSection(ModelAnalysisOptions.Section);
-builder.Services.Configure<ModelAnalysisOptions>(modelSection);
-var maxUpload = modelSection.Get<ModelAnalysisOptions>()?.MaxUploadBytes ?? new ModelAnalysisOptions().MaxUploadBytes;
-builder.WebHost.ConfigureKestrel(k => k.Limits.MaxRequestBodySize = maxUpload + 1024);
+builder.Services.AddOptions<ModelAnalysisOptions>()
+    .Bind(modelSection)
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+var modelOptions = modelSection.Get<ModelAnalysisOptions>() ?? new ModelAnalysisOptions();
+builder.WebHost.ConfigureKestrel(k => k.Limits.MaxRequestBodySize = checked(modelOptions.MaxUploadBytes + 1024));
 
 var app = builder.Build();
 

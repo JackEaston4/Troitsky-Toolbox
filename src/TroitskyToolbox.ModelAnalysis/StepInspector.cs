@@ -38,9 +38,12 @@ public sealed record StepInspection
     public required IReadOnlyDictionary<string, int> SurfaceTypes { get; init; }
 }
 
-public sealed record StepInspectionResult(StepInspection? Inspection, StepError? Error)
+public abstract record StepInspectionResult
 {
-    public bool IsValid => Error is null;
+    private protected StepInspectionResult() { }
+
+    public sealed record Success(StepInspection Inspection) : StepInspectionResult;
+    public sealed record Failure(StepError Error) : StepInspectionResult;
 }
 
 /// <summary>
@@ -92,7 +95,7 @@ public static class StepInspector
             .OrderByDescending(g => g.Count())
             .ToDictionary(g => g.Key, g => g.Count());
 
-        return new StepInspectionResult(new StepInspection
+        return new StepInspectionResult.Success(new StepInspection
         {
             FileName = fileName,
             SizeBytes = content.LongLength,
@@ -105,7 +108,7 @@ public static class StepInspector
             SolidCount = solids,
             FaceCount = faces.Count,
             SurfaceTypes = surfaceTypes,
-        }, null);
+        });
     }
 
     /// <summary>For complex surface instances (e.g. B-spline variants), use the most specific part name.</summary>
@@ -122,5 +125,6 @@ public static class StepInspector
         return string.IsNullOrWhiteSpace(name) ? null : name;
     }
 
-    private static StepInspectionResult Fail(StepErrorKind kind, string message) => new(null, new StepError(kind, message));
+    private static StepInspectionResult Fail(StepErrorKind kind, string message) =>
+        new StepInspectionResult.Failure(new StepError(kind, message));
 }
