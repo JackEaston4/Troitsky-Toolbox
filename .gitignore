@@ -284,3 +284,12 @@ TSWLatexianTemp*
 ## Python bytecode from the build scripts
 __pycache__/
 *.pyc
+src/sample_step_files/brig.step
+src/sample_step_files/CAD/arch.SLDPRT
+src/sample_step_files/CAD/beam.SLDPRT
+src/sample_step_files/CAD/brig.SLDASM
+src/sample_step_files/CAD/crossbeam.SLDPRT
+src/sample_step_files/CAD/dick.SLDPRT
+src/sample_step_files/CAD/idea1.SLDPRT
+src/sample_step_files/CAD/pier.SLDPRT
+src/sample_step_files/CAD/wire.SLDPRT
