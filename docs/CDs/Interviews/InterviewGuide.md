@@ -6,7 +6,7 @@ The Fall CD interviews will be semi-structured, with questions tailored primaril
 
 The interview guide is intended to be flexible allowing for experienced members to direct the discussion to areas they feel are important, while still ensuring that core concerns are addressed. As many of the interviewed members will be a part of many of these user groups, certain interviews will cover multiple question sets.
 
-## Interview Plan
+## Interview Questions
 
 ### All participants, General Questions
 
@@ -23,7 +23,7 @@ The interview guide is intended to be flexible allowing for experienced members 
 ### Team captains and experienced members
 
 1. What tool have you found is the most accurate and useful in predicting your bridge's performance?
-2. How close to a model estimate do you expect your bridge's performance to be, including uncertainties? [\const{failure\_load\_tolerance}]
+2. How close to a model estimate do you expect your bridge's performance to be, including uncertainties?
 3. What are the most common reasons for bridge failures in your experience?
 4. Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox?
 
@@ -33,3 +33,4 @@ The interview guide is intended to be flexible allowing for experienced members 
 2. Are there any items that you feel are important to include in the Toolbox that we have not discussed?
 
 ## Additional Notes
+
