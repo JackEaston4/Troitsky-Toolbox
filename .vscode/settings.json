@@ -25,6 +25,10 @@
         "**/VnVPlan.aux": true,
         "**/VnVPlan.log": true,
         "**/VnVPlan.gz": true,
-        "**/VnVPlan.out": true
+        "**/VnVPlan.out": true,
+        "**/MIS.aux": true,
+        "**/MIS.log": true,
+        "**/MIS.gz": true,
+        "**/MIS.out": true
     }
 }
