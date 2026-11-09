@@ -259,13 +259,13 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{5cm} p{5cm} p{3cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 logIn & - & success: \textit{B}& - \\
 \hline
-logOut & - & success: -& \textit{B} \\
+logOut & - & success: \textit{B}  \\
 \hline
 isAllowed & email, action & allowed: \textit{B}& - \\
 \hline
@@ -500,7 +500,7 @@ submitTest & List<(materialName: \textit{S}, strength: \textit{R}) & - & - \\
 \hline
 markTest & testId: \textit{N}, isValid: \textit{B} & success: \textit{B} & - \\
 \hline
-parseTestSheet & - & List<(materialName, strength) & file invalid \\
+parseTestSheet & - & List<(materialName: $S$, strength: $R$) & file invalid \\
 \hline
 getStrength & materialName: $S$ & strength: $I$ & no strength found \\
 \end{tabular}
@@ -594,11 +594,11 @@ uploadDoc & - & success: \textit{B} & - \\
 \hline
 searchDocs & searchQuery: $S$ & docIDs: List<$I$> & - \\
 \hline
-selectDoc & docID & success: $B$ - \\
+selectDoc & docID: $I$ & success: $B$ - \\
 \hline
-alterDoc & docID & success: $B$ & - \\
+alterDoc & docID: $I$ & success: $B$ & - \\
 \hline
-deleteDoc & docID & success: $B$ & - \\
+deleteDoc & docID: $I$ & success: $B$ & - \\
 \end{tabular}
 \end{center}
 
@@ -691,7 +691,7 @@ None.
 \hline
 prepareDocs & - & success: $B$ & - \\
 \hline
-retrieveDocs & position & List<docID>: $B$ & - \\
+retrieveDocs & position: $S$ & docs: List<$I$>: & - \\
 \hline
 \end{tabular}
 \end{center}
