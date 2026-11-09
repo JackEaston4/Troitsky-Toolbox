@@ -81,6 +81,8 @@ November 2, 2026 & 1.0 & First Draft\\
 
 \section{Symbols, Abbreviations, and Acronyms}
 
+\renewcommand{\arraystretch}{1.2}
+
 Terms and acronyms not listed above are defined in the glossary and acronym
 table of the SRS, Section E.1 \citep{TroitskySRS}, available in the
 \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/pdfs/SRS/SRS.pdf}{project
@@ -98,18 +100,18 @@ repository}.
 \subsection{Summary}
 
 The Troitsky Toolbox project seeks to create a centralized information repository and a collection of software
-services that provide technical support for the McMaster Troitsky club. These services ensure information transfer 
-between years and teams, and facilitate support and onboarding for new members. Served as a web application, 
-accessible by all current club members, the services provided will simplify the technical components of the bridge 
-design process, decreasing the barrier to becoming a competitive team. 
+services that provide technical support for the McMaster Troitsky club. These services ensure effective information transfer 
+from one year to the next and between teams and will facilitate support and onboarding for new members. 
+Served as a web application and accessible by all current club members, the services provided will simplify the 
+technical components of the bridge design process, decreasing the barrier to becoming a competitive team. 
 
-One of the primary services in the toolbox is the model analysis service, which allows teams to load STEP files of their bridge 
-designs and perform basic analysis on the models. This service will provide teams with a simplified analysis of their design, when compared to 
-external static model analysis software, and will integrate with the material testing component and the rule compliance checker to provide a more specified analysis given the 
-build material properties and current competition rules. Services regarding the information repository will include the ability to search through past designs and load them into 
-the model analysis service, allowing teams to upload their designs with exit documentation and providing customized material testing result upload features. A knowledge transfer 
+The primary service in the toolbox is the model analysis service, which allows teams to load STEP files of their bridge 
+designs and perform basic analysis on the models. This service will provide teams with a simplified analysis of their design when compared to 
+external static model analysis software. It will also integrate with the material testing component and the rule compliance checker to provide a more specified analysis given the 
+build material properties and current competition rules. Services regarding the information repository will include: (a) the ability to search through past designs and load them into 
+the model analysis service, (b) allowing teams to upload their designs with exit documentation, and (c) providing customized material testing result upload features. A knowledge transfer 
 service collects executive handoff documents so that club knowledge carries over between years.
-In managing the toolbox access, role-based access control (RBAC) will be integrated to ensure that information is kept within the club, limiting access, and allowing executive members 
+In managing the toolbox access, role-based access control (RBAC) will be integrated to ensure that information is inacessible to non-club members, and let executive members 
 the ability to manage club users.
 
 \subsection{Objectives}
@@ -120,20 +122,20 @@ confidence in the correctness, reliability and safety of the system, focusing ve
 outlined in the hazard analysis.
 
 The V\&V plan will primarily focus on these system objectives outlined below. There are also goals outlined that have been deemed 
-out of scope for the current development cycle, but will be outlined in documentation as goals for future year development.
+out of scope for the current development cycle, but will be outlined in documentation as goals for future development.
 
 \subsubsection{Primary Objectives}
 \begin{itemize}
 
-  \item \textbf{Adequate model analysis correctness:} Testing the correctness of the model analysis service is vital to the usability of the toolbox, as, without 
-  ensured correctness, teams will not be able to rely on the results. These results will not only be used by teams in the bridge design process, but will also 
+  \item \textbf{Adequate model analysis correctness:} Testing the correctness of the model analysis service is vital to the usability of the toolbox, since without 
+  demonstrated correctness, teams will not be able to rely on the results. These results will not only be used by teams in the bridge design process, but will also 
   guide them in making estimates of their bridge's weight and ultimate load capacity.
   
   \item \textbf{Data integrity and persistence:} The system must ensure data integrity and security in the knowledge repository. The repository will 
   serve as the club's main data storage and information transfer, so losing data would be a critical concern and would defeat the project's purpose.
   
-  \item \textbf{Access control:} The RBAC in the club will maintain data privacy both between teams and outside of the club. Testing 
-  this access control will provide confidence to teams when storing current bridge designs in the system, and ensure that executive and exit documentation is private to the club. 
+  \item \textbf{Access control:} The RBAC will facilitate data, keeping private team data and private club-wide data private. Testing 
+  this access control will provide confidence to teams when storing current bridge designs in the system, and ensure that executive and exit documentation remains inacessible for non-club members. 
   
   \item \textbf{Demonstrating functional usability:} The functional usability of the system determines if it will be fully integrated into the club's organization and 
   individual McMaster teams' bridge design and development process.
@@ -144,22 +146,22 @@ out of scope for the current development cycle, but will be outlined in document
 \begin{itemize}
   
   \item \textbf{Industry standard static model analysis performance:} The model analysis service is intentionally designed to provide a simplified approximation of static model 
-  analysis, so its accuracy will have a larger tolerance than industry-standard tools and will not aim to match established services.
+  analysis, so its accuracy will have a larger tolerance than industry-standard tools. In other words, the model analysis service will not aim to match established services.
 
   \item \textbf{Full year competition testing:} The toolbox testing will not include an end-to-end full-year competition evaluation within the current development cycle. This would require a usable product 
   from the beginning of the school term, allowing teams to use the service throughout their full design process.
 \end{itemize}
 
 \subsubsection{Assumptions}
-There is an assumption of the correctness of external libraries (BFE.NET, IxMilia.Step, occt-import-js, three.js,
+There is an assumption of the correctness of reputable external libraries (BFE.NET, IxMilia.Step, occt-import-js, three.js,
 SQL Server) used. It is assumed that they are verified by their maintainers; only our
-integration with them is tested.
+integration with them will be tested.
 
 \subsection{Custom Documents}
 
 \subsubsection{SRS - Requirements Elicitation Survey}
 
-A survey was performed to aid and help justify the requirements elicitation process, specifically with regards to the prioritization of included services within the SRS \citep{TroitskySRS}.
+A survey was performed to aid the elicitation and justification of requirements, specifically regarding the prioritization of included services within the SRS \citep{TroitskySRS}.
 The \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/SurveyDesign.md}{survey design report} and 
 \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/Troitsky%20Toolbox%20%E2%80%94%20Member%20Needs%20%26%20Service%20Priority%20Survey.csv}{collected raw data} 
 are stored in the project repository, under the interview CD folder.
@@ -171,9 +173,13 @@ The questions are listed in Appendix~\ref{app:member-survey}.
 \subsubsection{Fall - Interviews}
 
 The primary CD for the fall term development is interviews conducted with core stakeholders: experienced Troitsky club members and executives. These semi-structured interviews will 
-help outline expectations and prioritization of services from knowledgeable members. These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
-toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club members. The interviews will primarily validate the decisions made in the SRS, helping identify any differences between assumptions made and true user requirements. The interviews will also 
-help identify what data is able to be collected, checking with experienced members who have years of personal and team data collected. 
+help outline expectations and prioritization of services from knowledgeable members. These interviews will be anonymized in public-facing records to ensure user privacy. The interviews will also be aggregated into usable results for the 
+toolbox development process. The interviews will be vital in checking any assumptions made in the SRS with experienced club 
+members. The interviews will primarily validate the decisions made in the SRS, and correct any false assumptions made about
+ user requirements. 
+
+Interviews with veteran club members, who have collected years of personal and team data,
+will help identify which data can be collected.
 
 \paragraph{Timeline} A scheduling tool link will be sent out November 3rd, 2026, used to collect possible times for the interviews with the selected members. 
 The interviews will be scheduled for before the CD-Fall deadline of 16 November 2026.
@@ -182,10 +188,13 @@ The interviews will be scheduled for before the CD-Fall deadline of 16 November 
 
 \subsubsection{Winter - Usability Report}
 
-The CD completed in the winter term will be a usability report, allowing for a more complete assessment of the functional usability of the toolbox. 
-This round of testing will be performed with a more complete iteration of the product, allowing for more complete analysis of different system services' usability. 
-Users will be gathered spanning different experience levels, both in club experience and technical experience (modelling), creating valuable data about the system's performance. 
-Specific user functions will be tested, with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task. This CD will 
+The CD completed in the winter term will be a usability report, allowing for a more complete assessment of the functional 
+usability of the toolbox. 
+This round of testing will be performed with a more complete iteration of the product, allowing for
+ more complete analysis of different system services' usability. 
+Users will be gathered spanning different experience levels, creating valuable data about the system's performance. 
+Three areas of experience will be considered: club experience, general technical experience and modelling experience.
+Specific user functions will be tested with tasks that follow the G.5 usage scenarios, measured by completion rate and time on task. This CD will 
 further strengthen the V\&V of the system, ensuring that complete functional and non-functional requirements come together into a fully usable service.
 
 \paragraph{Timeline} Testing takes place after the Rev 0 presentations (1--11 February 2027) and before the final demonstrations
@@ -197,8 +206,8 @@ further strengthen the V\&V of the system, ensuring that complete functional and
 
 \begin{enumerate}
   \item \textbf{Software Requirements Specification \citep{TroitskySRS}:} The SRS defines the functional and non-functional requirements for the Troitsky Toolbox, and is referenced in the V\&V plan as 
-  the standard the system wishes to meet. The requirements set the goals for the testing areas, identifying the importance of different services, which is then reflected in the testing performed for those 
-  given systems.
+  the standard the system aspires to meet. The requirements set the goals for the testing areas, identifying the importance of different services.
+  Those goals are then reflected in the testing performed for those given systems.
 
   \item \textbf{Hazard Analysis \citep{TroitskyHazardAnalysis}:} The hazard analysis provides information regarding the primary risks and failure points of the system, pointing to the components that will require 
   more in-depth and complex system testing. The hazard analysis also defines safety requirements for the system which are referenced in the V\&V plan specifically with regard to system safety and 
@@ -384,9 +393,9 @@ test is a system-level test of the deployed system, following a workflow that a
 club member performs through the Toolbox Web App, and verifies several related
 requirements. The tests also verify the functional safety and security
 requirements that the Hazard Analysis Roadmap \citep{TroitskyHazardAnalysis}
-plans for the capstone. Together, they verify the model analysis correctness,
-data integrity, and access control identified as primary objectives in the
-Objectives section, while functional usability is assessed by the non-functional
+plans for this capstone project. Together, they demonstrate the correctness of the model analysis,
+data integrity, and access control, which were identified as primary objectives in the
+Objectives section. Functional usability is assessed by the non-functional
 tests and the winter usability report.
 
 Inputs and expected outputs refer to the symbolic constants of
@@ -422,7 +431,8 @@ accessible after logout.\\
 \textbf{Initial State:} An executive is logged in.\\
 \textbf{Input:} The executive creates an account three times: with a password
 one character shorter than \constfirst{password\_min\_length}, with an entry from
-\constfirst{password\_blocklist}, and with a password consisting solely of lowercase letters and exactly \constfirst{password\_max\_length} characters long. The executive then changes the
+\constfirst{password\_blocklist}, and with a password consisting solely of lowercase letters
+ and exactly \constfirst{password\_max\_length} characters long. The executive then changes the
 account's role and team, ends its session from the server side, and deactivates
 it.\\
 \textbf{Output:} The first two passwords are rejected, with a message stating
@@ -479,19 +489,19 @@ a category not in \const{category\_list}, and no year. Finally, the user searche
 by keyword, filters by category, year, team, and tag, previews a file of each
 type in \constfirst{preview\_file\_types}, and downloads every uploaded file.\\
 \textbf{Output:} Valid uploads are stored with their metadata. Each of the three
-invalid uploads is rejected, with a message naming the field. Searches and
+invalid uploads is rejected, with a message naming the incomplete field. Searches and
 filters return exactly the items that match them, previews display in the
-browser, and each downloaded file has the same SHA-256 hash as the uploaded
+browser, and each downloaded file has the same cryptographic signature as the uploaded
 file.\\
 \textbf{Derivation:} Verifies FR-KR-1, FR-KR-2, FR-KR-3, FR-KR-4, SR-KR-4.
 
 \item \testdef{T.FR.KR.4.2}\\
 \textbf{Control:} Manual\\
 \textbf{Initial State:} A member has uploaded an item.\\
-\textbf{Input:} The uploader edits the item, another member attempts to edit it,
-and an executive archives it. The repository's database server is then stopped,
+\textbf{Input:} The uploader edits the item. Another non-executive member attempts to edit it.
+Afterwars, an executive archives it. The repository's database server is then stopped,
 and a member uploads a file.\\
-\textbf{Output:} Each change asks for confirmation first, and the other member's
+\textbf{Output:} Each change asks for confirmation first. The other member's
 edit is refused. The archived item no longer appears in search results but can
 still be opened. The failed upload shows an error message, and the file is not
 listed once the database is restarted.\\
@@ -706,7 +716,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Output/Result: \\
   \texttt{Pass:} A test user who is inactive for \constfirst{session\_timeout} is timed out.\\
-  \texttt{Fail:} A test user who is inactive for \const{session\_timeout} isn't timed out, or a user inactive for less than \const{session\_timeout} is timed out.
+  \texttt{Fail:} A test user who is inactive for \const{session\_timeout} is not timed out, or a user inactive for less than \const{session\_timeout} is timed out.
 
   How the test will be performed:
   \begin{enumerate}
@@ -747,7 +757,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Input/Condition: While the user is still active, an administrator alters the user’s role, which removes their permission to view the data they were just interacting with.
 
-  Output/Result: \\ \texttt{Pass:} The system denies access on the user’s very next action without requiring them to log out and log back in.\\ \texttt{Fail:} The user is still able to view/edit the restricted data, or the system waits for a session timeout/re-login before enforcing the new role.
+  Output/Result: \\ \texttt{Pass:} The system denies access on the user’s very next action without requiring them to log out and log back in.\\ \texttt{Fail:} The user is still able to view/edit the restricted data, the system waits for a session timeout/re-login before enforcing the new role, or the system immediately logs out the user, forcing them to log in again.
 
   How the test will be performed:
   \begin{enumerate}
@@ -953,7 +963,7 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
   \texttt{Pass:} The new metric appears in the output payload without requiring alterations to the core code calculating Failure Load or Load-to-Mass ratio.\\
   \texttt{Fail:} Modifying/adding a metric breaks existing metric outputs.
 
-  How the test will be performed: Verified via Code Review and unit tests during the addition of a new metric to ensure the Open/Closed Principle of software architecture is maintained.
+  How the test will be performed: Verified via Code Review and unit tests during the addition of a new metric to ensure the Open/Closed Principle of software design is maintained.
 \end{enumerate}
 
 
@@ -1001,11 +1011,11 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Initial State: The user is on the Material Testing interface.
 
-  Input/Condition: The user uploads a standardized CSV containing \constfirst{mt\_bulk\_rows} rows of test data. Later, the user clicks ``Export to CSV''.
+  Input/Condition: The user uploads a standardized CSV or XLSX containing \constfirst{mt\_bulk\_rows} rows of test data. Later, the user clicks ``Export to CSV''.
 
   Output/Result: \\
   \texttt{Pass:} The file imports successfully with all \const{mt\_bulk\_rows} rows accurately reflected in the database. The exported CSV matches the data exactly.\\
-  \texttt{Fail:} The import fails, truncates data, or locks the data inside the system preventing export.
+  \texttt{Fail:} The import fails, alters data, truncates data, or locks the data inside the system preventing export.
 
   How the test will be performed: A script uploads a mock CSV, queries the DB to verify row count and data integrity, then hits the export API endpoint and compares the downloaded file's checksum/content against the original.
 \end{enumerate}
@@ -1056,9 +1066,9 @@ How the test will be performed: A tool like the Open Worldwide Application Secur
 
   Output/Result: \\
   \texttt{Pass:} The server generates and downloads a \texttt{.pdf} file containing the document's text and metadata cleanly formatted.\\
-  \texttt{Fail:} The export fails or produces an unreadable file.
+  \texttt{Fail:} The export fails, produces an unreadable file, or contains altered text and/or metadata.
 
-  How the test will be performed: An automated script calls the PDF generation endpoint, checks the response header for application/pdf, and validates the file size is $> 0$ bytes.
+  How the test will be performed: An automated script calls the PDF generation endpoint, checks the response header for application/pdf, validates the file size is $> 0$ bytes, and ensures its checksum is identical to the document's checksum.
 \end{enumerate}
 
 
@@ -1566,7 +1576,7 @@ Type: Manual, Dynamic
 					
 Initial State: User on materials testing page and may submit a materials test
 					
-Input: An spreadsheet-style document (.csv or .xslx) containing materials testing results (each containing a material and its strength)
+Input: An spreadsheet-style document (.csv or .xlsx) containing materials testing results (each containing a material and its strength)
 					
 Output: The results are stored as reliable materials testing results. User recieves confirmation of sucessful submission.
 
@@ -2061,31 +2071,35 @@ in SRS Section P.7.1 \citep{TroitskySRS}.
 \label{app:interview-guide}
 
 The Fall CD interviews will be semi-structured, with questions tailored primarily to experienced members, and additionally to specific roles. Interviews will 
-be around 10--15 minutes long, and conducted with 2--3 participants at a time, allowing for both discussion and individual responses. No names will be recorded, only information regarding 
-the background of the members, and transcripts will be anonymized before being reported in the repository. 
+be around 10--15 minutes long, and conducted with 2--3 participants at a time, allowing for both discussion and individual responses. 
+No names will be available in transcripts located in the repository or any other public-facing medium;
+the only available identifying information in such transcripts will be information about the member's
+ seniority and position within the club.
 
 The interview guide is intended to be flexible allowing for experienced members to direct 
-the discussion to areas they feel are important, while still ensuring that core concerns are addressed. As many of the interviewed members will be a part of many of these user groups, certain interviews will cover 
+the discussion to areas they feel are important, while still ensuring that core concerns are addressed.
+ As many of the interviewed members will be a part of many of these user groups, certain interviews will cover 
 multiple question sets.
 
 \paragraph{All participants, General Questions}
 \begin{enumerate}
-  \item What is your role in the club, and how many years have you been involved?
+  \item What is your role in the club? 
+  \item How many years have you been involved?
   \item Which tools do your teams use to design, analyze, and store their bridges?
-  \item What were the largest challenges you faced when you first joined the club?
+  \item What were the greatest challenges you faced when you first joined the club?
 \end{enumerate}
 
 \paragraph{Executives}
 \begin{enumerate}
   \item What information regarding the club administration is most important to consolidate?
-  \item When you first became an executive, what were your largest difficulties?
-  \item How would you like to see the software sub team integrated into the club administration?
+  \item When you first became an executive, what were your greatest difficulties?
+  \item How would you like to see the software sub-team be integrated into the club?
 \end{enumerate}
 
 \paragraph{Team captains and experienced members}
 \begin{enumerate}
   \item What tool have you found is the most accurate and useful in predicting your bridge's performance?
-  \item How close to a model estimate do you expect your bridge's performance to be, including uncertainties? [\const{failure\_load\_tolerance}]
+  \item How close to a model estimate, including its uncertainties, do you expect your bridge's performance to be? [\const{failure\_load\_tolerance}]
   \item What are the most common reasons for bridge failures in your experience?
   \item Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox?
 \end{enumerate}
@@ -2184,7 +2198,7 @@ Tasks follow the usage scenarios in SRS Section G.5.
 \paragraph{Post-task questions}\mbox{}\\
 After each task the participant answers:
 \begin{enumerate}
-  \item Overall, how difficult or easy was this task? \textbf{[1 = very difficult, 5 = very easy]}
+  \item Overall, how hard was this task? \textbf{[1 = very easy, 5 = very hard]}
   \item What would you change about the workflow to make this task easier? \textbf{[Open]}
 \end{enumerate}
 
@@ -2200,6 +2214,10 @@ The questionnaire begins with instructions, ensuring users understand the rating
   \item I would remember how to do these tasks the next time I use the Toolbox. [Memorability]
   \item I could tell which units the analysis results were given in. [SR-MA-2]
   \item I understood what the failure load estimate assumes about my bridge. [FR-PA-4]
+\end{enumerate}
+
+The questionnaire closes with two open-ended questions.
+\begin{enumerate}
   \item What was the most confusing part of the Toolbox?
   \item If you could change one thing about the Toolbox, what would it be?
 \end{enumerate}
@@ -2217,7 +2235,7 @@ conceptual models).
 \subsection{AI Tools Used}
 
 AI tools that were used were standard chatbots, including Claude, Gemini and ChatGPT. 
-Primarily using Opus 5.5 for general formatting and grammar checking throughout the document.
+Opus 5.5 was heavily used for general formatting, spell-checking and grammar checking throughout the document.
 
 \subsection{How and Where Used}
 
@@ -2305,6 +2323,7 @@ I will also work with Playwright from the beginning, integrating it into the dev
 \begin{enumerate}
     \item This time, we did not wait until the last minute to get our inital drafts, as well as an excellent SRS led to easy writing for this document. While tedious at times, our previous work and our alarcity served us in great stead.
     \item The biggest pain point was thinking of other ways to test beside client feedback, automated testing, and review from peers, another team or the instructional staff. I got defensive during that TA meeting when the TA insisted there was another way but wouldn't reveal it. Eventually, I realized while AI cannot verify or validate anything, it can serve as an excellent aid from brainstorming.
-    \item I will have to gain familiarity with external CAD libraries, the .NET testing suite, Coverlet, STEP visualizing software, and modern HTML/CSS enhancing libraries (e.g. Astro, React). I will primarily need to familiarize myself with Coverlet and .NET testing suite because this follows from my role as primary tester.
+    \item I will have to gain familiarity with external CAD libraries, the .NET testing suite, Coverlet, STEP visualizing software, and modern HTML/CSS enhancing libraries (e.g. Astro, React). 
+    \item I will primarily need to familiarize myself with Coverlet and .NET testing suite because this follows from my role as primary tester.
   \end{enumerate}
 \end{document}
