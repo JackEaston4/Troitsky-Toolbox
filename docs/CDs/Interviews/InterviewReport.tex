@@ -1,0 +1,252 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{enumitem}
+
+\title{Stakeholder Interview Report\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../../Comments.text}
+\input{../../Common.text}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\tabcolsep}{4pt}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+ & & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\tableofcontents
+\listoftables
+\newpage
+
+% =====================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Purpose}
+\todo{Why the interviews were run and what they were meant to check.}
+
+\subsection{Relation to Other Documents}
+\todo{Member survey and SRS P.7 \cite{TroitskySRS}; VnV Plan Custom Documents
+section \cite{TroitskyVnVPlan}; Winter usability report.}
+
+% =====================================================================
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Interview Format}
+The Fall CD interviews will be semi-structured, with questions tailored
+primarily to experienced members, and additionally to specific roles.
+Interviews will be around 10--15 minutes long, and conducted with 2--3
+participants at a time, allowing for both discussion and individual responses.
+
+The interview guide is intended to be flexible allowing for experienced members
+to direct the discussion to areas they feel are important, while still ensuring
+that core concerns are addressed. As many of the interviewed members will be a
+part of many of these user groups, certain interviews will cover multiple
+question sets.
+
+\subsection{Participant Selection and Recruitment}
+\todo{Stakeholder groups targeted, selection criteria, scheduling.}
+
+\subsection{Session Procedure and Roles}
+\todo{Interviewer and notetaker roles, introduction script, how notes were
+recorded (interview record template).}
+
+\subsection{Ethics and Anonymization}
+\todo{Consent, voluntary participation, what was and was not recorded, how
+transcripts were anonymized.}
+
+\subsection{Analysis Method}
+\todo{Empathy map per stakeholder group; thematic coding against SRS sections.}
+
+% =====================================================================
+\section{Interview Questions}
+\label{sec:questions}
+
+\begin{table}[H]
+\centering
+\caption{Interview questions by stakeholder group}
+\label{tab:questions}
+\small
+\begin{tabularx}{\textwidth}{L{0.9cm} Y L{2.6cm}}
+\toprule
+\textbf{ID} & \textbf{Question} & \textbf{Traces to} \\
+\midrule
+\multicolumn{3}{l}{\textit{All participants, general questions}} \\
+G1 & What is your role in the club, and how many years have you been involved? & \\
+G2 & Which tools do your teams use to design, analyze, and store their bridges? & \\
+G3 & What were the largest challenges you faced when you first joined the club? & \\
+\midrule
+\multicolumn{3}{l}{\textit{Executives}} \\
+E1 & What information regarding the club administration is most important to consolidate? & \\
+E2 & When you first became an executive, what were your largest difficulties? & \\
+E3 & How would you like to see the software sub team integrated into the club administration? & \\
+\midrule
+\multicolumn{3}{l}{\textit{Team captains and experienced members}} \\
+C1 & What tool have you found is the most accurate and useful in predicting your bridge's performance? & \\
+C2 & How close to a model estimate do you expect your bridge's performance to be, including uncertainties? & \textsc{failure\_load\_\allowbreak tolerance} \\
+C3 & What are the most common reasons for bridge failures in your experience? & \\
+C4 & Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox? & \\
+\midrule
+\multicolumn{3}{l}{\textit{Closing, all participants}} \\
+CL1 & Is there anything about the club's information or tools that we did not ask about? & \\
+CL2 & Are there any items that you feel are important to include in the Toolbox that we have not discussed? & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Participants}
+\label{sec:participants}
+
+\begin{table}[H]
+\centering
+\caption{Participants (non-identifying)}
+\label{tab:participants}
+\small
+\begin{tabularx}{\textwidth}{L{0.8cm} L{1.3cm} Y L{1.6cm} L{2.6cm}}
+\toprule
+\textbf{ID} & \textbf{Session} & \textbf{Role(s)} & \textbf{Years in club} & \textbf{Modelling experience} \\
+\midrule
+P1 & & & & \\
+P2 & & & & \\
+P3 & & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Interview Sessions}
+\label{sec:sessions}
+
+\begin{table}[H]
+\centering
+\caption{Interview sessions}
+\label{tab:sessions}
+\small
+\begin{tabularx}{\textwidth}{L{1.3cm} L{1.4cm} L{2.1cm} L{2.0cm} L{2.0cm} Y}
+\toprule
+\textbf{Session} & \textbf{Date} & \textbf{Participants} & \textbf{Interviewer} & \textbf{Notetaker} & \textbf{Question sets} \\
+\midrule
+S1 & & & & & \\
+S2 & & & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Analysis}
+\label{sec:analysis}
+
+\subsection{Empathy Maps}
+\label{sec:empathy}
+
+\begin{table}[H]
+\centering
+\caption{Empathy map: executives}
+\label{tab:empathy-exec}
+\small
+\begin{tabularx}{\textwidth}{YY}
+\toprule
+\textbf{Says} & \textbf{Thinks} \\
+\midrule
+ & \\[3em]
+\midrule
+\textbf{Does} & \textbf{Feels} \\
+\midrule
+ & \\[3em]
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Empathy map: team captains and experienced members}
+\label{tab:empathy-captains}
+\small
+\begin{tabularx}{\textwidth}{YY}
+\toprule
+\textbf{Says} & \textbf{Thinks} \\
+\midrule
+ & \\[3em]
+\midrule
+\textbf{Does} & \textbf{Feels} \\
+\midrule
+ & \\[3em]
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Themes}
+\label{sec:themes}
+
+\subsection{Impact on Requirements}
+\label{sec:impact}
+
+\begin{table}[H]
+\centering
+\caption{Requirement changes resulting from the interviews}
+\label{tab:impact}
+\small
+\begin{tabularx}{\textwidth}{Y L{2.4cm} L{2.6cm} L{2.0cm}}
+\toprule
+\textbf{Finding} & \textbf{Affected ID} & \textbf{Action} & \textbf{Issue} \\
+\midrule
+ & & & \\
+ & & & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Available Data for Testing}
+\label{sec:test-data}
+\todo{Past models and recorded failure loads identified in C4, and their use in
+the VnV Plan.}
+
+% =====================================================================
+\section{Limitations}
+\label{sec:limitations}
+\todo{Sample size, selection, group-interview effects, interviewer bias.}
+
+% =====================================================================
+\newpage
+\bibliographystyle{IEEEtran}
+\bibliography{../../../refs/References}
+
+\newpage
+\appendix
+
+\section{Raw Data: Interview Transcripts}
+\label{app:transcripts}
+
+\subsection{Session S1}
+\label{app:s1}
+
+\subsection{Session S2}
+\label{app:s2}
+
+\section{Use of Generative AI}
+\label{app:ai}
+
+\end{document}
