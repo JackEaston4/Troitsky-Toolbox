@@ -21,15 +21,16 @@
 
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
-\newcommand{\acref}[1]{AC\ref{#1}}
+\newcommand{\acref}[1]{\hyperref[#1]{AC\ref*{#1}}}
 
 \newcounter{ucnum}
 \newcommand{\uctheucnum}{UC\theucnum}
-\newcommand{\uref}[1]{UC\ref{#1}}
+\newcommand{\uref}[1]{\hyperref[#1]{UC\ref*{#1}}}
 
 \newcounter{mnum}
 \newcommand{\mthemnum}{M\themnum}
-\newcommand{\mref}[1]{M\ref{#1}}
+% \mref links to the module's entry in Section \ref{SecMD} (Module Decomposition)
+\newcommand{\mref}[1]{\hyperref[#1:dec]{M\ref*{#1}}}
 
 \begin{document}
 
@@ -210,26 +211,26 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item [\refstepcounter{mnum} \mthemnum \label{mWebApp}:] Web App Layout Module
-\item [\refstepcounter{mnum} \mthemnum \label{mBroker}:] Toolbox Broker Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAuthz}:] Authorization Rules Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMembers}:] Member Registry Module
-\item [\refstepcounter{mnum} \mthemnum \label{mContent}:] Repository Content Module
-\item [\refstepcounter{mnum} \mthemnum \label{mModelImport}:] Model Import Module
-\item [\refstepcounter{mnum} \mthemnum \label{mModelLibrary}:] Model Library Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMetrics}:] Performance Metrics Module
-\item [\refstepcounter{mnum} \mthemnum \label{mRuleSet}:] Rule Set Module
-\item [\refstepcounter{mnum} \mthemnum \label{mCompliance}:] Compliance Check Module
-\item [\refstepcounter{mnum} \mthemnum \label{mTestRecords}:] Material Test Records Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMatProps}:] Material Properties Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHandoff}:] Handoff Documents Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAuthn}:] Authentication Module
-\item [\refstepcounter{mnum} \mthemnum \label{mPersist}:] Persistence Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSearch}:] Search Module
-\item [\refstepcounter{mnum} \mthemnum \label{mStep}:] STEP Parsing Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSolver}:] Structural Solver Module
-\item [\refstepcounter{mnum} \mthemnum \label{mViewer}:] 3D Viewer Module
+\item [\refstepcounter{mnum}\label{mHH}\mref{mHH}:] Hardware-Hiding Module
+\item [\refstepcounter{mnum}\label{mWebApp}\mref{mWebApp}:] Web App Layout Module
+\item [\refstepcounter{mnum}\label{mBroker}\mref{mBroker}:] Toolbox Broker Module
+\item [\refstepcounter{mnum}\label{mAuthz}\mref{mAuthz}:] Authorization Rules Module
+\item [\refstepcounter{mnum}\label{mMembers}\mref{mMembers}:] Member Registry Module
+\item [\refstepcounter{mnum}\label{mContent}\mref{mContent}:] Repository Content Module
+\item [\refstepcounter{mnum}\label{mModelImport}\mref{mModelImport}:] Model Import Module
+\item [\refstepcounter{mnum}\label{mModelLibrary}\mref{mModelLibrary}:] Model Library Module
+\item [\refstepcounter{mnum}\label{mMetrics}\mref{mMetrics}:] Performance Metrics Module
+\item [\refstepcounter{mnum}\label{mRuleSet}\mref{mRuleSet}:] Rule Set Module
+\item [\refstepcounter{mnum}\label{mCompliance}\mref{mCompliance}:] Compliance Check Module
+\item [\refstepcounter{mnum}\label{mTestRecords}\mref{mTestRecords}:] Material Test Records Module
+\item [\refstepcounter{mnum}\label{mMatProps}\mref{mMatProps}:] Material Properties Module
+\item [\refstepcounter{mnum}\label{mHandoff}\mref{mHandoff}:] Handoff Documents Module
+\item [\refstepcounter{mnum}\label{mAuthn}\mref{mAuthn}:] Authentication Module
+\item [\refstepcounter{mnum}\label{mPersist}\mref{mPersist}:] Persistence Module
+\item [\refstepcounter{mnum}\label{mSearch}\mref{mSearch}:] Search Module
+\item [\refstepcounter{mnum}\label{mStep}\mref{mStep}:] STEP Parsing Module
+\item [\refstepcounter{mnum}\label{mSolver}\mref{mSolver}:] Structural Solver Module
+\item [\refstepcounter{mnum}\label{mViewer}\mref{mViewer}:] 3D Viewer Module
 \end{description}
 
 
@@ -291,31 +292,35 @@ proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
 decomposition is a brief statement of the design decision hidden by the
 module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
-implementing software is given under the \emph{Implemented By} title. If the
+implementing software is given under the \emph{Implemented By} title, listing
+the languages, frameworks, and libraries used to implement the module. If the
 entry is \emph{OS}, this means that the module is provided by the operating
-system or by standard programming language libraries.  \emph{\progname{}} means the
-module will be implemented by the \progname{} software.
+system or by standard programming language libraries.
 
 Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules}
+
+\subsubsection{Hardware-Hiding Module (M\ref*{mHH})}\label{mHH:dec}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
-\item[Implemented By:] OS
+\item[Secrets:] The hosting platform and its deployment configuration, such as
+  a cloud service (e.g., Azure App Service) or a university or club-owned server.
+\item[Services:] Serves as the virtual hardware used by the rest of the system.
+  This module provides the interface between the host machine and the software,
+  supplying the runtime, file system, network connections, and HTTPS endpoint
+  that the Toolbox is served from.
+\item[Implemented By:] OS and hosting platform, packaged as a Docker container
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
+\item[Secrets:] The contents of the required behaviours.
+\item[Services:] Includes programs that provide externally visible behaviour of
   the system as specified in the software requirements specification (SRS)
   documents. This module serves as a communication layer between the
   hardware-hiding module and the software decision module. The programs in this
@@ -323,19 +328,185 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Web App Layout Module (M\ref*{mWebApp})}\label{mWebApp:dec}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] The page layout, navigation structure, and visual design of the
+  Toolbox Web App, and the way user input on a page is turned into a request.
+\item[Services:] Serves the public landing page and the member pages for each
+  tool. Accepts user input through forms and file uploads, passes each request
+  to the Toolbox Broker with the signed-in member's identity, and displays the
+  response or error message. Ends inactive sessions after the session timeout.
+\item[Implemented By:] C\# with ASP.NET Core Razor Pages, HTML, and CSS
+\item[Type of Module:] Abstract Object
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Toolbox Broker Module (M\ref*{mBroker})}\label{mBroker:dec}
 
+\begin{description}
+\item[Secrets:] The registry of available services and the protocol used to
+  route requests to them, including timeouts and request logging.
+\item[Services:] Lets each tool register its operations at startup. Checks every
+  request against the Authorization Rules Module before forwarding it, directs
+  authorized requests to the service that provides the operation, and returns
+  the response. Returns an error when an operation does not exist or a service
+  does not respond, so that the failure of one service does not affect the
+  others. Logs every request it handles.
+\item[Implemented By:] C\# on ASP.NET Core, exposing RESTful HTTP endpoints
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Authorization Rules Module (M\ref*{mAuthz})}\label{mAuthz:dec}
+
+\begin{description}
+\item[Secrets:] The mapping from club roles and team assignments to the
+  operations they are allowed to perform.
+\item[Services:] Assigns exactly one role to each member account and decides
+  whether a given role and team may perform a requested operation. Restricts a
+  team's current-year models to the members of that team and the executives.
+  Lets executives and maintainers change roles, with changes taking effect by the
+  member's next request.
+\item[Implemented By:] C\# using ASP.NET Core Identity roles and authorization policies
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Member Registry Module (M\ref*{mMembers})}\label{mMembers:dec}
+
+\begin{description}
+\item[Secrets:] The data structure holding member accounts, their status, and
+  their team assignment for each competition year.
+\item[Services:] Provides access programs to add, update, deactivate, and look
+  up registered members. Assigns each account to at most one team per year.
+  Blocks deactivating an executive until a successor has been assigned to their
+  position.
+\item[Implemented By:] C\# on .NET, using ASP.NET Core Identity user accounts
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Repository Content Module (M\ref*{mContent})}\label{mContent:dec}
+
+\begin{description}
+\item[Secrets:] The structure of a stored item and its metadata (title,
+  category, year, team, and tags), and the rules for which metadata is
+  required.
+\item[Services:] Provides access to the Knowledge Repository. Accepts uploads of
+  any file type and rejects those missing a title, a category from the fixed
+  list, or a year. Lets members preview and download items. Lets the uploader or
+  an executive edit or archive an item after confirmation, and excludes archived
+  items from default searches. Reports an error when an item cannot be stored or
+  retrieved.
+\item[Implemented By:] C\# on .NET, using LINQ for data access
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Model Import Module (M\ref*{mModelImport})}\label{mModelImport:dec}
+
+\begin{description}
+\item[Secrets:] The club conventions for how bridge models are exported from CAD
+  software and how STEP files are accepted and returned.
+\item[Services:] Lets members upload and download bridge models as STEP files
+  (\texttt{.stp} or \texttt{.step}). Rejects files that are not valid STEP or
+  contain no geometry, stops processing after the model analysis timeout, and
+  explains why. Displays a summary of the imported model so the member can
+  confirm it was read correctly.
+\item[Implemented By:] C\# on ASP.NET Core, using its file upload and download handling
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Model Library Module (M\ref*{mModelLibrary})}\label{mModelLibrary:dec}
+
+\begin{description}
+\item[Secrets:] The organization of bridge model records, including ownership by
+  team, competition year, privacy, and the categorization of members and joints.
+\item[Services:] Stores each uploaded model as its team's current model, visible
+  only to that team. Lets members browse and load past designs read-only,
+  filtered by year and team. Lets executives convert all current models into past
+  designs at the end of the season.
+\item[Implemented By:] C\# on .NET, using LINQ for data access
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Performance Metrics Module (M\ref*{mMetrics})}\label{mMetrics:dec}
+
+\begin{description}
+\item[Secrets:] The set of performance metrics and the failure criterion used to
+  judge a bridge, such as the factor of safety of each element.
+\item[Services:] Estimates the failure load and failure location of a bridge and
+  computes its load-to-mass ratio, using the material properties selected by
+  year or batch. Displays the assumptions and limitations with each estimate,
+  and reports an error instead of an estimate when the results are invalid.
+  New metrics can be added without changing existing ones.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Rule Set Module (M\ref*{mRuleSet})}\label{mRuleSet:dec}
+
+\begin{description}
+\item[Secrets:] The data structure used to represent a competition rule set,
+  where each rule is a property with an allowed value or range.
+\item[Services:] Stores the rule set for each competition year. Lets executives
+  import a year's rules and create, edit, and remove individual rules without
+  changing code. Marks rules that cannot be checked from geometry as manual
+  checks.
+\item[Implemented By:] C\# on .NET, using LINQ for data access
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Compliance Check Module (M\ref*{mCompliance})}\label{mCompliance:dec}
+
+\begin{description}
+\item[Secrets:] The algorithm used to evaluate a bridge model's properties
+  against a rule set.
+\item[Services:] Checks a bridge model against the active or a past year's rule
+  set and reports pass or fail for each rule. For each failed rule, reports the
+  rule, the measured value, and the allowed range. Displays the competition year
+  of the rules used and lists the rules that must be checked manually.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Material Test Records Module (M\ref*{mTestRecords})}\label{mTestRecords:dec}
+
+\begin{description}
+\item[Secrets:] The format of material test records and the template used to
+  import them.
+\item[Services:] Records test results entered through a form or imported in bulk
+  from CSV or Excel files. Converts values to base units, requires grain
+  orientation for wood, and rejects records with missing fields or physically
+  impossible values, identifying the rows at fault. Lets executives flag results
+  as invalid without deleting them, compares results against previous years,
+  and exports records to CSV.
+\item[Implemented By:] C\# on .NET, with CSV and Excel (\texttt{.xlsx}) import and CSV export
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Material Properties Module (M\ref*{mMatProps})}\label{mMatProps:dec}
+
+\begin{description}
+\item[Secrets:] The method used to derive material properties, such as elastic
+  modulus and strength, from accepted test records.
+\item[Services:] Aggregates the accepted test records for a material, year, or
+  batch into a set of material properties and provides them to the Performance
+  Metrics Module. Keeps a trace from each property back to the tests it was
+  computed from.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Handoff Documents Module (M\ref*{mHandoff})}\label{mHandoff:dec}
+
+\begin{description}
+\item[Secrets:] The structure and templates of exit documents and role records.
+\item[Services:] Provides an exit-document template for each executive position
+  and team lead. Lets members fill out documents, save them as drafts, and submit
+  them for review before they are published to the repository. Validates
+  submitted documents against their template, maintains a role record for each
+  executive position, shows executives which documents are still outstanding,
+  and exports documents to PDF.
+\item[Implemented By:] C\# with ASP.NET Core Razor Pages, with PDF export
+\item[Type of Module:] Abstract Data Type
+\end{description}
 
 \subsection{Software Decision Module}
 
@@ -350,7 +521,81 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Authentication Module (M\ref*{mAuthn})}\label{mAuthn:dec}
+
+\begin{description}
+\item[Secrets:] The authentication mechanism, including how credentials are
+  stored and verified and how role and membership data are retrieved from
+  \mref{mAuthz} and \mref{mMembers}.
+\item[Services:] Signs members in and out. Verifies credentials and rejects
+  invalid or deactivated accounts, enforces the password policy, stores
+  passwords only as salted hashes, and supplies the signed-in member's identity
+  and role to the rest of the system.
+\item[Implemented By:] C\# using ASP.NET Core Identity, with salted password hashing
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Persistence Module (M\ref*{mPersist})}\label{mPersist:dec}
+
+\begin{description}
+\item[Secrets:] The database technology, schema, and backup strategy.
+\item[Services:] Stores and retrieves the data of every other module, keeping
+  records complete and consistent when several members use the system at once.
+  Provides access programs for reading and writing records and stored files, and
+  backs up the database at the backup interval.
+\item[Implemented By:] Microsoft SQL Server, accessed from C\# through LINQ
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Search Module (M\ref*{mSearch})}\label{mSearch:dec}
+
+\begin{description}
+\item[Secrets:] The query and indexing strategy used to find content in the
+  database.
+\item[Services:] Returns the stored items matching a keyword search, filtered by
+  category, year, team, or tag, within the maximum search time.
+\item[Implemented By:] C\# LINQ queries against Microsoft SQL Server
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{STEP Parsing Module (M\ref*{mStep})}\label{mStep:dec}
+
+\begin{description}
+\item[Secrets:] The library used to read STEP files and the method used to
+  extract geometry and metadata from them.
+\item[Services:] Reads a STEP file and provides its geometry and metadata in a
+  structured form, including overall dimensions, mass, and the members and
+  joints of the bridge, for use by the model, analysis, and compliance modules.
+\item[Implemented By:] C\# using the IxMilia.Step library (fallback: Open CASCADE through C++/CLI)
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Structural Solver Module (M\ref*{mSolver})}\label{mSolver:dec}
+
+\begin{description}
+\item[Secrets:] The structural analysis method, such as finite element analysis,
+  and the library used to carry it out.
+\item[Services:] Builds a structural model from a bridge's members, joints,
+  material properties, supports, and applied load, and returns the resulting
+  internal forces and stresses in each element for use by the Performance
+  Metrics Module and the 3D Viewer Module.
+\item[Implemented By:] C\# using the BriefFiniteElement.NET library (fallback:
+  a direct stiffness solver built on Math.NET Numerics)
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{3D Viewer Module (M\ref*{mViewer})}\label{mViewer:dec}
+
+\begin{description}
+\item[Secrets:] The library and rendering method used to display 3D models in
+  the browser.
+\item[Services:] Displays a bridge model in an interactive 3D view that the
+  member can rotate, zoom, and pan, with its units and a scale reference. Can
+  highlight results from the Structural Solver Module, such as the predicted
+  failure location, on the model.
+\item[Implemented By:] JavaScript in the browser, using occt-import-js and three.js
+\item[Type of Module:] Abstract Object
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
