@@ -5,6 +5,7 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
@@ -152,7 +153,7 @@ Finally, Section \ref{SecAI} discloses the use of generative AI tools in the pre
 This section lists possible changes to the system. According to the likeliness of the change, the possible changes are classified into two categories. Anticipated changes are listed in Section \ref{SecAchange}, and unlikely changes are listed in Section \ref{SecUchange}.
 
 \subsection{Anticipated Changes} \label{SecAchange}
-Anticipated changes are the source of the information that is to be hidden inside the modules. Ideally, changing one of the anticipated changes will only require changing the one module that hides the associated decision. The approach adopted here is called design for change. Some anticipated changes affect more than one module; these cases are identified in the traceability matrix in Section \ref{SecTM}.
+Anticipated changes are the source of the information that is to be hidden inside the modules. Ideally, changing one of the anticipated changes will only require changing the one module that hides the associated decision. The approach adopted here is called design for change. Some anticipated changes affect more than one module; these cases are identified in the traceability matrix in Section \ref{SecTMAC}.
 
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:]
@@ -601,33 +602,148 @@ to be implemented.
 
 \section{Traceability Matrix} \label{SecTM}
 
-This section shows two traceability matrices: between the modules and the
-requirements and between the modules and the anticipated changes.
+This section shows two traceability matrices: between the modules and the requirements in Section \ref{SecTMReq}, and between the modules and the anticipated changes in Section \ref{SecTMAC}.
 
-% the table should use mref, the requirements should be named, use something
-% like fref
-\begin{table}[H]
-\centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\subsection{Trace Between Requirements and Modules} \label{SecTMReq}
+
+Table~\ref{TblRT} traces the functional and non-functional requirements of the SRS, grouped by the SRS component that owns them, followed by the safety and security requirements of the Hazard Analysis. Every requirement is traced to at least one module, and every module satisfies at least one requirement.
+
+Three safety requirements (SR-WS-1, SR-SYS-1, and SR-SYS-2) constrain how the software is developed and deployed rather than what it does, so they are not satisfied by a module. They are satisfied by the development process described in the Development Plan and verified as described in the VnV Plan.
+
+\clearpage
+\begin{longtable}{p{0.6\textwidth} p{0.32\textwidth}}
+\caption{Trace Between Requirements and Modules} \label{TblRT}\\
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Requirement(s)} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+\endfirsthead
+\toprule
+\textbf{Requirement(s)} & \textbf{Modules}\\
+\midrule
+\endhead
 \bottomrule
-\end{tabular}
-\caption{Trace Between Requirements and Modules}
-\label{TblRT}
-\end{table}
+\endfoot
+\multicolumn{2}{l}{\emph{Web Server}}\\
+FR-WS-1 (Public landing page) & \mref{mWebApp}\\
+FR-WS-2 (Login and logout) & \mref{mWebApp}, \mref{mAuthn}\\
+FR-WS-3 (Request forwarding) & \mref{mWebApp}, \mref{mBroker}\\
+NFR-WS-1 (Serve web app) & \mref{mHH}, \mref{mWebApp}\\
+NFR-WS-2 (Encrypted communication) & \mref{mHH}\\
+NFR-WS-3 (Session expiry) & \mref{mWebApp}\\
+\midrule
+\multicolumn{2}{l}{\emph{Access Control System}}\\
+FR-AC-1 (Authentication) & \mref{mMembers}, \mref{mAuthn}\\
+FR-AC-2 (Roles) & \mref{mMembers}\\
+FR-AC-3 (Authorization) & \mref{mAuthz}\\
+FR-AC-4 (Member management) & \mref{mMembers}\\
+FR-AC-5 (Team membership) & \mref{mMembers}\\
+FR-AC-6 (Team data isolation) & \mref{mAuthz}, \mref{mModelLibrary}\\
+NFR-AC-1 (Credential security) & \mref{mAuthn}\\
+NFR-AC-2 (Effective role alterations) & \mref{mAuthz}, \mref{mMembers}\\
+\midrule
+\multicolumn{2}{l}{\emph{Toolbox Broker}}\\
+FR-BR-1 (Service registration) & \mref{mBroker}\\
+FR-BR-2 (Request authorization) & \mref{mBroker}, \mref{mAuthz}\\
+FR-BR-3 (Request routing) & \mref{mBroker}\\
+FR-BR-4 (Unavailable services) & \mref{mBroker}\\
+NFR-BR-1 (Extensibility) & \mref{mBroker}\\
+NFR-BR-2 (Routing overhead) & \mref{mBroker}\\
+NFR-BR-3 (Request logging) & \mref{mBroker}\\
+\midrule
+\multicolumn{2}{l}{\emph{Knowledge Repository}}\\
+FR-KR-1 (Data storage) & \mref{mPersist}\\
+FR-KR-2 (Content upload) & \mref{mContent}\\
+FR-KR-3 (Search and filter) & \mref{mSearch}\\
+FR-KR-4 (View and download) & \mref{mContent}\\
+FR-KR-5 (Content management) & \mref{mContent}, \mref{mSearch}\\
+NFR-KR-1 (Search responsiveness) & \mref{mPersist}, \mref{mSearch}\\
+NFR-KR-2 (Data durability) & \mref{mPersist}\\
+\midrule
+\multicolumn{2}{l}{\emph{Model Analysis System}}\\
+FR-MA-1 (File validation) & \mref{mModelImport}, \mref{mStep}\\
+FR-MA-2 (3D visualization) & \mref{mViewer}\\
+FR-MA-3 (Data extraction) & \mref{mModelImport}, \mref{mStep}\\
+FR-MA-4 (Current model storage) & \mref{mModelLibrary}\\
+FR-MA-5 (Past design viewing) & \mref{mModelLibrary}, \mref{mViewer}\\
+FR-MA-6 (Archiving current models) & \mref{mModelLibrary}\\
+NFR-MA-1 (Model upload) & \mref{mModelImport}\\
+NFR-MA-2 (Load time) & \mref{mViewer}\\
+NFR-MA-3 (Extraction accuracy) & \mref{mModelImport}, \mref{mStep}\\
+\midrule
+\multicolumn{2}{l}{\emph{Performance Analysis System}}\\
+FR-PA-1 (Failure load estimate) & \mref{mMetrics}, \mref{mSolver}\\
+FR-PA-2 (Load-to-mass ratio) & \mref{mMetrics}\\
+FR-PA-3 (Material selection) & \mref{mMetrics}, \mref{mMatProps}\\
+FR-PA-4 (Assumption disclosure) & \mref{mMetrics}\\
+NFR-PA-1 (Estimate accuracy) & \mref{mMetrics}, \mref{mMatProps}, \mref{mSolver}\\
+NFR-PA-2 (Computation time) & \mref{mMetrics}, \mref{mSolver}\\
+NFR-PA-3 (Extensibility) & \mref{mMetrics}\\
+\midrule
+\multicolumn{2}{l}{\emph{Rule Compliance System}}\\
+FR-RC-1 (Rule import) & \mref{mRuleSet}\\
+FR-RC-2 (Rule configuration) & \mref{mRuleSet}\\
+FR-RC-3 (Compliance check) & \mref{mRuleSet}, \mref{mCompliance}\\
+FR-RC-4 (Violation details) & \mref{mCompliance}\\
+FR-RC-5 (Manual checks) & \mref{mRuleSet}, \mref{mCompliance}\\
+NFR-RC-1 (Check correctness) & \mref{mCompliance}\\
+NFR-RC-2 (Rule updatability) & \mref{mRuleSet}\\
+\midrule
+\multicolumn{2}{l}{\emph{Material Testing Manager}}\\
+FR-MT-1 (Result entry) & \mref{mTestRecords}\\
+FR-MT-2 (Input validation) & \mref{mTestRecords}\\
+FR-MT-3 (Historical comparison) & \mref{mTestRecords}\\
+FR-MT-4 (Material properties) & \mref{mMatProps}\\
+FR-MT-5 (Result review) & \mref{mTestRecords}, \mref{mMatProps}\\
+NFR-MT-1 (Result import) & \mref{mTestRecords}\\
+NFR-MT-2 (Traceability) & \mref{mMatProps}\\
+NFR-MT-3 (Export) & \mref{mTestRecords}\\
+\midrule
+\multicolumn{2}{l}{\emph{Knowledge Transfer Manager}}\\
+FR-KT-1 (Exit document templates) & \mref{mHandoff}\\
+FR-KT-2 (Exit document submission) & \mref{mHandoff}\\
+FR-KT-3 (Role records) & \mref{mHandoff}\\
+FR-KT-4 (Publication) & \mref{mContent}, \mref{mHandoff}\\
+FR-KT-5 (Outstanding documents) & \mref{mHandoff}\\
+NFR-KT-1 (Findability) & \mref{mHandoff}, \mref{mSearch}\\
+NFR-KT-2 (Longevity) & \mref{mHandoff}\\
+\midrule
+\multicolumn{2}{l}{\emph{System-wide}}\\
+NFR-SYS-1 (Browser support) & \mref{mWebApp}, \mref{mViewer}\\
+NFR-SYS-2 (Capacity) & \mref{mHH}, \mref{mPersist}\\
+NFR-SYS-3 (Service independence) & \mref{mBroker}\\
+NFR-SYS-4 (Maintainability) & \mref{mHH}\\
+\midrule
+\multicolumn{2}{l}{\emph{Safety and Security Requirements (Hazard Analysis)}}\\
+SR-WS-2 (Previous production code kept) & \mref{mHH}\\
+SR-WS-3 (Thread safety) & \mref{mBroker}, \mref{mPersist}\\
+SR-WS-4 (Reliable hosting) & \mref{mHH}\\
+SR-WS-5 (Server-side session end) & \mref{mWebApp}, \mref{mAuthn}\\
+SR-AC-1 (Defenses against cyberattacks) & \mref{mHH}, \mref{mAuthn}\\
+SR-AC-2 (Password requirements) & \mref{mAuthn}\\
+SR-KR-1 (External backups) & \mref{mPersist}\\
+SR-KR-2 (Confirm modifications) & \mref{mContent}\\
+SR-KR-3 (Team-restricted uploads) & \mref{mAuthz}, \mref{mContent}\\
+SR-KR-4 (Required metadata) & \mref{mContent}\\
+SR-KR-5 (Storage error messages) & \mref{mContent}, \mref{mPersist}\\
+SR-MA-1 (Import summary) & \mref{mModelImport}\\
+SR-MA-2 (Units and scale reference) & \mref{mViewer}\\
+SR-MA-3 (Processing timeout) & \mref{mModelImport}\\
+SR-PA-1 (Calculation error messages) & \mref{mMetrics}\\
+SR-RC-1 (Rule year and manual checks) & \mref{mCompliance}\\
+SR-MT-1 (Base units) & \mref{mTestRecords}\\
+SR-MT-2 (Grain orientation) & \mref{mTestRecords}\\
+SR-MT-3 (Sanity checks) & \mref{mTestRecords}\\
+SR-KT-1 (Submission validation) & \mref{mHandoff}\\
+SR-KT-2 (Cross-reference checks) & \mref{mHandoff}\\
+SR-KT-3 (Role succession) & \mref{mMembers}, \mref{mHandoff}\\
+SR-KT-4 (Publishing lifecycle) & \mref{mHandoff}\\
+SR-KT-5 (Publication acknowledgement) & \mref{mContent}, \mref{mHandoff}\\
+SR-SYS-3 (Reproducible deployment) & \mref{mHH}\\
+\end{longtable}
+
+\subsection{Trace Between Anticipated Changes and Modules} \label{SecTMAC}
+
+Table~\ref{TblACT} maps each anticipated change listed in Section \ref{SecAchange} to the modules that hide it.
 
 \begin{table}[H]
 \centering
@@ -636,34 +752,29 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acRules} & \mref{mRuleSet}\\
+\acref{acModelInput} & \mref{mModelImport}, \mref{mStep}\\
+\acref{acAnalysis} & \mref{mMetrics}, \mref{mSolver}\\
+\acref{acMaterial} & \mref{mTestRecords}, \mref{mMatProps}\\
+\acref{acUI} & \mref{mWebApp}, \mref{mViewer}\\
+\acref{acServices} & \mref{mBroker}\\
+\acref{acDB} & \mref{mPersist}\\
+\acref{acAuth} & \mref{mAuthn}\\
+\acref{acHandoff} & \mref{mHandoff}\\
+\acref{acSearch} & \mref{mSearch}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
 \label{TblACT}
 \end{table}
 
-% TODO (when writing this matrix): Section 4.1 states that anticipated changes
-% affecting more than one module are identified here. The ACs were consolidated
-% (e.g. acModelInput = STEP library + export conventions, acAnalysis = solver +
-% metrics, acMaterial = test template + property derivation, acUI = layout + 3D
-% viewer, acDB = database + schema + backups), so some will map to several
-% modules. Add a short paragraph below Table TblACT listing each AC that maps to
-% more than one module and why (MG checklist: one-to-one mapping, or explain the
-% exceptions).
-% TODO: The Introduction says Section \ref{SecTM} "includes two traceability
-% matrices". If an Unlikely Changes -> Modules table is added (as in Becca's
-% MG), update that sentence in the Introduction.
+Most anticipated changes map to exactly one module. The exceptions are \acref{acModelInput}, \acref{acAnalysis}, \acref{acMaterial}, and \acref{acUI}, each of which groups two related design decisions that are hidden by separate modules. A change to either decision still affects only one module:
+\begin{itemize}
+\item \acref{acModelInput}: replacing the STEP library affects only \mref{mStep}, while changing the club's export conventions affects only \mref{mModelImport}.
+\item \acref{acAnalysis}: changing the structural analysis method affects only \mref{mSolver}, while adding or changing a performance metric affects only \mref{mMetrics}.
+\item \acref{acMaterial}: changing the test file template affects only \mref{mTestRecords}, while changing how material properties are derived affects only \mref{mMatProps}.
+\item \acref{acUI}: changing the page layout affects only \mref{mWebApp}, while replacing the 3D display library affects only \mref{mViewer}.
+\end{itemize}
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
