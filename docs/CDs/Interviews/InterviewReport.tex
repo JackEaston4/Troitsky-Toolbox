@@ -4,6 +4,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{float}
+\usepackage{longtable}
 \usepackage{enumitem}
 
 \title{Stakeholder Interview Report\\\progname}
@@ -18,6 +19,7 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \setlength{\tabcolsep}{4pt}
+\newcommand{\rid}[1]{\mbox{#1}}
 
 \begin{document}
 
@@ -93,7 +95,7 @@ recorded (interview record template).}
 transcripts were anonymized.}
 
 \subsection{Analysis Method}
-\todo{Empathy map per stakeholder group; thematic coding against SRS sections.}
+\todo{Single aggregated empathy map; themes coded against SRS sections; role-based grouping.}
 
 % =====================================================================
 \section{Interview Questions}
@@ -104,29 +106,29 @@ transcripts were anonymized.}
 \caption{Interview questions by stakeholder group}
 \label{tab:questions}
 \small
-\begin{tabularx}{\textwidth}{L{0.9cm} Y L{2.6cm}}
+\begin{tabularx}{\textwidth}{L{0.9cm} Y}
 \toprule
-\textbf{ID} & \textbf{Question} & \textbf{Traces to} \\
+\textbf{ID} & \textbf{Question} \\
 \midrule
-\multicolumn{3}{l}{\textit{All participants, general questions}} \\
-G1 & What is your role in the club, and how many years have you been involved? & \\
-G2 & Which tools do your teams use to design, analyze, and store their bridges? & \\
-G3 & What were the largest challenges you faced when you first joined the club? & \\
+\multicolumn{2}{l}{\textit{All participants, general questions}} \\
+G1 & What is your role in the club, and how many years have you been involved? \\
+G2 & Which tools do your teams use to design, analyze, and store their bridges? \\
+G3 & What were the largest challenges you faced when you first joined the club? \\
 \midrule
-\multicolumn{3}{l}{\textit{Executives}} \\
-E1 & What information regarding the club administration is most important to consolidate? & \\
-E2 & When you first became an executive, what were your largest difficulties? & \\
-E3 & How would you like to see the software sub team integrated into the club administration? & \\
+\multicolumn{2}{l}{\textit{Executives and coaches}} \\
+E1 & What information regarding the club administration is most important to consolidate? \\
+E2 & When you first became an executive or coach, what were your largest difficulties? \\
+E3 & How would you like to see the software sub team integrated into the club administration? \\
 \midrule
-\multicolumn{3}{l}{\textit{Team captains and experienced members}} \\
-C1 & What tool have you found is the most accurate and useful in predicting your bridge's performance? & \\
-C2 & How close to a model estimate do you expect your bridge's performance to be, including uncertainties? & \textsc{failure\_load\_\allowbreak tolerance} \\
-C3 & What are the most common reasons for bridge failures in your experience? & \\
-C4 & Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox? & \\
+\multicolumn{2}{l}{\textit{Team captains and experienced members}} \\
+C1 & What tool have you found is the most accurate and useful in predicting your bridge's performance? \\
+C2 & How close to a model estimate do you expect your bridge's performance to be, including uncertainties? \\
+C3 & What are the most common reasons for bridge failures in your experience? \\
+C4 & Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox? \\
 \midrule
-\multicolumn{3}{l}{\textit{Closing, all participants}} \\
-CL1 & Is there anything about the club's information or tools that we did not ask about? & \\
-CL2 & Are there any items that you feel are important to include in the Toolbox that we have not discussed? & \\
+\multicolumn{2}{l}{\textit{Closing, all participants}} \\
+CL1 & Is there anything about the club's information or tools that we did not ask about? \\
+CL2 & Are there any items that you feel are important to include in the Toolbox that we have not discussed? \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -140,13 +142,18 @@ CL2 & Are there any items that you feel are important to include in the Toolbox 
 \caption{Participants (non-identifying)}
 \label{tab:participants}
 \small
-\begin{tabularx}{\textwidth}{L{0.8cm} L{1.3cm} Y L{1.6cm} L{2.6cm}}
+\begin{tabularx}{\textwidth}{L{1.3cm} Y L{1.6cm} L{3.4cm}}
 \toprule
-\textbf{ID} & \textbf{Session} & \textbf{Role(s)} & \textbf{Years in club} & \textbf{Modelling experience} \\
+\textbf{ID} & \textbf{Role(s)} & \textbf{Years in club} & \textbf{Role group(s)} \\
 \midrule
-P1 & & & & \\
-P2 & & & & \\
-P3 & & & & \\
+S1-P1 & Executive (Co-chair), participant & 5 & Executive, Competitor \\
+S1-P2 & Executive (Event Coordinator) & 4 & Executive \\
+S2-P1 & Executive (Event Coordinator), participant & 4 & Executive, Competitor \\
+S2-P2 & Coach (Structural) & 3 & Coach \\
+S2-P3 & Coach (Manufacturing) & 3 & Coach \\
+S3-P1 & Executive (Co-chair), Coach (Logistics) & 3 & Executive, Coach \\
+S3-P2 & General member, participant & 5 & Competitor \\
+S3-P3 & Executive (Finance Director), Team Captain & 6 & Executive, Competitor \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -160,12 +167,13 @@ P3 & & & & \\
 \caption{Interview sessions}
 \label{tab:sessions}
 \small
-\begin{tabularx}{\textwidth}{L{1.3cm} L{1.4cm} L{2.1cm} L{2.0cm} L{2.0cm} Y}
+\begin{tabularx}{\textwidth}{@{}L{1.2cm} L{1.6cm} L{2.05cm} L{1.9cm} L{1.75cm} Y@{}}
 \toprule
 \textbf{Session} & \textbf{Date} & \textbf{Participants} & \textbf{Interviewer} & \textbf{Notetaker} & \textbf{Question sets} \\
 \midrule
-S1 & & & & & \\
-S2 & & & & & \\
+S1 & 2026-11-12 & S1-P1, S1-P2 & Pedro Azevedo & Mason Azzopardi & G, E, C (no C4 answers), CL \\
+S2 & 2026-11-13 & S2-P1, S2-P2, S2-P3 & Pedro Azevedo & Mason Azzopardi & G, E, C, CL \\
+S3 & 2026-11-14 & S3-P1, S3-P2, S3-P3 & Pedro Azevedo & Mason Azzopardi & G, E (not S3-P2), C, CL \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -174,41 +182,73 @@ S2 & & & & & \\
 \section{Analysis}
 \label{sec:analysis}
 
-\subsection{Empathy Maps}
+Entries in this section are tagged by session and participant (e.g.\ S2-P3 is
+Participant~3 of Session~S2), matching the columns of the raw records in
+Appendix~\ref{app:transcripts}. Question IDs refer to Table~\ref{tab:questions}.
+
+\subsection{Empathy Map}
 \label{sec:empathy}
 
-\begin{table}[H]
-\centering
-\caption{Empathy map: executives}
-\label{tab:empathy-exec}
-\small
-\begin{tabularx}{\textwidth}{YY}
-\toprule
-\textbf{Says} & \textbf{Thinks} \\
-\midrule
- & \\[3em]
-\midrule
-\textbf{Does} & \textbf{Feels} \\
-\midrule
- & \\[3em]
-\bottomrule
-\end{tabularx}
-\end{table}
+The notes from all three sessions were sorted into a single empathy map
+(Table~\ref{tab:empathy}). Entries marked \textit{(inferred)} are the team's
+interpretation of the notes rather than statements made by participants.
 
 \begin{table}[H]
 \centering
-\caption{Empathy map: team captains and experienced members}
-\label{tab:empathy-captains}
+\caption{Aggregated empathy map (all sessions)}
+\label{tab:empathy}
 \small
 \begin{tabularx}{\textwidth}{YY}
 \toprule
 \textbf{Says} & \textbf{Thinks} \\
 \midrule
- & \\[3em]
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item ``No information from previous years'' (S1-P2, G3); no documentation,
+        photo archive, or technique guides (S3-P2, G3)
+  \item Model estimates ``are not ever accurate, comes down to build quality''
+        (S2-P1, C2); last year's estimate was off by 1750~lbs (S1-P1, C2)
+  \item Above all, wants a collection of designs and models that work
+        (S2-P3, CL2)
+  \item The software subteam should not be a separate, isolated team
+        (S2-P3, E3)
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item Knowledge lost between years is the main barrier for new members and
+        new executives (7/8, G3)
+  \item Bridges fail from manufacturing quality, torsion and joints more than
+        from design (7/8, C3)
+  \item Model estimates are for comparing and optimizing designs, not for
+        predicting the ultimate load (S1-P2, S2-P1, S3-P3)
+  \item Uncertainty comes mainly from material data and 3D effects
+        (S3-P1, S3-P2, S3-P3)
+\end{itemize}
+\\
 \midrule
 \textbf{Does} & \textbf{Feels} \\
 \midrule
- & \\[3em]
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item Models in Autodesk Inventor; analyzes with SAP2000, hand calculations
+        and Excel (G2, all sessions)
+  \item Stores files in MS Teams, Google Drive, or on personal laptops
+        (S1-P1, S1-P2, S2-P1, S3-P1)
+  \item Estimates load by intuition or conservative guesses
+        (S2-P2, S2-P3, S3-P3)
+  \item Executives and coaches gather event logistics, sponsor contacts and
+        cost information without past records (S1-P1, S1-P2, S2-P1, S2-P3)
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item Frustrated by wasted effort and preventable failures (S1-P1, S1-P2)
+        \textit{(inferred)}
+  \item Uncertain about responsibilities in the new coach roles
+        (S2-P2, S2-P3) \textit{(inferred)}
+  \item Low confidence in performance predictions (S2-P1, S2-P3, S3-P3)
+        \textit{(inferred)}
+  \item Invested in the Toolbox lasting beyond this year (S3-P1, S3-P3)
+        \textit{(inferred)}
+\end{itemize}
+\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -216,28 +256,152 @@ S2 & & & & & \\
 \subsection{Themes}
 \label{sec:themes}
 
-\subsection{Impact on Requirements}
-\label{sec:impact}
+The empathy map entries were grouped into the themes in Table~\ref{tab:themes}.
+\todo{One paragraph per theme, or keep the table only.}
 
 \begin{table}[H]
 \centering
-\caption{Requirement changes resulting from the interviews}
-\label{tab:impact}
+\caption{Themes identified across sessions}
+\label{tab:themes}
 \small
-\begin{tabularx}{\textwidth}{Y L{2.4cm} L{2.6cm} L{2.0cm}}
+\begin{tabularx}{\textwidth}{L{0.6cm} L{3.4cm} L{3.2cm} Y}
 \toprule
-\textbf{Finding} & \textbf{Affected ID} & \textbf{Action} & \textbf{Issue} \\
+\textbf{ID} & \textbf{Theme} & \textbf{Participants} & \textbf{SRS links} \\
 \midrule
- & & & \\
- & & & \\
+T1 & Knowledge lost between years & All except S2-P2 (G3) & \rid{FR-KR-3}, \rid{FR-MA-5}, S.2.7 \\
+T2 & Administrative continuity: timeline, logistics, sponsors, costs & S1-P1, S1-P2, S2-P1, S2-P3 & \rid{FR-KT-1}, \rid{FR-KT-3} \\
+T3 & Team coordination: tasks, deadlines, milestones & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & None (Section~\ref{sec:stretch}) \\
+T4 & Low trust in failure load prediction & S1-P1, S1-P2, S2-P1, S2-P3, S3-P2, S3-P3 & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} \\
+T5 & Failures from manufacturing, torsion and joints & S1-P1, S1-P2, S2-P1, S2-P2, S3-P1, S3-P2, S3-P3 & \rid{FR-KR-2}, \rid{FR-MA-5}, S.2.6 \\
+T6 & Software subteam integrated with the club, not separate & S1-P1, S1-P2, S2-P1, S2-P2, S2-P3, S3-P1, S3-P3 & \rid{NFR-SYS-4} \\
+T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \rid{FR-KT-3} \\
+T8 & No dedicated build space & S2-P2, S3-P3 & Out of scope \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
+S2-P2 is the exception to T1: the rule book and past bridges made design
+fairly easy, but there was little guidance for manufacturing.
+
+\subsection{Role-Based Analysis}
+\label{sec:roles}
+
+Participants were grouped by role, using their answers to G1
+(Table~\ref{tab:roles}). Several participants hold more than one role, so the
+groups overlap.
+
+\begin{table}[H]
+\centering
+\caption{Concerns by role group}
+\label{tab:roles}
+\small
+\begin{tabularx}{\textwidth}{L{2.0cm} L{2.9cm} Y L{2.2cm}}
+\toprule
+\textbf{Role group} & \textbf{Participants} & \textbf{Main concerns} & \textbf{Themes} \\
+\midrule
+Executives (5) & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & Yearly timeline, event logistics, sponsor contacts, cost history; splitting work and keeping teams on track & T2, T3, T6 \\
+Coaches (3) & S2-P2, S2-P3, S3-P1 & Unclear responsibilities in a new structure; past score sheets, material sheets and sourcing contacts; manufacturing and joint guidance & T5, T7 \\
+Competitors (4) & S1-P1, S2-P1, S3-P2, S3-P3 & Past designs with outcomes; reliability of estimates; manufacturing quality & T1, T4, T5 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Executives} Three executives asked for administrative knowledge to
+be consolidated (S1-P1, S1-P2, S2-P1, E1), while two prioritized past bridge
+data and standardized analysis (S3-P1, S3-P3). Four described event logistics
+or keeping teams on track as their main difficulty on taking the role (S1-P1,
+S1-P2, S2-P1, S3-P3, E2); S3-P1 described introducing new members to the club.
+All five want the software subteam to work closely with the executive team
+(E3).
+\todo{Link to S.2.7 and to stretch goals SG-1 and SG-2.}
+
+\paragraph{Coaches} The two coaches in S2 are in the first year of the coach
+structure and described their responsibilities as unclear (S2-P2, S2-P3, E2).
+The SRS defines no coach role (\rid{FR-AC-2}), and its handover documents
+cover executive positions and team leads only (\rid{FR-KT-1}, \rid{FR-KT-3}).
+\todo{Decide whether coaches become a role in the SRS.}
+
+\paragraph{Competitors} Most participants who answered C2 doubted that model
+estimates predict the ultimate load (T4); only S3-P1 expected performance
+reasonably close to the estimate.
+The two numeric expectations given were 20\% (S3-P2) and 25\%, narrowing to
+10\% with refinement (S2-P2).
+\todo{Compare with \textsc{failure\_load\_\allowbreak tolerance} (25\%).}
+
+\paragraph{Differences between roles} Executives focus on administrative
+continuity, while coaches and competitors focus on technical knowledge from
+past bridges. Both groups converge on an archive of past designs that records
+how each bridge performed (T1).
+
+\subsection{Impact on Requirements}
+\label{sec:impact}
+
+Table~\ref{tab:impact} lists the proposed SRS changes. All actions are
+proposals until the team confirms them.
+
+\begin{table}[H]
+\centering
+\caption{Proposed requirement changes resulting from the interviews}
+\label{tab:impact}
+\small
+\begin{tabularx}{\textwidth}{Y L{2.6cm} L{3.4cm} L{1.2cm}}
+\toprule
+\textbf{Finding} & \textbf{Affected ID} & \textbf{Proposed action} & \textbf{Issue} \\
+\midrule
+No coach role in the system (T7) & \rid{FR-AC-2} & Add coach role & \\
+Coach handover missing (T7) & \rid{FR-KT-1}, \rid{FR-KT-3} & Extend to coach positions & \\
+Estimates trusted only as relative values (T4) & \rid{FR-PA-1}, \rid{FR-PA-4} & Report estimate as a range & \\
+Expected error of 10--25\% (S2-P2, S3-P2) & \rid{NFR-PA-1} & Keep 25\%; cite interviews in A.1 rationale & \\
+Outcome of past designs wanted (T1, T5) & \rid{FR-KR-2}, \rid{FR-MA-5} & Add score, failure load and failure location metadata & \\
+Administrative knowledge (T2) & \rid{FR-KT-3} & Confirmed & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Stretch Goals from Interview Requests}
+\label{sec:stretch}
+
+Participants requested the features in Table~\ref{tab:stretch}, which are not
+covered by the current SRS. They are recorded as stretch goals for the
+capstone team or for future software subteams.
+\todo{Assign priorities, or state that these are outside the capstone scope.}
+
+\begin{table}[H]
+\centering
+\caption{Stretch goals from interview requests}
+\label{tab:stretch}
+\small
+\begin{tabularx}{\textwidth}{L{0.8cm} Y L{2.6cm} L{3.4cm}}
+\toprule
+\textbf{ID} & \textbf{Request} & \textbf{Requested by} & \textbf{Relation to SRS} \\
+\midrule
+SG-1 & Team task management: task assignment, milestone submission, deadline and progress tracking, coach feedback & S1-P1, S3-P1 & Not covered; G.6 excludes member communication \\
+SG-2 & Club calendar of the yearly timeline and events, exportable to external calendars & S1-P1, S1-P2, S2-P1 & Extends \rid{FR-KT-3} (per-position timeline) \\
+SG-3 & Warnings for dimensions close to a rule's minimum or maximum & S2-P2 & Extends \rid{FR-RC-3}, \rid{FR-RC-4} \\
+SG-4 & Mock competition score sheet for a model & S2-P2 & Builds on \rid{FR-PA-2}, \rid{FR-RC-3} \\
+SG-5 & Interactive structural calculations: member forces, deflections, failure points (FEA) & S3-P1, S3-P3 & Beyond G.6 simplified modelling; enabled by \rid{NFR-PA-3} \\
+SG-6 & Joint library showing each joint's performance & S2-P3 & Builds on \rid{FR-KR-2}, \rid{FR-KR-3} \\
+SG-7 & Analysis and rules checklists for first-time members & S3-P2 & No requirement (survey feature H) \\
+SG-8 & Showcase of recent designs on the landing page & S2-P1 & Extends \rid{FR-WS-1} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Storing shared passwords and logins was also requested (S1-P1, E1). It is not
+listed as a stretch goal, because storing third-party credentials would add a
+security hazard not covered by the Hazard Analysis.
+
 \subsection{Available Data for Testing}
 \label{sec:test-data}
-\todo{Past models and recorded failure loads identified in C4, and their use in
-the VnV Plan.}
+
+Recorded failure loads exist only for recent years: records older than about
+three years were never kept (S3-P1). One coach offered their team's CAD models
+from past years, with crushing videos of similar bridges that failed
+differently (S2-P2). Videos, past score sheets, and the ultimate loads written
+on kept bridges are also available (S3-P2). Three participants did not know
+of usable data (S2-P1, S2-P3, S3-P3), and no C4 answers were recorded in S1.
+\todo{Which of these become the reference set for \rid{NFR-PA-1}; CAD files
+must be exported to STEP (\rid{NFR-MA-1}).}
 
 % =====================================================================
 \section{Limitations}
@@ -255,11 +419,27 @@ the VnV Plan.}
 \section{Raw Data: Interview Transcripts}
 \label{app:transcripts}
 
+The notes below are reproduced from the interview records, one per session.
+IDs match the participant tags used in Section~\ref{sec:analysis}.
+
 \subsection{Session S1}
 \label{app:s1}
+Source record: \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/InterviewRecords/InterviewRecord_Group1.csv}{\texttt{InterviewRecord\_Group1.csv}}.
+
+\input{InterviewRecords/InterviewRecord_Group1.tex}
 
 \subsection{Session S2}
 \label{app:s2}
+Source record: \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/InterviewRecords/InterviewRecord_Group2.csv}{\texttt{InterviewRecord\_Group2.csv}}.
+
+\input{InterviewRecords/InterviewRecord_Group2.tex}
+
+\subsection{Session S3}
+\label{app:s3}
+Source record: \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/InterviewRecords/InterviewRecord_Group3.csv}{\texttt{InterviewRecord\_Group3.csv}}.
+
+\input{InterviewRecords/InterviewRecord_Group3.tex}
+
 
 \section{Use of Generative AI}
 \label{app:ai}
