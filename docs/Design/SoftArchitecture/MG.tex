@@ -8,6 +8,8 @@
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -778,30 +780,79 @@ Most anticipated changes map to exactly one module. The exceptions are \acref{ac
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
-In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
-correct execution of B may be necessary for A to complete the task described in
-its specification. That is, A {\em uses} B if there exist situations in which
-the correct functioning of A depends upon the availability of a correct
-implementation of B.  Figure \ref{FigUH} illustrates the use relation between
-the modules. It can be seen that the graph is a directed acyclic graph
-(DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
+In this section, the uses hierarchy between modules is provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if correct execution of B may be necessary for A to complete the task described in its specification. That is, A {\em uses} B if there exist situations in which the correct functioning of A depends upon the availability of a correct implementation of B. Figure \ref{FigUH} illustrates the use relation between the modules, with an arrow from A to B when A uses B. It can be seen that the graph is a directed acyclic graph (DAG). Each level of the hierarchy offers a testable and usable subset of the system, and modules in the higher level of the hierarchy are essentially simpler because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
+Three conventions keep the figure readable:
+\begin{itemize}
+\item The Toolbox Broker (\mref{mBroker}) carries every call between services, so services never call each other directly. The figure shows the logical uses between services, such as \mref{mMetrics} using \mref{mMatProps}, rather than drawing each of these calls through the Broker.
+\item The Broker uses every service that registers with it, shown shaded in the figure. These arrows are omitted, as the Broker only routes requests to the registered services and does not depend on any particular one of them.
+\item Every module uses the Hardware-Hiding Module (\mref{mHH}), so it is not shown.
+\end{itemize}
 
-\wss{If module A uses module B, the arrow is directed from A to B.}
+At the top of the hierarchy, the Web App Layout Module (\mref{mWebApp}) signs members in through the Authentication Module (\mref{mAuthn}), sends every request to the Toolbox Broker (\mref{mBroker}), and displays bridge models with the 3D Viewer Module (\mref{mViewer}). The Broker checks each request with the Authorization Rules Module (\mref{mAuthz}) before routing it to a service. The services form the middle of the hierarchy: analysis services such as \mref{mMetrics} and \mref{mCompliance} use the modules that hold their data, and the libraries \mref{mStep} and \mref{mSolver} sit below the services that need them. At the bottom, the Persistence Module (\mref{mPersist}) stores the data of every module that owns records.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
-\caption{Use hierarchy among modules}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  mod/.style={draw, rounded corners, text width=2.4cm, minimum height=1cm, align=center, font=\small},
+  svc/.style={mod, fill=gray!20},
+  use/.style={-{Stealth[length=2.5mm]}, thick}
+]
+% Row 1
+\node[mod] (web) at (9,0) {M\ref*{mWebApp}\\Web App Layout};
+% Row 2
+\node[mod] (brk) at (9,-2.4) {M\ref*{mBroker}\\Toolbox Broker};
+\node[mod] (viewer) at (16,-2.4) {M\ref*{mViewer}\\3D Viewer};
+% Row 3
+\node[mod] (authn) at (-2.8,-4.8) {M\ref*{mAuthn}\\Authentication};
+\node[mod] (authz) at (0.4,-4.8) {M\ref*{mAuthz}\\Authorization Rules};
+\node[svc] (metrics) at (11.6,-4.8) {M\ref*{mMetrics}\\Performance Metrics};
+% Row 4
+\node[svc] (handoff) at (2.7,-7.2) {M\ref*{mHandoff}\\Handoff Documents};
+\node[svc] (import) at (8.2,-7.2) {M\ref*{mModelImport}\\Model Import};
+\node[mod] (solver) at (12.8,-7.2) {M\ref*{mSolver}\\Structural Solver};
+\node[svc] (compliance) at (16,-7.2) {M\ref*{mCompliance}\\Compliance Check};
+\node[svc] (matprops) at (19.2,-7.2) {M\ref*{mMatProps}\\Material Properties};
+% Row 5
+\node[svc] (members) at (0.6,-9.6) {M\ref*{mMembers}\\Member Registry};
+\node[svc] (content) at (3.8,-9.6) {M\ref*{mContent}\\Repository Content};
+\node[mod] (step) at (6.6,-9.6) {M\ref*{mStep}\\STEP Parsing};
+\node[svc] (library) at (9.8,-9.6) {M\ref*{mModelLibrary}\\Model Library};
+\node[svc] (ruleset) at (13,-9.6) {M\ref*{mRuleSet}\\Rule Set};
+\node[svc] (search) at (16.1,-9.6) {M\ref*{mSearch}\\Search};
+\node[svc] (tests) at (19.2,-9.6) {M\ref*{mTestRecords}\\Material Test Records};
+% Row 6: Persistence spans the modules that use it
+\node[mod, minimum width=21.4cm] (persist) at (9.9,-11.8) {M\ref*{mPersist}\\Persistence};
+% Uses: vertical drops, with right-angle turns only in the gaps between rows
+\draw[use] (web) -- (brk);
+\draw[use] (web.west) -| (authn.north);
+\draw[use] (web.east) -| (viewer.north);
+\draw[use] (brk.west) -| (authz.north);
+\draw[use] (authn.south) |- (members.west);
+\path ([xshift=0.2cm]members.north) coordinate (p);
+\draw[use] (p |- authz.south) -- (p);
+\path ([xshift=-1.0cm]handoff.south) coordinate (p);
+\draw[use] (p) -- (p |- members.north);
+\path ([xshift=0.8cm]handoff.south) coordinate (p);
+\draw[use] (p) -- (p |- content.north);
+\path ([xshift=-0.8cm]import.south) coordinate (p);
+\draw[use] (p) -- (p |- step.north);
+\path ([xshift=0.8cm]import.south) coordinate (p);
+\draw[use] (p) -- (p |- library.north);
+\path ([xshift=-1.2cm]metrics.south) coordinate (p);
+\draw[use] (p) -- (p |- library.north);
+\path ([xshift=0.8cm]metrics.south) coordinate (p);
+\draw[use] (p) -- (p |- solver.north);
+\draw[use] (metrics.east) -| (matprops.north);
+\draw[use] ([xshift=-1.0cm]compliance.south) -- ++(0,-0.3) -| ([xshift=1.15cm]library.north);
+\draw[use] ([xshift=-0.4cm]compliance.south) -- ++(0,-0.85) -| (ruleset.north);
+\draw[use] (matprops) -- (tests);
+\foreach \m in {members, content, library, ruleset, search, tests}
+  \draw[use] (\m.south) -- (\m.south |- persist.north);
+\end{tikzpicture}%
+}
+\caption{Use hierarchy among modules. Shaded modules are services registered with, and used by, the Toolbox Broker (\mref{mBroker}). All modules use the Hardware-Hiding Module (\mref{mHH}).}
 \label{FigUH}
 \end{figure}
 
