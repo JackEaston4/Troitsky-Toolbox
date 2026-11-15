@@ -14,10 +14,10 @@ The interview guide is intended to be flexible allowing for experienced members 
 2. Which tools do your teams use to design, analyze, and store their bridges?
 3. What were the largest challenges you faced when you first joined the club?
 
-### Executives
+### Executives and coaches
 
 1. What information regarding the club administration is most important to consolidate?
-2. When you first became an executive, what were your largest difficulties?
+2. When you first became an executive or coach, what were your largest difficulties?
 3. How would you like to see the software sub team integrated into the club administration?
 
 ### Team captains and experienced members
