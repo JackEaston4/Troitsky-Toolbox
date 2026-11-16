@@ -34,7 +34,7 @@
 11/10/2026 & Pedro Azevedo & Template created for report \\
 11/14/2026 & Pedro Azevedo & Mason Azzopardi \& Interviews complete \\
 11/14/2026 & Pedro Azevedo & Raw results aggregated and included (.csv) \\
-11/15/2026 & Pedro Azevedo & Stakehodler interview report complete \\
+11/15/2026 & Pedro Azevedo & Stakeholder interview report complete \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -87,18 +87,43 @@ part of many of these user groups, certain interviews will cover multiple
 question sets.
 
 \subsection{Participant Selection and Recruitment}
-\todo{Stakeholder groups targeted, selection criteria, scheduling.}
+
+The selection process was primarily focused on targeting more experienced members, while cover a diversity of 
+roles, specifically across coaching and executive space. From there the selection focused on member availability 
+and scheduling, resulting in 3 interviewing session, each with 2-3 participants, totalling 8 interviewed members. 
+The scheduling was done through When2Meet, where all users were able to fill out their availability, then the 
+team was able to select times that had groups of people and required members available.
 
 \subsection{Session Procedure and Roles}
-\todo{Interviewer and notetaker roles, introduction script, how notes were
-recorded (interview record template).}
+
+The interviews followed a simply set-up process where the interview parameters and ethics considerations outlined 
+below are presented to the participants. As described the semi-structured nature of the interviews questions and sections 
+served almost as checkpoints throughout the interview, allowing for deviation and discussion among team members and 
+Troitsky participants. For each of the interview blocks, there were always 2 team members present, where 1 served as the 
+main interviewer, asking the main questions and remaining attentive to the participants. The other member served as a 
+more concrete notetaker, filling in the empathy map sections roughly, but primarily working on the interview record excel template. 
+The excel template served as both a mid-interview note taking system, but also created standardized exports to stored the 
+interview records as CSV files.
 
 \subsection{Ethics and Anonymization}
-\todo{Consent, voluntary participation, what was and was not recorded, how
-transcripts were anonymized.}
+
+These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
+toolbox development process, while collecting information about the participant's experience and role 
+for result categorization. No names will be recorded, only information regarding the background of 
+the members, and transcripts will be anonymized before being reported in the repository.
 
 \subsection{Analysis Method}
-\todo{Single aggregated empathy map; themes coded against SRS sections; role-based grouping.}
+
+These semi-structured interviews will help outline expectations and prioritization of services from 
+knowledgeable members, requiring some preprocessing and sorting of the results, specifically 
+utilizing empathy maps and role categorized findings. Utilizing an aggregated empathy map helps to group the 
+findings from the results specifically into more concrete actionable groups, helping infer the highest and 
+lowest priority items within the app. These consolidated findings will be vital in checking any assumptions 
+made in the SRS with experienced club members. The analysis focuses on determining the highest priority and 
+largest gaps within the club, specifically noted by their more experienced members. This was also done by breaking 
+down the themes of the interviews, where the participants decided to focus in on, and analyzing the importance 
+or associated project considerations that may arise. It will also consolidated the data that users presented 
+as available to host on the service.
 
 % =====================================================================
 \section{Interview Questions}
@@ -142,7 +167,7 @@ CL2 & Are there any items that you feel are important to include in the Toolbox 
 
 \begin{table}[H]
 \centering
-\caption{Participants (non-identifying)}
+\caption{Participants}
 \label{tab:participants}
 \small
 \begin{tabularx}{\textwidth}{L{1.3cm} Y L{1.6cm} L{3.4cm}}
@@ -185,20 +210,15 @@ S3 & 2026-11-14 & S3-P1, S3-P2, S3-P3 & Pedro Azevedo & Mason Azzopardi & G, E (
 \section{Analysis}
 \label{sec:analysis}
 
-Entries in this section are tagged by session and participant (e.g.\ S2-P3 is
-Participant~3 of Session~S2), matching the columns of the raw records in
-Appendix~\ref{app:transcripts}. Question IDs refer to Table~\ref{tab:questions}.
-
 \subsection{Empathy Map}
 \label{sec:empathy}
 
 The notes from all three sessions were sorted into a single empathy map
-(Table~\ref{tab:empathy}). Entries marked \textit{(inferred)} are the team's
-interpretation of the notes rather than statements made by participants.
+(Table~\ref{tab:empathy}).
 
 \begin{table}[H]
 \centering
-\caption{Aggregated empathy map (all sessions)}
+\caption{Aggregated empathy map}
 \label{tab:empathy}
 \small
 \begin{tabularx}{\textwidth}{YY}
@@ -243,13 +263,9 @@ interpretation of the notes rather than statements made by participants.
 &
 \begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
   \item Frustrated by wasted effort and preventable failures (S1-P1, S1-P2)
-        \textit{(inferred)}
   \item Uncertain about responsibilities in the new coach roles
-        (S2-P2, S2-P3) \textit{(inferred)}
   \item Low confidence in performance predictions (S2-P1, S2-P3, S3-P3)
-        \textit{(inferred)}
   \item Invested in the Toolbox lasting beyond this year (S3-P1, S3-P3)
-        \textit{(inferred)}
 \end{itemize}
 \\
 \bottomrule
@@ -260,7 +276,6 @@ interpretation of the notes rather than statements made by participants.
 \label{sec:themes}
 
 The empathy map entries were grouped into the themes in Table~\ref{tab:themes}.
-\todo{One paragraph per theme, or keep the table only.}
 
 \begin{table}[H]
 \centering
@@ -272,19 +287,28 @@ The empathy map entries were grouped into the themes in Table~\ref{tab:themes}.
 \textbf{ID} & \textbf{Theme} & \textbf{Participants} & \textbf{SRS links} \\
 \midrule
 T1 & Knowledge lost between years & All except S2-P2 (G3) & \rid{FR-KR-3}, \rid{FR-MA-5}, S.2.7 \\
-T2 & Administrative continuity: timeline, logistics, sponsors, costs & S1-P1, S1-P2, S2-P1, S2-P3 & \rid{FR-KT-1}, \rid{FR-KT-3} \\
+T2 & Administrative information centralization: timeline, logistics, sponsors, costs & S1-P1, S1-P2, S2-P1, S2-P3 & \rid{FR-KT-1}, \rid{FR-KT-3} \\
 T3 & Team coordination: tasks, deadlines, milestones & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & None (Section~\ref{sec:stretch}) \\
-T4 & Low trust in failure load prediction & S1-P1, S1-P2, S2-P1, S2-P3, S3-P2, S3-P3 & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} \\
+T4 & Accepted low trust in failure load prediction & S1-P1, S1-P2, S2-P1, S2-P3, S3-P2, S3-P3 & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} \\
 T5 & Failures from manufacturing, torsion and joints & S1-P1, S1-P2, S2-P1, S2-P2, S3-P1, S3-P2, S3-P3 & \rid{FR-KR-2}, \rid{FR-MA-5}, S.2.6 \\
 T6 & Software subteam integrated with the club, not separate & S1-P1, S1-P2, S2-P1, S2-P2, S2-P3, S3-P1, S3-P3 & \rid{NFR-SYS-4} \\
 T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \rid{FR-KT-3} \\
-T8 & No dedicated build space & S2-P2, S3-P3 & Out of scope \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-S2-P2 is the exception to T1: the rule book and past bridges made design
-fairly easy, but there was little guidance for manufacturing.
+\begin{itemize}
+
+      \item \textbf{T1 - Knowledge Loss} \newline The focus on knowledge loss was primarily a focus when members were discussing their difficulties 
+      in finding reference material and design decision help within the 
+      \item \textbf{T2 - Administrative Information Centralization} \newline 
+      \item \textbf{T3 - Knowledge Loss} \newline 
+      \item \textbf{T4 - Knowledge Loss} \newline 
+      \item \textbf{T5 -- Knowledge Loss} \newline 
+      \item \textbf{T6 - Knowledge Loss} \newline 
+
+\end{itemize}
+
 
 \subsection{Role-Based Analysis}
 \label{sec:roles}
@@ -309,42 +333,32 @@ Competitors (4) & S1-P1, S2-P1, S3-P2, S3-P3 & Past designs with outcomes; relia
 \end{tabularx}
 \end{table}
 
-\paragraph{Executives} Three executives asked for administrative knowledge to
-be consolidated (S1-P1, S1-P2, S2-P1, E1), while two prioritized past bridge
-data and standardized analysis (S3-P1, S3-P3). Four described event logistics
-or keeping teams on track as their main difficulty on taking the role (S1-P1,
-S1-P2, S2-P1, S3-P3, E2); S3-P1 described introducing new members to the club.
-All five want the software subteam to work closely with the executive team
-(E3).
-\todo{Link to S.2.7 and to stretch goals SG-1 and SG-2.}
+A further breakdown was provided below, looking to isolate the concerns between the roles, ensuring that prioritization does not favour one 
+user base to heavily. While there was an overlap of roles, coaches and executives were generally separate, with only one co-chair also serving 
+a new role, created this year, as a logistics coach.
 
-\paragraph{Coaches} The two coaches in S2 are in the first year of the coach
-structure and described their responsibilities as unclear (S2-P2, S2-P3, E2).
-The SRS defines no coach role (\rid{FR-AC-2}), and its handover documents
-cover executive positions and team leads only (\rid{FR-KT-1}, \rid{FR-KT-3}).
-\todo{Decide whether coaches become a role in the SRS.}
+\begin{itemize}
 
-\paragraph{Competitors} Most participants who answered C2 doubted that model
-estimates predict the ultimate load (T4); only S3-P1 expected performance
-reasonably close to the estimate.
-The two numeric expectations given were 20\% (S3-P2) and 25\%, narrowing to
-10\% with refinement (S2-P2).
-\todo{Compare with \textsc{failure\_load\_\allowbreak tolerance} (25\%).}
+      \item \textbf{Executives} \newline Information consolidation is a general priority, taken from both  
+      the executives that asked for administrative knowledge to be carried over year-to-year and another two 
+      who focused on past bridge data and standardized analysis. Four described event logistics
+      or keeping teams on track as their main difficulty on taking the role, even directly suggesting one 
+      of the considered stretch goals, a ticket assignment, calendar integration, for task assignment and progress 
+      assessment. All five want the software subteam to work closely with the executive team (E3).
 
-\paragraph{Differences between roles} Executives focus on administrative
-continuity, while coaches and competitors focus on technical knowledge from
-past bridges. Both groups converge on an archive of past designs that records
-how each bridge performed (T1).
+      \item \textbf{Coaches} \newline Both coaches in S.2 have never coached before and have described their 
+      role responsibilities as unclear, lacking any past documentation or record of what the role have entailed. 
+      The SRS will need to integrate the coach role, also providing support on exit documentation and other implemented 
+      role services.
 
-\subsection{Impact on Requirements}
+\end{itemize}
+
+\subsection{Requirement Action Items \& Changes}
 \label{sec:impact}
-
-Table~\ref{tab:impact} lists the proposed SRS changes. All actions are
-proposals until the team confirms them.
 
 \begin{table}[H]
 \centering
-\caption{Proposed requirement changes resulting from the interviews}
+\caption{Impact on Requirements}
 \label{tab:impact}
 \small
 \begin{tabularx}{\textwidth}{Y L{2.6cm} L{3.4cm} L{1.2cm}}
@@ -364,7 +378,7 @@ Administrative knowledge (T2) & \rid{FR-KT-3} & Confirmed & \\
 \subsection{Stretch Goals from Interview Requests}
 \label{sec:stretch}
 
-Participants requested the features in Table~\ref{tab:stretch}, which are not
+Participants requested the features in Table~\ref{tab:stwretch}, which are not
 covered by the current SRS. They are recorded as stretch goals for the
 capstone team or for future software subteams.
 \todo{Assign priorities, or state that these are outside the capstone scope.}
@@ -390,26 +404,32 @@ SG-8 & Showcase of recent designs on the landing page & S2-P1 & Extends \rid{FR-
 \end{tabularx}
 \end{table}
 
-Storing shared passwords and logins was also requested (S1-P1, E1). It is not
-listed as a stretch goal, because storing third-party credentials would add a
-security hazard not covered by the Hazard Analysis.
 
 \subsection{Available Data for Testing}
 \label{sec:test-data}
 
-Recorded failure loads exist only for recent years: records older than about
-three years were never kept (S3-P1). One coach offered their team's CAD models
-from past years, with crushing videos of similar bridges that failed
-differently (S2-P2). Videos, past score sheets, and the ultimate loads written
-on kept bridges are also available (S3-P2). Three participants did not know
-of usable data (S2-P1, S2-P3, S3-P3), and no C4 answers were recorded in S1.
-\todo{Which of these become the reference set for \rid{NFR-PA-1}; CAD files
-must be exported to STEP (\rid{NFR-MA-1}).}
+Recorded failure loads exist only for recent years, primarily for the years that 
+current experienced members have been involved in, with records older than about
+three years never being consolidated anywhere (S3-P1). There were also individuals that
+offered their team's CAD models from past years, with some even mentioning crushing videos, 
+helping provide failure information (S2-P2). Competition technical data and recorded items 
+such as videos, past score sheets, and the ultimate loads written on kept bridges are also 
+available (S3-P2). Three participants did not know of usable data (S2-P1, S2-P3, S3-P3), 
+further validating the lack of current consolidation ability. The models collected through 
+these members will be utilized as reference model analysis files, relying on their recorded 
+performance as a general measure of accuracy.
 
 % =====================================================================
 \section{Limitations}
 \label{sec:limitations}
-\todo{Sample size, selection, group-interview effects, interviewer bias.}
+
+The primary limitation for the interview process surrounded the sample size, considering only 8 members were interviewed. 
+While in terms of the full club member count, hovering around ~55 members, the count more so reflects a proper sample of 
+experienced and more critical project roles, ensuring that coaches, team captains and executives were all reflected.
+
+The interviewer bias was primarily geared towards experienced members, primarily with a lack of representation for new members. 
+This selection was intentional due to the inability for new members to recognize club requirements or potential failings 
+of other competition years. New members may also obscure results, providing information from non-experts in the subject.
 
 % =====================================================================
 \newpage
@@ -422,7 +442,7 @@ must be exported to STEP (\rid{NFR-MA-1}).}
 \section{Raw Data: Interview Transcripts}
 \label{app:transcripts}
 
-The notes below are reproduced from the interview records, one per session.
+The notes below are reformated from the interview records, one per session.
 IDs match the participant tags used in Section~\ref{sec:analysis}.
 
 \subsection{Session S1}
