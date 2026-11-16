@@ -245,28 +245,28 @@ actually be implemented.
 \midrule
 
 
-{Hardware-Hiding Module} & ~ \\
+{Hardware-Hiding Module} & \mref{mHH}: Hardware-Hiding Module\\
 \midrule
-\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & Web App Layout Module\\
-& Toolbox Broker Module\\
-& Authorization Rules Module\\
-& Member Registry Module\\
-& Repository Content Module\\
-& Model Import Module\\
-& Model Library Module\\
-& Performance Metrics Module\\
-& Rule Set Module\\
-& Compliance Check Module\\
-& Material Test Records Module\\
-& Material Properties Module\\
-& Handoff Documents Module\\
+\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & \mref{mWebApp}: Web App Layout Module\\
+& \mref{mBroker}: Toolbox Broker Module\\
+& \mref{mAuthz}: Authorization Rules Module\\
+& \mref{mMembers}: Member Registry Module\\
+& \mref{mContent}: Repository Content Module\\
+& \mref{mModelImport}: Model Import Module\\
+& \mref{mModelLibrary}: Model Library Module\\
+& \mref{mMetrics}: Performance Metrics Module\\
+& \mref{mRuleSet}: Rule Set Module\\
+& \mref{mCompliance}: Compliance Check Module\\
+& \mref{mTestRecords}: Material Test Records Module\\
+& \mref{mMatProps}: Material Properties Module\\
+& \mref{mHandoff}: Handoff Documents Module\\
 \midrule
-\multirow{6}{0.3\textwidth}{Software Decision Module} & Authentication Module\\
-& Persistence Module\\
-& Search Module\\
-& STEP Parsing Module\\
-& Structural Solver Module\\
-& 3D Viewer Module\\
+\multirow{6}{0.3\textwidth}{Software Decision Module} & \mref{mAuthn}: Authentication Module\\
+& \mref{mPersist}: Persistence Module\\
+& \mref{mSearch}: Search Module\\
+& \mref{mStep}: STEP Parsing Module\\
+& \mref{mSolver}: Structural Solver Module\\
+& \mref{mViewer}: 3D Viewer Module\\
 \bottomrule
 
 
@@ -277,16 +277,30 @@ actually be implemented.
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
 
-The design of the system is intended to satisfy the requirements developed in
-the SRS. In this stage, the system is decomposed into modules. The connection
-between requirements and modules is listed in Table~\ref{TblRT}.
+The design of the system is intended to satisfy the requirements developed in the SRS and the safety and security requirements of the Hazard Analysis. The following key design decisions were made to address specific requirements. The full mapping between requirements and modules is given in the Traceability Matrix in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+\begin{itemize}
+\item \textbf{Hardware-Hiding Module (\mref{mHH}):} To satisfy NFR-WS-2, NFR-SYS-2, NFR-SYS-4, SR-WS-2, SR-WS-4, and SR-SYS-3, the hosting platform is hidden behind a single module packaged as a Docker container, so the system can move between a cloud service and a university server without changing other modules, and a new maintainer can reproduce the deployment locally.
+\item \textbf{Web App Layout Module (\mref{mWebApp}):} To satisfy FR-WS-1--FR-WS-3, NFR-WS-1, NFR-WS-3, and NFR-SYS-1, the pages members see are isolated in one module that serves the public landing page and member pages, attaches the signed-in member's identity to each request, and ends inactive sessions, so the layout can change with user feedback without affecting the services.
+\item \textbf{Toolbox Broker Module (\mref{mBroker}):} To satisfy FR-BR-1--FR-BR-4, NFR-BR-1--NFR-BR-3, and NFR-SYS-3, all communication between the user interface and the services passes through a broker that services register with at startup. New tools are added by registering them, an unavailable service returns an error instead of affecting the others, and every request is logged in one place.
+\item \textbf{Authorization Rules Module (\mref{mAuthz}):} To satisfy FR-AC-3, FR-AC-6, NFR-AC-2, and SR-KR-3, the mapping from roles and teams to permitted operations is kept in one module that the Broker consults on every request, so each service is protected without implementing its own access control, and role changes take effect by the member's next request.
+\item \textbf{Member Registry Module (\mref{mMembers}):} To satisfy FR-AC-2, FR-AC-4, FR-AC-5, and SR-KT-3, member accounts, roles, and team assignments are held in a single registry, which also blocks deactivating an outgoing executive until a successor has been assigned.
+\item \textbf{Repository Content Module (\mref{mContent}):} To satisfy FR-KR-2, FR-KR-4, FR-KR-5, and SR-KR-2--SR-KR-5, the structure of repository items and their required metadata is hidden in one module, which rejects uploads missing a title, category, or year, asks for confirmation before changes, and archives items instead of deleting them.
+\item \textbf{Model Import Module (\mref{mModelImport}):} To satisfy FR-MA-1, FR-MA-3, NFR-MA-1, NFR-MA-3, SR-MA-1, and SR-MA-3, the club's export conventions are kept separate from the STEP library, so models can be validated, summarized for the member to confirm, and stopped after a timeout, independently of how the file is parsed.
+\item \textbf{Model Library Module (\mref{mModelLibrary}):} To satisfy FR-MA-4--FR-MA-6 and FR-AC-6, bridge models are stored as records owned by a team and competition year, so current models stay private to their team and can be converted to past designs in a single executive action at the end of the season.
+\item \textbf{Performance Metrics Module (\mref{mMetrics}):} To satisfy FR-PA-1--FR-PA-4, NFR-PA-1--NFR-PA-3, and SR-PA-1, the performance metrics are kept separate from the structural solver, so new metrics can be added without changing existing ones, and each estimate is shown with its assumptions or replaced by an error message when the results are invalid.
+\item \textbf{Rule Set Module (\mref{mRuleSet}):} To satisfy FR-RC-1, FR-RC-2, FR-RC-5, and NFR-RC-2, competition rules are stored as data, each defined by a property and its allowed value or range, so executives can configure a new year's rules without programming.
+\item \textbf{Compliance Check Module (\mref{mCompliance}):} To satisfy FR-RC-3--FR-RC-5, NFR-RC-1, and SR-RC-1, the checking algorithm is kept separate from the rules it checks, so it reports the measured and allowed values for each failed rule, and the year of the rules used, however the rule set changes.
+\item \textbf{Material Test Records Module (\mref{mTestRecords}):} To satisfy FR-MT-1--FR-MT-3, FR-MT-5, NFR-MT-1, NFR-MT-3, and SR-MT-1--SR-MT-3, the format and import template of test results are hidden in one module, which validates every record, including its units, grain orientation, and physically possible values, before it can affect material properties.
+\item \textbf{Material Properties Module (\mref{mMatProps}):} To satisfy FR-MT-4, FR-MT-5, FR-PA-3, and NFR-MT-2, the derivation of material properties is kept separate from the test records, excludes results flagged as invalid, and keeps a trace from each property back to the tests it was computed from.
+\item \textbf{Handoff Documents Module (\mref{mHandoff}):} To satisfy FR-KT-1--FR-KT-5, NFR-KT-1, NFR-KT-2, SR-KT-1, SR-KT-2, SR-KT-4, and SR-KT-5, handoff templates and the draft, review, and publish lifecycle are kept in their own module, which publishes accepted documents to the repository and exports them to PDF.
+\item \textbf{Authentication Module (\mref{mAuthn}):} To satisfy FR-AC-1, FR-WS-2, NFR-AC-1, SR-AC-1, SR-AC-2, and SR-WS-5, signing in is handled by ASP.NET Core Identity behind a single module, so passwords are stored only as salted hashes and the mechanism can be replaced, for example by single sign-on, without affecting other modules.
+\item \textbf{Persistence Module (\mref{mPersist}):} To satisfy FR-KR-1, NFR-KR-2, NFR-SYS-2, SR-KR-1, and SR-WS-3, all modules store their data through one data-access layer over Microsoft SQL Server, which keeps records consistent under concurrent use and backs up the database to an external platform.
+\item \textbf{Search Module (\mref{mSearch}):} To satisfy FR-KR-3, NFR-KR-1, and NFR-KT-1, searching is kept separate from content storage, so the query and indexing strategy can be tuned to keep search fast as stored content grows.
+\item \textbf{STEP Parsing Module (\mref{mStep}):} To satisfy FR-MA-1, FR-MA-3, and NFR-MA-3, the STEP library is wrapped in its own module, so it can be replaced by the Open CASCADE fallback if it cannot read club exports.
+\item \textbf{Structural Solver Module (\mref{mSolver}):} To satisfy FR-PA-1, NFR-PA-1, and NFR-PA-2, the structural analysis method is hidden in its own module, so BriefFiniteElement.NET can be replaced by the fallback direct stiffness solver without changing the metrics built on its results.
+\item \textbf{3D Viewer Module (\mref{mViewer}):} To satisfy FR-MA-2, FR-MA-5, NFR-MA-2, NFR-SYS-1, and SR-MA-2, 3D rendering runs in the browser behind one module, as the back end cannot render models, and displays the units and a scale reference with each model.
+\end{itemize}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -805,7 +819,7 @@ At the top of the hierarchy, the Web App Layout Module (\mref{mWebApp}) signs me
 \node[mod] (brk) at (9,-2.4) {M\ref*{mBroker}\\Toolbox Broker};
 \node[mod] (viewer) at (16,-2.4) {M\ref*{mViewer}\\3D Viewer};
 % Row 3
-\node[mod] (authn) at (-2.8,-4.8) {M\ref*{mAuthn}\\Authentication};
+\node[mod, text width=2.6cm] (authn) at (-2.8,-4.8) {M\ref*{mAuthn}\\Authentication};
 \node[mod] (authz) at (0.4,-4.8) {M\ref*{mAuthz}\\Authorization Rules};
 \node[svc] (metrics) at (11.6,-4.8) {M\ref*{mMetrics}\\Performance Metrics};
 % Row 4
