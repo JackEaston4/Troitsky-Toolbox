@@ -117,7 +117,12 @@ integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, 
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 string & $\mathbb{S}$ & an ordered array of characters (e.g. a string) \\
-list & List<$E$> & an ordered collection of elements of type $E$ \\
+list & List<$E$> & a mutable ordered collection of elements of type $E$ \\
+file & File & a file on a machine \\
+dictionary & Dict<$K$, $V$> & a key-value lookup. Keys are of immutable type $K$, values are of type $V$ \\
+ip address & IP & an Internet Protocol address $W.X.Y.Z, 0 \le W,X,Y,Z \le 255, W,X,Y,Z \in I$ \\
+set & Set<$E$> & a unordered collection of objects of immutable type $E$ \\
+tuple & Tuple<$E_1$, $E_2$, ..., $E_n$> & an ordered immutable collection. The $n$th element is of type $E_n$.
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -164,7 +169,1154 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
-~\newpage
+\section{MIS of Hardware Hiding Module} \label{M1}
+
+\subsection{Module}
+HardwareHide
+
+\subsection{Uses}
+
+Integrate directly with the hardware.
+
+\subsection{Syntax}
+
+Note that this project is a software project, not a hardware project. As a result,
+all functions approximate hardware functions and exact names, inner workings and 
+architectures are almost certainly different.
+
+\subsubsection{Exported Constants}
+
+HttpEndpoint: $S$ - the Hypertext Transfer Protocol (HTTP) uniform resource locator (URL) of the application
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getFile & filePath: $S$ & file: File & File Not Found, File Unreadable \\
+\hline
+postFile & filePath: $S$, file: File & - & File Found, File Uncreatable \\
+\hline
+putFile & filePath: $S$, file:File & - & File Not Found, File Unwritable \\
+\hline
+putFile & filePath: $S$, part: $S$, contents: $S$ & - & File Not Found, Part Not Found, File Unwritable \\
+\hline
+deleteFile & filePath: $S$ & - & File Not Found, File Undeletable \\
+\hline
+connect & ipAddress $S$ & - & Connection Failed \\
+\hline
+disconnect & ipAddress $S$ & - & Disconnection Failed \\
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  fileShare: Dict<$S, S$>: the file share, used to store files on the system
+  devicesConnected: Dict<$IP$, $B$>: the devices actively connected to the system
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The hardware supports a file share and network connection.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getFile(filePath: $S$):
+\begin{itemize}
+\item transition: none
+\item output: the retrieved file $F$ 
+\item exception: file not found error, file inacessible error
+\end{itemize}
+
+\noindent postFile(filePath: $S$, file: File):
+\begin{itemize}
+\item transition: fileShare[filePath] = file
+\item output: -
+\item exception: file found error, file uncreatable
+\end{itemize}
+
+\noindent putFile(filePath: $S$, file: File):
+\begin{itemize}
+\item transition: fileShare[filePath] = file
+\item output: -
+\item exception: file not found error, file unwritable
+\end{itemize}
+
+\noindent patchFile(filePath: $S$, filePart: $S$, contents: $S$):
+\begin{itemize}
+\item transition: fileShare[filePath].filePart = contents
+\item output: -
+\item exception: file not found error, file unwritable
+\end{itemize}
+
+\noindent deleteFile(filePath: $S$):
+\begin{itemize}
+\item transition: \textbf{delete} fileShare[filePath]
+\item output: -
+\item exception: file not found error, file undeletable
+\end{itemize}
+
+\noindent connect(ipAddress: $IP$)
+\begin{itemize}
+  \item transition: devicesConnected[ipAddress] = $true$
+  \item output: -
+  \item exception: connection error
+\end{itemize}
+
+\noindent disconnect(ipAddress: $IP$)
+\begin{itemize}
+  \item transition: devicesConnected[ipAddress] = $false$
+  \item output: -
+  \item exception: connection error
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None.
+
+\section{MIS of Web App Layout Module} \label{M2} \wss{Use labels for
+  cross-referencing}
+
+\subsection{Module}
+
+WebLayout
+
+\subsection{Uses}
+
+Detect user input and display output to the user
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ForwardInputs & - & - & Server error, connection error  \\
+\hline
+DisplayOutput & HtmlElement, value: \textit{S} & Server error, connection error \\
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item The HTML inputs (e.g. button clicks, text entered)
+  \item The HTML output (e.g. the HTML text, HTML updates)
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The user's browsers can display a HTML5 document and handle common inputs the document facilitates. This assumption is very reasonable because every modern browser has this capability.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+Please note a rough sketch will be given in lieu of the actual implementation as implementation
+varies by browser and device hardware. This is alright because this is an external component.
+
+These functions do not exist directly. However, they summarize external activity.
+\noindent ForwardInputs()
+\begin{itemize}
+  \item transition: get all inputs. Forward them to the toolbox broker.
+  \item output: none.
+  \item 
+\end{itemize}
+
+
+\noindent DisplayOutput(h: HtmlElement, value: $S$)
+\begin{itemize}
+\item transition: value is applied to the HTML element
+\item output: none
+\item exception: server error, connection error
+\end{itemize}
+\subsubsection{Local Functions}
+
+\noindent GetInput()
+\begin{itemize}
+\item transition: poll each input-supporting element if any new input was given by the user 
+\item output: a list of 2-tuples: (h: HtmlElement, value: $S$) 
+\item exception: server error, connection error 
+\end{itemize}
+
+\noident ToRequest(hi: HtmlInput)
+\begin{itemize}
+  \item transition: none
+  \item output: the input as a request
+  \item exception: none. If untransferrable, ignore input and log it
+\end{itemize}
+
+Many more. But they vary by browser.
+
+\section{MIS of Toolbox Broker} \label{M3} 
+
+\subsection{Module}
+
+ToolboxBroker
+
+\subsection{Uses}
+
+Facilitate service-based architecture, keeping services separate and making the creation of new services easy.
+
+
+\subsection{Syntax}
+
+Note tool is an abstract class which each service inherits from.
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+registerServices & tool: Tool & - & - \\
+\hline
+goToService & serviceName: $S$ & (success: $B$) & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item account: User account 
+  \item log: List<$S$>, list of messages to be written to longtable
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent goToService(serviceName):
+\begin{itemize}
+\item transition: check if the account may perform the action. If so, do it.
+\item output: a was sucessful boolean.
+\item exception: none. Exceptions should be caught; if not otherwise display generic error screen.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noident isAllowed(service, accountName):
+\begin{itemize}
+  \item transition: none
+  \item output: is user allowed to perform service $B$. Should call access module.
+  \item exception: none. If DB error, return false.
+\end{itemize}
+
+\noindent log(serviceName, accountName):
+\begin{itemize}
+\item transition: Add (account name, service name and current timestamp) to the log.
+\item output: none
+\item exception: none. 
+\end{itemize}
+
+\newpage
+\section{MIS of Authorization Rules Module} \label{M4} \wss{Use labels for
+  cross-referencing}
+
+\subsection{Module}
+
+AuthRules
+
+\subsection{Uses}
+
+Determine whether a role-team combination may access a service,
+and change and a role-team combination's acessible services.
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getPermitted & role: Role, team: Team, service: Service & permitted: $B$ & - \\
+\hline
+setPermitted & role: Role, team: Team, service: Service, permitted: $B$ & - & Role or team not found\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item permitDict: Dict<Tuple<Role, Team, Service>, $B$>, lookup for role and service to is permitted.
+  \item adminDict: Dict<Role, $B$>, lookup for is role administrative.
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+These lookups will actually be handled by a database. It is merely given as lookups here
+for easy transition syntax.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getPermitted(role, team, service):
+\begin{itemize}
+\item transition: none
+\item output: permit[(role, team, service)]. If absent, return whether role is administrative. 
+\item exception: none. 
+\end{itemize}
+
+\noindent setPermitted(role, team, service, isPermitted):
+\begin{itemize}
+\item transition: permit[(role, team, service)] = isPermitted
+\item output: none
+\item exception: role not found. 
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent isAdministrative(role: Role):
+\begin{itemize}
+\item transition: none 
+\item output: adminDict[role], default false
+\item exception: none. 
+\end{itemize}
+
+\noindent setAdministrative(role: Role, isAdminRole: $B$):
+\begin{itemize}
+\item transition: none 
+\item output: adminDict[role] = isAdminRole
+\item exception: role not found.
+\end{itemize}
+
+\newpage
+\section{MIS of Member Registry Module} \label{M5} \wss{Use labels for
+  cross-referencing}
+
+\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+\subsection{Module}
+
+MemberRegistry
+
+\subsection{Uses}
+
+Get and set a user's role and team.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getRole & user: UserAccount & role: Role & - & User not found \\
+\hline
+getTeam & user: UserAccount & team: Team & - & User not found \\
+\hline
+setRole & user: UserAccount, role: Role & - & User not found\\
+\hline
+setTeam & user: UserAccount, team: Team & - & User not found \\
+\hline
+addUser & role: Role, team: Team, info: UserInfo & - & User found \\
+\hline
+updateUserInfo & user: UserAccount, info: UserInfo & - & User not found \\
+\hline
+getUserInfo & user: UserAccount & info: UserInfo & User not found \\
+\hline
+deleteUser & user: UserAccount & - & User not found, User critical \\
+\hline 
+addMandatoryRole & role: Role & - & Role not found \\
+\hline
+removeMandatoryRole & role: Role & - & Role not found \\
+\hline
+isMandatoryRoles & role: Role & isMandatory: $B$ & Role not found \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item rolesDict: Dict<UserAccount, Role>
+  \item teamsDict: Dict<UserAccount, Team>
+  \item users: List<UserAccount>
+  \item mandatoryRoles: List<Role>
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+None. Methods may return null.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getRole(user: UserAccount):
+\begin{itemize}
+\item transition: none
+\item output: rolesDict[user]
+\item exception: user not found.
+\end{itemize}
+
+\noindent getTeam(user: UserAccount):
+\begin{itemize}
+\item transition: none
+\item output: teamsDict[user]
+\item exception: user not found
+\end{itemize}
+
+\noindent setRole(user: UserAccount, role: Role):
+\begin{itemize}
+\item transition: rolesDict[user] = role
+\item output: none
+\item exception: user not found
+\end{itemize}
+
+\noindent setTeam(user: UserAccount, team: Team):
+\begin{itemize}
+\item transition: teamsDict[user] = team
+\item output: none
+\item exception: user not found
+\end{itemize}
+
+\noindent addUser(role: Role, team: Team, info: UserInfo)
+\begin{itemize}
+  \item Transitions
+  \begin{itemize}
+    \item UserAccount user = new UserAccount(info)
+    \item \textbf{add} user to users
+    \item rolesDict[user] = role
+    \item teamsDict[user] = team
+  \end{itemize}
+  \item output: none
+  \item exception: user found (already exists)
+\end{itemize}
+
+\noindent updateUserInfo(user: UserAccount, info: UserInfo)
+\begin{itemize}
+  \item transition: user.info = info
+  \item output: none
+  \item exception: user not found
+\end{itemize}
+
+\noindent getUserInfo(user: UserAccount)
+\begin{itemize}
+  \item transition: none
+  \item output: user.info
+  \item exception: none
+\end{itemize}
+
+\noindent deleteUser(user: UserAccount)
+\begin{itemize}
+  \item Transitions
+  \begin{itemize}
+    \item \textbf{pop} user from users
+    \item \textbf{delete} user from roles
+    \item \textbf{delete} user from teams
+  \end{itemize}
+  \item output: none
+  \item exceptions: user is critical, user not found
+\end{itemize}
+
+\noitem addMandatoryRole(role: Role)
+\begin{itemize}
+  \item transition: \textbf{add} role to mandatoryRoles
+  \item output: none
+  \item exception: role not found
+\end{itemize}
+
+\noitem removeMandatoryRole(role: Role)
+\begin{itemize}
+  \item transition: \textbf{remove} role from mandatoryRoles
+  \item output: none
+  \item exception: role not found
+\end{itemize}
+
+\noitem isMandatoryRole(role: Role)
+\begin{itemize}
+  \item transition: none
+  \item output: role $\in$ mandatoryRoles
+  \item exception: role not found
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\notiem isCritical(user: User)
+\begin{itemize}
+  \item transition: none
+  \item output: roles[user] $\in$ mandatoryRoles AND no other user has that role
+  \item exceptions: user not found 
+\end{itemize}
+
+\newpage
+\section{MIS of Repository Content Module} \label{M6} \wss{Use labels for
+  cross-referencing}
+
+\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+\subsection{Module}
+
+RepoContents
+
+\subsection{Uses}
+
+Let users add files to, edit files of, and delete, preview, and download files from the knowledge repository.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None.
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addFile & file: File & - & invalid file error \\
+updateFile & fileId: $N$ & file: File & - & file not found error, invalid file error \\
+editFile & fileId: $N$, part: $S$, contents: $S$ & - & file not found error, part not found error, contents invalid error \\
+deleteFile & fileId: $N$ & - & file not found error \\
+getFile & fileId: $N$ & file: File & file not found \\
+previewFile & fileId: $N$ & preview: Preview & file not found error, not previewable error \\
+downloadFile & fileId: $N$ & download: Download & file not found error \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item fileDict: Dict<$N$, File>, id to file lookup
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addFile(file):
+\begin{itemize}
+\item Transitions
+\begin{itemize}
+  \item Generate a new fileId
+  \item fileDict[fileId] = file
+\end{itemize}
+\item output: none
+\item exception:
+
+\noindent updateFile(fileId, file):
+\begin{itemize}
+\item transition: fileDict[fileId] = file
+\item output: none
+\item exception: file not found, file invalid
+\end{itemize}
+
+\noindent editFile(fileId, part, contents):
+\begin{itemize}
+\item transition: fileDict[fileId].part = contents
+\item output: none
+\item exception: file not found, invalid part, invalid contents
+\end{itemize}
+
+\noindent deleteFile(fileId):
+\begin{itemize}
+\item transition: fileDict[fileId] = file
+\item output: none
+\item exception: file not found
+\end{itemize}
+
+\noindent getFile(fileId):
+\begin{itemize}
+\item transition: none
+\item output: file[fileId]
+\item exception: file not found
+\end{itemize}
+
+\noindent previewFile(fileId):
+\begin{itemize}
+\item transition: none
+\item output: toPreview(file[fileId])
+\item exception: file not found, file not previewable
+\end{itemize}
+
+\noindent downloadFile(fileId):
+\begin{itemize}
+\item transition: none
+\item output: toDownload(file[fileId])
+\item exception: file not found
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+\section{MIS of Model Import Module} \label{M7} \wss{Use labels for
+  cross-referencing}
+
+
+\subsection{Module}
+
+ModelImport
+
+\subsection{Uses}
+
+Import a model from a STEP file. Summarize import into file.
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+importModel & modelFile: File & Tuple<Model, $S$> & - \\
+\hline
+summarizeModel & model: Model & summaryDoc: Model & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None.
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+None. Exceptions should not be called, message should be used instead
+
+\subsubsection{Access Routine Semantics}
+
+\noindent importModel(modelFile)
+\begin{itemize}
+  \item transition: Create new model from model file
+  \item output: "success" if successful, the error message otherwise
+  \item exceptions: none
+\end{itemize}
+
+\noindent summarizeModel(model)
+\begin{itemize}
+  \item transition: none
+  \item output: a file summarizing the imported model
+  \item exceptions: none
+\end{itemize}
+
+\newpage
+\section{MIS of Model Library} \label{M8} \wss{Use labels for
+  cross-referencing}
+
+\subsection{Module}
+
+ModelLibrary
+
+\subsection{Uses}
+
+Store models. Designate one current model for each team, track models by team and general accessibility.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+uploadModel & model: Model, team: Team & - & - \\
+\hline
+getCurrentModel & team: Team & model: Model & - \\
+\hline
+getRecentModels & team: Team & models: List<Models> & - \\
+\hline
+getArchivedModels & year: $N$, team: Team & models: List<Models> & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item recentModels: Dict<Team, List<Model>>, recent models (of current year), inaccessible outside team
+  \item archivedModels: List<Model>, list of publicly available models
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent uploadModel(model, team):
+\begin{itemize}
+\item transition: \textbf{append} model to recentModels[team]
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent getCurrentModel(team):
+\begin{itemize}
+  \item transition: none
+  \item output: \textbf{last element} of recentModels[team]
+  \item exception: none
+\end{itemize}
+
+\noindent getRecentModels(team):
+\begin{itemize}
+  \item transition: none
+  \item output: recentModels[team]
+  \item exception: none
+\end{itemize}
+
+\noindent getArchivedModels(year, team)
+\begin{itemize}
+  \item transition: none
+  \item output: copy of archiveModels. If year provided, omit all in other years. If team provided, omit all in other teams.
+  \item exception: none
+\end{itemize}
+
+\newpage
+\section{MIS of Performance Metrics Module} \label{Module} \wss{Use labels for
+  cross-referencing}
+
+\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+\subsection{Module}
+
+PerfMet
+
+\subsection{Uses}
+
+Produce performance metrics. Estimate failure load, failure location; compute mass to load ratio.
+Allow customization by year or batch, and addition of new metrics.
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None.
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getBatch & year: $N$ & batch: Batch & batch not found \\
+\hline
+getEstimatedFailureLoad & model: Model, batch: Batch & failureLoad: $R$ & invalid result \\
+\hline
+getEstimatedFailureLocation & model: Model, batch: Batch & failureLocation: Location & - \\
+\hline
+getLoadToMassRatio & model: Model, batch: Batch & ratio: $N$ & invalid result \\
+\hline
+createNewMetric & formula: Formula & metric: Metric & invalid formula \\
+\hline
+getCustomMetricResult & model: Model, metric: Metric, batch: Batch & result: $R$ & invalid result \\
+\hline
+deleteMetric & metric: Metric & - & metric not found \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item yearBatches: Dict<$N$, Batch>
+  \item batches: List<Batch>
+  \item customMetrics: List<Metric>
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\wss{This section is not necessary for all modules.  Its purpose is to capture
+  when the module has external interaction with the environment, such as for a
+  device driver, screen interface, keyboard, file, etc.}
+
+\subsubsection{Assumptions}
+
+\wss{Try to minimize assumptions and anticipate programmer errors via
+  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getBatch(year):
+\begin{itemize}
+\item transition: none
+\item output: batches[year]
+\item exception: batch not found
+\end{itemize}
+
+\noindent getEstimatedFailureLoad(model, batch):
+\begin{itemize}
+\item transition: none
+\item output: estimated failure load of the model, using batch
+\item exception: invalid result
+\end{itemize}
+
+\noindent getEstimatedFailureLoad(model, batch):
+\begin{itemize}
+\item transition: none
+\item output: estimated failure load of the model, using batch
+\item exception: invalid result
+\end{itemize}
+
+\noindent getLoadToMassRatio(model, batch):
+\begin{itemize}
+\item transition: none
+\item output: load to mass ratio of the model, using batch
+\item exception: invalid result
+\end{itemize}
+
+\noindent createNewMetric(formula)
+\begin{itemize}
+  \item transition I : create a Metric object based off the formula. 
+  \item transition II: \textbf{add} the Metric object to localMetrics
+  \item output: the new metric
+  \item exception: invalid formula
+\end{itemize}
+
+\noindent getCustomMetricResult(model, batch, metric):
+\begin{itemize}
+\item transition: none
+\item output: result of custom metric on the model, using batch
+\item exception: invalid result
+\end{itemize}
+
+\noindent deleteCustomMetric(metric):
+\begin{itemize}
+\item transition: \textbf{delete} metric from localMetrics
+\item output: none
+\item exception: metric not found
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None.
+
+\newpage
+\section{MIS of Rule Set Module} \label{M10} 
+
+\subsection{Module}
+
+RuleSet
+
+\subsection{Uses}
+
+Create, edit and delete rules. Mark rules that cannot be checked automatically as manual checks.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None.
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addRule & name: $S$, minVal: $R$, maxVal: $R$, obtainVal: Formula & rule: Rule & invalid bounds, invalid formula \\
+\hline
+editRule & rule: Rule, name: $S$, minVal: $R$, maxVal: $R$, obtainVal: Formula & - & rule not found, invalid bounds, invalid formula \\
+\hline
+deleteRule & rule: Rule & - & rule not found \\
+\hline
+getYear & - & $N$ & - \\
+\hline
+setYear & $N$ & - & - \\
+\hline
+getRules & - & List<Rules> & - \\
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item rules: List<Rule>
+  \item year: Year
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createRule(name, minVal, maxVal, formula):
+\begin{itemize}
+\item transition: Create new Rule(name, minVal, maxVal, formula). \textbf{Add} it to rules.
+\item output: the new Rule object
+\item exception: invalid bounds, invalid formula
+\end{itemize}
+
+\noindent editRule(rule, name, minVal, maxVal, formula):
+\begin{itemize}
+\item transition: Update rule with new values: name, minVal, maxVal and formula.
+\item output: none
+\item exception: rule not found, invalid bounds, invalid formula
+\end{itemize}
+
+\noindent deleteRule(rule):
+\begin{itemize}
+\item transition: \textbf{delete} rule from rules
+\item output: none
+\item exception: rule not found
+\end{itemize}
+
+\noindent getYear()
+\begin{itemize}
+  \item transition: none
+  \item output: year
+  \item exception: none
+\end{itemize}
+
+\noindent setYear(newYear)
+\begin{itemize}
+  \item transition: year = newYear
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\noindent getRules()
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of rules
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None.
+
+\newpage
+\section{MIS of Compliance Check} \label{M11} \wss{Use labels for
+  cross-referencing}
+
+
+
+\subsection{Module}
+
+ComplianceCheck
+
+\subsection{Uses}
+
+Evaluate a model against a set of rules. Display the rules that pass, the rules that fail and the rules
+that need manual checks in addition to the year of the competition rules used.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+evaluateRules & model: Model, ruleSet: RuleSet & Tuple<Tuple<$S$, $R$, $R$, $R$, $B$, $B$>, $N$> invalid model, invalid rule set \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None.
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent evaluateRules(model, ruleSet.rules):
+\begin{itemize}
+\item Transitions
+\begin{itemize}
+    \item \textbf{for each} rule \textbf{in} getRules(ruleset)
+    \begin{itemize}
+      \item Get the minimum and maximum values
+      \item Obtain the value using rule.formula. manual = formula == null.
+      \item If not manual, find compliant = min $\le$ obtained $\le max$
+      \item Add (name, min, obtained, max, compliant, manual) to the tuple builder
+    \end{itemize}
+    \item Create the tuple results from the builder. Call getYear(ruleSet) to getYear.
+\end{itemize}  
+\item output: (results, year)
+\item exception: invalid model, invalid rules
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None.
+
+
+
+
+\newpage
+\section{MIS of Materials Test Records} \label{M12} \wss{Use labels for
+  cross-referencing}
+
+
+\subsection{Module}
+
+MatlsTestRecords
+
+\subsection{Uses}
+
+Upload and parse materials test results, rejecting incomplete and impossible ones. Let executives mark records as incorrect
+without deleting them.
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+addTest & file: File & matlsTest: MaterialsTest & - & incomplete file, impossible file \\
+\hline
+markInvalid & matlsTest: MaterialsTest & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item materialsTests: List<MaterialsTest>
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent addTest(file: File):
+\begin{itemize}
+\item transition: \textbf{parse} the file into a MaterialsTest. \textbf{Add} that test to materialsTest.
+\item output: none 
+\item exception: none
+\end{itemize}
+
+\noindent markInvalid(matlsTest: MaterialsTest)
+\begin{itemize}
+  \item transition: matlsTest.isInvalid = $true$
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None.
 
 \section{MIS of Web Server} \label{WebServer} \wss{Use labels for
   cross-referencing}
