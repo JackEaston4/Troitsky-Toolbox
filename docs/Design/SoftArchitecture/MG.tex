@@ -988,9 +988,27 @@ Role Record & Executive position, responsibilities, key contacts, yearly timelin
 
 \section{Timeline} \label{SecTimeline}
 
-\wss{Schedule of tasks and who is responsible}
+Table~\ref{TblTimeline} gives the schedule for implementing Revision 0, which covers the modules needed for a working end-to-end system by the Revision 0 demonstrations (February 1--12, 2027). Work is assigned by the team roles in SRS P.1, and each task is tracked as an issue on the team's \href{https://github.com/users/JackEaston4/projects/3/views/2}{GitHub KanBan}.
 
-\wss{You can point to GitHub if this information is included there}
+\begin{table}[H]
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}p{0.4\textwidth} >{\raggedright\arraybackslash}p{0.15\textwidth} >{\raggedright\arraybackslash}p{0.13\textwidth}}
+\toprule
+\textbf{Modules} & \textbf{Work} & \textbf{Assignee} & \textbf{Due Date}\\
+\midrule
+\mref{mModelImport}, \mref{mStep} & STEP model import (Proof of Concept) & Mason & 04/12/2026\\
+\mref{mHH}, \mref{mBroker}, \mref{mPersist} & System foundation: deployment, database, and Broker & Jack, Mason & 08/01/2027\\
+\mref{mAuthz}, \mref{mMembers}, \mref{mAuthn} & Access control: sign-in, roles, and team permissions & Jack, Mason & 12/01/2027\\
+\mref{mContent}, \mref{mModelLibrary}, \mref{mSearch} & Knowledge Repository and model storage & Jack, Mason & 15/01/2027\\
+\mref{mWebApp}, \mref{mViewer} & User interface and 3D model display & Pedro, Michael & 15/01/2027\\
+All & Integration, testing per the VnV Plan, and the Revision 0 demonstration & Team (Michael leads testing) & 01/02/2027\\
+\bottomrule
+\end{tabular}
+\caption{Implementation timeline for Revision 0}
+\label{TblTimeline}
+\end{table}
+
+The analysis, rules, materials, and handoff modules (\mref{mMetrics}, \mref{mRuleSet}, \mref{mCompliance}, \mref{mTestRecords}, \mref{mMatProps}, \mref{mSolver}, and \mref{mHandoff}) will be scheduled after Revision 0, in time for the final submission on March 31, 2027.
 
 \section{Generative AI Use Disclosure} \label{SecAI}
 
