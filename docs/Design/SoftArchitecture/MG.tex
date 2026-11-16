@@ -887,9 +887,99 @@ components, so there is no hardware-software communication protocol to design.
 
 \section{Database Design} \label{SecDB}
 
-\wss{If a database is a significant component of the project, the database
-design should be summarized here.  This section should be filled in with NA if
-it is not appropriate for a given project.}
+The Toolbox stores all club data in a Microsoft SQL Server database, accessed only through the Persistence Module (\mref{mPersist}). Following the rule that each data structure is implemented in only one module, every entity is owned by exactly one module, which provides the only access programs for it. Other modules read or change an entity by calling its owning module through the Toolbox Broker (\mref{mBroker}), never by querying its tables directly. Figure~\ref{FigER} shows the main entities and their relationships, and Table~\ref{TblDB} lists each entity, its key attributes, and the module that owns it.
+
+The design follows three further decisions:
+\begin{itemize}
+\item \textbf{Member accounts:} Members and roles are stored in the standard user and role tables of ASP.NET Core Identity, extended with the club's own fields, such as account status. Each member has exactly one role, and team assignments are stored separately for each competition year.
+\item \textbf{Stored files:} Uploaded files, such as STEP models, documents, and exported PDFs, are stored by the Persistence Module, and each entity that has a file holds a reference to it. Where file contents are kept is a secret of the Persistence Module (\acref{acDB}).
+\item \textbf{Backups:} The database and stored files are backed up at least every 7 days to a platform separate from the hosting server.
+\end{itemize}
+
+Analysis and compliance results are not stored. They are computed on request from the stored model, rule set, and material properties, so they always reflect the current data.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}p{0.54\textwidth} >{\raggedright\arraybackslash}p{0.14\textwidth}}
+\caption{Database Entities} \label{TblDB}\\
+\toprule
+\textbf{Entity} & \textbf{Key attributes} & \textbf{Owner}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Entity} & \textbf{Key attributes} & \textbf{Owner}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Member & Identity user fields (name, email, password hash), account status & \mref{mMembers}\\
+Role & Identity role: general member, team member, team captain, club executive, or software subteam maintainer & \mref{mMembers}\\
+Team & Name, competition year & \mref{mMembers}\\
+Team Assignment & Member, team, competition year; at most one team per member per year & \mref{mMembers}\\
+Executive Position & Title, current holder, designated successor & \mref{mMembers}\\
+Request Log & Requesting member, operation, time, whether the request succeeded & \mref{mBroker}\\
+Repository Item & Title, category from the fixed list, year, team, tags, uploader, archived flag, file reference & \mref{mContent}\\
+Bridge Model & Team, competition year, current or past design, repository item holding its STEP file, extracted dimensions and mass & \mref{mModelLibrary}\\
+Model Member / Joint & The members and joints identified in a bridge model, with their positions and dimensions & \mref{mModelLibrary}\\
+Rule Set & Competition year, whether it is the active rule set & \mref{mRuleSet}\\
+Rule & Constrained property, allowed value or range, unit, whether it must be checked manually & \mref{mRuleSet}\\
+Material Batch & Material, supplier, competition year & \mref{mTestRecords}\\
+Test Result & Batch, test type, specimen dimensions, applied load, grain orientation for wood, date, tester, invalid flag and reason & \mref{mTestRecords}\\
+Material Property & Batch, property (such as elastic modulus or strength), value, the test results it was computed from & \mref{mMatProps}\\
+Handoff Template & Executive position or team lead role, required fields & \mref{mHandoff}\\
+Exit Document & Template, author, competition year, status (draft, review, or published), content, repository item once published & \mref{mHandoff}\\
+Role Record & Executive position, responsibilities, key contacts, yearly timeline & \mref{mHandoff}\\
+\end{longtable}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  ent/.style={draw, text width=2.8cm, minimum height=0.8cm, align=center, font=\small},
+  rel/.style={thick},
+  m/.style={font=\footnotesize, inner sep=1.5pt}
+]
+% Access control (M5)
+\node[ent] (log) at (0,0) {Request Log};
+\node[ent] (role) at (4.2,0) {Role};
+\node[ent] (member) at (0,-2) {Member};
+\node[ent] (assign) at (4.2,-2) {Team\\Assignment};
+\node[ent] (team) at (8.4,-2) {Team};
+\node[ent] (position) at (0,-4) {Executive Position};
+% Repository and models (M6, M8)
+\node[ent] (item) at (12.6,0) {Repository Item};
+\node[ent] (model) at (12.6,-2) {Bridge Model};
+\node[ent] (geom) at (12.6,-4) {Model Member\\/ Joint};
+% Handoff (M14)
+\node[ent] (exit) at (17.6,0) {Exit Document};
+\node[ent] (template) at (17.6,-2) {Handoff Template};
+\node[ent] (record) at (4.2,-4) {Role Record};
+% Rules (M10)
+\node[ent] (ruleset) at (0,-6.2) {Rule Set};
+\node[ent] (rule) at (4.2,-6.2) {Rule};
+% Materials (M12, M13)
+\node[ent] (batch) at (8.4,-6.2) {Material Batch};
+\node[ent] (test) at (17.6,-6.2) {Test Result};
+\node[ent] (prop) at (12.6,-8) {Material Property};
+% Relationships: 1 and * mark the multiplicity at each end
+\draw[rel] (role) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (member);
+\draw[rel] (member) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (log);
+\draw[rel] (member) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (assign);
+\draw[rel] (assign) -- node[m,pos=0.2,above]{*} node[m,pos=0.8,above]{1} (team);
+\draw[rel] (member) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (position);
+\draw[rel] (team) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (model);
+\draw[rel] (model) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{1} (item);
+\draw[rel] (model) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (geom);
+\draw[rel] (item) -- node[m,pos=0.2,above]{1} node[m,pos=0.75,above]{0..1} (exit);
+\draw[rel] (template) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (exit);
+\draw[rel] (position) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{1} (record);
+\draw[rel] (ruleset) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (rule);
+\draw[rel] (batch) -- node[m,pos=0.1,above]{1} node[m,pos=0.9,above]{*} (test);
+\draw[rel] (batch) -- node[m,pos=0.2,left]{1} node[m,pos=0.8,left]{*} (prop);
+\draw[rel] (prop) -- node[m,pos=0.2,right]{*} node[m,pos=0.8,right]{*} (test);
+\end{tikzpicture}%
+}
+\caption{Main entities of the database and their relationships. A 1 or * at each end of a line gives how many of that entity take part in the relationship.}
+\label{FigER}
+\end{figure}
 
 \section{Timeline} \label{SecTimeline}
 
