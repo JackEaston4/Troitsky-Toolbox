@@ -880,11 +880,15 @@ The interface design is based on the member needs and feature priorities gathere
 
 \section{Design of Communication Protocols} \label{SecComm}
 
-\wss{If there is communication between hardware and software, it may be necessary to explain the design of the communication protocol.  This section should be filled in with NA if it is not appropriate for a given project.}
+The Troitsky Toolbox has no custom hardware, so there is no hardware--software protocol to design. Its main communication protocol is the one between the user interface and the services, which all pass through the Toolbox Broker (\mref{mBroker}) so that no service depends directly on another. Members' browsers communicate with the Toolbox only over an encrypted connection.
 
-N/A. The Troitsky Toolbox is a web application with no custom hardware
-components, so there is no hardware-software communication protocol to design.
-
+The Broker protocol has four steps:
+\begin{enumerate}
+\item \textbf{Register:} When the system starts, each service registers with the Broker and lists the operations it provides. A new tool is added by registering it, without changing the Broker or any existing service.
+\item \textbf{Authorize:} Each request names an operation and carries the identity of the signed-in member, attached by the Web App Layout Module (\mref{mWebApp}). The Broker checks the request with the Authorization Rules Module (\mref{mAuthz}) and rejects it if the member's role and team do not permit the operation.
+\item \textbf{Route:} The Broker forwards an authorized request to the service that registered the operation, and returns that service's response to the requester. Services also use this step to request data from one another, such as \mref{mMetrics} requesting material properties from \mref{mMatProps}.
+\item \textbf{Respond or fail safely:} If no service provides the operation, or the service does not respond in time, the Broker returns an error message instead of a response, so the failure of one service does not affect the others. The Broker logs every request it handles, with the member, operation, time, and outcome.
+\end{enumerate}
 
 \section{Database Design} \label{SecDB}
 
