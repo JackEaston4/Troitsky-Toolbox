@@ -327,8 +327,8 @@ to be implemented.
   a cloud service (e.g., Azure App Service) or a university or club-owned server.
 \item[Services:] Serves as the virtual hardware used by the rest of the system.
   This module provides the interface between the host machine and the software,
-  supplying the runtime, file system, network connections, and HTTPS endpoint
-  that the Toolbox is served from.
+  supplying the runtime, file storage, and secure network connection that the
+  Toolbox is served from.
 \item[Implemented By:] OS and hosting platform, packaged as a Docker container
 \item[Type of Module:] Abstract Object
 \end{description}
@@ -354,7 +354,7 @@ to be implemented.
   tool. Accepts user input through forms and file uploads, passes each request
   to the Toolbox Broker with the signed-in member's identity, and displays the
   response or error message. Ends inactive sessions after the session timeout.
-\item[Implemented By:] C\# with ASP.NET Core Razor Pages, HTML, and CSS
+\item[Implemented By:] C\# with ASP.NET Core Razor Pages
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -369,7 +369,7 @@ to be implemented.
   the response. Returns an error when an operation does not exist or a service
   does not respond, so that the failure of one service does not affect the
   others. Logs every request it handles.
-\item[Implemented By:] C\# on ASP.NET Core, exposing RESTful HTTP endpoints
+\item[Implemented By:] C\# on ASP.NET Core
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -383,7 +383,7 @@ to be implemented.
   team's current-year models to the members of that team and the executives.
   Checks the member's current role on every request, so that role changes take
   effect by the member's next request.
-\item[Implemented By:] C\# using ASP.NET Core Identity roles and authorization policies
+\item[Implemented By:] C\# using ASP.NET Core Identity
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -399,7 +399,7 @@ to be implemented.
   Blocks deactivating an executive until a successor has been assigned to their
   position.
 \item[Implemented By:] C\# on .NET, using ASP.NET Core Identity user accounts
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Repository Content Module (M\ref*{mContent})}\label{mContent:dec}
@@ -414,8 +414,8 @@ to be implemented.
   an executive edit or archive an item after confirmation, and excludes archived
   items from default searches. Reports an error when an item cannot be stored or
   retrieved.
-\item[Implemented By:] C\# on .NET, using LINQ for data access
-\item[Type of Module:] Abstract Data Type
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Model Import Module (M\ref*{mModelImport})}\label{mModelImport:dec}
@@ -430,7 +430,7 @@ to be implemented.
   STEP or contain no geometry, stops processing after the model analysis
   timeout, and explains why. Displays a summary of the imported model so the
   member can confirm it was read correctly.
-\item[Implemented By:] C\# on ASP.NET Core, using its file upload and download handling
+\item[Implemented By:] C\# on ASP.NET Core
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -443,8 +443,8 @@ to be implemented.
   only to that team. Lets members browse and load past designs read-only,
   filtered by year and team. Lets executives convert all current models into past
   designs at the end of the season.
-\item[Implemented By:] C\# on .NET, using LINQ for data access
-\item[Type of Module:] Abstract Data Type
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Performance Metrics Module (M\ref*{mMetrics})}\label{mMetrics:dec}
@@ -470,8 +470,8 @@ to be implemented.
   import a year's rules and create, edit, and remove individual rules without
   changing code. Marks rules that cannot be checked from geometry as manual
   checks.
-\item[Implemented By:] C\# on .NET, using LINQ for data access
-\item[Type of Module:] Abstract Data Type
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Compliance Check Module (M\ref*{mCompliance})}\label{mCompliance:dec}
@@ -499,7 +499,7 @@ to be implemented.
   as invalid without deleting them, compares results against previous years,
   and exports records to CSV.
 \item[Implemented By:] C\# on .NET, with CSV and Excel (\texttt{.xlsx}) import and CSV export
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Material Properties Module (M\ref*{mMatProps})}\label{mMatProps:dec}
@@ -525,8 +525,8 @@ to be implemented.
   submitted documents against their template, maintains a role record for each
   executive position, shows executives which documents are still outstanding,
   and exports documents to PDF.
-\item[Implemented By:] C\# with ASP.NET Core Razor Pages, with PDF export
-\item[Type of Module:] Abstract Data Type
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsection{Software Decision Module}
@@ -551,7 +551,7 @@ to be implemented.
   invalid or deactivated accounts, enforces the password policy, stores
   passwords only as salted hashes, and supplies the signed-in member's identity
   and role to the rest of the system.
-\item[Implemented By:] C\# using ASP.NET Core Identity, with salted password hashing
+\item[Implemented By:] C\# using ASP.NET Core Identity
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -563,7 +563,7 @@ to be implemented.
   records complete and consistent when several members use the system at once.
   Provides access programs for reading and writing records and stored files, and
   backs up the database at the backup interval.
-\item[Implemented By:] Microsoft SQL Server, accessed from C\# through LINQ
+\item[Implemented By:] Microsoft SQL Server
 \item[Type of Module:] Abstract Object
 \end{description}
 
@@ -574,7 +574,7 @@ to be implemented.
   database.
 \item[Services:] Returns the stored items matching a keyword search, filtered by
   category, year, team, or tag, within the maximum search time.
-\item[Implemented By:] C\# LINQ queries against Microsoft SQL Server
+\item[Implemented By:] C\# on .NET
 \item[Type of Module:] Library
 \end{description}
 
@@ -874,8 +874,9 @@ At the top of the hierarchy, the Web App Layout Module (\mref{mWebApp}) signs me
 
 \section{User Interfaces} \label{SecUI}
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
+The detailed design of the user interface, provided by the Web App Layout Module (\mref{mWebApp}) and the 3D Viewer Module (\mref{mViewer}), will be developed in stages and refined as feedback is collected from club members. As such, the specific screen designs are not included in this document, in line with \acref{acUI}, which anticipates that the layout will change based on user feedback.
+
+The interface design is based on the member needs and feature priorities gathered in the Stakeholder Interview Report (CD-Fall) document, a member survey and stakeholder interviews summarized in SRS P.7. It will be evaluated and refined through the Usability Testing (CD-Winter) document in the winter, which will document the tasks, results, and changes from each round of testing. Throughout this iteration, the interface will remain consistent with the SRS and Hazard Analysis. In particular, it must work in all four supported desktop browsers (NFR-SYS-1), show the assumptions behind each estimate (FR-PA-4), let members confirm an imported model and see its units (SR-MA-1, SR-MA-2), ask for confirmation before stored content is changed (SR-KR-2), show the competition year of the rules used (SR-RC-1), and display a clear error message when an operation fails (SR-KR-5, SR-PA-1).
 
 \section{Design of Communication Protocols} \label{SecComm}
 
