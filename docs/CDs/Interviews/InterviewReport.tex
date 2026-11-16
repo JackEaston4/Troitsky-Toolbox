@@ -410,10 +410,10 @@ Administrative knowledge (T2) & \rid{FR-KT-3} & Confirmed & \\
 \subsection{Stretch Goals from Interview Requests}
 \label{sec:stretch}
 
-Participants requested the features in Table~\ref{tab:stwretch}, which are not
-covered by the current SRS. They are recorded as stretch goals for the
-capstone team or for future software subteams.
-\todo{Assign priorities, or state that these are outside the capstone scope.}
+The stretch goals in Table 9 list established features or project components 
+that the participants noted as being beneficial or taken from the discussed themes. 
+The requests were given an ID, similar to SRS requirements, and linked to the existing SRS requirements they effect.
+
 
 \begin{table}[H]
 \centering
@@ -422,16 +422,16 @@ capstone team or for future software subteams.
 \small
 \begin{tabularx}{\textwidth}{L{0.8cm} Y L{2.6cm} L{3.4cm}}
 \toprule
-\textbf{ID} & \textbf{Request} & \textbf{Requested by} & \textbf{Relation to SRS} \\
+\textbf{ID} & \textbf{Request} & \textbf{Relation to SRS} \\
 \midrule
-SG-1 & Team task management: task assignment, milestone submission, deadline and progress tracking, coach feedback & S1-P1, S3-P1 & Not covered; G.6 excludes member communication \\
-SG-2 & Club calendar of the yearly timeline and events, exportable to external calendars & S1-P1, S1-P2, S2-P1 & Extends \rid{FR-KT-3} (per-position timeline) \\
-SG-3 & Warnings for dimensions close to a rule's minimum or maximum & S2-P2 & Extends \rid{FR-RC-3}, \rid{FR-RC-4} \\
-SG-4 & Mock competition score sheet for a model & S2-P2 & Builds on \rid{FR-PA-2}, \rid{FR-RC-3} \\
-SG-5 & Interactive structural calculations: member forces, deflections, failure points (FEA) & S3-P1, S3-P3 & Beyond G.6 simplified modelling; enabled by \rid{NFR-PA-3} \\
-SG-6 & Joint library showing each joint's performance & S2-P3 & Builds on \rid{FR-KR-2}, \rid{FR-KR-3} \\
-SG-7 & Analysis and rules checklists for first-time members & S3-P2 & No requirement (survey feature H) \\
-SG-8 & Showcase of recent designs on the landing page & S2-P1 & Extends \rid{FR-WS-1} \\
+SG-1 & Organization (Executive and Team) task management: task assignment, task progress checking, coach input, linked to club calendar (S.2) & Not covered, G.6 excludes this \\
+SG-2 & Club calendar of the yearly timeline and events, connection to external calendar services & \rid{FR-KT-3} \\
+SG-3 & Model warnings for when model metric/features are near competition limits & \rid{FR-RC-3}, \rid{FR-RC-4} \\
+SG-4 & Mock scoresheet, UI change for scoring prediction & \rid{FR-PA-2}, \rid{FR-RC-3} \\
+SG-5 & FEA, Interactive structural calculations: (member forces, component deflections, design failure points) & Beyond modelling described in G.6, \rid{NFR-PA-3} \\
+SG-6 & Joint library showing each joint's performance & \rid{FR-KR-2}, \rid{FR-KR-3} \\
+SG-7 & Analysis and rules checklists for first-time members & No requirement (requirements elicitation survey, feature H) \\
+SG-8 & Showcase of recent designs on the landing page & \rid{FR-WS-1} \\
 \bottomrule
 \end{tabularx}
 \end{table}
