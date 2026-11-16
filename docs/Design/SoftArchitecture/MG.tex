@@ -69,18 +69,42 @@ This section records information for easy reference.
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   AC & Anticipated Change\\
+  AI & Artificial Intelligence\\
+  CAD & Computer-Aided Design\\
+  CSV & Comma-Separated Values\\
   DAG & Directed Acyclic Graph \\
+  FR & Functional Requirement\\
   M & Module \\
   MG & Module Guide \\
+  NFR & Non-Functional Requirement\\
   OS & Operating System \\
-  R & Requirement\\
-  SC & Scientific Computing \\
+  PDF & Portable Document Format\\
+  SR & Safety and Security Requirement (Hazard Analysis)\\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  STEP & Standard for the Exchange of Product Model Data (ISO 10303)\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
+  VnV & Verification and Validation\\
   \bottomrule
-\end{tabular}\\
+\end{tabular}
+
+\vspace{1em}
+\noindent Requirements are identified as $\langle \mathit{Type} \rangle$-$\langle \mathit{Component} \rangle$-$\langle n \rangle$, where:
+\begin{itemize}
+\item $\mathit{Type} \in \{\mathrm{FR}, \mathrm{NFR}, \mathrm{SR}\}$
+\item $\mathit{Component} \in \{\mathrm{WS}, \mathrm{AC}, \mathrm{BR}, \mathrm{KR}, \mathrm{MA}, \mathrm{PA}, \mathrm{RC}, \mathrm{MT}, \mathrm{KT}, \mathrm{SYS}\}$, the SRS component the requirement belongs to
+\item $n \in \{1, 2, 3, \ldots\}$, the number of the requirement within its type and component
+\end{itemize}
+
+\begin{tabular}{l l l l}
+WS & Web Server & AC & Access Control System\\
+BR & Toolbox Broker & KR & Knowledge Repository\\
+MA & Model Analysis System & PA & Performance Analysis System\\
+RC & Rule Compliance System & MT & Material Testing Manager\\
+KT & Knowledge Transfer Manager & SYS & System-wide\\
+\end{tabular}
+
+\vspace{1em}
+\noindent For example, FR-KR-2 is the second functional requirement of the Knowledge Repository.
 
 \newpage
 
