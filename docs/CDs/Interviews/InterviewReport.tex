@@ -6,6 +6,7 @@
 \usepackage{float}
 \usepackage{longtable}
 \usepackage{enumitem}
+\usepackage[round]{natbib}
 
 \title{Stakeholder Interview Report\\\progname}
 
@@ -32,7 +33,7 @@
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
 11/10/2026 & Pedro Azevedo & Template created for report \\
-11/14/2026 & Pedro Azevedo & Mason Azzopardi \& Interviews complete \\
+11/14/2026 & Pedro Azevedo \& Mason Azzopardi & Interviews complete \\
 11/14/2026 & Pedro Azevedo & Raw results aggregated and included (.csv) \\
 11/15/2026 & Pedro Azevedo & Stakeholder interview report complete \\
 \bottomrule
@@ -53,22 +54,20 @@
 The purpose of the interviews was to collect specified and verifiably valid feedback from the 
 users with the most experience in the club. With the base of the project identified, outlined 
 in the SRS, the interviews provided proper guiding information about the prioritization and 
-further specification of services~\cite{TroitskySRS}. Product information 
-that is related or benefits from input of experienced members, or executive specific 
+further specification of services~\citep{TroitskySRS}. Product information 
+that is related to or benefits from input of experienced members, or executive-specific 
 requirements will be addressed through the interviews. There will also be discussion 
 regarding the available data for testing, specifically data that has more records or 
-background stored from current experience members. The analysis breaks down the results 
-of the interview into applicable findings, linked to specific, system functions, or general 
+background stored from current experienced members. The analysis breaks down the results 
+of the interview into applicable findings, linked to specific system functions, or general 
 product specifications, relating to club operations.
 
 \subsection{Relation to Other Documents}
 
-This interview was outlined and described in the VnV Plan Custom Documents section~\cite{TroitskyVnVPlan}. 
-The interview supports the findings found in the member survey, providing more detailed 
-answers specific to a more concrete conception of the product. The prior elicitation provides data 
-to contrast against the interview, ensuring that experienced member results are not overly biased. The 
-interviews will also provide the most information regarding the role requirements, supporting user group
-descriptions in the SRS~\cite{TroitskySRS}.
+This interview was outlined and described in the VnV Plan Custom Documents section~\citep{TroitskyVnVPlan}. 
+The prior elicitation provides data to contrast against the interview, ensuring that experienced member 
+results are not overly biased. The interviews will also provide the most information regarding the role 
+requirements, supporting user group descriptions in the SRS~\citep{TroitskySRS}.
 
 % =====================================================================
 \section{Methodology}
@@ -88,21 +87,21 @@ question sets.
 
 \subsection{Participant Selection and Recruitment}
 
-The selection process was primarily focused on targeting more experienced members, while cover a diversity of 
+The selection process was primarily focused on targeting more experienced members, while covering a diversity of 
 roles, specifically across coaching and executive space. From there the selection focused on member availability 
-and scheduling, resulting in 3 interviewing session, each with 2-3 participants, totalling 8 interviewed members. 
+and scheduling, resulting in 3 interview sessions, each with 2--3 participants, totalling 8 interviewed members. 
 The scheduling was done through When2Meet, where all users were able to fill out their availability, then the 
 team was able to select times that had groups of people and required members available.
 
 \subsection{Session Procedure and Roles}
 
-The interviews followed a simply set-up process where the interview parameters and ethics considerations outlined 
-below are presented to the participants. As described the semi-structured nature of the interviews questions and sections 
+The interviews followed a simple set-up process where the interview parameters and ethics considerations outlined 
+below were presented to the participants. As described, the semi-structured nature of the interview questions and sections 
 served almost as checkpoints throughout the interview, allowing for deviation and discussion among team members and 
 Troitsky participants. For each of the interview blocks, there were always 2 team members present, where 1 served as the 
 main interviewer, asking the main questions and remaining attentive to the participants. The other member served as a 
-more concrete notetaker, filling in the empathy map sections roughly, but primarily working on the interview record excel template. 
-The excel template served as both a mid-interview note taking system, but also created standardized exports to stored the 
+more concrete notetaker, filling in the empathy map sections roughly, but primarily working on the interview record Excel template. 
+The Excel template served both as a mid-interview note-taking system and to create standardized exports to store the 
 interview records as CSV files.
 
 \subsection{Ethics and Anonymization}
@@ -116,13 +115,13 @@ the members, and transcripts will be anonymized before being reported in the rep
 
 These semi-structured interviews will help outline expectations and prioritization of services from 
 knowledgeable members, requiring some preprocessing and sorting of the results, specifically 
-utilizing empathy maps and role categorized findings. Utilizing an aggregated empathy map helps to group the 
+utilizing empathy maps and role-categorized findings. Utilizing an aggregated empathy map helps to group the 
 findings from the results specifically into more concrete actionable groups, helping infer the highest and 
 lowest priority items within the app. These consolidated findings will be vital in checking any assumptions 
 made in the SRS with experienced club members. The analysis focuses on determining the highest priority and 
 largest gaps within the club, specifically noted by their more experienced members. This was also done by breaking 
-down the themes of the interviews, where the participants decided to focus in on, and analyzing the importance 
-or associated project considerations that may arise. It will also consolidated the data that users presented 
+down the themes of the interviews, where the participants decided to focus, and analyzing the importance 
+or associated project considerations that may arise. It also consolidated the data that users presented 
 as available to host on the service.
 
 % =====================================================================
@@ -264,6 +263,7 @@ The notes from all three sessions were sorted into a single empathy map
 \begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
   \item Frustrated by wasted effort and preventable failures (S1-P1, S1-P2)
   \item Uncertain about responsibilities in the new coach roles
+        (S2-P2, S2-P3)
   \item Low confidence in performance predictions (S2-P1, S2-P3, S3-P3)
   \item Invested in the Toolbox lasting beyond this year (S3-P1, S3-P3)
 \end{itemize}
@@ -302,27 +302,27 @@ T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \
       \item \textbf{T1 --- Knowledge Loss} \newline 
       The focus on knowledge loss was primarily a concern for all members when discussing their difficulties 
       in finding reference material and design decision help, especially causing issues or misplaced effort 
-      in their first years. The more experienced members discussed having much of their data, but that if not collected 
+      in their first years. The more experienced members discussed having much of their data, but that, if not collected, 
       that data itself may be lost. There was also discussion about smaller competition information or discoveries 
-      needing recording, to ensure they are transferred to new year, even something as small as choice of floss.
+      needing recording, to ensure they are transferred to the next year, even something as small as choice of floss.
 
       \item \textbf{T2 --- Administrative Information Centralization} \newline
-      Among Executive members, there was much discussion, both about issues faced in the past and benefits that 
-      Troitsky Toolbox could supply, focusing on the centralization and access to administrative information centralization. 
+      Among executive members, there was much discussion, both about issues faced in the past and benefits that 
+      Troitsky Toolbox could supply, focusing on the centralization of, and access to, administrative information. 
       This would entail simplifying the transition between years, reducing the learning curve or potential issues that arise 
       from a lack of knowledge and about the timeline structure relating to executive tasks.
 
       \item \textbf{T3 --- Team Coordination} \newline 
       Many participants discussed how there is a concentration of issues due to a lack of coordination between team members, from 
       coaches and executives to team captains, and even from club presidents/co-chairs to executives. These communication 
-      issues create gaps in understanding between members, facilitating the missing of tasks and unequal work/participation among participants. 
-      The primary solution to this gap related to the stretch goal, SG-2.
+      issues create gaps in understanding between members, leading to missed tasks and unequal work/participation among participants. 
+      The primary solution to this gap relates to stretch goal SG-2.
 
       \item \textbf{T4 --- Model Prediction Load Estimate} \newline
-      A primary theme amongst the interviews, was the reorientation of how the ultimate load model estimate is perceived and discussed. 
-      When approached with the question about model accuracy, majority of the participants noted that the estimate provided by modelling services 
-      are always used to assess bridge design quality and general model weight to ultimate load performance. This changes how the model 
-      analysis is perceived shifting the focus from true accuracy, to consistency and proper weak point identification. The ultimate load 
+      A primary theme amongst the interviews was the reorientation of how the ultimate load model estimate is perceived and discussed. 
+      When approached with the question about model accuracy, the majority of participants noted that the estimate provided by modelling services 
+      is always used to assess bridge design quality and general model weight to ultimate load performance. This changes how the model 
+      analysis is perceived, shifting the focus from true accuracy to consistency and proper weak point identification. The ultimate load 
       prediction no longer has to match that of external software, but provide a general assessment of the model's quality, especially when 
       reviewing stored designs.
 
@@ -332,9 +332,9 @@ T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \
       within the service.
 
       \item \textbf{T6 --- Software Subteam Integration} \newline
-      All executive responded that the software subteam should be fully integrated with the club and executives, attending all meetings 
+      All executives responded that the software subteam should be fully integrated with the club and executives, attending all meetings 
       and being generally involved in the club beyond just the software side. This was noted to be vital to ensuring that the software developed 
-      services the club and member needs specifically, not diverting due to a lack of communication between the teams.
+      serves the club and member needs specifically, not diverting due to a lack of communication between the teams.
       
 
 
@@ -364,10 +364,10 @@ Competitors (4) & S1-P1, S2-P1, S3-P2, S3-P3 & Past designs with outcomes; relia
 \end{tabularx}
 \end{table}
 
-A further breakdown was provided below, looking to isolate the concerns between the roles, ensuring that prioritization does not favour one 
-user base to heavily. While there was an overlap of roles, coaches and executives were generally separate, with only one co-chair also serving 
+A further breakdown is provided below, looking to isolate the concerns between the roles, ensuring that prioritization does not favour one 
+user base too heavily. While there was an overlap of roles, coaches and executives were generally separate, with only one co-chair also serving 
 a new role, created this year, as a logistics coach. The standard competitor role breakdown was not further broken down, as the main concerns 
-associated with being a regular competitor are discussed in the Section 6.2.
+associated with being a regular competitor are discussed in Section~\ref{sec:themes}.
 
 \begin{itemize}
 
@@ -378,31 +378,35 @@ associated with being a regular competitor are discussed in the Section 6.2.
       of the considered stretch goals, a ticket assignment, calendar integration, for task assignment and progress 
       assessment. All five want the software subteam to work closely with the executive team (E3).
 
-      \item \textbf{Coaches} \newline Both coaches in S.2 have never coached before and have described their 
-      role responsibilities as unclear, lacking any past documentation or record of what the role have entailed. 
+      \item \textbf{Coaches} \newline Both coaches in S2 have never coached before and have described their 
+      role responsibilities as unclear, lacking any past documentation or record of what the role has entailed. 
       The SRS will need to integrate the coach role, also providing support on exit documentation and other implemented 
       role services.
 
 \end{itemize}
 
-\subsection{Requirement Action Items \& Changes}
+\subsection{Project Action Items \& Changes}
 \label{sec:impact}
+
+From the assessed themes a more concise list of changes has been extracted, focusing on changes to existing features 
+or requirements, where the requests are still clearly within scope. Some of the findings have a looser connection to the 
+requirements but require more changes in general project direction or a shift in project understanding from the team's 
+perspective.
 
 \begin{table}[H]
 \centering
-\caption{Impact on Requirements}
+\caption{Impact on Requirements and Action}
 \label{tab:impact}
 \small
-\begin{tabularx}{\textwidth}{Y L{2.6cm} L{3.4cm} L{1.2cm}}
+\begin{tabularx}{\textwidth}{Y L{2.6cm} L{3.4cm}}
 \toprule
-\textbf{Finding} & \textbf{Affected ID} & \textbf{Proposed action} & \textbf{Issue} \\
+\textbf{Finding} & \textbf{Affected ID} & \textbf{Proposed action} \\
 \midrule
-No coach role in the system (T7) & \rid{FR-AC-2} & Add coach role & \\
-Coach handover missing (T7) & \rid{FR-KT-1}, \rid{FR-KT-3} & Extend to coach positions & \\
-Estimates trusted only as relative values (T4) & \rid{FR-PA-1}, \rid{FR-PA-4} & Report estimate as a range & \\
-Expected error of 10--25\% (S2-P2, S3-P2) & \rid{NFR-PA-1} & Keep 25\%; cite interviews in A.1 rationale & \\
-Outcome of past designs wanted (T1, T5) & \rid{FR-KR-2}, \rid{FR-MA-5} & Add score, failure load and failure location metadata & \\
-Administrative knowledge (T2) & \rid{FR-KT-3} & Confirmed & \\
+No coach role in the system (T7) & \rid{FR-AC-2} & Add coach role \\
+Coach handover missing (T7) & \rid{FR-KT-1}, \rid{FR-KT-3} & Extend to coach positions \\
+Estimates trusted only as relative values (T4), change of estimate focus & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} & Project direction change, focus on model precision \\
+Outcome of past designs wanted, more complete dataset (T1, T5) & \rid{FR-KR-2}, \rid{FR-MA-5} & Add score, failure load and failure location metadata \\
+Expanded administrative knowledge retention (T2) & \rid{FR-KT-3} & Expanded exit documentation \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -410,9 +414,9 @@ Administrative knowledge (T2) & \rid{FR-KT-3} & Confirmed & \\
 \subsection{Stretch Goals from Interview Requests}
 \label{sec:stretch}
 
-The stretch goals in Table 9 list established features or project components 
+The stretch goals in Table~\ref{tab:stretch} list established features or project components 
 that the participants noted as being beneficial or taken from the discussed themes. 
-The requests were given an ID, similar to SRS requirements, and linked to the existing SRS requirements they effect.
+The requests were given an ID, similar to SRS requirements, and linked to the existing SRS requirements they affect.
 
 
 \begin{table}[H]
@@ -420,7 +424,7 @@ The requests were given an ID, similar to SRS requirements, and linked to the ex
 \caption{Stretch goals from interview requests}
 \label{tab:stretch}
 \small
-\begin{tabularx}{\textwidth}{L{0.8cm} Y L{2.6cm} L{3.4cm}}
+\begin{tabularx}{\textwidth}{L{0.8cm} Y L{3.4cm}}
 \toprule
 \textbf{ID} & \textbf{Request} & \textbf{Relation to SRS} \\
 \midrule
@@ -429,7 +433,7 @@ SG-2 & Club calendar of the yearly timeline and events, connection to external c
 SG-3 & Model warnings for when model metric/features are near competition limits & \rid{FR-RC-3}, \rid{FR-RC-4} \\
 SG-4 & Mock scoresheet, UI change for scoring prediction & \rid{FR-PA-2}, \rid{FR-RC-3} \\
 SG-5 & FEA, Interactive structural calculations: (member forces, component deflections, design failure points) & Beyond modelling described in G.6, \rid{NFR-PA-3} \\
-SG-6 & Joint library, maybe focusing on that connection design strength. & \rid{FR-KR-2}, \rid{FR-KR-3} \\
+SG-6 & Joint library, maybe focusing on connection design strength. & \rid{FR-KR-2}, \rid{FR-KR-3} \\
 SG-7 & Analysis and rules checklists for first-time members & No requirement (requirements elicitation survey, feature H) \\
 SG-8 & Showcase of recent designs on the landing page, improved club visibility & \rid{FR-WS-1} \\
 \bottomrule
@@ -456,7 +460,7 @@ performance as a general measure of accuracy.
 \label{sec:limitations}
 
 The primary limitation for the interview process surrounded the sample size, considering only 8 members were interviewed. 
-While in terms of the full club member count, hovering around ~55 members, the count more so reflects a proper sample of 
+While in terms of the full club member count, hovering around 55 members, the count more so reflects a proper sample of 
 experienced and more critical project roles, ensuring that coaches, team captains and executives were all reflected.
 
 The interviewer bias was primarily geared towards experienced members, primarily with a lack of representation for new members. 
@@ -465,7 +469,9 @@ of other competition years. New members may also obscure results, providing info
 
 % =====================================================================
 \newpage
-\bibliographystyle{IEEEtran}
+\phantomsection
+\addcontentsline{toc}{section}{\protect\numberline{}References}
+\bibliographystyle{plainnat}
 \bibliography{../../../refs/References}
 
 \newpage
@@ -474,7 +480,7 @@ of other competition years. New members may also obscure results, providing info
 \section{Raw Data: Interview Transcripts}
 \label{app:transcripts}
 
-The notes below are reformated from the interview records, one per session.
+The notes below are reformatted from the interview records, one per session.
 IDs match the participant tags used in Section~\ref{sec:analysis}.
 
 \subsection{Session S1}
@@ -518,7 +524,7 @@ AI tools were primarily used to assist in these areas:
 
 The team followed the same policy for AI use that the Development Plan sets
 for AI-generated code, used in the SRS as well, ensuring that every developer 
-thoroughly reviews all AI-generated content before creating a pull request and does submit any 
+thoroughly reviews all AI-generated content before creating a pull request and does not submit any 
 content that was not understood and verified individually.
 
 \begin{itemize}
