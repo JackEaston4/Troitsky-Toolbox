@@ -29,6 +29,10 @@
         "**/MG.aux": true,
         "**/MG.log": true,
         "**/MG.gz": true,
-        "**/MG.out": true
+        "**/MG.out": true,
+        "**/MIS.aux": true,
+        "**/MIS.log": true,
+        "**/MIS.gz": true,
+        "**/MIS.out": true
     }
 }
