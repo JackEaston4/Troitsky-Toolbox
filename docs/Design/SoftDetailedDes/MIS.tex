@@ -1,68 +1,70 @@
-\documentclass[12pt, titlepage]{article}
-
-\usepackage{amsmath, mathtools}
-
-\usepackage[round]{natbib}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{colortbl}
-\usepackage{xr}
-\usepackage{hyperref}
-\usepackage{longtable}
-\usepackage{xfrac}
-\usepackage{tabularx}
-\usepackage{float}
-\usepackage{siunitx}
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath, amssymb}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{multirow}
-\usepackage[section]{placeins}
-\usepackage{caption}
-\usepackage{fullpage}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+
+\definecolor{primary}{HTML}{1E3A8A}
+\definecolor{subaccent}{HTML}{334155}
+\definecolor{rowtint}{HTML}{F8FAFC}
+\definecolor{commentbg}{HTML}{FEF9C3}
+\definecolor{commentborder}{HTML}{CA8A04}
 
 \hypersetup{
-bookmarks=true,     % show bookmarks bar?
-colorlinks=true,       % false: boxed links; true: colored links
-linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-citecolor=blue,      % color of links to bibliography
-filecolor=magenta,  % color of file links
-urlcolor=cyan          % color of external links
+  colorlinks=true,
+  linkcolor=primary,
+  citecolor=primary,
+  urlcolor=primary
 }
 
-\usepackage{array}
+\newcommand{\progname}{Troitsky Toolbox}
+\newcommand{\authname}{Troitsky Toolbox Team}
+\newcommand{\wss}[1]{\par\medskip\noindent\fcolorbox{commentborder}{commentbg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\small\textbf{Template Note:} #1}}\par\medskip}
 
-\externaldocument{../../SRS/SRS}
-
-
-
-\input{../../Comments.text}
-\input{../../Common.text}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
-\title{Module Interface Specification for \progname{}}
-
-\author{\authname}
-
-\date{\today}
-
-\maketitle
+\begin{titlepage}
+  \centering
+  \vspace*{3.5cm}
+  {\Large\color{subaccent}\textsc{Software Design Documentation}\par}
+  \vspace{0.6cm}
+  {\Huge\bfseries\color{primary} Module Interface Specification\\[0.3em] for \progname\par}
+  \vspace{1.2cm}
+  \rule{0.4\textwidth}{1pt}
+  \vspace{1.2cm}
+  {\large\textbf{Author:} \authname\par}
+  \vspace{0.4cm}
+  {\large\textbf{Date:} \today\par}
+  \vfill
+  {\small\color{subaccent} McMaster Troitsky Club --- Bridge Analysis \& Knowledge Repository System\par}
+\end{titlepage}
 
 \pagenumbering{roman}
 
-\section{Revision History}
+\section*{Revision History}
+\addcontentsline{toc}{section}{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm} p{2.2cm} X}
+\toprule
+\textbf{Date} & \textbf{Version} & \textbf{Notes} \\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Date 1 & 1.0 & Notes \\
+Date 2 & 1.1 & Notes \\
 \bottomrule
 \end{tabularx}
 
-~\newpage
+\newpage
 
-\section{Symbols, Abbreviations and Acronyms}
+\section*{Symbols, Abbreviations and Acronyms}
+\addcontentsline{toc}{section}{Symbols, Abbreviations and Acronyms}
 
 See SRS Documentation \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/pdfs/SRS/SRS.pdf}{here}.
 
@@ -85,53 +87,51 @@ The analysis draws upon materials testing results uploaded to the system in anot
 auxiliary services exist to facilitate club operations. The former is the knowledge repository to upload,
 search for, preview and download documents. The latter is a login and role-based access control (RBAC) service,
 which prevents unauthorized access of documents or use of services. This is necessary because the toolbox
-will be acessible by a publicly-acessible website hosted on a web server.
+will be accessible by a publicly-accessible website hosted on a web server.
 
 Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
+and Module Guide. The full documentation and implementation can be
 found \href{https://github.com/JackEaston4/Troitsky-Toolbox}{here}.
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
+\wss{You should describe your notation. You can use what is below as a starting point.}
 
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
+The structure of the MIS for modules comes from Hoffman and Strooper (1995),
 with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
+Ghezzi et al. (2003). The mathematical notation comes from Chapter 3 of
+Hoffman and Strooper (1995). For instance, the symbol $:=$ is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
+\Rightarrow r_1 \mid c_2 \Rightarrow r_2 \mid \dots \mid c_n \Rightarrow r_n )$.
 
-The following table summarizes the primitive data types used by \progname. 
+The following table summarizes the primitive data types used by \progname.
 
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
-\noindent 
-\begin{tabular}{l l p{7.5cm}} 
-\toprule 
-\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Data Type} & \textbf{Notation} & \textbf{Description} \\
 \midrule
-character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-string & $\mathbb{S}$ & an ordered array of characters (e.g. a string) \\
-list & List<$E$> & a mutable ordered collection of elements of type $E$ \\
+character & char & a single symbol or digit \\
+integer & $\mathbb{Z}$ & a number without a fractional component in $(-\infty, \infty)$ \\
+natural number & $\mathbb{N}$ & a number without a fractional component in $[1, \infty)$ \\
+real & $\mathbb{R}$ & any number in $(-\infty, \infty)$ \\
+string & $\mathbb{S}$ & an ordered array of characters (e.g., a string) \\
+boolean & $\mathbb{B}$ & a logical truth value (\textit{true} or \textit{false}) \\
+list & $\text{List}\langle E \rangle$ & a mutable ordered collection of elements of type $E$ \\
 file & File & a file on a machine \\
-dictionary & Dict<$K$, $V$> & a key-value lookup. Keys are of immutable type $K$, values are of type $V$ \\
-ip address & IP & an Internet Protocol address $W.X.Y.Z, 0 \le W,X,Y,Z \le 255, W,X,Y,Z \in I$ \\
-set & Set<$E$> & a unordered collection of objects of immutable type $E$ \\
-tuple & Tuple<$E_1$, $E_2$, ..., $E_n$> & an ordered immutable collection. The $n$th element is of type $E_n$. \\
+dictionary & $\text{Dict}\langle K, V \rangle$ & a key-value lookup. Keys are of immutable type $K$, values are of type $V$ \\
+ip address & IP & an Internet Protocol address $W.X.Y.Z$, $0 \le W,X,Y,Z \le 255$, $W,X,Y,Z \in \mathbb{Z}$ \\
+set & $\text{Set}\langle E \rangle$ & an unordered collection of objects of immutable type $E$ \\
+tuple & $\text{Tuple}\langle E_1, E_2, \dots, E_n \rangle$ & an ordered immutable collection. The $n$th element is of type $E_n$. \\
 \bottomrule
-\end{tabular} 
+\end{tabularx}
 \end{center}
 
-\noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
+The specification of \progname\ uses some derived data types: sequences, strings, and
 tuples. Sequences are lists filled with elements of the same data type. Strings
 are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
+different types. In addition, \progname\ uses functions, which
 are defined by the data types of their inputs and outputs. Local functions are
 described by giving their type signature followed by their specification.
 
@@ -141,29 +141,26 @@ The following table is taken directly from the Module Guide document for this pr
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{0.9\textwidth}{p{0.32\textwidth} X}
 \toprule
-\textbf{Level 1} & \textbf{Level 2}\\
+\textbf{Level 1} & \textbf{Level 2} \\
 \midrule
-
-{Hardware-Hiding} & ~ \\
+Hardware-Hiding & --- \\
 \midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{7}{0.32\textwidth}{Behaviour-Hiding} & Input Parameters \\
+& Output Format \\
+& Output Verification \\
+& Temperature ODEs \\
+& Energy Equations \\
+& Control Module \\
+& Specification Parameters Module \\
 \midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{3}{0.32\textwidth}{Software Decision} & Sequence Data Structure \\
+& ODE Solver \\
+& Plotting \\
 \bottomrule
-
-\end{tabular}
+\end{tabularx}
 \caption{Module Hierarchy}
 \label{TblMH}
 \end{table}
@@ -172,682 +169,597 @@ The following table is taken directly from the Module Guide document for this pr
 \section{MIS of Hardware Hiding Module} \label{M1}
 
 \subsection{Module}
-HardwareHide
+\texttt{HardwareHide}
 
 \subsection{Uses}
-
 Integrate directly with the hardware.
 
 \subsection{Syntax}
-
 Note that this project is a software project, not a hardware project. As a result,
 all functions approximate hardware functions and exact names, inner workings and 
 architectures are almost certainly different.
 
 \subsubsection{Exported Constants}
-
-HttpEndpoint: $S$ - the Hypertext Transfer Protocol (HTTP) uniform resource locator (URL) of the application
+\begin{itemize}
+  \item \texttt{HttpEndpoint}: $\mathbb{S}$ --- the Hypertext Transfer Protocol (HTTP) uniform resource locator (URL) of the application
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.7cm} p{4.2cm} p{2.8cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-getFile & filePath: $S$ & file: File & File Not Found, File Unreadable \\
-\hline
-postFile & filePath: $S$, file: File & - & File Found, File Uncreatable \\
-\hline
-putFile & filePath: $S$, file:File & - & File Not Found, File Unwritable \\
-\hline
-putFile & filePath: $S$, part: $S$, contents: $S$ & - & File Not Found, Part Not Found, File Unwritable \\
-\hline
-deleteFile & filePath: $S$ & - & File Not Found, File Undeletable \\
-\hline
-connect & ipAddress $S$ & - & Connection Failed \\
-\hline
-disconnect & ipAddress $S$ & - & Disconnection Failed \\
-\end{tabular}
-\end{center}
+\midrule
+\texttt{getFile} & \texttt{filePath}: $\mathbb{S}$ & \texttt{file}: File & File Not Found, File Unreadable \\
+\texttt{postFile} & \texttt{filePath}: $\mathbb{S}$, \texttt{file}: File & --- & File Found, File Uncreatable \\
+\texttt{putFile} & \texttt{filePath}: $\mathbb{S}$, \texttt{file}: File & --- & File Not Found, File Unwritable \\
+\texttt{patchFile} & \texttt{filePath}: $\mathbb{S}$, \texttt{part}: $\mathbb{S}$, \texttt{contents}: $\mathbb{S}$ & --- & File Not Found, Part Not Found, File Unwritable \\
+\texttt{deleteFile} & \texttt{filePath}: $\mathbb{S}$ & --- & File Not Found, File Undeletable \\
+\texttt{connect} & \texttt{ipAddress}: $\mathbb{S}$ & --- & Connection Failed \\
+\texttt{disconnect} & \texttt{ipAddress}: $\mathbb{S}$ & --- & Disconnection Failed \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item fileShare: Dict<$S, S$>: the file share, used to store files on the system
-  \item devicesConnected: Dict<$IP$, $B$>: the devices actively connected to the system
+  \item \texttt{fileShare}: $\text{Dict}\langle \mathbb{S}, \mathbb{S} \rangle$ --- the file share, used to store files on the system
+  \item \texttt{devicesConnected}: $\text{Dict}\langle \text{IP}, \mathbb{B} \rangle$ --- the devices actively connected to the system
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
-None
+None.
 
 \subsubsection{Assumptions}
-
 The hardware supports a file share and network connection.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getFile(filePath: $S$):
+\textbf{\texttt{getFile(filePath: $\mathbb{S}$)}}:
 \begin{itemize}
-\item transition: none
-\item output: the retrieved file $F$ 
-\item exception: file not found error, file inacessible error
+  \item transition: none
+  \item output: the retrieved file $F$
+  \item exception: file not found error, file inaccessible error
 \end{itemize}
 
-\noindent postFile(filePath: $S$, file: File):
+\textbf{\texttt{postFile(filePath: $\mathbb{S}$, file: File)}}:
 \begin{itemize}
-\item transition: fileShare[filePath] = file
-\item output: -
-\item exception: file found error, file uncreatable
+  \item transition: $\texttt{fileShare[filePath]} := \texttt{file}$
+  \item output: none
+  \item exception: file found error, file uncreatable
 \end{itemize}
 
-\noindent putFile(filePath: $S$, file: File):
+\textbf{\texttt{putFile(filePath: $\mathbb{S}$, file: File)}}:
 \begin{itemize}
-\item transition: fileShare[filePath] = file
-\item output: -
-\item exception: file not found error, file unwritable
+  \item transition: $\texttt{fileShare[filePath]} := \texttt{file}$
+  \item output: none
+  \item exception: file not found error, file unwritable
 \end{itemize}
 
-\noindent patchFile(filePath: $S$, filePart: $S$, contents: $S$):
+\textbf{\texttt{patchFile(filePath: $\mathbb{S}$, filePart: $\mathbb{S}$, contents: $\mathbb{S}$)}}:
 \begin{itemize}
-\item transition: fileShare[filePath].filePart = contents
-\item output: -
-\item exception: file not found error, file unwritable
+  \item transition: $\texttt{fileShare[filePath].filePart} := \texttt{contents}$
+  \item output: none
+  \item exception: file not found error, file unwritable
 \end{itemize}
 
-\noindent deleteFile(filePath: $S$):
+\textbf{\texttt{deleteFile(filePath: $\mathbb{S}$)}}:
 \begin{itemize}
-\item transition: \textbf{delete} fileShare[filePath]
-\item output: -
-\item exception: file not found error, file undeletable
+  \item transition: \textbf{delete} \texttt{fileShare[filePath]}
+  \item output: none
+  \item exception: file not found error, file undeletable
 \end{itemize}
 
-\noindent connect(ipAddress: $IP$)
+\textbf{\texttt{connect(ipAddress: IP)}}:
 \begin{itemize}
-  \item transition: devicesConnected[ipAddress] = $true$
-  \item output: -
+  \item transition: $\texttt{devicesConnected[ipAddress]} := \textit{true}$
+  \item output: none
   \item exception: connection error
 \end{itemize}
 
-\noindent disconnect(ipAddress: $IP$)
+\textbf{\texttt{disconnect(ipAddress: IP)}}:
 \begin{itemize}
-  \item transition: devicesConnected[ipAddress] = $false$
-  \item output: -
+  \item transition: $\texttt{devicesConnected[ipAddress]} := \textit{false}$
+  \item output: none
   \item exception: connection error
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
 
-\section{MIS of Web App Layout Module} \label{M2} \wss{Use labels for
-  cross-referencing}
+\newpage
+\section{MIS of Web App Layout Module} \label{M2}
+
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-WebLayout
+\texttt{WebLayout}
 
 \subsection{Uses}
-
-Detect user input and display output to the user
+Detect user input and display output to the user.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
-None
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3cm} p{4.2cm} p{2.5cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-forwardInputs & - & - & Server error, connection error  \\
-\hline
-displayOutput & HtmlElement, value: \textit{S} & Server error, connection error \\
-\end{tabular}
-\end{center}
+\midrule
+\texttt{forwardInputs} & --- & --- & Server error, connection error \\
+\texttt{displayOutput} & \texttt{HtmlElement}, \texttt{value}: $\mathbb{S}$ & --- & Server error, connection error \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+None.
 
 \subsubsection{Environment Variables}
-
 \begin{itemize}
-  \item The HTML inputs (e.g. button clicks, text entered)
-  \item The HTML output (e.g. the HTML text, HTML updates)
+  \item The HTML inputs (e.g., button clicks, text entered)
+  \item The HTML output (e.g., the HTML text, HTML updates)
 \end{itemize}
 
 \subsubsection{Assumptions}
-
 \begin{itemize}
-  \item The user's browsers can display a HTML5 document and handle common inputs the document facilitates. This assumption is very reasonable because every modern browser has this capability.
+  \item The user's browsers can display an HTML5 document and handle common inputs the document facilitates. This assumption is reasonable because every modern browser has this capability.
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
-
 Please note a rough sketch will be given in lieu of the actual implementation as implementation
-varies by browser and device hardware. This is alright because this is an external component.
+varies by browser and device hardware. This is acceptable because this is an external component.
+These functions do not exist directly; however, they summarize external activity.
 
-These functions do not exist directly. However, they summarize external activity. \\
-\noindent forwardInputs()
+\textbf{\texttt{forwardInputs()}}:
 \begin{itemize}
-  \item transition: get all inputs. Forward them to the toolbox broker.
-  \item output: none.
-  \item 
+  \item transition: get all inputs and forward them to the toolbox broker
+  \item output: none
+  \item exception: server error, connection error
 \end{itemize}
 
-
-\noindent displayOutput(h: HtmlElement, value: $S$)
+\textbf{\texttt{displayOutput(h: HtmlElement, value: $\mathbb{S}$)}}:
 \begin{itemize}
-\item transition: value is applied to the HTML element
-\item output: none
-\item exception: server error, connection error
+  \item transition: \texttt{value} is applied to the HTML element
+  \item output: none
+  \item exception: server error, connection error
 \end{itemize}
-
 
 \subsubsection{Local Functions}
 
-\noindent getInput()
+\textbf{\texttt{getInput()}}:
 \begin{itemize}
-\item transition: poll each input-supporting element if any new input was given by the user 
-\item output: a list of 2-tuples: (h: HtmlElement, value: $S$) 
-\item exception: server error, connection error 
+  \item transition: poll each input-supporting element if any new input was given by the user
+  \item output: a list of 2-tuples: $(h: \text{HtmlElement}, \text{value}: \mathbb{S})$
+  \item exception: server error, connection error
 \end{itemize}
 
-\noindent toRequest(hi: HtmlInput)
+\textbf{\texttt{toRequest(hi: HtmlInput)}}:
 \begin{itemize}
   \item transition: none
   \item output: the input as a request
-  \item exception: none. If untransferrable, ignore input and log it
+  \item exception: none (if untransferable, ignore input and log it)
 \end{itemize}
 
-Many more. But they vary by browser.
+Additional browser-dependent local functions exist as required by the client runtime.
 
-\section{MIS of Toolbox Broker} \label{M3} 
+\newpage
+\section{MIS of Toolbox Broker} \label{M3}
 
 \subsection{Module}
-
-ToolboxBroker
+\texttt{ToolboxBroker}
 
 \subsection{Uses}
-
 Facilitate service-based architecture, keeping services separate and making the creation of new services easy.
 
-
 \subsection{Syntax}
-
-Note tool is an abstract class which each service inherits from.
+Note that \texttt{Tool} is an abstract class from which each service inherits.
 
 \subsubsection{Exported Constants}
-
-None
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3.2cm} p{4cm} p{3cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-registerServices & tool: Tool & - & - \\
-\hline
-goToService & serviceName: $S$ & (success: $B$) & - \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{registerServices} & \texttt{tool}: Tool & --- & --- \\
+\texttt{goToService} & \texttt{serviceName}: $\mathbb{S}$ & \texttt{success}: $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item account: User account 
-  \item log: List<$S$>, list of messages to be written to longtable
+  \item \texttt{account}: UserAccount --- active user account
+  \item \texttt{log}: $\text{List}\langle \mathbb{S} \rangle$ --- list of messages to be written to the audit log
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
-None
+None.
 
 \subsubsection{Assumptions}
-
-None
+None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent goToService(serviceName):
+\textbf{\texttt{goToService(serviceName)}}:
 \begin{itemize}
-\item transition: check if the account may perform the action. If so, do it.
-\item output: a was sucessful boolean.
-\item exception: none. Exceptions should be caught; if not otherwise display generic error screen.
+  \item transition: check if the account may perform the action; if so, execute it
+  \item output: boolean indicating whether navigation/execution was successful
+  \item exception: none (exceptions are caught; unhandled faults display a generic error screen)
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent isAllowed(service, accountName):
+\textbf{\texttt{isAllowed(service, accountName)}}:
 \begin{itemize}
   \item transition: none
-  \item output: is user allowed to perform service $B$. Should call access module.
-  \item exception: none. If DB error, return false.
+  \item output: boolean $\mathbb{B}$ indicating whether the user is allowed to access the service (delegates to access module)
+  \item exception: none (if database error occurs, return \textit{false})
 \end{itemize}
 
-\noindent log(serviceName, accountName):
+\textbf{\texttt{log(serviceName, accountName)}}:
 \begin{itemize}
-\item transition: Add (account name, service name and current timestamp) to the log.
-\item output: none
-\item exception: none. 
+  \item transition: append $(\text{accountName}, \text{serviceName}, \text{currentTimestamp})$ to \texttt{log}
+  \item output: none
+  \item exception: none
 \end{itemize}
 
 \newpage
-\section{MIS of Authorization Rules Module} \label{M4} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Authorization Rules Module} \label{M4}
+
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-AuthRules
+\texttt{AuthRules}
 
 \subsection{Uses}
-
 Determine whether a role-team combination may access a service,
-and change and a role-team combination's acessible services.
-
+and modify a role-team combination's accessible services.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3cm} p{4.8cm} p{2.6cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-getPermitted & role: Role, team: Team, service: Service & permitted: $B$ & - \\
-\hline
-setPermitted & role: Role, team: Team, service: Service, permitted: $B$ & - & Role or team not found\\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{getPermitted} & \texttt{role}: Role, \texttt{team}: Team, \texttt{service}: Service & \texttt{permitted}: $\mathbb{B}$ & --- \\
+\texttt{setPermitted} & \texttt{role}: Role, \texttt{team}: Team, \texttt{service}: Service, \texttt{permitted}: $\mathbb{B}$ & --- & Role or team not found \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item permitDict: Dict<Tuple<Role, Team, Service>, $B$>, lookup for role and service to is permitted.
-  \item adminDict: Dict<Role, $B$>, lookup for is role administrative.
+  \item \texttt{permitDict}: $\text{Dict}\langle \text{Tuple}\langle \text{Role}, \text{Team}, \text{Service} \rangle, \mathbb{B} \rangle$ --- lookup mapping role, team, and service to permission status
+  \item \texttt{adminDict}: $\text{Dict}\langle \text{Role}, \mathbb{B} \rangle$ --- lookup indicating whether a role has administrative privileges
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
-These lookups will actually be handled by a database. It is merely given as lookups here
-for easy transition syntax.
+These lookups are backed by a persistent database in production and are modeled here as dictionaries for concise transition notation.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getPermitted(role, team, service):
+\textbf{\texttt{getPermitted(role, team, service)}}:
 \begin{itemize}
-\item transition: none
-\item output: permit[(role, team, service)]. If absent, return whether role is administrative. 
-\item exception: none. 
+  \item transition: none
+  \item output: $\texttt{permitDict[(role, team, service)]}$; if absent, return whether \texttt{role} is administrative
+  \item exception: none
 \end{itemize}
 
-\noindent setPermitted(role, team, service, isPermitted):
+\textbf{\texttt{setPermitted(role, team, service, isPermitted)}}:
 \begin{itemize}
-\item transition: permit[(role, team, service)] = isPermitted
-\item output: none
-\item exception: role not found. 
+  \item transition: $\texttt{permitDict[(role, team, service)]} := \texttt{isPermitted}$
+  \item output: none
+  \item exception: role not found
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent isAdministrative(role: Role):
+\textbf{\texttt{isAdministrative(role: Role)}}:
 \begin{itemize}
-\item transition: none 
-\item output: adminDict[role], default false
-\item exception: none. 
+  \item transition: none
+  \item output: \texttt{adminDict[role]}, defaulting to \textit{false}
+  \item exception: none
 \end{itemize}
 
-\noindent setAdministrative(role: Role, isAdminRole: $B$):
+\textbf{\texttt{setAdministrative(role: Role, isAdminRole: $\mathbb{B}$)}}:
 \begin{itemize}
-\item transition: none 
-\item output: adminDict[role] = isAdminRole
-\item exception: role not found.
+  \item transition: $\texttt{adminDict[role]} := \texttt{isAdminRole}$
+  \item output: none
+  \item exception: role not found
 \end{itemize}
 
 \newpage
-\section{MIS of Member Registry Module} \label{M5} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Member Registry Module} \label{M5}
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{Use labels for cross-referencing. You can reference SRS labels or external hyperlinks.}
 
 \subsection{Module}
-
-MemberRegistry
+\texttt{MemberRegistry}
 
 \subsection{Uses}
-
-Get and set a user's role and team.
+Retrieve and update a user's role, team, and account profile information.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3.6cm} p{4.2cm} p{2.6cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-getRole & user: UserAccount & role: Role & User not found \\
-\hline
-getTeam & user: UserAccount & team: Team & User not found \\
-\hline
-setRole & user: UserAccount, role: Role & - & User not found\\
-\hline
-setTeam & user: UserAccount, team: Team & - & User not found \\
-\hline
-addUser & role: Role, team: Team, info: UserInfo & - & User found \\
-\hline
-updateUserInfo & user: UserAccount, info: UserInfo & User not found \\
-\hline
-getUserInfo & user: UserAccount & info: UserInfo & User not found \\
-\hline
-deleteUser & user: UserAccount & - & User not found, User critical \\
-\hline 
-addMandatoryRole & role: Role & - & Role not found \\
-\hline
-removeMandatoryRole & role: Role & - & Role not found \\
-\hline
-isMandatoryRoles & role: Role & isMandatory: $B$ & Role not found \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{getRole} & \texttt{user}: UserAccount & \texttt{role}: Role & User not found \\
+\texttt{getTeam} & \texttt{user}: UserAccount & \texttt{team}: Team & User not found \\
+\texttt{setRole} & \texttt{user}: UserAccount, \texttt{role}: Role & --- & User not found \\
+\texttt{setTeam} & \texttt{user}: UserAccount, \texttt{team}: Team & --- & User not found \\
+\texttt{addUser} & \texttt{role}: Role, \texttt{team}: Team, \texttt{info}: UserInfo & --- & User found \\
+\texttt{updateUserInfo} & \texttt{user}: UserAccount, \texttt{info}: UserInfo & --- & User not found \\
+\texttt{getUserInfo} & \texttt{user}: UserAccount & \texttt{info}: UserInfo & User not found \\
+\texttt{deleteUser} & \texttt{user}: UserAccount & --- & User not found, User critical \\
+\texttt{addMandatoryRole} & \texttt{role}: Role & --- & Role not found \\
+\texttt{removeMandatoryRole} & \texttt{role}: Role & --- & Role not found \\
+\texttt{isMandatoryRole} & \texttt{role}: Role & \texttt{isMandatory}: $\mathbb{B}$ & Role not found \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item rolesDict: Dict<UserAccount, Role>
-  \item teamsDict: Dict<UserAccount, Team>
-  \item users: List<UserAccount>
-  \item mandatoryRoles: List<Role>
+  \item \texttt{rolesDict}: $\text{Dict}\langle \text{UserAccount}, \text{Role} \rangle$
+  \item \texttt{teamsDict}: $\text{Dict}\langle \text{UserAccount}, \text{Team} \rangle$
+  \item \texttt{users}: $\text{List}\langle \text{UserAccount} \rangle$
+  \item \texttt{mandatoryRoles}: $\text{List}\langle \text{Role} \rangle$
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
-None. Methods may return null.
+None. Methods may return \textit{null} when optional fields are unset.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getRole(user: UserAccount):
+\textbf{\texttt{getRole(user: UserAccount)}}:
 \begin{itemize}
-\item transition: none
-\item output: rolesDict[user]
-\item exception: user not found.
+  \item transition: none
+  \item output: \texttt{rolesDict[user]}
+  \item exception: user not found
 \end{itemize}
 
-\noindent getTeam(user: UserAccount):
+\textbf{\texttt{getTeam(user: UserAccount)}}:
 \begin{itemize}
-\item transition: none
-\item output: teamsDict[user]
-\item exception: user not found
+  \item transition: none
+  \item output: \texttt{teamsDict[user]}
+  \item exception: user not found
 \end{itemize}
 
-\noindent setRole(user: UserAccount, role: Role):
+\textbf{\texttt{setRole(user: UserAccount, role: Role)}}:
 \begin{itemize}
-\item transition: rolesDict[user] = role
-\item output: none
-\item exception: user not found
+  \item transition: $\texttt{rolesDict[user]} := \texttt{role}$
+  \item output: none
+  \item exception: user not found
 \end{itemize}
 
-\noindent setTeam(user: UserAccount, team: Team):
+\textbf{\texttt{setTeam(user: UserAccount, team: Team)}}:
 \begin{itemize}
-\item transition: teamsDict[user] = team
-\item output: none
-\item exception: user not found
+  \item transition: $\texttt{teamsDict[user]} := \texttt{team}$
+  \item output: none
+  \item exception: user not found
 \end{itemize}
 
-\noindent addUser(role: Role, team: Team, info: UserInfo)
+\textbf{\texttt{addUser(role: Role, team: Team, info: UserInfo)}}:
 \begin{itemize}
-  \item Transitions
+  \item transition:
   \begin{itemize}
-    \item UserAccount user = new UserAccount(info)
-    \item \textbf{add} user to users
-    \item rolesDict[user] = role
-    \item teamsDict[user] = team
+    \item $\texttt{user} := \text{new UserAccount(info)}$
+    \item \textbf{add} \texttt{user} to \texttt{users}
+    \item $\texttt{rolesDict[user]} := \texttt{role}$
+    \item $\texttt{teamsDict[user]} := \texttt{team}$
   \end{itemize}
   \item output: none
   \item exception: user found (already exists)
 \end{itemize}
 
-\noindent updateUserInfo(user: UserAccount, info: UserInfo)
+\textbf{\texttt{updateUserInfo(user: UserAccount, info: UserInfo)}}:
 \begin{itemize}
-  \item transition: user.info = info
+  \item transition: $\texttt{user.info} := \texttt{info}$
   \item output: none
   \item exception: user not found
 \end{itemize}
 
-\noindent getUserInfo(user: UserAccount)
+\textbf{\texttt{getUserInfo(user: UserAccount)}}:
 \begin{itemize}
   \item transition: none
-  \item output: user.info
-  \item exception: none
+  \item output: \texttt{user.info}
+  \item exception: user not found
 \end{itemize}
 
-\noindent deleteUser(user: UserAccount)
+\textbf{\texttt{deleteUser(user: UserAccount)}}:
 \begin{itemize}
-  \item Transitions
+  \item transition:
   \begin{itemize}
-    \item \textbf{pop} user from users
-    \item \textbf{delete} user from roles
-    \item \textbf{delete} user from teams
+    \item \textbf{pop} \texttt{user} from \texttt{users}
+    \item \textbf{delete} \texttt{user} from \texttt{rolesDict}
+    \item \textbf{delete} \texttt{user} from \texttt{teamsDict}
   \end{itemize}
   \item output: none
-  \item exceptions: user is critical, user not found
+  \item exception: user is critical, user not found
 \end{itemize}
 
-\noindent addMandatoryRole(role: Role)
+\textbf{\texttt{addMandatoryRole(role: Role)}}:
 \begin{itemize}
-  \item transition: \textbf{add} role to mandatoryRoles
+  \item transition: \textbf{add} \texttt{role} to \texttt{mandatoryRoles}
   \item output: none
   \item exception: role not found
 \end{itemize}
 
-\noindent removeMandatoryRole(role: Role)
+\textbf{\texttt{removeMandatoryRole(role: Role)}}:
 \begin{itemize}
-  \item transition: \textbf{remove} role from mandatoryRoles
+  \item transition: \textbf{remove} \texttt{role} from \texttt{mandatoryRoles}
   \item output: none
   \item exception: role not found
 \end{itemize}
 
-\noindent isMandatoryRole(role: Role)
+\textbf{\texttt{isMandatoryRole(role: Role)}}:
 \begin{itemize}
   \item transition: none
-  \item output: role $\in$ mandatoryRoles
+  \item output: $\texttt{role} \in \texttt{mandatoryRoles}$
   \item exception: role not found
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent isCritical(user: User)
+\textbf{\texttt{isCritical(user: UserAccount)}}:
 \begin{itemize}
   \item transition: none
-  \item output: roles[user] $\in$ mandatoryRoles AND no other user has that role
-  \item exceptions: user not found 
+  \item output: $\texttt{rolesDict[user]} \in \texttt{mandatoryRoles} \land \text{no other user holds that role}$
+  \item exception: user not found
 \end{itemize}
 
 \newpage
-\section{MIS of Repository Content Module} \label{M6} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Repository Content Module} \label{M6}
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-RepoContents
+\texttt{RepoContents}
 
 \subsection{Uses}
-
 Let users add files to, edit files of, and delete, preview, and download files from the knowledge repository.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
 None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.8cm} p{4.2cm} p{2.8cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-addFile & file: File & - & invalid file error \\
-\hline
-updateFile & fileId: $N$ & file: File & file not found error, invalid file error \\
-\hline
-editFile & fileId: $N$, part: $S$, contents: $S$ & - & file not found error, part not found error, contents invalid error \\
-\hline
-deleteFile & fileId: $N$ & - & file not found error \\
-\hline
-getFile & fileId: $N$ & file: File & file not found \\
-\hline
-previewFile & fileId: $N$ & preview: Preview & file not found error, not previewable error \\
-\hline
-downloadFile & fileId: $N$ & download: Download & file not found error \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{addFile} & \texttt{file}: File & --- & Invalid file error \\
+\texttt{updateFile} & \texttt{fileId}: $\mathbb{N}$, \texttt{file}: File & --- & File not found error, invalid file error \\
+\texttt{editFile} & \texttt{fileId}: $\mathbb{N}$, \texttt{part}: $\mathbb{S}$, \texttt{contents}: $\mathbb{S}$ & --- & File not found error, part not found error, contents invalid error \\
+\texttt{deleteFile} & \texttt{fileId}: $\mathbb{N}$ & --- & File not found error \\
+\texttt{getFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{file}: File & File not found \\
+\texttt{previewFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{preview}: Preview & File not found error, not previewable error \\
+\texttt{downloadFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{download}: Download & File not found error \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item fileDict: Dict<$N$, File>, id to file lookup
+  \item \texttt{fileDict}: $\text{Dict}\langle \mathbb{N}, \text{File} \rangle$ --- identifier-to-file lookup
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
-None
+None.
 
 \subsubsection{Assumptions}
-
-None
+None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent addFile(file):
+\textbf{\texttt{addFile(file)}}:
 \begin{itemize}
-\item Transitions
-\begin{itemize}
-  \item Generate a new fileId
-  \item fileDict[fileId] = file
-\end{itemize}
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent updateFile(fileId, file):
-\begin{itemize}
-\item transition: fileDict[fileId] = file
-\item output: none
-\item exception: file not found, file invalid
+  \item transition:
+  \begin{itemize}
+    \item Generate a new unique \texttt{fileId}
+    \item $\texttt{fileDict[fileId]} := \texttt{file}$
+  \end{itemize}
+  \item output: none
+  \item exception: invalid file error
 \end{itemize}
 
-\noindent editFile(fileId, part, contents):
+\textbf{\texttt{updateFile(fileId, file)}}:
 \begin{itemize}
-\item transition: fileDict[fileId].part = contents
-\item output: none
-\item exception: file not found, invalid part, invalid contents
+  \item transition: $\texttt{fileDict[fileId]} := \texttt{file}$
+  \item output: none
+  \item exception: file not found, file invalid
 \end{itemize}
 
-\noindent deleteFile(fileId):
+\textbf{\texttt{editFile(fileId, part, contents)}}:
 \begin{itemize}
-\item transition: fileDict[fileId] = file
-\item output: none
-\item exception: file not found
+  \item transition: $\texttt{fileDict[fileId].part} := \texttt{contents}$
+  \item output: none
+  \item exception: file not found, invalid part, invalid contents
 \end{itemize}
 
-\noindent getFile(fileId):
+\textbf{\texttt{deleteFile(fileId)}}:
 \begin{itemize}
-\item transition: none
-\item output: file[fileId]
-\item exception: file not found
+  \item transition: \textbf{delete} \texttt{fileDict[fileId]}
+  \item output: none
+  \item exception: file not found
 \end{itemize}
 
-\noindent previewFile(fileId):
+\textbf{\texttt{getFile(fileId)}}:
 \begin{itemize}
-\item transition: none
-\item output: toPreview(file[fileId])
-\item exception: file not found, file not previewable
+  \item transition: none
+  \item output: \texttt{fileDict[fileId]}
+  \item exception: file not found
 \end{itemize}
 
-\noindent downloadFile(fileId):
+\textbf{\texttt{previewFile(fileId)}}:
 \begin{itemize}
-\item transition: none
-\item output: toDownload(file[fileId])
-\item exception: file not found
+  \item transition: none
+  \item output: \texttt{toPreview(fileDict[fileId])}
+  \item exception: file not found, file not previewable
+\end{itemize}
+
+\textbf{\texttt{downloadFile(fileId)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{toDownload(fileDict[fileId])}
+  \item exception: file not found
 \end{itemize}
 
 \subsubsection{Local Functions}
 None.
 
 \newpage
-\section{MIS of Model Import Module} \label{M7} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Model Import Module} \label{M7}
 
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-ModelImport
+\texttt{ModelImport}
 
 \subsection{Uses}
-
-Import a model from a STEP file. Summarize import into file.
-
+Import a model from a STEP file and summarize the import into a document.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3.2cm} p{3.8cm} p{3.6cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-importModel & modelFile: File & Tuple<Model, $S$> & - \\
-\hline
-summarizeModel & model: Model & summaryDoc: Model & - \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{importModel} & \texttt{modelFile}: File & $\text{Tuple}\langle \text{Model}, \mathbb{S} \rangle$ & --- \\
+\texttt{summarizeModel} & \texttt{model}: Model & \texttt{summaryDoc}: File & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
@@ -855,1200 +767,984 @@ summarizeModel & model: Model & summaryDoc: Model & - \\
 None.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
-None. Exceptions should not be called, message should be used instead
+Exceptions are not raised directly; status and error messages are returned as part of the output tuple.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent importModel(modelFile)
+\textbf{\texttt{importModel(modelFile)}}:
 \begin{itemize}
-  \item transition: Create new model from model file
-  \item output: "success" if successful, the error message otherwise
-  \item exceptions: none
+  \item transition: create a new \texttt{Model} instance from \texttt{modelFile}
+  \item output: $(\texttt{model}, \text{"success"})$ if successful, or $(\textit{null}, \text{errorMessage})$ otherwise
+  \item exception: none
 \end{itemize}
 
-\noindent summarizeModel(model)
+\textbf{\texttt{summarizeModel(model)}}:
 \begin{itemize}
   \item transition: none
   \item output: a file summarizing the imported model
-  \item exceptions: none
-\end{itemize}
-
-\newpage
-\section{MIS of Model Library} \label{M8} \wss{Use labels for
-  cross-referencing}
-
-\subsection{Module}
-
-ModelLibrary
-
-\subsection{Uses}
-
-Store models. Designate one current model for each team, track models by team and general accessibility.
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-uploadModel & model: Model, team: Team & - & - \\
-\hline
-getCurrentModel & team: Team & model: Model & - \\
-\hline
-getRecentModels & team: Team & models: List<Models> & - \\
-\hline
-getArchivedModels & year: $N$, team: Team & models: List<Models> & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item recentModels: Dict<Team, List<Model>>, recent models (of current year), inaccessible outside team
-  \item archivedModels: List<Model>, list of publicly available models
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-None
-
-\subsubsection{Access Routine Semantics}
-
-\noindent uploadModel(model, team):
-\begin{itemize}
-\item transition: \textbf{append} model to recentModels[team]
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent getCurrentModel(team):
-\begin{itemize}
-  \item transition: none
-  \item output: \textbf{last element} of recentModels[team]
   \item exception: none
-\end{itemize}
-
-\noindent getRecentModels(team):
-\begin{itemize}
-  \item transition: none
-  \item output: recentModels[team]
-  \item exception: none
-\end{itemize}
-
-\noindent getArchivedModels(year, team)
-\begin{itemize}
-  \item transition: none
-  \item output: copy of archiveModels. If year provided, omit all in other years. If team provided, omit all in other teams.
-  \item exception: none
-\end{itemize}
-
-\newpage
-\section{MIS of Performance Metrics Module} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
-\subsection{Module}
-
-PerfMet
-
-\subsection{Uses}
-
-Produce performance metrics. Estimate failure load, failure location; compute mass to load ratio.
-Allow customization by year or batch, and addition of new metrics.
-
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None.
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-getBatch & year: $N$ & batch: Batch & batch not found \\
-\hline
-getEstimatedFailureLoad & model: Model, batch: Batch & failureLoad: $R$ & invalid result \\
-\hline
-getEstimatedFailureLocation & model: Model, batch: Batch & failureLocation: Location & - \\
-\hline
-getLoadToMassRatio & model: Model, batch: Batch & ratio: $N$ & invalid result \\
-\hline
-createNewMetric & formula: Formula & metric: Metric & invalid formula \\
-\hline
-getCustomMetricResult & model: Model, metric: Metric, batch: Batch & result: $R$ & invalid result \\
-\hline
-deleteMetric & metric: Metric & - & metric not found \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item yearBatches: Dict<$N$, Batch>
-  \item batches: List<Batch>
-  \item customMetrics: List<Metric>
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent getBatch(year):
-\begin{itemize}
-\item transition: none
-\item output: batches[year]
-\item exception: batch not found
-\end{itemize}
-
-\noindent getEstimatedFailureLoad(model, batch):
-\begin{itemize}
-\item transition: none
-\item output: estimated failure load of the model, using batch
-\item exception: invalid result
-\end{itemize}
-
-\noindent getEstimatedFailureLoad(model, batch):
-\begin{itemize}
-\item transition: none
-\item output: estimated failure load of the model, using batch
-\item exception: invalid result
-\end{itemize}
-
-\noindent getLoadToMassRatio(model, batch):
-\begin{itemize}
-\item transition: none
-\item output: load to mass ratio of the model, using batch
-\item exception: invalid result
-\end{itemize}
-
-\noindent createNewMetric(formula)
-\begin{itemize}
-  \item transition I : create a Metric object based off the formula. 
-  \item transition II: \textbf{add} the Metric object to localMetrics
-  \item output: the new metric
-  \item exception: invalid formula
-\end{itemize}
-
-\noindent getCustomMetricResult(model, batch, metric):
-\begin{itemize}
-\item transition: none
-\item output: result of custom metric on the model, using batch
-\item exception: invalid result
-\end{itemize}
-
-\noindent deleteCustomMetric(metric):
-\begin{itemize}
-\item transition: \textbf{delete} metric from localMetrics
-\item output: none
-\item exception: metric not found
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
 
 \newpage
-\section{MIS of Rule Set Module} \label{M10} 
+\section{MIS of Model Library} \label{M8}
+
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-RuleSet
+\texttt{ModelLibrary}
 
 \subsection{Uses}
-
-Create, edit and delete rules. Mark rules that cannot be checked automatically as manual checks.
+Store models, designate one current model for each team, and track models by team and general accessibility.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
 None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3.4cm} p{4cm} p{3.4cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-addRule & name: $S$, minVal: $R$, maxVal: $R$, obtainVal: Formula & rule: Rule & invalid bounds, invalid formula \\
-\hline
-editRule & rule: Rule, name: $S$, minVal: $R$, maxVal: $R$, obtainVal: Formula & - & rule not found, invalid bounds, invalid formula \\
-\hline
-deleteRule & rule: Rule & - & rule not found \\
-\hline
-getYear & - & $N$ & - \\
-\hline
-setYear & $N$ & - & - \\
-\hline
-getRules & - & List<Rules> & - \\
-\end{tabular}
-\end{center}
+\midrule
+\texttt{uploadModel} & \texttt{model}: Model, \texttt{team}: Team & --- & --- \\
+\texttt{getCurrentModel} & \texttt{team}: Team & \texttt{model}: Model & --- \\
+\texttt{getRecentModels} & \texttt{team}: Team & \texttt{models}: $\text{List}\langle \text{Model} \rangle$ & --- \\
+\texttt{getArchivedModels} & \texttt{year}: $\mathbb{N}$, \texttt{team}: Team & \texttt{models}: $\text{List}\langle \text{Model} \rangle$ & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item rules: List<Rule>
-  \item year: Year
+  \item \texttt{recentModels}: $\text{Dict}\langle \text{Team}, \text{List}\langle \text{Model} \rangle \rangle$ --- recent models (of the current year), inaccessible outside the owning team
+  \item \texttt{archivedModels}: $\text{List}\langle \text{Model} \rangle$ --- list of publicly available archived models
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
-None
+None.
 
 \subsubsection{Assumptions}
-
-None
+None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent createRule(name, minVal, maxVal, formula):
+\textbf{\texttt{uploadModel(model, team)}}:
 \begin{itemize}
-\item transition: Create new Rule(name, minVal, maxVal, formula). \textbf{Add} it to rules.
-\item output: the new Rule object
-\item exception: invalid bounds, invalid formula
-\end{itemize}
-
-\noindent editRule(rule, name, minVal, maxVal, formula):
-\begin{itemize}
-\item transition: Update rule with new values: name, minVal, maxVal and formula.
-\item output: none
-\item exception: rule not found, invalid bounds, invalid formula
-\end{itemize}
-
-\noindent deleteRule(rule):
-\begin{itemize}
-\item transition: \textbf{delete} rule from rules
-\item output: none
-\item exception: rule not found
-\end{itemize}
-
-\noindent getYear()
-\begin{itemize}
-  \item transition: none
-  \item output: year
-  \item exception: none
-\end{itemize}
-
-\noindent setYear(newYear)
-\begin{itemize}
-  \item transition: year = newYear
+  \item transition: \textbf{append} \texttt{model} to \texttt{recentModels[team]}
   \item output: none
   \item exception: none
 \end{itemize}
 
-\noindent getRules()
+\textbf{\texttt{getCurrentModel(team)}}:
 \begin{itemize}
   \item transition: none
-  \item output: a copy of rules
+  \item output: \textbf{last element} of \texttt{recentModels[team]}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getRecentModels(team)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{recentModels[team]}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getArchivedModels(year, team)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: copy of \texttt{archivedModels}; if \texttt{year} is provided, filter to matching year; if \texttt{team} is provided, filter to matching team
   \item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
 
 \newpage
-\section{MIS of Compliance Check} \label{M11} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Performance Metrics Module} \label{M9}
 
-
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-ComplianceCheck
+\texttt{PerfMet}
 
 \subsection{Uses}
+Produce performance metrics, estimate failure load and failure location, compute load-to-mass ratio,
+allow customization by year or batch, and support adding new custom metrics.
 
-Evaluate a model against a set of rules. Display the rules that pass, the rules that fail and the rules
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{4.3cm} p{4.2cm} p{3.1cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{getBatch} & \texttt{year}: $\mathbb{N}$ & \texttt{batch}: Batch & Batch not found \\
+\texttt{getEstimatedFailureLoad} & \texttt{model}: Model, \texttt{batch}: Batch & \texttt{failureLoad}: $\mathbb{R}$ & Invalid result \\
+\texttt{getEstimatedFailureLocation} & \texttt{model}: Model, \texttt{batch}: Batch & \texttt{failureLocation}: Location & Invalid result \\
+\texttt{getLoadToMassRatio} & \texttt{model}: Model, \texttt{batch}: Batch & \texttt{ratio}: $\mathbb{R}$ & Invalid result \\
+\texttt{createNewMetric} & \texttt{formula}: Formula & \texttt{metric}: Metric & Invalid formula \\
+\texttt{getCustomMetricResult} & \texttt{model}: Model, \texttt{metric}: Metric, \texttt{batch}: Batch & \texttt{result}: $\mathbb{R}$ & Invalid result \\
+\texttt{deleteMetric} & \texttt{metric}: Metric & --- & Metric not found \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{yearBatches}: $\text{Dict}\langle \mathbb{N}, \text{Batch} \rangle$
+  \item \texttt{batches}: $\text{List}\langle \text{Batch} \rangle$
+  \item \texttt{customMetrics}: $\text{List}\langle \text{Metric} \rangle$
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\wss{This section is not necessary for all modules. Its purpose is to capture when the module has external interaction with the environment, such as for a device driver, screen interface, keyboard, file, etc.}
+
+\subsubsection{Assumptions}
+\wss{Try to minimize assumptions and anticipate programmer errors via exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{getBatch(year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{yearBatches[year]}
+  \item exception: batch not found
+\end{itemize}
+
+\textbf{\texttt{getEstimatedFailureLoad(model, batch)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: estimated failure load of \texttt{model} using \texttt{batch}
+  \item exception: invalid result
+\end{itemize}
+
+\textbf{\texttt{getEstimatedFailureLocation(model, batch)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: estimated failure location of \texttt{model} using \texttt{batch}
+  \item exception: invalid result
+\end{itemize}
+
+\textbf{\texttt{getLoadToMassRatio(model, batch)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: load-to-mass ratio of \texttt{model} using \texttt{batch}
+  \item exception: invalid result
+\end{itemize}
+
+\textbf{\texttt{createNewMetric(formula)}}:
+\begin{itemize}
+  \item transition: create a \texttt{Metric} object based on \texttt{formula} and \textbf{add} it to \texttt{customMetrics}
+  \item output: the new \texttt{Metric}
+  \item exception: invalid formula
+\end{itemize}
+
+\textbf{\texttt{getCustomMetricResult(model, metric, batch)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: result of evaluating \texttt{metric} on \texttt{model} using \texttt{batch}
+  \item exception: invalid result
+\end{itemize}
+
+\textbf{\texttt{deleteMetric(metric)}}:
+\begin{itemize}
+  \item transition: \textbf{delete} \texttt{metric} from \texttt{customMetrics}
+  \item output: none
+  \item exception: metric not found
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+\section{MIS of Rule Set Module} \label{M10}
+
+\subsection{Module}
+\texttt{RuleSet}
+
+\subsection{Uses}
+Create, edit, and delete competition rules. Mark rules that cannot be checked automatically as manual checks.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.7cm} p{5.3cm} p{2.6cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{addRule} & \texttt{name}: $\mathbb{S}$, \texttt{minVal}: $\mathbb{R}$, \texttt{maxVal}: $\mathbb{R}$, \texttt{obtainVal}: Formula & \texttt{rule}: Rule & Invalid bounds, invalid formula \\
+\texttt{editRule} & \texttt{rule}: Rule, \texttt{name}: $\mathbb{S}$, \texttt{minVal}: $\mathbb{R}$, \texttt{maxVal}: $\mathbb{R}$, \texttt{obtainVal}: Formula & --- & Rule not found, invalid bounds, invalid formula \\
+\texttt{deleteRule} & \texttt{rule}: Rule & --- & Rule not found \\
+\texttt{getYear} & --- & $\mathbb{N}$ & --- \\
+\texttt{setYear} & $\mathbb{N}$ & --- & --- \\
+\texttt{getRules} & --- & $\text{List}\langle \text{Rule} \rangle$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{rules}: $\text{List}\langle \text{Rule} \rangle$
+  \item \texttt{year}: $\mathbb{N}$
+\end{itemize}
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{addRule(name, minVal, maxVal, formula)}}:
+\begin{itemize}
+  \item transition: create \texttt{new Rule(name, minVal, maxVal, formula)} and \textbf{add} it to \texttt{rules}
+  \item output: the new \texttt{Rule} object
+  \item exception: invalid bounds, invalid formula
+\end{itemize}
+
+\textbf{\texttt{editRule(rule, name, minVal, maxVal, formula)}}:
+\begin{itemize}
+  \item transition: update \texttt{rule} with new values \texttt{name}, \texttt{minVal}, \texttt{maxVal}, and \texttt{formula}
+  \item output: none
+  \item exception: rule not found, invalid bounds, invalid formula
+\end{itemize}
+
+\textbf{\texttt{deleteRule(rule)}}:
+\begin{itemize}
+  \item transition: \textbf{delete} \texttt{rule} from \texttt{rules}
+  \item output: none
+  \item exception: rule not found
+\end{itemize}
+
+\textbf{\texttt{getYear()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{year}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{setYear(newYear)}}:
+\begin{itemize}
+  \item transition: $\texttt{year} := \texttt{newYear}$
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getRules()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of \texttt{rules}
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+\section{MIS of Compliance Check} \label{M11}
+
+\wss{Use labels for cross-referencing}
+
+\subsection{Module}
+\texttt{ComplianceCheck}
+
+\subsection{Uses}
+Evaluate a model against a set of rules. Display the rules that pass, the rules that fail, and the rules
 that need manual checks in addition to the year of the competition rules used.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.9cm} p{3.8cm} p{4.8cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-evaluateRules & model: Model, ruleSet: RuleSet & Tuple<Tuple<$S$, $R$, $R$, $R$, $B$, $B$>, $N$> invalid model, invalid rule set \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{evaluateRules} & \texttt{model}: Model, \texttt{ruleSet}: RuleSet & $\text{Tuple}\langle \text{List}\langle \text{Tuple}\langle \mathbb{S}, \mathbb{R}, \mathbb{R}, \mathbb{R}, \mathbb{B}, \mathbb{B} \rangle \rangle, \mathbb{N} \rangle$ & Invalid model, invalid rule set \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 None.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
 None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent evaluateRules(model, ruleSet.rules):
+\textbf{\texttt{evaluateRules(model, ruleSet)}}:
 \begin{itemize}
-\item Transitions
-\begin{itemize}
-    \item \textbf{for each} rule \textbf{in} getRules(ruleset)
+  \item transition:
+  \begin{itemize}
+    \item \textbf{for each} \texttt{rule} \textbf{in} \texttt{ruleSet.getRules()}:
     \begin{itemize}
-      \item Get the minimum and maximum values
-      \item Obtain the value using rule.formula. manual = formula == null.
-      \item If not manual, find compliant = min $\le$ obtained $\le max$
-      \item Add (name, min, obtained, max, compliant, manual) to the tuple builder
+      \item obtain \texttt{min} and \texttt{max} bounds
+      \item compute \texttt{obtained} using \texttt{rule.formula}; set $\texttt{manual} := (\texttt{rule.formula} == \textit{null})$
+      \item if not \texttt{manual}, evaluate $\texttt{compliant} := (\texttt{min} \le \texttt{obtained} \le \texttt{max})$
+      \item append $(\text{name}, \text{min}, \text{obtained}, \text{max}, \text{compliant}, \text{manual})$ to results builder
     \end{itemize}
-    \item Create the tuple results from the builder. Call getYear(ruleSet) to getYear.
-\end{itemize}  
-\item output: (results, year)
-\item exception: invalid model, invalid rules
+    \item construct \texttt{results} from builder and retrieve $\texttt{year} := \texttt{ruleSet.getYear()}$
+  \end{itemize}
+  \item output: $(\texttt{results}, \texttt{year})$
+  \item exception: invalid model, invalid rule set
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
-
-
-
 
 \newpage
-\section{MIS of Materials Test Records} \label{M12} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Materials Test Records} \label{M12}
 
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-MatlsTestRecords
+\texttt{MatlsTestRecords}
 
 \subsection{Uses}
-
-Upload and parse materials test results, rejecting incomplete and impossible ones. Let executives mark records as incorrect
+Upload and parse materials test results, rejecting incomplete and impossible records. Let executives mark records as incorrect
 without deleting them.
 
-
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3cm} p{4.8cm} p{2.2cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-addTest & file: File, matlsTest: MaterialsTest & - & incomplete file, impossible file \\
-\hline
-markInvalid & matlsTest: MaterialsTest & - & - \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{addTest} & \texttt{file}: File, \texttt{matlsTest}: MaterialsTest & --- & Incomplete file, impossible file \\
+\texttt{markInvalid} & \texttt{matlsTest}: MaterialsTest & --- & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 \begin{itemize}
-  \item materialsTests: List<MaterialsTest>
+  \item \texttt{materialsTests}: $\text{List}\langle \text{MaterialsTest} \rangle$
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
-None
+None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent addTest(file: File):
+\textbf{\texttt{addTest(file: File)}}:
 \begin{itemize}
-\item transition: \textbf{parse} the file into a MaterialsTest. \textbf{Add} that test to materialsTest.
-\item output: none 
-\item exception: none
+  \item transition: \textbf{parse} \texttt{file} into a \texttt{MaterialsTest} object and \textbf{add} it to \texttt{materialsTests}
+  \item output: none
+  \item exception: incomplete file, impossible file
 \end{itemize}
 
-\noindent markInvalid(matlsTest: MaterialsTest)
+\textbf{\texttt{markInvalid(matlsTest: MaterialsTest)}}:
 \begin{itemize}
-  \item transition: matlsTest.isInvalid = $true$
+  \item transition: $\texttt{matlsTest.isInvalid} := \textit{true}$
   \item output: none
   \item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
 
-\section{MIS of Materials Properties} \label{M13} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Materials Properties} \label{M13}
+
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-MatlsProp
+\texttt{MatlsProp}
 
 \subsection{Uses}
-
-Derive material properties for the MaterialsTest class, mentioned above.
+Derive material properties for the \texttt{MaterialsTest} class defined in Section~\ref{M12}.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3.8cm} p{4.2cm} p{2.2cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-calculateProperties & matlsTest: MaterialsTest & - & invalid materials test, calculation error \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{calculateProperties} & \texttt{matlsTest}: MaterialsTest & --- & Invalid materials test, calculation error \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-None. This is a pass-through.
+None. This module operates as a stateless pass-through.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
 None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent calculateProperties(matlsTest):
+\textbf{\texttt{calculateProperties(matlsTest)}}:
 \begin{itemize}
-\item transition: populate values in the MaterialsTest object based on calculated results 
-\item output: none
-\item exception: invalid materials test, calculation error
-\end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
-
-\subsubsection{Local Functions}
-
-\noindent getElasticModulus(matlsTest):
-\begin{itemize}
-\item transition: none
-\item output: the calculated elastic modulus ($R$)
-\item exception: invalid materials test, calculation error
-\end{itemize}
-
-\noindent getElasticStrength(matlsTest):
-\begin{itemize}
-\item transition: none
-\item output: the calculated elastic strength ($R$)
-\item exception: invalid materials test, calculation error
-\end{itemize}
-
-  \section{MIS of Handoff Document} \label{H14} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
-\subsection{Module}
-
-HandDoc
-
-\subsection{Uses}
-
-Notify users to submit handoff documents. 
-Let users create, save, edit and submit handoff documents.
-
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-createDoc & user: UserAccount & handoffDoc: File & - \\
-\hline
-editDoc & user: UserAccount, handoffDoc: File & document invalid \\
-\hline
-submitDoc & user: UserAccount & - & document invalid \\
-\hline
-notifyOutstandingUsers & - & - & - \\
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item handoffDocs: Dict<UserAccount, File>
-  \item outstandingUsers: List<UserAccount>
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-None.
-
-\subsubsection{Assumptions}
-
-None.
-
-\subsubsection{Access Routine Semantics}
-
-\noindent createDoc(user):
-\begin{itemize}
-\item transition: Create a handoff document, using the template fitting the user's role. Set handoffDocs[user] to that document.
-\item output: The handoff document created. 
-\item exception: None. If no role-specific template, return default template
-\end{itemize}
-
-\noindent editDoc(user, doc):
-\begin{itemize}
-\item transition: handoff[docs] = doc.
-\item output: none
-\item exception: document invalid
-\end{itemize}
-
-\noindent submitDoc(user):
-\begin{itemize}
-\item transition: \textbf{Remove} user from outstandingUsers
-\item output: None
-\item exception: document invalid
-\end{itemize}
-
-\noindent notifyOutstandingUsers()
-\begin{itemize}
-  \item transition: for each outstanding user, add an alert to their home page adjuring them to complete their handoff document
+  \item transition: populate calculated property fields in the \texttt{MaterialsTest} object
   \item output: none
-  \item exception: none
+  \item exception: invalid materials test, calculation error
 \end{itemize}
 
+\wss{A module without environment variables or state variables is unlikely to have a state transition. In this case a state transition can only occur if the module is changing the state of another module. Modules rarely have both a transition and an output.}
 
 \subsubsection{Local Functions}
 
-None.
-
-  \section{MIS of Authentication Module} \label{M16} \wss{Use labels for
-  cross-referencing}
-
-\subsection{Module}
-
-Auth
-
-\subsection{Uses}
-
-Log in and log out users on a session. Get the current user of a session.
-Store password and enforces the password policy, allowing users to change passwords and set a new one in
-case it is forgotten.
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-logIn & username: $S$, password: $S$, session: Session & success: $B$ & - \\
-\hline
-logOut & - & - & - \\
-\hline
-getCurrentUser & session: Session & user: UserAccount & - \\
-\hline
-changePassword & user: UserAccount, password: $S$ & user not found, invalid password \\
-\hline
-recoverAccount & username: $S$ & - & user not found \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item credentials: Dict<Tuple<$S$, $S$>, UserAccount>
-  \item emails: Dict<$S$, $S$>
-  \item currentUser: Dict<Session, UserAccount>
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent logIn(username, password, session):
-\begin{itemize}
-\item transition: If credentials[(username, hash(password))] $\ne null$ \textbf{and} that user is active, 
-set currentUser[session] = user, where user is the corresponding UserAccount.
-\item output: Whether log in was successful
-\item exception: none
-\end{itemize}
-
-\noindent logOut(session):
-\begin{itemize}
-\item transition: Set currentUser[session] = $null$.
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent getCurrentUser(session)
+\textbf{\texttt{getElasticModulus(matlsTest)}}:
 \begin{itemize}
   \item transition: none
-  \item output: currentUser[session]
-  \item exception: None. If error, log out the session and return $null$.
+  \item output: calculated elastic modulus ($\mathbb{R}$)
+  \item exception: invalid materials test, calculation error
 \end{itemize}
 
-\noindent changePassword(user, password)
+\textbf{\texttt{getElasticStrength(matlsTest)}}:
 \begin{itemize}
-  \item transition: Find key in credentials with value of user. Save it and \textbf{delete} entry from credentials. Then,
-  \textbf{add} (username, hash(password)) to credentials dictionary.
+  \item transition: none
+  \item output: calculated elastic strength ($\mathbb{R}$)
+  \item exception: invalid materials test, calculation error
+\end{itemize}
+
+\newpage
+\section{MIS of Handoff Document} \label{H14}
+
+\wss{Use labels for cross-referencing}
+
+\subsection{Module}
+\texttt{HandDoc}
+
+\subsection{Uses}
+Notify users to submit handoff documents. Let users create, save, edit, and submit handoff documents.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{4.1cm} p{4.2cm} p{2.8cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{createDoc} & \texttt{user}: UserAccount & \texttt{handoffDoc}: File & --- \\
+\texttt{editDoc} & \texttt{user}: UserAccount, \texttt{handoffDoc}: File & --- & Document invalid \\
+\texttt{submitDoc} & \texttt{user}: UserAccount & --- & Document invalid \\
+\texttt{notifyOutstandingUsers} & --- & --- & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{handoffDocs}: $\text{Dict}\langle \text{UserAccount}, \text{File} \rangle$
+  \item \texttt{outstandingUsers}: $\text{List}\langle \text{UserAccount} \rangle$
+\end{itemize}
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{createDoc(user)}}:
+\begin{itemize}
+  \item transition: create a handoff document using the template matching \texttt{user}'s role (or default template if none exists) and set $\texttt{handoffDocs[user]} := \texttt{doc}$
+  \item output: the created handoff document
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{editDoc(user, doc)}}:
+\begin{itemize}
+  \item transition: $\texttt{handoffDocs[user]} := \texttt{doc}$
+  \item output: none
+  \item exception: document invalid
+\end{itemize}
+
+\textbf{\texttt{submitDoc(user)}}:
+\begin{itemize}
+  \item transition: \textbf{remove} \texttt{user} from \texttt{outstandingUsers}
+  \item output: none
+  \item exception: document invalid
+\end{itemize}
+
+\textbf{\texttt{notifyOutstandingUsers()}}:
+\begin{itemize}
+  \item transition: for each user in \texttt{outstandingUsers}, add an alert to their home page prompting completion of their handoff document
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+\section{MIS of Authentication Module} \label{M16}
+
+\wss{Use labels for cross-referencing}
+
+\subsection{Module}
+\texttt{Auth}
+
+\subsection{Uses}
+Log in and log out users on a session, retrieve the current user of a session, store password hashes, enforce the password policy, and allow users to change or recover forgotten passwords.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.4cm} p{4.6cm} p{3.1cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{logIn} & \texttt{username}: $\mathbb{S}$, \texttt{password}: $\mathbb{S}$, \texttt{session}: Session & \texttt{success}: $\mathbb{B}$ & --- \\
+\texttt{logOut} & \texttt{session}: Session & --- & --- \\
+\texttt{getCurrentUser} & \texttt{session}: Session & \texttt{user}: UserAccount & --- \\
+\texttt{changePassword} & \texttt{user}: UserAccount, \texttt{password}: $\mathbb{S}$ & --- & User not found, invalid password \\
+\texttt{recoverAccount} & \texttt{username}: $\mathbb{S}$ & --- & User not found \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{credentials}: $\text{Dict}\langle \text{Tuple}\langle \mathbb{S}, \mathbb{S} \rangle, \text{UserAccount} \rangle$
+  \item \texttt{emails}: $\text{Dict}\langle \mathbb{S}, \mathbb{S} \rangle$
+  \item \texttt{currentUser}: $\text{Dict}\langle \text{Session}, \text{UserAccount} \rangle$
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\wss{This section is not necessary for all modules. Its purpose is to capture when the module has external interaction with the environment.}
+
+\subsubsection{Assumptions}
+\wss{Try to minimize assumptions and anticipate programmer errors via exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{logIn(username, password, session)}}:
+\begin{itemize}
+  \item transition: if $\texttt{credentials[(username, hash(password))]} \ne \textit{null}$ \textbf{and} that user is active, set $\texttt{currentUser[session]} := \texttt{user}$
+  \item output: boolean indicating whether login was successful
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{logOut(session)}}:
+\begin{itemize}
+  \item transition: $\texttt{currentUser[session]} := \textit{null}$
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getCurrentUser(session)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{currentUser[session]}
+  \item exception: none (on error, log out the session and return \textit{null})
+\end{itemize}
+
+\textbf{\texttt{changePassword(user, password)}}:
+\begin{itemize}
+  \item transition: locate existing credential entry for \texttt{user}, \textbf{delete} it from \texttt{credentials}, and \textbf{add} $(\texttt{username}, \texttt{hash(password)})$ to \texttt{credentials}
   \item output: none
   \item exception: invalid user, invalid password
 \end{itemize}
 
-\noindent recoverAccount(username)
+\textbf{\texttt{recoverAccount(username)}}:
 \begin{itemize}
-  \item transition: Send a hyperlink logging the user in to email[username]. That link will prompt an automatic password reset and log the user out.
+  \item transition: send a password-reset authentication link to \texttt{emails[username]} that prompts an automatic password reset and logs the user out
   \item output: none
   \item exception: invalid username
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent hash(password)
+\textbf{\texttt{hash(password)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the salted hash of the password, using the SHA-256 algorithm. ($S$)
+  \item output: salted SHA-256 hash of \texttt{password} ($\mathbb{S}$)
   \item exception: none
 \end{itemize}
 
-\noindent isStrongPassword(password)
+\textbf{\texttt{isStrongPassword(password)}}:
 \begin{itemize}
   \item transition: none
-  \item output: whether the password is strong, using industry standard criteria. ($B$)
+  \item output: boolean $\mathbb{B}$ indicating whether \texttt{password} satisfies industry-standard strength criteria
   \item exception: none
 \end{itemize}
 
-  \section{MIS of Persistence Module} \label{Module} \wss{Use labels for
-  cross-referencing}
+\newpage
+\section{MIS of Persistence Module} \label{M15}
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-Persistence
+\texttt{Persistence}
 
 \subsection{Uses}
-
-Keep data of all other modules persistent.
-
-All long-term data is really stored here,
-the data structures that "store" long-term data elsewhere are merely illustrative
-and should be obtained by calling this module. Long-term means not limited to one session's 
-transient interaction with the web server.
-
-All functions below are pass-throughs for SQL queries. In reality, use LINQ
-to facilitate it, \textbf{not} raw SQL.
-
+Keep data of all other modules persistent. All long-term data is stored here; the state structures shown in other modules are illustrative and obtained through this module. Long-term means persisting beyond a single transient session with the web server. All functions below act as pass-throughs for data queries (implemented via LINQ rather than raw SQL).
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
 \begin{itemize}
-  \item BackupInterval: $I$
+  \item \texttt{BackupInterval}: $\mathbb{Z}$
 \end{itemize}
 
-
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.7cm} p{3.6cm} p{3.2cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-select & query: $S$ & result: Object & invalid query, result too large \\
-\hline
-update & query: $S$ & success: $B$ & invalid query \\
-\hline
-delete & query: $S$ & success: $B$ & invalid query \\
-\hline
-backup & - & success: $B$ & - \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{select} & \texttt{query}: $\mathbb{S}$ & \texttt{result}: Object & Invalid query, result too large \\
+\texttt{update} & \texttt{query}: $\mathbb{S}$ & \texttt{success}: $\mathbb{B}$ & Invalid query \\
+\texttt{delete} & \texttt{query}: $\mathbb{S}$ & \texttt{success}: $\mathbb{B}$ & Invalid query \\
+\texttt{backup} & --- & \texttt{success}: $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\wss{Not all modules will have state variables. State variables give the module a memory.}
 
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+\wss{This section is not necessary for all modules.}
 
 \subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+\wss{Try to minimize assumptions and anticipate programmer errors via exceptions.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent select(query)
+\textbf{\texttt{select(query)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the values that meet the query's condition, in the format the query orders
-  \item exceptions: invalid query
+  \item output: records matching \texttt{query}'s condition in the requested ordering
+  \item exception: invalid query, result too large
 \end{itemize}
 
-\noindent update(query)
+\textbf{\texttt{update(query)}}:
 \begin{itemize}
-  \item transition: update per the query's specification
-  \item output: was operation sucessful
-  \item exceptions: invalid query
+  \item transition: update records per \texttt{query}'s specification
+  \item output: boolean indicating whether operation was successful
+  \item exception: invalid query
 \end{itemize}
 
-\noindent delete(query)
+\textbf{\texttt{delete(query)}}:
 \begin{itemize}
-  \item transition: update per the query's specification
-  \item output: was operation sucessful
-  \item exceptions: invalid query
+  \item transition: delete records per \texttt{query}'s specification
+  \item output: boolean indicating whether operation was successful
+  \item exception: invalid query
 \end{itemize}
 
-\noindent backup()
+\textbf{\texttt{backup()}}:
 \begin{itemize}
-  \item transiton: back up the database
-  \item output: was backup successful
-  \item exceptions: none
+  \item transition: back up the database
+  \item output: boolean indicating whether backup was successful
+  \item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
 
-  \section{MIS of Search Module} \label{M17} \wss{Use labels for
-  cross-referencing}
+\newpage
+\section{MIS of Search Module} \label{M17}
 
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-Search
+\texttt{Search}
 
 \subsection{Uses}
-
 Search the knowledge repository.
 
-
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
-MaxSearchTime: $R$ = 2, the maximum search time in seconds.
+\begin{itemize}
+  \item \texttt{MaxSearchTime}: $\mathbb{R} = 2$ --- the maximum search time in seconds
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.7cm} p{5.5cm} p{3.5cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-search & keyword: $S$, category: $S$, year: $N$, team: Team, tag: $S$ & files: List<Files> & - \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{search} & \texttt{keyword}: $\mathbb{S}$, \texttt{category}: $\mathbb{S}$, \texttt{year}: $\mathbb{N}$, \texttt{team}: Team, \texttt{tag}: $\mathbb{S}$ & \texttt{files}: $\text{List}\langle \text{File} \rangle$ & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 None.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
 None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent search(keyword, category, year, team, tag):
+\textbf{\texttt{search(keyword, category, year, team, tag)}}:
 \begin{itemize}
-\item transition: none
-\item output: the relevant files based on keyword, filtered provided remaining parameters.
-\item exception: none (return empty list if error)
+  \item transition: none
+  \item output: relevant files matching \texttt{keyword}, filtered by the remaining optional parameters
+  \item exception: none (returns an empty list on error)
 \end{itemize}
 
 \subsubsection{Local Functions}
-
 None.
 
-  \section{MIS of STEP Parser} \label{M18} \wss{Use labels for
-  cross-referencing}
+\newpage
+\section{MIS of STEP Parser} \label{M18}
 
-
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-StepParser
+\texttt{StepParser}
 
 \subsection{Uses}
-
-Parse STEP files.
-
+Parse STEP files into structural models.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.7cm} p{3.6cm} p{3.2cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-parse & file: File & model: Model & invalid file \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{parse} & \texttt{file}: File & \texttt{model}: Model & Invalid file \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 None.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
 None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent parse(file):
+\textbf{\texttt{parse(file)}}:
 \begin{itemize}
-\item transition: none
-\item output: a new Model object, based on the inputted file
-\item exception: invalid file
+  \item transition: none
+  \item output: a new \texttt{Model} object constructed from \texttt{file}
+  \item exception: invalid file
 \end{itemize}
-
 
 \subsubsection{Local Functions}
-
 None.
 
-  \section{MIS of Structural Solver} \label{M19} \wss{Use labels for
-  cross-referencing}
+\newpage
+\section{MIS of Structural Solver} \label{M19}
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{Use labels for cross-referencing}
 
 \subsection{Module}
-
-StructSolver
+\texttt{StructSolver}
 
 \subsection{Uses}
-
-Populate calculated fields for the Model object
+Populate calculated structural fields for the \texttt{Model} object.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-None
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{3.4cm} p{4.6cm} p{3.1cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-populateModel & model: Model & - & invalid model \\
-\hline
-evaluateFormula & model: Model, formula: Formula & result: $N$ & invalid model, invalid formula \\
-\hline
-getForces & model: Model, selector Selector & result: List<$N$> & invalid model, invalid selector \\
-\hline
-getStresses & model: Model, selector: Selector & reuslt: List<$N$> & invalid model, invalid selector \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{populateModel} & \texttt{model}: Model & --- & Invalid model \\
+\texttt{evaluateFormula} & \texttt{model}: Model, \texttt{formula}: Formula & \texttt{result}: $\mathbb{R}$ & Invalid model, invalid formula \\
+\texttt{getForces} & \texttt{model}: Model, \texttt{selector}: Selector & \texttt{result}: $\text{List}\langle \mathbb{R} \rangle$ & Invalid model, invalid selector \\
+\texttt{getStresses} & \texttt{model}: Model, \texttt{selector}: Selector & \texttt{result}: $\text{List}\langle \mathbb{R} \rangle$ & Invalid model, invalid selector \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-None. This is a pass-through.
+None. This module operates as a stateless pass-through.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
 None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent populateModel(model):
+\textbf{\texttt{populateModel(model)}}:
 \begin{itemize}
-\item transition: populate model with members, joints, material properties, supports and applied load.
-\item output: none
-\item exception: invalid model
+  \item transition: populate \texttt{model} with members, joints, material properties, supports, and applied loads
+  \item output: none
+  \item exception: invalid model
 \end{itemize}
 
-\noindent evaluateFormula(model, formula)
+\textbf{\texttt{evaluateFormula(model, formula)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the result of the formula on the model
-  \item exception: invalid formula
+  \item output: the evaluated result of \texttt{formula} on \texttt{model}
+  \item exception: invalid model, invalid formula
 \end{itemize}
 
-\noindent getForces(model, selctor)
+\textbf{\texttt{getForces(model, selector)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the forces on the part of the model selected by the selector
+  \item output: the forces acting on the portion of \texttt{model} selected by \texttt{selector}
   \item exception: invalid model, invalid selector
 \end{itemize}
 
-\noindent getStresses(model, selctor)
+\textbf{\texttt{getStresses(model, selector)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the stresses on the part of the model selected by the selector
+  \item output: the stresses within the portion of \texttt{model} selected by \texttt{selector}
   \item exception: invalid model, invalid selector
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent selectPart(model, selector)
+\textbf{\texttt{selectPart(model, selector)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the part of the model selected by the selector
-  \item exceptions: invalid model, invalid selector
+  \item output: the subset of \texttt{model} selected by \texttt{selector}
+  \item exception: invalid model, invalid selector
 \end{itemize}
 
 \section{MIS of 3D Viewer} \label{M20}
 
-
-
 \subsection{Module}
-
-Viewer3D
+\texttt{Viewer3D}
 
 \subsection{Uses}
-
-Display a model in a three-dimensional view for users to manually inspect
-
+Display a model in a three-dimensional view for users to manually inspect.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None.
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.9cm} p{3.6cm} p{3.2cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-display3d & model: Model & view3d: File & invalid model \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{display3d} & \texttt{model}: Model & \texttt{view3d}: File & Invalid model \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
 None.
 
 \subsubsection{Environment Variables}
-
 None.
 
 \subsubsection{Assumptions}
-
 None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent display3d(model):
+\textbf{\texttt{display3d(model)}}:
 \begin{itemize}
-\item transition: none
-\item output: A file which a user can inspect the model visually in three dimensions
-\item exception: invalid model
+  \item transition: none
+  \item output: a file allowing a user to inspect the model visually in three dimensions
+  \item exception: invalid model
 \end{itemize}
 
 \subsubsection{Local Functions}
+None.
 
-\
-\newpage{}
-
-\section{Appendix --- Generative AI Use Disclosure}
-
+\newpage
+\appendix
+\section{Generative AI Use Disclosure}
 
 \subsection{AI Tools Used}
-
 Gemini (version 3)
 
 \subsection{How and Where Used}
-
-Advisory only. 
+Advisory only.
 
 \subsection{Verification of AI-Generated Content}
+\wss{Describe how the team checked AI-generated or AI-assisted material before including it in the document. Verify factual claims, technical assertions, requirements, calculations, references, and other information. The team is responsible for the accuracy, completeness, consistency, and appropriateness of the submitted document.}
 
-\wss{\begin{itemize}
-    \item Describe how the team checked AI-generated or AI-assisted material
-    before including it in the document.
-    \item In particular, verify factual claims, technical assertions,
-    requirements, calculations, references, and other information for which an
-    AI system may produce incorrect or fabricated results.
-    \item \textbf{The team is responsible for the accuracy, completeness,
-consistency, and appropriateness of the submitted document, regardless of
-whether material was generated by a human or an AI system.}
-\end{itemize}}
+All advice was critically evaluated and all factual claims within the advice were verified before the advice was used.
 
-All advice was critically thought of and all factual claims within the advice were 
-verified before the advice was used.
-
-\newpage{}
-
-\section{Appendix --- Reflection}
+\newpage
+\section{Reflection}
 
 \wss{Not required for CAS 741 projects}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
-\input{../../Reflection.text}
-
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which of your design decisions stemmed from speaking to your client(s)
-  or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
-  \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
-  \item (After you have implemented another team's module, which means this
-  isn't filled in until after the original deadline). What did you learn by
-  implementing another team's module? Were all the details you needed in the
-  documentation, or did you need to make assumptions, or ask the other team
-  questions?  If your team also had another team implement one of your modules,
-  what was this experience like?  Are there things in your documentation you
-  could have changed to make the process go more smoothly for when an
-  ``outsider'' completes some of the implementation?
+  \item What went well while writing this deliverable?
+  \item What pain points did you experience during this deliverable, and how did you resolve them?
+  \item Which of your design decisions stemmed from speaking to your client(s) or a proxy (e.g., your peers, stakeholders, potential users)? For those that were not, why, and where did they come from?
+  \item While creating the design doc, what parts of your other documents (e.g., requirements, hazard analysis, etc.), if any, needed to be changed, and why?
+  \item What are the limitations of your solution? Put another way, given unlimited resources, what could you do to make the project better? (\texttt{LO\_ProbSolutions})
+  \item Give a brief overview of other design solutions you considered. What are the benefits and tradeoffs of those other designs compared with the chosen design? From all the potential options, why did you select the documented design? (\texttt{LO\_Explores})
+  \item (After you have implemented another team's module, which means this isn't filled in until after the original deadline). What did you learn by implementing another team's module? Were all the details you needed in the documentation, or did you need to make assumptions, or ask the other team questions? If your team also had another team implement one of your modules, what was this experience like? Are there things in your documentation you could have changed to make the process go more smoothly for when an ``outsider'' completes some of the implementation?
 
-  Your reflection should be about concepts learned in your SE education, such as modular decomposition, cohesion, coupling, information hiding, etc.  You should critique the quality and utility of the specification you received.
-
-  You should create a PR for your implemented module.  A link to the PR should be part of your reflection.
-
+  Your reflection should be about concepts learned in your SE education, such as modular decomposition, cohesion, coupling, information hiding, etc. You should critique the quality and utility of the specification you received. You should create a PR for your implemented module, and a link to the PR should be part of your reflection.
 \end{enumerate}
 
 \subsection{Michael}
 \begin{itemize}
   \item I thought of how this would be implemented low-level and did it with time to spare.
-  \item Motivation - sometimes I got distracted while writing this large document. Eventually I committed as it got later into the night.
-  \item None. The earlier documents were well designed to facilitate the production of this one
+  \item Motivation --- sometimes I got distracted while writing this large document. Eventually I committed as it got later into the night.
+  \item None. The earlier documents were well designed to facilitate the production of this one.
   \item With unlimited resources, we could use premier external libraries instead of the free versions that will ultimately be used. Also, a premier firewall would be installed to prevent any attack.
-  \item Another design I considered were stateful objects instead of delegating to databases. (While state variables are used, they are illustrative)
-    While this may make a slight speedup during runtime, storage and durability could be a nightmare if
-     JSON was used in lieu of a database. Also RBAC was considered being scrapped because most people are 
-     trustworthy anyway, but security is worthwhile due to the occasional malicious outsider. 
-     Lastly, I chose that materials tests are initially valid because the vast, vast majority will be.
+  \item Another design I considered was stateful objects instead of delegating to databases. (While state variables are used, they are illustrative.) While this may make a slight speedup during runtime, storage and durability could be a nightmare if JSON was used in lieu of a database. Also, RBAC was considered being scrapped because most people are trustworthy anyway, but security is worthwhile due to the occasional malicious outsider. Lastly, I chose that materials tests are initially valid because the vast, vast majority will be.
 \end{itemize}
 
 \end{document}
