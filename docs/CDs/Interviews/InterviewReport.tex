@@ -124,6 +124,14 @@ down the themes of the interviews, where the participants decided to focus, and 
 or associated project considerations that may arise. It also consolidated the data that users presented 
 as available to host on the service.
 
+For both themes and action items, priority was assigned based on the impact on the project and the number of participants 
+that discussed or requested the given item. A theme or action item is \textbf{High} priority when it is supported by 6 or more of the 8 participants, 
+\textbf{Medium} when supported by 4--5 participants or by a majority of the role group it concerns, and 
+\textbf{Low} otherwise. Stretch goals are counted only by the participants who asked for the feature: 
+\textbf{High} for 3 or more, \textbf{Medium} for 2, and \textbf{Low} for 1. Each stretch goal is also given a 
+scope relating to the SRS, either describing the existing requirements it would extend or providing detail to the changes 
+it would make.
+
 % =====================================================================
 \section{Interview Questions}
 \label{sec:questions}
@@ -275,24 +283,27 @@ The notes from all three sessions were sorted into a single empathy map
 \subsection{Themes}
 \label{sec:themes}
 
-The empathy map entries were grouped into the themes in Table~\ref{tab:themes}.
+The empathy map entries were grouped into the themes in Table~\ref{tab:themes}. The priority of each theme is given in the table, 
+reflecting the number of participants that discussed the theme. While T7 is at the bottom of the list, primarily because the coach role 
+was only discussed with current coaches, it is one of the most important for implementing the core project goals, supporting all the 
+roles within the club. 
 
 \begin{table}[H]
 \centering
 \caption{Themes identified across sessions}
 \label{tab:themes}
 \small
-\begin{tabularx}{\textwidth}{L{0.6cm} L{3.4cm} L{3.2cm} Y}
+\begin{tabularx}{\textwidth}{@{}L{0.6cm} L{3.1cm} L{3.0cm} Y L{1.6cm}@{}}
 \toprule
-\textbf{ID} & \textbf{Theme} & \textbf{Participants} & \textbf{SRS links} \\
+\textbf{ID} & \textbf{Theme} & \textbf{Participants} & \textbf{SRS links} & \textbf{Priority} \\
 \midrule
-T1 & Knowledge lost between years & All except S2-P2 (G3) & \rid{FR-KR-3}, \rid{FR-MA-5}, S.2.7 \\
-T2 & Administrative information centralization: timeline, logistics, sponsors, costs & S1-P1, S1-P2, S2-P1, S2-P3 & \rid{FR-KT-1}, \rid{FR-KT-3} \\
-T3 & Team coordination: tasks, deadlines, milestones & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & None (Section~\ref{sec:stretch}) \\
-T4 & Accepted low trust in failure load prediction & S1-P1, S1-P2, S2-P1, S2-P3, S3-P2, S3-P3 & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} \\
-T5 & Failures from manufacturing, torsion and joints & S1-P1, S1-P2, S2-P1, S2-P2, S3-P1, S3-P2, S3-P3 & \rid{FR-KR-2}, \rid{FR-MA-5}, S.2.6 \\
-T6 & Software subteam integrated with the club, not separate & S1-P1, S1-P2, S2-P1, S2-P2, S2-P3, S3-P1, S3-P3 & \rid{NFR-SYS-4} \\
-T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \rid{FR-KT-3} \\
+T1 & Knowledge lost between years & All except S2-P2 (G3) & \rid{FR-KR-3}, \rid{FR-MA-5}, S.2.7 & High (7/8) \\
+T2 & Administrative information centralization: timeline, logistics, sponsors, costs & S1-P1, S1-P2, S2-P1, S2-P3 & \rid{FR-KT-1}, \rid{FR-KT-3} & Medium (4/8) \\
+T3 & Team coordination: tasks, deadlines, milestones & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & None (Section~\ref{sec:stretch}) & Medium (5/8) \\
+T4 & Accepted low trust in failure load prediction & S1-P1, S1-P2, S2-P1, S2-P3, S3-P2, S3-P3 & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} & High (6/8) \\
+T5 & Failures from manufacturing, torsion and joints & S1-P1, S1-P2, S2-P1, S2-P2, S3-P1, S3-P2, S3-P3 & \rid{FR-KR-2}, \rid{FR-MA-5}, S.2.6 & High (7/8) \\
+T6 & Software subteam integrated with the club, not separate & S1-P1, S1-P2, S2-P1, S2-P2, S2-P3, S3-P1, S3-P3 & \rid{NFR-SYS-4} & High (7/8) \\
+T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \rid{FR-KT-3} & Medium (2/3 coaches) \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -335,6 +346,12 @@ T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \
       All executives responded that the software subteam should be fully integrated with the club and executives, attending all meetings 
       and being generally involved in the club beyond just the software side. This was noted to be vital to ensuring that the software developed 
       serves the club and member needs specifically, not diverting due to a lack of communication between the teams.
+
+      \item \textbf{T7 --- Coach Role Definition} \newline
+      The coaching structure and positions are new this year, and both interviewed coaches in S2 described their responsibilities as undefined (E2). 
+      Both coaches discussed a lack of definition in the role, both in how each role differs and how to operate within the role, such as 
+      the level of initiative to take in helping teams. The SRS does not yet account for coaches, so features and descriptions for other roles, like executive roles, should be carried 
+      over and/or adapted for coach specific permissions.
       
 
 
@@ -398,15 +415,15 @@ perspective.
 \caption{Impact on Requirements and Action}
 \label{tab:impact}
 \small
-\begin{tabularx}{\textwidth}{Y L{2.6cm} L{3.4cm}}
+\begin{tabularx}{\textwidth}{@{}Y L{2.5cm} L{3.2cm} L{1.4cm}@{}}
 \toprule
-\textbf{Finding} & \textbf{Affected ID} & \textbf{Proposed action} \\
+\textbf{Finding} & \textbf{Affected ID} & \textbf{Proposed action} & \textbf{Priority} \\
 \midrule
-No coach role in the system (T7) & \rid{FR-AC-2} & Add coach role \\
-Coach handover missing (T7) & \rid{FR-KT-1}, \rid{FR-KT-3} & Extend to coach positions \\
-Estimates trusted only as relative values (T4), change of estimate focus & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} & Project direction change, focus on model precision \\
-Outcome of past designs wanted, more complete dataset (T1, T5) & \rid{FR-KR-2}, \rid{FR-MA-5} & Add score, failure load and failure location metadata \\
-Expanded administrative knowledge retention (T2) & \rid{FR-KT-3} & Expanded exit documentation \\
+Outcome of past designs wanted, more complete dataset (T1, T5) & \rid{FR-KR-2}, \rid{FR-MA-5} & Add score, failure load and failure location metadata & High (7/8) \\
+Estimates trusted only as relative values (T4), change of estimate focus & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} & Project direction change, focus on model precision & High (6/8) \\
+Expanded administrative knowledge retention (T2) & \rid{FR-KT-3} & Expanded exit documentation & Medium (4/8) \\
+No coach role in the system (T7) & \rid{FR-AC-2} & Add coach role & Medium (2/3 coaches) \\
+Coach handover missing (T7) & \rid{FR-KT-1}, \rid{FR-KT-3} & Extend to coach positions & Medium (2/3 coaches) \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -424,22 +441,21 @@ The requests were given an ID, similar to SRS requirements, and linked to the ex
 \caption{Stretch goals from interview requests}
 \label{tab:stretch}
 \small
-\begin{tabularx}{\textwidth}{L{0.8cm} Y L{3.4cm}}
+\begin{tabularx}{\textwidth}{@{}L{0.8cm} Y L{3.3cm} L{1.3cm}@{}}
 \toprule
-\textbf{ID} & \textbf{Request} & \textbf{Relation to SRS} \\
+\textbf{ID} & \textbf{Request} & \textbf{Scope (SRS)} & \textbf{Priority} \\
 \midrule
-SG-1 & Organization (Executive and Team) task management: task assignment, task progress checking, coach input, linked to club calendar (S.2) & Not covered, G.6 excludes this \\
-SG-2 & Club calendar of the yearly timeline and events, connection to external calendar services & \rid{FR-KT-3} \\
-SG-3 & Model warnings for when model metric/features are near competition limits & \rid{FR-RC-3}, \rid{FR-RC-4} \\
-SG-4 & Mock scoresheet, UI change for scoring prediction & \rid{FR-PA-2}, \rid{FR-RC-3} \\
-SG-5 & FEA, Interactive structural calculations: (member forces, component deflections, design failure points) & Beyond modelling described in G.6, \rid{NFR-PA-3} \\
-SG-6 & Joint library, maybe focusing on connection design strength. & \rid{FR-KR-2}, \rid{FR-KR-3} \\
-SG-7 & Analysis and rules checklists for first-time members & No requirement (requirements elicitation survey, feature H) \\
-SG-8 & Showcase of recent designs on the landing page, improved club visibility & \rid{FR-WS-1} \\
+SG-1 & Club calendar of the yearly timeline and events, connection to external calendar services & Extends \rid{FR-KT-3} & High \\
+SG-2 & Organization (Executive and Team) task management: task assignment, task progress checking, coach input, linked to club calendar (S.2) & New, no requirement (T3) & Medium \\
+SG-3 & Model warnings for when model metric/features are near competition limits & Extends \rid{FR-RC-3}, \rid{FR-RC-4} & Low \\
+SG-4 & Mock scoresheet, UI change for scoring prediction & Extends \rid{FR-PA-2}, \rid{FR-RC-3} & Low \\
+SG-5 & FEA, Interactive structural calculations: (member forces, component deflections, design failure points) & Excluded by G.6 (advanced modelling), \rid{NFR-PA-3} & Medium \\
+SG-6 & Joint library, maybe focusing on connection design strength. & Extends \rid{FR-KR-2}, \rid{FR-KR-3} & Low \\
+SG-7 & Analysis and rules checklists for first-time members & New, no requirement (survey feature H) & Low \\
+SG-8 & Showcase of recent designs on the landing page, improved club visibility & Extends \rid{FR-WS-1} & Low \\
 \bottomrule
 \end{tabularx}
 \end{table}
-
 
 \subsection{Available Data for Testing}
 \label{sec:test-data}
