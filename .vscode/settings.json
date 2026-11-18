@@ -26,5 +26,9 @@
         "**/VnVPlan.log": true,
         "**/VnVPlan.gz": true,
         "**/VnVPlan.out": true
-    }
+    },
+    "cSpell.words": [
+        "Anonymization",
+        "scoresheet"
+    ]
 }
