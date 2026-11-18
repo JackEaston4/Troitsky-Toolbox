@@ -2,19 +2,17 @@
 
 The SRS for the Troitsky Toolbox follows the four-book structure from Bertrand
 Meyer's *Handbook of Requirements and Business Analysis*, with an Appendix book
-added for content the course requires that fits none of the four (see A.3). The 
-layout and formatting were adjusted from the latex template, matching the SRS to 
-the other documents for the project.
+added for content the course requires that fits none of the four and any other 
+template changes outlined in A.3. The layout and formatting were adjusted from 
+the latex template, matching the SRS to the other documents for the project.
 
 [SRS.tex](SRS.tex) is the main document. It holds the title page and revision
 history, then `\input`s one file per section from the folders below. CI builds
 it into [pdfs/SRS/SRS.pdf](../../pdfs/SRS/SRS.pdf), published at
 [SRS.pdf](https://jackeaston4.github.io/Troitsky-Toolbox/SRS/SRS.pdf).
 
-The SRS builds on the
-[Problem Statement and Goals](../ProblemStatementAndGoals/). Elicitation results
-come from the member survey, reported in P.7, and from the
-[CD-Fall stakeholder interviews](../CDs/Interviews/).
+Elicitation results come from the member survey, reported in P.7 and fully recorded in the 
+[CD-Fall Interview, Requirement elicitation](docs/CDs/Interviews/RequirementElicitationSurvey) folder.
 
 ## Books
 
