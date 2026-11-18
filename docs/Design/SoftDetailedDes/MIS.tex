@@ -1,6 +1,6 @@
 \documentclass[11pt, a4paper]{article}
 \usepackage[a4paper, margin=2.2cm]{geometry}
-\usepackage{fontspec}
+
 \usepackage{amsmath, amssymb}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -141,30 +141,41 @@ The following table is taken directly from the Module Guide document for this pr
 
 \begin{table}[h!]
 \centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{0.9\textwidth}{p{0.32\textwidth} X}
+\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{Level 1} & \textbf{Level 2} \\
+\textbf{Level 1} & \textbf{Level 2}\\
 \midrule
-Hardware-Hiding & --- \\
+
+
+{Hardware-Hiding Module} & ~ \\
 \midrule
-\multirow{7}{0.32\textwidth}{Behaviour-Hiding} & Input Parameters \\
-& Output Format \\
-& Output Verification \\
-& Temperature ODEs \\
-& Energy Equations \\
-& Control Module \\
-& Specification Parameters Module \\
+\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & Web App Layout Module\\
+& Toolbox Broker Module\\
+& Authorization Rules Module\\
+& Member Registry Module\\
+& Repository Content Module\\
+& Model Import Module\\
+& Model Library Module\\
+& Performance Metrics Module\\
+& Rule Set Module\\
+& Compliance Check Module\\
+& Material Test Records Module\\
+& Material Properties Module\\
+& Handoff Documents Module\\
 \midrule
-\multirow{3}{0.32\textwidth}{Software Decision} & Sequence Data Structure \\
-& ODE Solver \\
-& Plotting \\
+\multirow{6}{0.3\textwidth}{Software Decision Module} & Authentication Module\\
+& Persistence Module\\
+& Search Module\\
+& STEP Parsing Module\\
+& Structural Solver Module\\
+& 3D Viewer Module\\
 \bottomrule
-\end{tabularx}
+
+
+\end{tabular}
 \caption{Module Hierarchy}
 \label{TblMH}
 \end{table}
-
 \newpage
 \section{MIS of Hardware Hiding Module} \label{M1}
 
