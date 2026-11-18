@@ -2,11 +2,19 @@
 
 The SRS for the Troitsky Toolbox follows the four-book structure from Bertrand
 Meyer's *Handbook of Requirements and Business Analysis*, with an Appendix book
-added for content the course requires that fits none of the four (see A.3).
+added for content the course requires that fits none of the four (see A.3). The 
+layout and formatting were adjusted from the latex template, matching the SRS to 
+the other documents for the project.
 
 [SRS.tex](SRS.tex) is the main document. It holds the title page and revision
 history, then `\input`s one file per section from the folders below. CI builds
-it into [pdfs/SRS/SRS.pdf](../../pdfs/SRS/SRS.pdf).
+it into [pdfs/SRS/SRS.pdf](../../pdfs/SRS/SRS.pdf), published at
+[SRS.pdf](https://jackeaston4.github.io/Troitsky-Toolbox/SRS/SRS.pdf).
+
+The SRS builds on the
+[Problem Statement and Goals](../ProblemStatementAndGoals/). Elicitation results
+come from the member survey, reported in P.7, and from the
+[CD-Fall stakeholder interviews](../CDs/Interviews/).
 
 ## Books
 
@@ -23,10 +31,3 @@ S.2 Functionality). The E.1 Glossary is placed before the Goals book in the PDF
 so terms are defined before their first use. References come from the shared
 [refs/References.bib](../../refs/References.bib) and are printed between the
 Project and Appendix books.
-
-## Adding or changing a section
-
-- Edit the section's `.txt` file; it starts with `\nsection{X.n Title}`.
-- A new section needs a new file and a matching `\input` line in
-  [SRS.tex](SRS.tex).
-- Any departure from Meyer's structure should be recorded in A.3.
