@@ -9,7 +9,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows.meta, backgrounds}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -205,6 +205,16 @@ Anticipated changes are the source of the information that is to be hidden insid
   The structure and templates of handoff documents. Executives are expected to refine these each year based on what incoming members found useful.
 \item[\refstepcounter{acnum} \actheacnum \label{acSearch}:]
   The search strategy used to find content in the Knowledge Repository. This may need to change to keep searches fast as the amount of stored content grows.
+\item[\refstepcounter{acnum} \actheacnum \label{acPermissions}:]
+  The operations each role is permitted to perform. The roles themselves are stable, but executives are expected to adjust what each role can see and change as the Toolbox is used.
+\item[\refstepcounter{acnum} \actheacnum \label{acMemberData}:]
+  The information recorded about each member account. This may grow as the club decides to track more about its members, such as the positions they have held.
+\item[\refstepcounter{acnum} \actheacnum \label{acItemMetadata}:]
+  The metadata required for repository items, such as the list of categories. This is expected to change as the club's stored content grows and members find new ways they need to filter it.
+\item[\refstepcounter{acnum} \actheacnum \label{acModelRecords}:]
+  The rules for who may view each bridge model. These may change if the club changes how designs are shared between teams during or after a season.
+\item[\refstepcounter{acnum} \actheacnum \label{acCompliance}:]
+  The method used to check a bridge model against a rule set. This may change as new kinds of rules are added that cannot be checked as a single property against an allowed range.
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -321,7 +331,7 @@ The design of the system is intended to satisfy the requirements developed in th
 \item \textbf{Handoff Documents Module (\mref{mHandoff}):} To satisfy FR-KT-1--FR-KT-5, NFR-KT-1, NFR-KT-2, SR-KT-1, SR-KT-2, SR-KT-4, and SR-KT-5, handoff templates and the draft, review, and publish lifecycle are kept in their own module, which publishes accepted documents to the repository and exports them to PDF.
 \item \textbf{Authentication Module (\mref{mAuthn}):} To satisfy FR-AC-1, FR-WS-2, NFR-AC-1, SR-AC-1, SR-AC-2, and SR-WS-5, signing in is handled by ASP.NET Core Identity behind a single module, so passwords are stored only as salted hashes and the mechanism can be replaced, for example by single sign-on, without affecting other modules.
 \item \textbf{Persistence Module (\mref{mPersist}):} To satisfy FR-KR-1, NFR-KR-2, NFR-SYS-2, SR-KR-1, and SR-WS-3, all modules store their data through one data-access layer over Microsoft SQL Server, which keeps records consistent under concurrent use and backs up the database to an external platform.
-\item \textbf{Search Module (\mref{mSearch}):} To satisfy FR-KR-3, NFR-KR-1, and NFR-KT-1, searching is kept separate from content storage, so the query and indexing strategy can be tuned to keep search fast as stored content grows.
+\item \textbf{Search Module (\mref{mSearch}):} To satisfy FR-KR-3, NFR-KR-1, and NFR-KT-1, searching is kept separate from content storage and finds items through the Repository Content Module, so the search strategy can be changed to keep search fast as stored content grows.
 \item \textbf{STEP Parsing Module (\mref{mStep}):} To satisfy FR-MA-1, FR-MA-3, and NFR-MA-3, the STEP library is wrapped in its own module, so it can be replaced by the Open CASCADE fallback if it cannot read club exports.
 \item \textbf{Structural Solver Module (\mref{mSolver}):} To satisfy FR-PA-1, NFR-PA-1, and NFR-PA-2, the structural analysis method is hidden in its own module, so BriefFiniteElement.NET can be replaced by the fallback direct stiffness solver without changing the metrics built on its results.
 \item \textbf{3D Viewer Module (\mref{mViewer}):} To satisfy FR-MA-2, FR-MA-5, NFR-MA-2, NFR-SYS-1, and SR-MA-2, 3D rendering runs in the browser behind one module, as the back end cannot render models, and displays the units and a scale reference with each model.
@@ -348,8 +358,7 @@ to be implemented.
 \subsubsection{Hardware-Hiding Module (M\ref*{mHH})}\label{mHH:dec}
 
 \begin{description}
-\item[Secrets:] The hosting platform and its deployment configuration, such as
-  a cloud service (e.g., Azure App Service) or a university or club-owned server.
+\item[Secrets:] The hosting platform on which the system is deployed, such as a cloud service (e.g., Azure App Service) or a university or club-owned server.
 \item[Services:] Serves as the virtual hardware used by the rest of the system.
   This module provides the interface between the host machine and the software,
   supplying the runtime, file storage, and secure network connection that the
@@ -373,8 +382,7 @@ to be implemented.
 \subsubsection{Web App Layout Module (M\ref*{mWebApp})}\label{mWebApp:dec}
 
 \begin{description}
-\item[Secrets:] The page layout, navigation structure, and visual design of the
-  Toolbox Web App, and the way user input on a page is turned into a request.
+\item[Secrets:] The presentation of the Toolbox Web App's pages to members.
 \item[Services:] Serves the public landing page and the member pages for each
   tool. Accepts user input through forms and file uploads, passes each request
   to the Toolbox Broker with the signed-in member's identity, and displays the
@@ -386,8 +394,7 @@ to be implemented.
 \subsubsection{Toolbox Broker Module (M\ref*{mBroker})}\label{mBroker:dec}
 
 \begin{description}
-\item[Secrets:] The registry of available services and the protocol used to
-  route requests to them, including timeouts and request logging.
+\item[Secrets:] The protocol used to route requests to registered services.
 \item[Services:] Lets each tool register its operations at startup. Checks every
   request against the Authorization Rules Module before forwarding it, directs
   authorized requests to the service that provides the operation, and returns
@@ -401,8 +408,7 @@ to be implemented.
 \subsubsection{Authorization Rules Module (M\ref*{mAuthz})}\label{mAuthz:dec}
 
 \begin{description}
-\item[Secrets:] The mapping from club roles and team assignments to the
-  operations they are allowed to perform.
+\item[Secrets:] The access policy that decides which operations a member may perform.
 \item[Services:] Decides whether a member may perform a requested operation,
   based on the role and team recorded for them in \mref{mMembers}. Restricts a
   team's current-year models to the members of that team and the executives.
@@ -415,8 +421,7 @@ to be implemented.
 \subsubsection{Member Registry Module (M\ref*{mMembers})}\label{mMembers:dec}
 
 \begin{description}
-\item[Secrets:] The data structure holding member accounts, their role, their
-  status, and their team assignment for each competition year.
+\item[Secrets:] The data structure that represents member accounts.
 \item[Services:] Provides access programs to add, update, deactivate, and look
   up registered members. Assigns exactly one role to each account and lets
   executives and maintainers change it. Assigns each account to at most one team
@@ -430,9 +435,7 @@ to be implemented.
 \subsubsection{Repository Content Module (M\ref*{mContent})}\label{mContent:dec}
 
 \begin{description}
-\item[Secrets:] The structure of a stored item and its metadata (title,
-  category, year, team, and tags), and the rules for which metadata is
-  required.
+\item[Secrets:] The structure of repository items, including the metadata each item must have.
 \item[Services:] Provides access to the Knowledge Repository. Accepts uploads of
   any file type and rejects those missing a title, a category from the fixed
   list, or a year. Lets members preview and download items. Lets the uploader or
@@ -446,9 +449,7 @@ to be implemented.
 \subsubsection{Model Import Module (M\ref*{mModelImport})}\label{mModelImport:dec}
 
 \begin{description}
-\item[Secrets:] The club conventions for how bridge models are exported from CAD
-  software, which determine how the members and joints of a bridge are
-  identified from its geometry.
+\item[Secrets:] The club conventions for exporting bridge models from CAD software, which determine how the structural elements of a bridge are identified from its geometry.
 \item[Services:] Lets members upload and download bridge models as STEP files
   (\texttt{.stp} or \texttt{.step}). Identifies the members and joints of the
   bridge from the geometry read by \mref{mStep}. Rejects files that are not valid
@@ -462,8 +463,7 @@ to be implemented.
 \subsubsection{Model Library Module (M\ref*{mModelLibrary})}\label{mModelLibrary:dec}
 
 \begin{description}
-\item[Secrets:] The organization of bridge model records, including ownership by
-  team, competition year, and privacy.
+\item[Secrets:] The organization of bridge model records, which determines who may view each model.
 \item[Services:] Stores each uploaded model as its team's current model, visible
   only to that team. Lets members browse and load past designs read-only,
   filtered by year and team. Lets executives convert all current models into past
@@ -475,8 +475,7 @@ to be implemented.
 \subsubsection{Performance Metrics Module (M\ref*{mMetrics})}\label{mMetrics:dec}
 
 \begin{description}
-\item[Secrets:] The set of performance metrics and the failure criterion used to
-  judge a bridge, such as the factor of safety of each element.
+\item[Secrets:] The set of performance metrics used to judge a bridge, such as its failure load or the factor of safety of each element.
 \item[Services:] Estimates the failure load and failure location of a bridge and
   computes its load-to-mass ratio, using the material properties selected by
   year or batch. Displays the assumptions and limitations with each estimate,
@@ -515,8 +514,7 @@ to be implemented.
 \subsubsection{Material Test Records Module (M\ref*{mTestRecords})}\label{mTestRecords:dec}
 
 \begin{description}
-\item[Secrets:] The format of material test records and the template used to
-  import them.
+\item[Secrets:] The format of material test records, including the template used to import them.
 \item[Services:] Records test results entered through a form or imported in bulk
   from CSV or Excel files. Converts values to base units, requires grain
   orientation for wood, and rejects records with missing fields or physically
@@ -530,8 +528,7 @@ to be implemented.
 \subsubsection{Material Properties Module (M\ref*{mMatProps})}\label{mMatProps:dec}
 
 \begin{description}
-\item[Secrets:] The method used to derive material properties, such as elastic
-  modulus and strength, from accepted test records.
+\item[Secrets:] The method used to derive material properties, such as elastic modulus or strength, from accepted test records.
 \item[Services:] Aggregates the accepted test records for a material, year, or
   batch into a set of material properties and provides them to the Performance
   Metrics Module. Keeps a trace from each property back to the tests it was
@@ -543,12 +540,14 @@ to be implemented.
 \subsubsection{Handoff Documents Module (M\ref*{mHandoff})}\label{mHandoff:dec}
 
 \begin{description}
-\item[Secrets:] The structure and templates of exit documents and role records.
+\item[Secrets:] The templates that define each type of handoff document.
 \item[Services:] Provides an exit-document template for each executive position
   and team lead. Lets members fill out documents, save them as drafts, and submit
   them for review before they are published to the repository. Validates
   submitted documents against their template, maintains a role record for each
-  executive position, shows executives which documents are still outstanding,
+  executive position, verifies that the bridge models, test results, and rule
+  sets a document refers to exist, shows executives which documents are still
+  outstanding,
   and exports documents to PDF.
 \item[Implemented By:] C\# on .NET
 \item[Type of Module:] Abstract Object
@@ -570,8 +569,7 @@ to be implemented.
 \subsubsection{Authentication Module (M\ref*{mAuthn})}\label{mAuthn:dec}
 
 \begin{description}
-\item[Secrets:] The authentication mechanism, including how credentials are
-  stored and verified.
+\item[Secrets:] The mechanism used to verify a member's identity.
 \item[Services:] Signs members in and out. Verifies credentials and rejects
   invalid or deactivated accounts, enforces the password policy, stores
   passwords only as salted hashes, and supplies the signed-in member's identity
@@ -583,7 +581,7 @@ to be implemented.
 \subsubsection{Persistence Module (M\ref*{mPersist})}\label{mPersist:dec}
 
 \begin{description}
-\item[Secrets:] The database technology, schema, and backup strategy.
+\item[Secrets:] The data storage mechanism, such as the database technology, its schema, or its backup strategy.
 \item[Services:] Stores and retrieves the data of every other module, keeping
   records complete and consistent when several members use the system at once.
   Provides access programs for reading and writing records and stored files, and
@@ -595,8 +593,7 @@ to be implemented.
 \subsubsection{Search Module (M\ref*{mSearch})}\label{mSearch:dec}
 
 \begin{description}
-\item[Secrets:] The query and indexing strategy used to find content in the
-  database.
+\item[Secrets:] The search strategy used to find content in the repository.
 \item[Services:] Returns the stored items matching a keyword search, filtered by
   category, year, team, or tag, within the maximum search time.
 \item[Implemented By:] C\# on .NET
@@ -617,12 +614,11 @@ to be implemented.
 \subsubsection{Structural Solver Module (M\ref*{mSolver})}\label{mSolver:dec}
 
 \begin{description}
-\item[Secrets:] The structural analysis method, such as finite element analysis,
-  and the library used to carry it out.
+\item[Secrets:] The structural analysis method used to compute the internal forces in a bridge, such as finite element analysis.
 \item[Services:] Builds a structural model from a bridge's members, joints,
   material properties, supports, and applied load, and returns the resulting
   internal forces and stresses in each element for use by the Performance
-  Metrics Module and the 3D Viewer Module.
+  Metrics Module (\mref{mMetrics}).
 \item[Implemented By:] C\# using the BriefFiniteElement.NET library (fallback:
   a direct stiffness solver built on Math.NET Numerics)
 \item[Type of Module:] Library
@@ -631,12 +627,11 @@ to be implemented.
 \subsubsection{3D Viewer Module (M\ref*{mViewer})}\label{mViewer:dec}
 
 \begin{description}
-\item[Secrets:] The library and rendering method used to display 3D models in
-  the browser.
+\item[Secrets:] The rendering method used to display 3D models in the browser.
 \item[Services:] Displays a bridge model in an interactive 3D view that the
   member can rotate, zoom, and pan, with its units and a scale reference. Can
-  highlight results from the Structural Solver Module, such as the predicted
-  failure location, on the model.
+  highlight results passed to it by the Web App Layout Module (\mref{mWebApp}),
+  such as the predicted failure location, on the model.
 \item[Implemented By:] JavaScript in the browser, using occt-import-js and three.js
 \item[Type of Module:] Abstract Object
 \end{description}
@@ -784,7 +779,7 @@ SR-SYS-3 (Reproducible deployment) & \mref{mHH}\\
 
 \subsection{Trace Between Anticipated Changes and Modules} \label{SecTMAC}
 
-Table~\ref{TblACT} maps each anticipated change listed in Section \ref{SecAchange} to the modules that hide it.
+Table~\ref{TblACT} maps each anticipated change listed in Section \ref{SecAchange} to the modules that hide it. Every module hides at least one anticipated change.
 
 \begin{table}[H]
 \centering
@@ -803,6 +798,11 @@ Table~\ref{TblACT} maps each anticipated change listed in Section \ref{SecAchang
 \acref{acAuth} & \mref{mAuthn}\\
 \acref{acHandoff} & \mref{mHandoff}\\
 \acref{acSearch} & \mref{mSearch}\\
+\acref{acPermissions} & \mref{mAuthz}\\
+\acref{acMemberData} & \mref{mMembers}\\
+\acref{acItemMetadata} & \mref{mContent}\\
+\acref{acModelRecords} & \mref{mModelLibrary}\\
+\acref{acCompliance} & \mref{mCompliance}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -821,22 +821,25 @@ Most anticipated changes map to exactly one module. The exceptions are \acref{ac
 
 In this section, the uses hierarchy between modules is provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if correct execution of B may be necessary for A to complete the task described in its specification. That is, A {\em uses} B if there exist situations in which the correct functioning of A depends upon the availability of a correct implementation of B. Figure \ref{FigUH} illustrates the use relation between the modules, with an arrow from A to B when A uses B. It can be seen that the graph is a directed acyclic graph (DAG). Each level of the hierarchy offers a testable and usable subset of the system, and modules in the higher level of the hierarchy are essentially simpler because they use modules from the lower levels.
 
-Three conventions keep the figure readable:
+Four conventions keep the figure readable:
 \begin{itemize}
 \item The Toolbox Broker (\mref{mBroker}) carries every call between services, so services never call each other directly. The figure shows the logical uses between services, such as \mref{mMetrics} using \mref{mMatProps}, rather than drawing each of these calls through the Broker.
-\item The Broker uses every service that registers with it, shown shaded in the figure. These arrows are omitted, as the Broker only routes requests to the registered services and does not depend on any particular one of them.
+\item Every service shown shaded in the figure uses the Broker, both to register its operations and to request operations from other services. These arrows are omitted. The Broker does not use any service: it invokes whichever service registered an operation and returns an error if none responds, so its correct functioning never depends on a particular service. This keeps the hierarchy free of cycles.
 \item Every module uses the Hardware-Hiding Module (\mref{mHH}), so it is not shown.
+\item The Handoff Documents Module (\mref{mHandoff}), drawn with a dashed border, draws on information from across the system, so its arrows are omitted and its uses are listed below instead.
 \end{itemize}
 
 At the top of the hierarchy, the Web App Layout Module (\mref{mWebApp}) signs members in through the Authentication Module (\mref{mAuthn}), sends every request to the Toolbox Broker (\mref{mBroker}), and displays bridge models with the 3D Viewer Module (\mref{mViewer}). The Broker checks each request with the Authorization Rules Module (\mref{mAuthz}) before routing it to a service. The services form the middle of the hierarchy: analysis services such as \mref{mMetrics} and \mref{mCompliance} use the modules that hold their data, and the libraries \mref{mStep} and \mref{mSolver} sit below the services that need them. At the bottom, the Persistence Module (\mref{mPersist}) stores the data of every module that owns records.
+
+Handoff documents are meant to capture knowledge from every part of the club's work, so the Handoff Documents Module (\mref{mHandoff}) uses more modules than any other. It uses the Member Registry Module (\mref{mMembers}) to track executive positions and their successors, the Repository Content Module (\mref{mContent}) to publish accepted documents, and the Search Module (\mref{mSearch}) so that role records can be found. It uses the Model Library Module (\mref{mModelLibrary}), the Rule Set Module (\mref{mRuleSet}), and the Material Test Records Module (\mref{mTestRecords}) to verify that the bridge models, rule sets, and test results a document refers to exist, and the Persistence Module (\mref{mPersist}) to store its templates, drafts, and role records.
 
 \begin{figure}[H]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
-  mod/.style={draw, rounded corners, text width=2.4cm, minimum height=1cm, align=center, font=\small},
+  mod/.style={draw, fill=white, rounded corners, text width=2.4cm, minimum height=1cm, align=center, font=\small},
   svc/.style={mod, fill=gray!20},
-  use/.style={-{Stealth[length=2.5mm]}, thick}
+  use/.style={-{Stealth[length=2.5mm]}, thick, preaction={draw=white, line width=3.5pt, arrows=-}}
 ]
 % Row 1
 \node[mod] (web) at (9,0) {M\ref*{mWebApp}\\Web App Layout};
@@ -846,52 +849,61 @@ At the top of the hierarchy, the Web App Layout Module (\mref{mWebApp}) signs me
 % Row 3
 \node[mod, text width=2.6cm] (authn) at (-2.8,-4.8) {M\ref*{mAuthn}\\Authentication};
 \node[mod] (authz) at (0.4,-4.8) {M\ref*{mAuthz}\\Authorization Rules};
-\node[svc] (metrics) at (11.6,-4.8) {M\ref*{mMetrics}\\Performance Metrics};
+\node[svc, dashed] (handoff) at (4.0,-4.8) {M\ref*{mHandoff}\\Handoff Documents};
+\node[svc] (import) at (7.6,-4.8) {M\ref*{mModelImport}\\Model Import};
+\node[svc] (compliance) at (11.0,-4.8) {M\ref*{mCompliance}\\Compliance Check};
+\node[svc] (metrics) at (14.4,-4.8) {M\ref*{mMetrics}\\Performance Metrics};
 % Row 4
-\node[svc] (handoff) at (2.7,-7.2) {M\ref*{mHandoff}\\Handoff Documents};
-\node[svc] (import) at (8.2,-7.2) {M\ref*{mModelImport}\\Model Import};
-\node[mod] (solver) at (12.8,-7.2) {M\ref*{mSolver}\\Structural Solver};
-\node[svc] (compliance) at (16,-7.2) {M\ref*{mCompliance}\\Compliance Check};
-\node[svc] (matprops) at (19.2,-7.2) {M\ref*{mMatProps}\\Material Properties};
+\node[svc] (search) at (3.6,-7.2) {M\ref*{mSearch}\\Search};
+\node[mod] (step) at (6.6,-7.2) {M\ref*{mStep}\\STEP Parsing};
+\node[svc] (library) at (10.0,-7.2) {M\ref*{mModelLibrary}\\Model Library};
+\node[mod] (solver) at (14.6,-7.2) {M\ref*{mSolver}\\Structural Solver};
+\node[svc] (matprops) at (18.0,-7.2) {M\ref*{mMatProps}\\Material Properties};
 % Row 5
-\node[svc] (members) at (0.6,-9.6) {M\ref*{mMembers}\\Member Registry};
-\node[svc] (content) at (3.8,-9.6) {M\ref*{mContent}\\Repository Content};
-\node[mod] (step) at (6.6,-9.6) {M\ref*{mStep}\\STEP Parsing};
-\node[svc] (library) at (9.8,-9.6) {M\ref*{mModelLibrary}\\Model Library};
-\node[svc] (ruleset) at (13,-9.6) {M\ref*{mRuleSet}\\Rule Set};
-\node[svc] (search) at (16.1,-9.6) {M\ref*{mSearch}\\Search};
-\node[svc] (tests) at (19.2,-9.6) {M\ref*{mTestRecords}\\Material Test Records};
+\node[svc] (members) at (0.2,-9.6) {M\ref*{mMembers}\\Member Registry};
+\node[svc] (content) at (3.6,-9.6) {M\ref*{mContent}\\Repository Content};
+\node[svc] (ruleset) at (12.6,-9.6) {M\ref*{mRuleSet}\\Rule Set};
+\node[svc] (tests) at (18.0,-9.6) {M\ref*{mTestRecords}\\Material Test Records};
 % Row 6: Persistence spans the modules that use it
-\node[mod, minimum width=21.4cm] (persist) at (9.9,-11.8) {M\ref*{mPersist}\\Persistence};
-% Uses: vertical drops, with right-angle turns only in the gaps between rows
+\node[mod, minimum width=20.4cm] (persist) at (9.1,-11.8) {M\ref*{mPersist}\\Persistence};
+\begin{scope}[on background layer]
+% Web App and access control
 \draw[use] (web) -- (brk);
 \draw[use] (web.west) -| (authn.north);
 \draw[use] (web.east) -| (viewer.north);
-\draw[use] (brk.west) -| (authz.north);
+\draw[use] ([yshift=2mm]brk.west) -| (authz.north);
+\path (1.95,0) coordinate (q);
+\draw[use] ([yshift=-2mm]brk.west) -| (q |- persist.north);
 \draw[use] (authn.south) |- (members.west);
-\path ([xshift=0.2cm]members.north) coordinate (p);
-\draw[use] (p |- authz.south) -- (p);
-\path ([xshift=-1.0cm]handoff.south) coordinate (p);
+\path ([xshift=0.2cm]authz.south) coordinate (p);
 \draw[use] (p) -- (p |- members.north);
-\path ([xshift=0.8cm]handoff.south) coordinate (p);
+% Repository
+\path ([xshift=-0.2cm]search.south) coordinate (p);
 \draw[use] (p) -- (p |- content.north);
+\draw[use] ([xshift=-1cm]library.south) -- ++(0,-0.6) -| ([xshift=0.8cm]content.north);
+% Models and analysis
 \path ([xshift=-0.8cm]import.south) coordinate (p);
 \draw[use] (p) -- (p |- step.north);
-\path ([xshift=0.8cm]import.south) coordinate (p);
+\path ([xshift=1.2cm]import.south) coordinate (p);
 \draw[use] (p) -- (p |- library.north);
-\path ([xshift=-1.2cm]metrics.south) coordinate (p);
+\path ([xshift=-0.8cm]compliance.south) coordinate (p);
 \draw[use] (p) -- (p |- library.north);
-\path ([xshift=0.8cm]metrics.south) coordinate (p);
+\path ([xshift=1cm]compliance.south) coordinate (p);
+\draw[use] (p) -- (p |- ruleset.north);
+\draw[use] ([xshift=-1cm]metrics.south) -- ++(0,-0.6) -| ([xshift=1cm]library.north);
+\path ([xshift=0.2cm]metrics.south) coordinate (p);
 \draw[use] (p) -- (p |- solver.north);
 \draw[use] (metrics.east) -| (matprops.north);
-\draw[use] ([xshift=-1.0cm]compliance.south) -- ++(0,-0.3) -| ([xshift=1.15cm]library.north);
-\draw[use] ([xshift=-0.4cm]compliance.south) -- ++(0,-0.85) -| (ruleset.north);
 \draw[use] (matprops) -- (tests);
-\foreach \m in {members, content, library, ruleset, search, tests}
+% Persistence
+\foreach \m in {members, content, ruleset, tests}
   \draw[use] (\m.south) -- (\m.south |- persist.north);
+\path ([xshift=0.8cm]library.south) coordinate (p);
+\draw[use] (p) -- (p |- persist.north);
+\end{scope}
 \end{tikzpicture}%
 }
-\caption{Use hierarchy among modules. Shaded modules are services registered with, and used by, the Toolbox Broker (\mref{mBroker}). All modules use the Hardware-Hiding Module (\mref{mHH}).}
+\caption{Use hierarchy among modules. Shaded modules are services that register with, and use, the Toolbox Broker (\mref{mBroker}); the Broker does not use them. All modules use the Hardware-Hiding Module (\mref{mHH}). The uses of the Handoff Documents Module (\mref{mHandoff}), drawn dashed, are listed in the text.}
 \label{FigUH}
 \end{figure}
 
@@ -926,7 +938,7 @@ The design follows three further decisions:
 \item \textbf{Backups:} The database and stored files are backed up at least every 7 days to a platform separate from the hosting server.
 \end{itemize}
 
-Analysis and compliance results are not stored. They are computed on request from the stored model, rule set, and material properties, so they always reflect the current data.
+Material properties, analysis results, and compliance results are not stored. They are computed on request from the stored test results, models, and rule sets, so they always reflect the current data. Each material property is computed from identifiable test results, so it can still be traced to the tests behind it.
 
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}p{0.54\textwidth} >{\raggedright\arraybackslash}p{0.14\textwidth}}
 \caption{Database Entities} \label{TblDB}\\
@@ -953,7 +965,6 @@ Rule Set & Competition year, whether it is the active rule set & \mref{mRuleSet}
 Rule & Constrained property, allowed value or range, unit, whether it must be checked manually & \mref{mRuleSet}\\
 Material Batch & Material, supplier, competition year & \mref{mTestRecords}\\
 Test Result & Batch, test type, specimen dimensions, applied load, grain orientation for wood, date, tester, invalid flag and reason & \mref{mTestRecords}\\
-Material Property & Batch, property (such as elastic modulus or strength), value, the test results it was computed from & \mref{mMatProps}\\
 Handoff Template & Executive position or team lead role, required fields & \mref{mHandoff}\\
 Exit Document & Template, author, competition year, status (draft, review, or published), content, repository item once published & \mref{mHandoff}\\
 Role Record & Executive position, responsibilities, key contacts, yearly timeline & \mref{mHandoff}\\
@@ -988,7 +999,6 @@ Role Record & Executive position, responsibilities, key contacts, yearly timelin
 % Materials (M12, M13)
 \node[ent] (batch) at (8.4,-6.2) {Material Batch};
 \node[ent] (test) at (17.6,-6.2) {Test Result};
-\node[ent] (prop) at (12.6,-8) {Material Property};
 % Relationships: 1 and * mark the multiplicity at each end
 \draw[rel] (role) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (member);
 \draw[rel] (member) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (log);
@@ -1003,8 +1013,6 @@ Role Record & Executive position, responsibilities, key contacts, yearly timelin
 \draw[rel] (position) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{1} (record);
 \draw[rel] (ruleset) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (rule);
 \draw[rel] (batch) -- node[m,pos=0.1,above]{1} node[m,pos=0.9,above]{*} (test);
-\draw[rel] (batch) -- node[m,pos=0.2,left]{1} node[m,pos=0.8,left]{*} (prop);
-\draw[rel] (prop) -- node[m,pos=0.2,right]{*} node[m,pos=0.8,right]{*} (test);
 \end{tikzpicture}%
 }
 \caption{Main entities of the database and their relationships. A 1 or * at each end of a line gives how many of that entity take part in the relationship.}
