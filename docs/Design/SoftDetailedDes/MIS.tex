@@ -70,10 +70,10 @@ urlcolor=cyan          % color of external links
 \textbf{Date} & \textbf{Version} & \textbf{Notes} \\
 \midrule
 2026-11-08 & 1.1 & Initial draft; based on system components \\
-2026-11-17 & 1.2 & Updated the MIS layout and began replacing the generic template with the project module hierarchy. \\
-2026-11-19 & 1.3 & Expanded and revised the MIS to align it with the Module Guide. \\
-2026-11-19 & 1.4 & Merged updates from \texttt{main} into the branch. \\
-2026-11-19 & 1.5 & Removed remaining template comments, clarified wording, and made other small MIS fixes. \\
+2026-11-15 & 1.2 & Updated the MIS layout and began replacing the generic template with the project module hierarchy. \\
+2026-11-17 & 1.3 & Expanded and revised the MIS to align it with the Module Guide. \\
+2026-11-18 & 1.4 & Merged updates from \texttt{main} into the branch. \\
+2026-11-18 & 1.5 & Removed remaining template comments, clarified wording, and made other small MIS fixes. \\
 \bottomrule
 \end{tabularx}
 
@@ -2278,28 +2278,63 @@ All advice was critically evaluated and all factual claims within the advice wer
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
-\input{../../Reflection.text}
-
+\subsubsection*{Individual}
 \begin{enumerate}
   \item What went well while writing this deliverable?
   \item What pain points did you experience during this deliverable, and how did you resolve them?
+\end{enumerate}
+
+\subsubsection*{Team}
+\begin{enumerate}
   \item Which of your design decisions stemmed from speaking to your client(s) or a proxy (e.g., your peers, stakeholders, potential users)? For those that were not, why, and where did they come from?
   \item While creating the design doc, what parts of your other documents (e.g., requirements, hazard analysis, etc.), if any, needed to be changed, and why?
   \item What are the limitations of your solution? Put another way, given unlimited resources, what could you do to make the project better? (\texttt{LO\_ProbSolutions})
   \item Give a brief overview of other design solutions you considered. What are the benefits and tradeoffs of those other designs compared with the chosen design? From all the potential options, why did you select the documented design? (\texttt{LO\_Explores})
-  One final design solution we almost made was to make the app open source to other schools, however we really wanted to address the club structure and needs of the McMaster team which made this design solution unfeasible.
+\end{enumerate}
+
+\subsubsection*{Currently Out-of-Scope}
+\begin{enumerate}
   \item (After you have implemented another team's module, which means this isn't filled in until after the original deadline). What did you learn by implementing another team's module? Were all the details you needed in the documentation, or did you need to make assumptions, or ask the other team questions? If your team also had another team implement one of your modules, what was this experience like? Are there things in your documentation you could have changed to make the process go more smoothly for when an ``outsider'' completes some of the implementation?
-  
   Your reflection should be about concepts learned in your SE education, such as modular decomposition, cohesion, coupling, information hiding, etc. You should critique the quality and utility of the specification you received. You should create a PR for your implemented module, and a link to the PR should be part of your reflection.
+\end{enumerate}
+
+
+\subsection{Team}
+\begin{enumerate}
+
+  \item Majority of design decisions related to user benefit or specific user requirements were determined through the primary member elicitation survey conducted, and constant communication with the Troitsky club. As one of the team's members, Pedro, is also an experience Troitsky member, 
+  several components that would require domain knowledge were easily understood and integrated, allowing design decision to stem from primary user needs. As the project is also focusing on integration Troitsky Toolbox support into the club's operation, through a specified subteam, the team has been highly integrated with the club's current operations. 
+  Any design decision focused on roles, competition specifications, material testing support, stored data and exit documentation was directly in compliance and off of user needs.
+  
+  \item There were no major changes that had to be made, but more discussion surround specific design decision were brought up that will potentially further require changes to past documents. The full implementation of a coach role and the support that is required for that will need to be added into the past docs, a change that was understood through the Fall CD. 
+  There was also a change/discussion on what sign-in system the product will use, primarily debating between going through McMaster SSO and an internal account system. Changes regarding this decision will be made once discussion with the TA and Professor has been had, checking if the team is able to use the McMaster SSO feasibly within this project.
+  
+  \item Structural analysis; currently we are relying on standardized dependencies to predict the estimated load and failure points of a given model and the main goal is that it is consistently inaccurate (i.e, good models get a high estimated load relative to poorer models, but the actual estimated load may not be close to how.) A custom modelling software built using numerical analysis would be ideal for estimating load but it is just not within the scope of this project to do it within the given time constraint. 
+  We are also heavily limited in our testing due to the development period only following one competition year. With unlimited time, the team would be able to iterate off of the product once already used and understood by members.
+  
+  \item One design solution we considered was to have the majority of the application ran locally, essentially it would be a downloaded application rather than a web app, however the friction to download and set up the app along with the fact that we would still have to host the data on a server somewhere made us decide a webapp was a better route.
+  A completely different design route we almost went was the in depth modelling route; instead of building a database, transition documentation, materials properties manager, we would just build them a custom simulator using numerical analysis that would be more accurate than commercial modeling softwares FEA at estimating the load of troitsky bridges, however it seemed like too large of a task that also doesn't align with the needs of the stakeholders (Information centralization and carry over, club communication and coordination, talked about more in depth in the interview report CD)
+  One final design solution we almost made was to make the app open source to other schools, however we really wanted to address the club structure and needs of the McMaster team which made this design solution unfeasible.
+
+\end{enumerate}
+
+\subsection{Pedro Azevedo}
+\begin{enumerate}
+  \item In writing these deliverables discussion with the team felt primarily strong. As we have settled into a more polished development flow, working collaboratively has been easier than ever. The team's use of specialized kanban boards and tags, allowed for work to be done early as all members understood their assignments.
+  \item The primary pain point experience in this deliverable was the decomposition of our system into proper modules. As out project is a toolbox, servicing many components of the club operation, the decomposition was very lengthy and at times felt trivial for specific components.
+  Certain sections there was uncertainty in the granularity of the breakdown, specifically in how individual a secret had to be within each module. 
 \end{enumerate}
 
 \subsection{Michael Roberts}
 \begin{enumerate}
   \item I thought of how this would be implemented low-level and did it with time to spare.
   \item Motivation --- sometimes I got distracted while writing this large document. Eventually I committed as it got later into the night.
-  \item None. The earlier documents were well designed to facilitate the production of this one.
-  \item With unlimited resources, we could use premier external libraries instead of the free versions that will ultimately be used. Also, a premier firewall would be installed to prevent any attack.
-  \item Another design I considered was stateful objects instead of delegating to databases. (While state variables are used, they are illustrative.) While this may make a slight speedup during runtime, storage and durability could be a nightmare if JSON was used in lieu of a database. Also, RBAC was considered being scrapped because most people are trustworthy anyway, but security is worthwhile due to the occasional malicious outsider. Lastly, I chose that materials tests are initially valid because the vast, vast majority will be.
+\end{enumerate}
+
+\subsection{Michael Roberts}
+\begin{enumerate}
+  \item I thought of how this would be implemented low-level and did it with time to spare.
+  \item Motivation --- sometimes I got distracted while writing this large document. Eventually I committed as it got later into the night.
 \end{enumerate}
 
 \subsection{Mason Azzopardi}
