@@ -2261,9 +2261,15 @@ graduate attribute of Problem Analysis and Design.
   \item Which of your design decisions stemmed from speaking to your client(s) or a proxy (e.g., your peers, stakeholders, potential users)? For those that were not, why, and where did they come from?
   \item While creating the design doc, what parts of your other documents (e.g., requirements, hazard analysis, etc.), if any, needed to be changed, and why?
   \item What are the limitations of your solution? Put another way, given unlimited resources, what could you do to make the project better? (\texttt{LO\_ProbSolutions})
+  
+  Structural analysis; currently we are relying on standardized dependencies to predict the estimated load and failure points of a given model and the main goal is that it is consistently inaccurate (i.e, good models get a high estimated load relative to poorer models, but the actual estimated load may not be close to how.) A custom modelling software built using numerical analysis would be ideal for estimating load but it is just not within the scope of this project to do it within the given time constraint.
   \item Give a brief overview of other design solutions you considered. What are the benefits and tradeoffs of those other designs compared with the chosen design? From all the potential options, why did you select the documented design? (\texttt{LO\_Explores})
+  
+One design solution we considered was to have the majority of the application ran locally, essentially it would be a downloaded application rather than a web app, however the friction to download and set up the app along with the fact that we would still have to host the data on a server somewhere made us decide a webapp was a better route.
+  A completely different design route we almost went was the in depth modelling route; instead of building a database, transition documentation, materials properties manager, we would just build them a custom simulator using numerical analysis that would be more accurate than commercial modeling softwares FEA at estimating the load of troitsky bridges, however it seemed like too large of a task that also doesn't align with the needs of the stakeholders (Information centralization and carry over, club communication and coordination, talked about more in depth in the interview report CD)
+  One final design solution we almost made was to make the app open source to other schools, however we really wanted to address the club structure and needs of the McMaster team which made this design solution unfeasible.
   \item (After you have implemented another team's module, which means this isn't filled in until after the original deadline). What did you learn by implementing another team's module? Were all the details you needed in the documentation, or did you need to make assumptions, or ask the other team questions? If your team also had another team implement one of your modules, what was this experience like? Are there things in your documentation you could have changed to make the process go more smoothly for when an ``outsider'' completes some of the implementation?
-
+  
   Your reflection should be about concepts learned in your SE education, such as modular decomposition, cohesion, coupling, information hiding, etc. You should critique the quality and utility of the specification you received. You should create a PR for your implemented module, and a link to the PR should be part of your reflection.
 \end{enumerate}
 
@@ -2275,5 +2281,9 @@ graduate attribute of Problem Analysis and Design.
   \item With unlimited resources, we could use premier external libraries instead of the free versions that will ultimately be used. Also, a premier firewall would be installed to prevent any attack.
   \item Another design I considered was stateful objects instead of delegating to databases. (While state variables are used, they are illustrative.) While this may make a slight speedup during runtime, storage and durability could be a nightmare if JSON was used in lieu of a database. Also, RBAC was considered being scrapped because most people are trustworthy anyway, but security is worthwhile due to the occasional malicious outsider. Lastly, I chose that materials tests are initially valid because the vast, vast majority will be.
 \end{itemize}
-
+subsection{Mason Azzopardi}
+\begin{enumerate}
+  \item I think what went best during this document was the early work delegation we did. Everyone knew their parts and was able to get some work done before each meeting, we were able to create consistent action items that streamlined the process and eliminated our need to rush at the end of this deliverable.
+  \item Consistency between the MG and the MIS was a bit of a pain point for this deliverable. They were being worked on in parallel which meant a lot of revision had to be done to both as we were writing them to ensure they were accurate to each other.
+\end{enumerate}
 \end{document}
