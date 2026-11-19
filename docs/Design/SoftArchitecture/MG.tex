@@ -5,8 +5,11 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, backgrounds}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -21,15 +24,16 @@
 
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
-\newcommand{\acref}[1]{AC\ref{#1}}
+\newcommand{\acref}[1]{\hyperref[#1]{AC\ref*{#1}}}
 
 \newcounter{ucnum}
 \newcommand{\uctheucnum}{UC\theucnum}
-\newcommand{\uref}[1]{UC\ref{#1}}
+\newcommand{\uref}[1]{\hyperref[#1]{UC\ref*{#1}}}
 
 \newcounter{mnum}
 \newcommand{\mthemnum}{M\themnum}
-\newcommand{\mref}[1]{M\ref{#1}}
+% \mref links to the module's entry in Section \ref{SecMD} (Module Decomposition)
+\newcommand{\mref}[1]{\hyperref[#1:dec]{M\ref*{#1}}}
 
 \begin{document}
 
@@ -43,11 +47,12 @@
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\begin{tabularx}{\textwidth}{p{2.4cm}p{1.8cm}>{\raggedright\arraybackslash}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+13/11/2026 & 0.1 & Initial draft: anticipated and unlikely changes, module hierarchy, and module decomposition\\
+16/11/2026 & 0.2 & Completed draft: traceability matrices, use hierarchy, connection between requirements and design, user interfaces, communication protocols, database design, timeline, and AI disclosure\\
+18/11/2026 & 1.0 & Rev -1 deliverable\\
 \bottomrule
 \end{tabularx}
 
@@ -65,18 +70,42 @@ This section records information for easy reference.
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   AC & Anticipated Change\\
+  AI & Artificial Intelligence\\
+  CAD & Computer-Aided Design\\
+  CSV & Comma-Separated Values\\
   DAG & Directed Acyclic Graph \\
+  FR & Functional Requirement\\
   M & Module \\
   MG & Module Guide \\
+  NFR & Non-Functional Requirement\\
   OS & Operating System \\
-  R & Requirement\\
-  SC & Scientific Computing \\
+  PDF & Portable Document Format\\
+  SR & Safety and Security Requirement (Hazard Analysis)\\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  STEP & Standard for the Exchange of Product Model Data (ISO 10303)\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
+  VnV & Verification and Validation\\
   \bottomrule
-\end{tabular}\\
+\end{tabular}
+
+\vspace{1em}
+\noindent Requirements are identified as $\langle \mathit{Type} \rangle$-$\langle \mathit{Component} \rangle$-$\langle n \rangle$, where:
+\begin{itemize}
+\item $\mathit{Type} \in \{\mathrm{FR}, \mathrm{NFR}, \mathrm{SR}\}$
+\item $\mathit{Component} \in \{\mathrm{WS}, \mathrm{AC}, \mathrm{BR}, \mathrm{KR}, \mathrm{MA}, \mathrm{PA}, \mathrm{RC}, \mathrm{MT}, \mathrm{KT}, \mathrm{SYS}\}$, the SRS component the requirement belongs to
+\item $n \in \{1, 2, 3, \ldots\}$, the number of the requirement within its type and component
+\end{itemize}
+
+\begin{tabular}{l l l l}
+WS & Web Server & AC & Access Control System\\
+BR & Toolbox Broker & KR & Knowledge Repository\\
+MA & Model Analysis System & PA & Performance Analysis System\\
+RC & Rule Compliance System & MT & Material Testing Manager\\
+KT & Knowledge Transfer Manager & SYS & System-wide\\
+\end{tabular}
+
+\vspace{1em}
+\noindent For example, FR-KR-2 is the second functional requirement of the Knowledge Repository.
 
 \newpage
 
@@ -151,7 +180,7 @@ Finally, Section \ref{SecAI} discloses the use of generative AI tools in the pre
 This section lists possible changes to the system. According to the likeliness of the change, the possible changes are classified into two categories. Anticipated changes are listed in Section \ref{SecAchange}, and unlikely changes are listed in Section \ref{SecUchange}.
 
 \subsection{Anticipated Changes} \label{SecAchange}
-Anticipated changes are the source of the information that is to be hidden inside the modules. Ideally, changing one of the anticipated changes will only require changing the one module that hides the associated decision. The approach adopted here is called design for change. Some anticipated changes affect more than one module; these cases are identified in the traceability matrix in Section \ref{SecTM}.
+Anticipated changes are the source of the information that is to be hidden inside the modules. Ideally, changing one of the anticipated changes will only require changing the one module that hides the associated decision. The approach adopted here is called design for change. Some anticipated changes affect more than one module; these cases are identified in the traceability matrix in Section \ref{SecTMAC}.
 
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:]
@@ -176,6 +205,16 @@ Anticipated changes are the source of the information that is to be hidden insid
   The structure and templates of handoff documents. Executives are expected to refine these each year based on what incoming members found useful.
 \item[\refstepcounter{acnum} \actheacnum \label{acSearch}:]
   The search strategy used to find content in the Knowledge Repository. This may need to change to keep searches fast as the amount of stored content grows.
+\item[\refstepcounter{acnum} \actheacnum \label{acPermissions}:]
+  The operations each role is permitted to perform. The roles themselves are stable, but executives are expected to adjust what each role can see and change as the Toolbox is used.
+\item[\refstepcounter{acnum} \actheacnum \label{acMemberData}:]
+  The information recorded about each member account. This may grow as the club decides to track more about its members, such as the positions they have held.
+\item[\refstepcounter{acnum} \actheacnum \label{acItemMetadata}:]
+  The metadata required for repository items, such as the list of categories. This is expected to change as the club's stored content grows and members find new ways they need to filter it.
+\item[\refstepcounter{acnum} \actheacnum \label{acModelRecords}:]
+  The rules for who may view each bridge model. These may change if the club changes how designs are shared between teams during or after a season.
+\item[\refstepcounter{acnum} \actheacnum \label{acCompliance}:]
+  The method used to check a bridge model against a rule set. This may change as new kinds of rules are added that cannot be checked as a single property against an allowed range.
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -210,26 +249,26 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item [\refstepcounter{mnum} \mthemnum \label{mWebApp}:] Web App Layout Module
-\item [\refstepcounter{mnum} \mthemnum \label{mBroker}:] Toolbox Broker Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAuthz}:] Authorization Rules Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMembers}:] Member Registry Module
-\item [\refstepcounter{mnum} \mthemnum \label{mContent}:] Repository Content Module
-\item [\refstepcounter{mnum} \mthemnum \label{mModelImport}:] Model Import Module
-\item [\refstepcounter{mnum} \mthemnum \label{mModelLibrary}:] Model Library Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMetrics}:] Performance Metrics Module
-\item [\refstepcounter{mnum} \mthemnum \label{mRuleSet}:] Rule Set Module
-\item [\refstepcounter{mnum} \mthemnum \label{mCompliance}:] Compliance Check Module
-\item [\refstepcounter{mnum} \mthemnum \label{mTestRecords}:] Material Test Records Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMatProps}:] Material Properties Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHandoff}:] Handoff Documents Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAuthn}:] Authentication Module
-\item [\refstepcounter{mnum} \mthemnum \label{mPersist}:] Persistence Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSearch}:] Search Module
-\item [\refstepcounter{mnum} \mthemnum \label{mStep}:] STEP Parsing Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSolver}:] Structural Solver Module
-\item [\refstepcounter{mnum} \mthemnum \label{mViewer}:] 3D Viewer Module
+\item [\refstepcounter{mnum}\label{mHH}\mref{mHH}:] Hardware-Hiding Module
+\item [\refstepcounter{mnum}\label{mWebApp}\mref{mWebApp}:] Web App Layout Module
+\item [\refstepcounter{mnum}\label{mBroker}\mref{mBroker}:] Toolbox Broker Module
+\item [\refstepcounter{mnum}\label{mAuthz}\mref{mAuthz}:] Authorization Rules Module
+\item [\refstepcounter{mnum}\label{mMembers}\mref{mMembers}:] Member Registry Module
+\item [\refstepcounter{mnum}\label{mContent}\mref{mContent}:] Repository Content Module
+\item [\refstepcounter{mnum}\label{mModelImport}\mref{mModelImport}:] Model Import Module
+\item [\refstepcounter{mnum}\label{mModelLibrary}\mref{mModelLibrary}:] Model Library Module
+\item [\refstepcounter{mnum}\label{mMetrics}\mref{mMetrics}:] Performance Metrics Module
+\item [\refstepcounter{mnum}\label{mRuleSet}\mref{mRuleSet}:] Rule Set Module
+\item [\refstepcounter{mnum}\label{mCompliance}\mref{mCompliance}:] Compliance Check Module
+\item [\refstepcounter{mnum}\label{mTestRecords}\mref{mTestRecords}:] Material Test Records Module
+\item [\refstepcounter{mnum}\label{mMatProps}\mref{mMatProps}:] Material Properties Module
+\item [\refstepcounter{mnum}\label{mHandoff}\mref{mHandoff}:] Handoff Documents Module
+\item [\refstepcounter{mnum}\label{mAuthn}\mref{mAuthn}:] Authentication Module
+\item [\refstepcounter{mnum}\label{mPersist}\mref{mPersist}:] Persistence Module
+\item [\refstepcounter{mnum}\label{mSearch}\mref{mSearch}:] Search Module
+\item [\refstepcounter{mnum}\label{mStep}\mref{mStep}:] STEP Parsing Module
+\item [\refstepcounter{mnum}\label{mSolver}\mref{mSolver}:] Structural Solver Module
+\item [\refstepcounter{mnum}\label{mViewer}\mref{mViewer}:] 3D Viewer Module
 \end{description}
 
 
@@ -241,28 +280,28 @@ actually be implemented.
 \midrule
 
 
-{Hardware-Hiding Module} & ~ \\
+{Hardware-Hiding Module} & \mref{mHH}: Hardware-Hiding Module\\
 \midrule
-\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & Web App Layout Module\\
-& Toolbox Broker Module\\
-& Authorization Rules Module\\
-& Member Registry Module\\
-& Repository Content Module\\
-& Model Import Module\\
-& Model Library Module\\
-& Performance Metrics Module\\
-& Rule Set Module\\
-& Compliance Check Module\\
-& Material Test Records Module\\
-& Material Properties Module\\
-& Handoff Documents Module\\
+\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & \mref{mWebApp}: Web App Layout Module\\
+& \mref{mBroker}: Toolbox Broker Module\\
+& \mref{mAuthz}: Authorization Rules Module\\
+& \mref{mMembers}: Member Registry Module\\
+& \mref{mContent}: Repository Content Module\\
+& \mref{mModelImport}: Model Import Module\\
+& \mref{mModelLibrary}: Model Library Module\\
+& \mref{mMetrics}: Performance Metrics Module\\
+& \mref{mRuleSet}: Rule Set Module\\
+& \mref{mCompliance}: Compliance Check Module\\
+& \mref{mTestRecords}: Material Test Records Module\\
+& \mref{mMatProps}: Material Properties Module\\
+& \mref{mHandoff}: Handoff Documents Module\\
 \midrule
-\multirow{6}{0.3\textwidth}{Software Decision Module} & Authentication Module\\
-& Persistence Module\\
-& Search Module\\
-& STEP Parsing Module\\
-& Structural Solver Module\\
-& 3D Viewer Module\\
+\multirow{6}{0.3\textwidth}{Software Decision Module} & \mref{mAuthn}: Authentication Module\\
+& \mref{mPersist}: Persistence Module\\
+& \mref{mSearch}: Search Module\\
+& \mref{mStep}: STEP Parsing Module\\
+& \mref{mSolver}: Structural Solver Module\\
+& \mref{mViewer}: 3D Viewer Module\\
 \bottomrule
 
 
@@ -273,16 +312,30 @@ actually be implemented.
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
 
-The design of the system is intended to satisfy the requirements developed in
-the SRS. In this stage, the system is decomposed into modules. The connection
-between requirements and modules is listed in Table~\ref{TblRT}.
+The design of the system is intended to satisfy the requirements developed in the SRS and the safety and security requirements of the Hazard Analysis. The following key design decisions were made to address specific requirements. The full mapping between requirements and modules is given in the Traceability Matrix in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+\begin{itemize}
+\item \textbf{Hardware-Hiding Module (\mref{mHH}):} To satisfy NFR-WS-2, NFR-SYS-2, NFR-SYS-4, SR-WS-2, SR-WS-4, and SR-SYS-3, the hosting platform is hidden behind a single module packaged as a Docker container, so the system can move between a cloud service and a university server without changing other modules, and a new maintainer can reproduce the deployment locally.
+\item \textbf{Web App Layout Module (\mref{mWebApp}):} To satisfy FR-WS-1--FR-WS-3, NFR-WS-1, NFR-WS-3, and NFR-SYS-1, the pages members see are isolated in one module that serves the public landing page and member pages, attaches the signed-in member's identity to each request, and ends inactive sessions, so the layout can change with user feedback without affecting the services.
+\item \textbf{Toolbox Broker Module (\mref{mBroker}):} To satisfy FR-BR-1--FR-BR-4, NFR-BR-1--NFR-BR-3, and NFR-SYS-3, all communication between the user interface and the services passes through a broker that services register with at startup. New tools are added by registering them, an unavailable service returns an error instead of affecting the others, and every request is logged in one place.
+\item \textbf{Authorization Rules Module (\mref{mAuthz}):} To satisfy FR-AC-3, FR-AC-6, NFR-AC-2, and SR-KR-3, the mapping from roles and teams to permitted operations is kept in one module that the Broker consults on every request, so each service is protected without implementing its own access control, and role changes take effect by the member's next request.
+\item \textbf{Member Registry Module (\mref{mMembers}):} To satisfy FR-AC-2, FR-AC-4, FR-AC-5, and SR-KT-3, member accounts, roles, and team assignments are held in a single registry, which also blocks deactivating an outgoing executive until a successor has been assigned.
+\item \textbf{Repository Content Module (\mref{mContent}):} To satisfy FR-KR-2, FR-KR-4, FR-KR-5, and SR-KR-2--SR-KR-5, the structure of repository items and their required metadata is hidden in one module, which rejects uploads missing a title, category, or year, asks for confirmation before changes, and archives items instead of deleting them.
+\item \textbf{Model Import Module (\mref{mModelImport}):} To satisfy FR-MA-1, FR-MA-3, NFR-MA-1, NFR-MA-3, SR-MA-1, and SR-MA-3, the club's export conventions are kept separate from the STEP library, so models can be validated, summarized for the member to confirm, and stopped after a timeout, independently of how the file is parsed.
+\item \textbf{Model Library Module (\mref{mModelLibrary}):} To satisfy FR-MA-4--FR-MA-6 and FR-AC-6, bridge models are stored as records owned by a team and competition year, so current models stay private to their team and can be converted to past designs in a single executive action at the end of the season.
+\item \textbf{Performance Metrics Module (\mref{mMetrics}):} To satisfy FR-PA-1--FR-PA-4, NFR-PA-1--NFR-PA-3, and SR-PA-1, the performance metrics are kept separate from the structural solver, so new metrics can be added without changing existing ones, and each estimate is shown with its assumptions or replaced by an error message when the results are invalid.
+\item \textbf{Rule Set Module (\mref{mRuleSet}):} To satisfy FR-RC-1, FR-RC-2, FR-RC-5, and NFR-RC-2, competition rules are stored as data, each defined by a property and its allowed value or range, so executives can configure a new year's rules without programming.
+\item \textbf{Compliance Check Module (\mref{mCompliance}):} To satisfy FR-RC-3--FR-RC-5, NFR-RC-1, and SR-RC-1, the checking algorithm is kept separate from the rules it checks, so it reports the measured and allowed values for each failed rule, and the year of the rules used, however the rule set changes.
+\item \textbf{Material Test Records Module (\mref{mTestRecords}):} To satisfy FR-MT-1--FR-MT-3, FR-MT-5, NFR-MT-1, NFR-MT-3, and SR-MT-1--SR-MT-3, the format and import template of test results are hidden in one module, which validates every record, including its units, grain orientation, and physically possible values, before it can affect material properties.
+\item \textbf{Material Properties Module (\mref{mMatProps}):} To satisfy FR-MT-4, FR-MT-5, FR-PA-3, and NFR-MT-2, the derivation of material properties is kept separate from the test records, excludes results flagged as invalid, and keeps a trace from each property back to the tests it was computed from.
+\item \textbf{Handoff Documents Module (\mref{mHandoff}):} To satisfy FR-KT-1--FR-KT-5, NFR-KT-1, NFR-KT-2, SR-KT-1, SR-KT-2, SR-KT-4, and SR-KT-5, handoff templates and the draft, review, and publish lifecycle are kept in their own module, which publishes accepted documents to the repository and exports them to PDF.
+\item \textbf{Authentication Module (\mref{mAuthn}):} To satisfy FR-AC-1, FR-WS-2, NFR-AC-1, SR-AC-1, SR-AC-2, and SR-WS-5, signing in is handled by ASP.NET Core Identity behind a single module, so passwords are stored only as salted hashes and the mechanism can be replaced, for example by single sign-on, without affecting other modules.
+\item \textbf{Persistence Module (\mref{mPersist}):} To satisfy FR-KR-1, NFR-KR-2, NFR-SYS-2, SR-KR-1, and SR-WS-3, all modules store their data through one data-access layer over Microsoft SQL Server, which keeps records consistent under concurrent use and backs up the database to an external platform.
+\item \textbf{Search Module (\mref{mSearch}):} To satisfy FR-KR-3, NFR-KR-1, and NFR-KT-1, searching is kept separate from content storage and finds items through the Repository Content Module, so the search strategy can be changed to keep search fast as stored content grows.
+\item \textbf{STEP Parsing Module (\mref{mStep}):} To satisfy FR-MA-1, FR-MA-3, and NFR-MA-3, the STEP library is wrapped in its own module, so it can be replaced by the Open CASCADE fallback if it cannot read club exports.
+\item \textbf{Structural Solver Module (\mref{mSolver}):} To satisfy FR-PA-1, NFR-PA-1, and NFR-PA-2, the structural analysis method is hidden in its own module, so BriefFiniteElement.NET can be replaced by the fallback direct stiffness solver without changing the metrics built on its results.
+\item \textbf{3D Viewer Module (\mref{mViewer}):} To satisfy FR-MA-2, FR-MA-5, NFR-MA-2, NFR-SYS-1, and SR-MA-2, 3D rendering runs in the browser behind one module, as the back end cannot render models, and displays the units and a scale reference with each model.
+\end{itemize}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -291,31 +344,34 @@ proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
 decomposition is a brief statement of the design decision hidden by the
 module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
-implementing software is given under the \emph{Implemented By} title. If the
+implementing software is given under the \emph{Implemented By} title, listing
+the languages, frameworks, and libraries used to implement the module. If the
 entry is \emph{OS}, this means that the module is provided by the operating
-system or by standard programming language libraries.  \emph{\progname{}} means the
-module will be implemented by the \progname{} software.
+system or by standard programming language libraries.
 
 Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules}
+
+\subsubsection{Hardware-Hiding Module (M\ref*{mHH})}\label{mHH:dec}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
-\item[Implemented By:] OS
+\item[Secrets:] The hosting platform on which the system is deployed, such as a cloud service (e.g., Azure App Service) or a university or club-owned server.
+\item[Services:] Serves as the virtual hardware used by the rest of the system.
+  This module provides the interface between the host machine and the software,
+  supplying the runtime, file storage, and secure network connection that the
+  Toolbox is served from.
+\item[Implemented By:] OS and hosting platform, packaged as a Docker container
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
+\item[Secrets:] The contents of the required behaviours.
+\item[Services:] Includes programs that provide externally visible behaviour of
   the system as specified in the software requirements specification (SRS)
   documents. This module serves as a communication layer between the
   hardware-hiding module and the software decision module. The programs in this
@@ -323,19 +379,179 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Web App Layout Module (M\ref*{mWebApp})}\label{mWebApp:dec}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] The presentation of the Toolbox Web App's pages to members.
+\item[Services:] Serves the public landing page and the member pages for each
+  tool. Accepts user input through forms and file uploads, passes each request
+  to the Toolbox Broker with the signed-in member's identity, and displays the
+  response or error message. Ends inactive sessions after the session timeout.
+\item[Implemented By:] C\# with ASP.NET Core Blazor (Razor components)
+\item[Type of Module:] Abstract Object
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Toolbox Broker Module (M\ref*{mBroker})}\label{mBroker:dec}
 
+\begin{description}
+\item[Secrets:] The protocol used to route requests to registered services.
+\item[Services:] Lets each tool register its operations at startup. Checks every
+  request against the Authorization Rules Module before forwarding it, directs
+  authorized requests to the service that provides the operation, and returns
+  the response. Returns an error when an operation does not exist or a service
+  does not respond, so that the failure of one service does not affect the
+  others. Logs every request it handles.
+\item[Implemented By:] C\# on ASP.NET Core
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Authorization Rules Module (M\ref*{mAuthz})}\label{mAuthz:dec}
+
+\begin{description}
+\item[Secrets:] The access policy that decides which operations a member may perform.
+\item[Services:] Decides whether a member may perform a requested operation,
+  based on the role and team recorded for them in \mref{mMembers}. Restricts a
+  team's current-year models to the members of that team and the executives.
+  Checks the member's current role on every request, so that role changes take
+  effect by the member's next request.
+\item[Implemented By:] C\# using ASP.NET Core Identity
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Member Registry Module (M\ref*{mMembers})}\label{mMembers:dec}
+
+\begin{description}
+\item[Secrets:] The data structure that represents member accounts.
+\item[Services:] Provides access programs to add, update, deactivate, and look
+  up registered members. Assigns exactly one role to each account and lets
+  executives and maintainers change it. Assigns each account to at most one team
+  per year.
+  Blocks deactivating an executive until a successor has been assigned to their
+  position.
+\item[Implemented By:] C\# on .NET, using ASP.NET Core Identity user accounts
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Repository Content Module (M\ref*{mContent})}\label{mContent:dec}
+
+\begin{description}
+\item[Secrets:] The structure of repository items, including the metadata each item must have.
+\item[Services:] Provides access to the Knowledge Repository. Accepts uploads of
+  any file type and rejects those missing a title, a category from the fixed
+  list, or a year. Lets members preview and download items. Lets the uploader or
+  an executive edit or archive an item after confirmation, and excludes archived
+  items from default searches. Reports an error when an item cannot be stored or
+  retrieved.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Model Import Module (M\ref*{mModelImport})}\label{mModelImport:dec}
+
+\begin{description}
+\item[Secrets:] The club conventions for exporting bridge models from CAD software, which determine how the structural elements of a bridge are identified from its geometry.
+\item[Services:] Lets members upload and download bridge models as STEP files
+  (\texttt{.stp} or \texttt{.step}). Identifies the members and joints of the
+  bridge from the geometry read by \mref{mStep}. Rejects files that are not valid
+  STEP or contain no geometry, stops processing after the model analysis
+  timeout, and explains why. Displays a summary of the imported model so the
+  member can confirm it was read correctly.
+\item[Implemented By:] C\# on ASP.NET Core
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Model Library Module (M\ref*{mModelLibrary})}\label{mModelLibrary:dec}
+
+\begin{description}
+\item[Secrets:] The organization of bridge model records, which determines who may view each model.
+\item[Services:] Stores each uploaded model as its team's current model, visible
+  only to that team. Lets members browse and load past designs read-only,
+  filtered by year and team. Lets executives convert all current models into past
+  designs at the end of the season.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Performance Metrics Module (M\ref*{mMetrics})}\label{mMetrics:dec}
+
+\begin{description}
+\item[Secrets:] The set of performance metrics used to judge a bridge, such as its failure load or the factor of safety of each element.
+\item[Services:] Estimates the failure load and failure location of a bridge and
+  computes its load-to-mass ratio, using the material properties selected by
+  year or batch. Displays the assumptions and limitations with each estimate,
+  and reports an error instead of an estimate when the results are invalid.
+  New metrics can be added without changing existing ones.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Rule Set Module (M\ref*{mRuleSet})}\label{mRuleSet:dec}
+
+\begin{description}
+\item[Secrets:] The data structure used to represent a competition rule set,
+  where each rule is a property with an allowed value or range.
+\item[Services:] Stores the rule set for each competition year. Lets executives
+  import a year's rules and create, edit, and remove individual rules without
+  changing code. Marks rules that cannot be checked from geometry as manual
+  checks.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Compliance Check Module (M\ref*{mCompliance})}\label{mCompliance:dec}
+
+\begin{description}
+\item[Secrets:] The algorithm used to evaluate a bridge model's properties
+  against a rule set.
+\item[Services:] Checks a bridge model against the active or a past year's rule
+  set and reports pass or fail for each rule. For each failed rule, reports the
+  rule, the measured value, and the allowed range. Displays the competition year
+  of the rules used and lists the rules that must be checked manually.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Material Test Records Module (M\ref*{mTestRecords})}\label{mTestRecords:dec}
+
+\begin{description}
+\item[Secrets:] The format of material test records, including the template used to import them.
+\item[Services:] Records test results entered through a form or imported in bulk
+  from CSV or Excel files. Converts values to base units, requires grain
+  orientation for wood, and rejects records with missing fields or physically
+  impossible values, identifying the rows at fault. Lets executives flag results
+  as invalid without deleting them, compares results against previous years,
+  and exports records to CSV.
+\item[Implemented By:] C\# on .NET, with CSV and Excel (\texttt{.xlsx}) import and CSV export
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Material Properties Module (M\ref*{mMatProps})}\label{mMatProps:dec}
+
+\begin{description}
+\item[Secrets:] The method used to derive material properties, such as elastic modulus or strength, from accepted test records.
+\item[Services:] Aggregates the accepted test records for a material, year, or
+  batch into a set of material properties and provides them to the Performance
+  Metrics Module. Keeps a trace from each property back to the tests it was
+  computed from.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Handoff Documents Module (M\ref*{mHandoff})}\label{mHandoff:dec}
+
+\begin{description}
+\item[Secrets:] The templates that define each type of handoff document.
+\item[Services:] Provides an exit-document template for each executive position
+  and team lead. Lets members fill out documents, save them as drafts, and submit
+  them for review before they are published to the repository. Validates
+  submitted documents against their template, maintains a role record for each
+  executive position, verifies that the bridge models, test results, and rule
+  sets a document refers to exist, shows executives which documents are still
+  outstanding,
+  and exports documents to PDF.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Abstract Object
+\end{description}
 
 \subsection{Software Decision Module}
 
@@ -350,37 +566,220 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Authentication Module (M\ref*{mAuthn})}\label{mAuthn:dec}
+
+\begin{description}
+\item[Secrets:] The mechanism used to verify a member's identity.
+\item[Services:] Signs members in and out. Verifies credentials and rejects
+  invalid or deactivated accounts, enforces the password policy, stores
+  passwords only as salted hashes, and supplies the signed-in member's identity
+  and role to the rest of the system.
+\item[Implemented By:] C\# using ASP.NET Core Identity
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Persistence Module (M\ref*{mPersist})}\label{mPersist:dec}
+
+\begin{description}
+\item[Secrets:] The data storage mechanism, such as the database technology, its schema, or its backup strategy.
+\item[Services:] Stores and retrieves the data of every other module, keeping
+  records complete and consistent when several members use the system at once.
+  Provides access programs for reading and writing records and stored files, and
+  backs up the database at the backup interval.
+\item[Implemented By:] Microsoft SQL Server
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Search Module (M\ref*{mSearch})}\label{mSearch:dec}
+
+\begin{description}
+\item[Secrets:] The search strategy used to find content in the repository.
+\item[Services:] Returns the stored items matching a keyword search, filtered by
+  category, year, team, or tag, within the maximum search time.
+\item[Implemented By:] C\# on .NET
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{STEP Parsing Module (M\ref*{mStep})}\label{mStep:dec}
+
+\begin{description}
+\item[Secrets:] The library used to read STEP files.
+\item[Services:] Reads a STEP file and provides its raw geometry and metadata in
+  a structured form, including its solids, overall dimensions, and mass, for use
+  by \mref{mModelImport}.
+\item[Implemented By:] C\# using the IxMilia.Step library (fallback: Open CASCADE through C++/CLI)
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Structural Solver Module (M\ref*{mSolver})}\label{mSolver:dec}
+
+\begin{description}
+\item[Secrets:] The structural analysis method used to compute the internal forces in a bridge, such as finite element analysis.
+\item[Services:] Builds a structural model from a bridge's members, joints,
+  material properties, supports, and applied load, and returns the resulting
+  internal forces and stresses in each element for use by the Performance
+  Metrics Module (\mref{mMetrics}).
+\item[Implemented By:] C\# using the BriefFiniteElement.NET library (fallback:
+  a direct stiffness solver built on Math.NET Numerics)
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{3D Viewer Module (M\ref*{mViewer})}\label{mViewer:dec}
+
+\begin{description}
+\item[Secrets:] The rendering method used to display 3D models in the browser.
+\item[Services:] Displays a bridge model in an interactive 3D view that the
+  member can rotate, zoom, and pan, with its units and a scale reference. Can
+  highlight results passed to it by the Web App Layout Module (\mref{mWebApp}),
+  such as the predicted failure location, on the model.
+\item[Implemented By:] JavaScript in the browser, using occt-import-js and three.js
+\item[Type of Module:] Abstract Object
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
-This section shows two traceability matrices: between the modules and the
-requirements and between the modules and the anticipated changes.
+This section shows two traceability matrices: between the modules and the requirements in Section \ref{SecTMReq}, and between the modules and the anticipated changes in Section \ref{SecTMAC}.
 
-% the table should use mref, the requirements should be named, use something
-% like fref
-\begin{table}[H]
-\centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\subsection{Trace Between Requirements and Modules} \label{SecTMReq}
+
+Table~\ref{TblRT} traces the functional and non-functional requirements of the SRS, grouped by the SRS component that owns them, followed by the safety and security requirements of the Hazard Analysis. Every requirement is traced to at least one module, and every module satisfies at least one requirement.
+
+Three safety requirements (SR-WS-1, SR-SYS-1, and SR-SYS-2) constrain how the software is developed and deployed rather than what it does, so they are not satisfied by a module. They are satisfied by the development process described in the Development Plan and verified as described in the VnV Plan.
+
+\clearpage
+\begin{longtable}{p{0.6\textwidth} p{0.32\textwidth}}
+\caption{Trace Between Requirements and Modules} \label{TblRT}\\
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Requirement(s)} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+\endfirsthead
+\toprule
+\textbf{Requirement(s)} & \textbf{Modules}\\
+\midrule
+\endhead
 \bottomrule
-\end{tabular}
-\caption{Trace Between Requirements and Modules}
-\label{TblRT}
-\end{table}
+\endfoot
+\multicolumn{2}{l}{\emph{Web Server}}\\
+FR-WS-1 (Public landing page) & \mref{mWebApp}\\
+FR-WS-2 (Login and logout) & \mref{mWebApp}, \mref{mAuthn}\\
+FR-WS-3 (Request forwarding) & \mref{mWebApp}, \mref{mBroker}\\
+NFR-WS-1 (Serve web app) & \mref{mHH}, \mref{mWebApp}\\
+NFR-WS-2 (Encrypted communication) & \mref{mHH}\\
+NFR-WS-3 (Session expiry) & \mref{mWebApp}\\
+\midrule
+\multicolumn{2}{l}{\emph{Access Control System}}\\
+FR-AC-1 (Authentication) & \mref{mMembers}, \mref{mAuthn}\\
+FR-AC-2 (Roles) & \mref{mMembers}\\
+FR-AC-3 (Authorization) & \mref{mAuthz}\\
+FR-AC-4 (Member management) & \mref{mMembers}\\
+FR-AC-5 (Team membership) & \mref{mMembers}\\
+FR-AC-6 (Team data isolation) & \mref{mAuthz}, \mref{mModelLibrary}\\
+NFR-AC-1 (Credential security) & \mref{mAuthn}\\
+NFR-AC-2 (Effective role alterations) & \mref{mAuthz}, \mref{mMembers}\\
+\midrule
+\multicolumn{2}{l}{\emph{Toolbox Broker}}\\
+FR-BR-1 (Service registration) & \mref{mBroker}\\
+FR-BR-2 (Request authorization) & \mref{mBroker}, \mref{mAuthz}\\
+FR-BR-3 (Request routing) & \mref{mBroker}\\
+FR-BR-4 (Unavailable services) & \mref{mBroker}\\
+NFR-BR-1 (Extensibility) & \mref{mBroker}\\
+NFR-BR-2 (Routing overhead) & \mref{mBroker}\\
+NFR-BR-3 (Request logging) & \mref{mBroker}\\
+\midrule
+\multicolumn{2}{l}{\emph{Knowledge Repository}}\\
+FR-KR-1 (Data storage) & \mref{mPersist}\\
+FR-KR-2 (Content upload) & \mref{mContent}\\
+FR-KR-3 (Search and filter) & \mref{mSearch}\\
+FR-KR-4 (View and download) & \mref{mContent}\\
+FR-KR-5 (Content management) & \mref{mContent}, \mref{mSearch}\\
+NFR-KR-1 (Search responsiveness) & \mref{mPersist}, \mref{mSearch}\\
+NFR-KR-2 (Data durability) & \mref{mPersist}\\
+\midrule
+\multicolumn{2}{l}{\emph{Model Analysis System}}\\
+FR-MA-1 (File validation) & \mref{mModelImport}, \mref{mStep}\\
+FR-MA-2 (3D visualization) & \mref{mViewer}\\
+FR-MA-3 (Data extraction) & \mref{mModelImport}, \mref{mStep}\\
+FR-MA-4 (Current model storage) & \mref{mModelLibrary}\\
+FR-MA-5 (Past design viewing) & \mref{mModelLibrary}, \mref{mViewer}\\
+FR-MA-6 (Archiving current models) & \mref{mModelLibrary}\\
+NFR-MA-1 (Model upload) & \mref{mModelImport}\\
+NFR-MA-2 (Load time) & \mref{mViewer}\\
+NFR-MA-3 (Extraction accuracy) & \mref{mModelImport}, \mref{mStep}\\
+\midrule
+\multicolumn{2}{l}{\emph{Performance Analysis System}}\\
+FR-PA-1 (Failure load estimate) & \mref{mMetrics}, \mref{mSolver}\\
+FR-PA-2 (Load-to-mass ratio) & \mref{mMetrics}\\
+FR-PA-3 (Material selection) & \mref{mMetrics}, \mref{mMatProps}\\
+FR-PA-4 (Assumption disclosure) & \mref{mMetrics}\\
+NFR-PA-1 (Estimate accuracy) & \mref{mMetrics}, \mref{mMatProps}, \mref{mSolver}\\
+NFR-PA-2 (Computation time) & \mref{mMetrics}, \mref{mSolver}\\
+NFR-PA-3 (Extensibility) & \mref{mMetrics}\\
+\midrule
+\multicolumn{2}{l}{\emph{Rule Compliance System}}\\
+FR-RC-1 (Rule import) & \mref{mRuleSet}\\
+FR-RC-2 (Rule configuration) & \mref{mRuleSet}\\
+FR-RC-3 (Compliance check) & \mref{mRuleSet}, \mref{mCompliance}\\
+FR-RC-4 (Violation details) & \mref{mCompliance}\\
+FR-RC-5 (Manual checks) & \mref{mRuleSet}, \mref{mCompliance}\\
+NFR-RC-1 (Check correctness) & \mref{mCompliance}\\
+NFR-RC-2 (Rule updatability) & \mref{mRuleSet}\\
+\midrule
+\multicolumn{2}{l}{\emph{Material Testing Manager}}\\
+FR-MT-1 (Result entry) & \mref{mTestRecords}\\
+FR-MT-2 (Input validation) & \mref{mTestRecords}\\
+FR-MT-3 (Historical comparison) & \mref{mTestRecords}\\
+FR-MT-4 (Material properties) & \mref{mMatProps}\\
+FR-MT-5 (Result review) & \mref{mTestRecords}, \mref{mMatProps}\\
+NFR-MT-1 (Result import) & \mref{mTestRecords}\\
+NFR-MT-2 (Traceability) & \mref{mMatProps}\\
+NFR-MT-3 (Export) & \mref{mTestRecords}\\
+\midrule
+\multicolumn{2}{l}{\emph{Knowledge Transfer Manager}}\\
+FR-KT-1 (Exit document templates) & \mref{mHandoff}\\
+FR-KT-2 (Exit document submission) & \mref{mHandoff}\\
+FR-KT-3 (Role records) & \mref{mHandoff}\\
+FR-KT-4 (Publication) & \mref{mContent}, \mref{mHandoff}\\
+FR-KT-5 (Outstanding documents) & \mref{mHandoff}\\
+NFR-KT-1 (Findability) & \mref{mHandoff}, \mref{mSearch}\\
+NFR-KT-2 (Longevity) & \mref{mHandoff}\\
+\midrule
+\multicolumn{2}{l}{\emph{System-wide}}\\
+NFR-SYS-1 (Browser support) & \mref{mWebApp}, \mref{mViewer}\\
+NFR-SYS-2 (Capacity) & \mref{mHH}, \mref{mPersist}\\
+NFR-SYS-3 (Service independence) & \mref{mBroker}\\
+NFR-SYS-4 (Maintainability) & \mref{mHH}\\
+\midrule
+\multicolumn{2}{l}{\emph{Safety and Security Requirements (Hazard Analysis)}}\\
+SR-WS-2 (Previous production code kept) & \mref{mHH}\\
+SR-WS-3 (Thread safety) & \mref{mBroker}, \mref{mPersist}\\
+SR-WS-4 (Reliable hosting) & \mref{mHH}\\
+SR-WS-5 (Server-side session end) & \mref{mWebApp}, \mref{mAuthn}\\
+SR-AC-1 (Defenses against cyberattacks) & \mref{mHH}, \mref{mAuthn}\\
+SR-AC-2 (Password requirements) & \mref{mAuthn}\\
+SR-KR-1 (External backups) & \mref{mPersist}\\
+SR-KR-2 (Confirm modifications) & \mref{mContent}\\
+SR-KR-3 (Team-restricted uploads) & \mref{mAuthz}, \mref{mContent}\\
+SR-KR-4 (Required metadata) & \mref{mContent}\\
+SR-KR-5 (Storage error messages) & \mref{mContent}, \mref{mPersist}\\
+SR-MA-1 (Import summary) & \mref{mModelImport}\\
+SR-MA-2 (Units and scale reference) & \mref{mViewer}\\
+SR-MA-3 (Processing timeout) & \mref{mModelImport}\\
+SR-PA-1 (Calculation error messages) & \mref{mMetrics}\\
+SR-RC-1 (Rule year and manual checks) & \mref{mCompliance}\\
+SR-MT-1 (Base units) & \mref{mTestRecords}\\
+SR-MT-2 (Grain orientation) & \mref{mTestRecords}\\
+SR-MT-3 (Sanity checks) & \mref{mTestRecords}\\
+SR-KT-1 (Submission validation) & \mref{mHandoff}\\
+SR-KT-2 (Cross-reference checks) & \mref{mHandoff}\\
+SR-KT-3 (Role succession) & \mref{mMembers}, \mref{mHandoff}\\
+SR-KT-4 (Publishing lifecycle) & \mref{mHandoff}\\
+SR-KT-5 (Publication acknowledgement) & \mref{mContent}, \mref{mHandoff}\\
+SR-SYS-3 (Reproducible deployment) & \mref{mHH}\\
+\end{longtable}
+
+\subsection{Trace Between Anticipated Changes and Modules} \label{SecTMAC}
+
+Table~\ref{TblACT} maps each anticipated change listed in Section \ref{SecAchange} to the modules that hide it. Every module hides at least one anticipated change.
 
 \begin{table}[H]
 \centering
@@ -389,61 +788,122 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acRules} & \mref{mRuleSet}\\
+\acref{acModelInput} & \mref{mModelImport}, \mref{mStep}\\
+\acref{acAnalysis} & \mref{mMetrics}, \mref{mSolver}\\
+\acref{acMaterial} & \mref{mTestRecords}, \mref{mMatProps}\\
+\acref{acUI} & \mref{mWebApp}, \mref{mViewer}\\
+\acref{acServices} & \mref{mBroker}\\
+\acref{acDB} & \mref{mPersist}\\
+\acref{acAuth} & \mref{mAuthn}\\
+\acref{acHandoff} & \mref{mHandoff}\\
+\acref{acSearch} & \mref{mSearch}\\
+\acref{acPermissions} & \mref{mAuthz}\\
+\acref{acMemberData} & \mref{mMembers}\\
+\acref{acItemMetadata} & \mref{mContent}\\
+\acref{acModelRecords} & \mref{mModelLibrary}\\
+\acref{acCompliance} & \mref{mCompliance}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
 \label{TblACT}
 \end{table}
 
-% TODO (when writing this matrix): Section 4.1 states that anticipated changes
-% affecting more than one module are identified here. The ACs were consolidated
-% (e.g. acModelInput = STEP library + export conventions, acAnalysis = solver +
-% metrics, acMaterial = test template + property derivation, acUI = layout + 3D
-% viewer, acDB = database + schema + backups), so some will map to several
-% modules. Add a short paragraph below Table TblACT listing each AC that maps to
-% more than one module and why (MG checklist: one-to-one mapping, or explain the
-% exceptions).
-% TODO: The Introduction says Section \ref{SecTM} "includes two traceability
-% matrices". If an Unlikely Changes -> Modules table is added (as in Becca's
-% MG), update that sentence in the Introduction.
+Most anticipated changes map to exactly one module. The exceptions are \acref{acModelInput}, \acref{acAnalysis}, \acref{acMaterial}, and \acref{acUI}, each of which groups two related design decisions that are hidden by separate modules. A change to either decision still affects only one module:
+\begin{itemize}
+\item \acref{acModelInput}: replacing the STEP library affects only \mref{mStep}, while changing the club's export conventions affects only \mref{mModelImport}.
+\item \acref{acAnalysis}: changing the structural analysis method affects only \mref{mSolver}, while adding or changing a performance metric affects only \mref{mMetrics}.
+\item \acref{acMaterial}: changing the test file template affects only \mref{mTestRecords}, while changing how material properties are derived affects only \mref{mMatProps}.
+\item \acref{acUI}: changing the page layout affects only \mref{mWebApp}, while replacing the 3D display library affects only \mref{mViewer}.
+\end{itemize}
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
-In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
-correct execution of B may be necessary for A to complete the task described in
-its specification. That is, A {\em uses} B if there exist situations in which
-the correct functioning of A depends upon the availability of a correct
-implementation of B.  Figure \ref{FigUH} illustrates the use relation between
-the modules. It can be seen that the graph is a directed acyclic graph
-(DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
+In this section, the uses hierarchy between modules is provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if correct execution of B may be necessary for A to complete the task described in its specification. That is, A {\em uses} B if there exist situations in which the correct functioning of A depends upon the availability of a correct implementation of B. Figure \ref{FigUH} illustrates the use relation between the modules, with an arrow from A to B when A uses B. It can be seen that the graph is a directed acyclic graph (DAG). Each level of the hierarchy offers a testable and usable subset of the system, and modules in the higher level of the hierarchy are essentially simpler because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
+Four conventions keep the figure readable:
+\begin{itemize}
+\item The Toolbox Broker (\mref{mBroker}) carries every call between services, so services never call each other directly. The figure shows the logical uses between services, such as \mref{mMetrics} using \mref{mMatProps}, rather than drawing each of these calls through the Broker.
+\item Every service shown shaded in the figure uses the Broker, both to register its operations and to request operations from other services. These arrows are omitted. The Broker does not use any service: it invokes whichever service registered an operation and returns an error if none responds, so its correct functioning never depends on a particular service. This keeps the hierarchy free of cycles.
+\item Every module uses the Hardware-Hiding Module (\mref{mHH}), so it is not shown.
+\item The Handoff Documents Module (\mref{mHandoff}), drawn with a dashed border, draws on information from across the system, so its arrows are omitted and its uses are listed below instead.
+\end{itemize}
 
-\wss{If module A uses module B, the arrow is directed from A to B.}
+At the top of the hierarchy, the Web App Layout Module (\mref{mWebApp}) signs members in through the Authentication Module (\mref{mAuthn}), sends every request to the Toolbox Broker (\mref{mBroker}), and displays bridge models with the 3D Viewer Module (\mref{mViewer}). The Broker checks each request with the Authorization Rules Module (\mref{mAuthz}) before routing it to a service. The services form the middle of the hierarchy: analysis services such as \mref{mMetrics} and \mref{mCompliance} use the modules that hold their data, and the libraries \mref{mStep} and \mref{mSolver} sit below the services that need them. At the bottom, the Persistence Module (\mref{mPersist}) stores the data of every module that owns records.
+
+Handoff documents are meant to capture knowledge from every part of the club's work, so the Handoff Documents Module (\mref{mHandoff}) uses more modules than any other. It uses the Member Registry Module (\mref{mMembers}) to track executive positions and their successors, the Repository Content Module (\mref{mContent}) to publish accepted documents, and the Search Module (\mref{mSearch}) so that role records can be found. It uses the Model Library Module (\mref{mModelLibrary}), the Rule Set Module (\mref{mRuleSet}), and the Material Test Records Module (\mref{mTestRecords}) to verify that the bridge models, rule sets, and test results a document refers to exist, and the Persistence Module (\mref{mPersist}) to store its templates, drafts, and role records.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
-\caption{Use hierarchy among modules}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  mod/.style={draw, fill=white, rounded corners, text width=2.4cm, minimum height=1cm, align=center, font=\small},
+  svc/.style={mod, fill=gray!20},
+  use/.style={-{Stealth[length=2.5mm]}, thick, preaction={draw=white, line width=3.5pt, arrows=-}}
+]
+% Row 1
+\node[mod] (web) at (9,0) {M\ref*{mWebApp}\\Web App Layout};
+% Row 2
+\node[mod] (brk) at (9,-2.4) {M\ref*{mBroker}\\Toolbox Broker};
+\node[mod] (viewer) at (16,-2.4) {M\ref*{mViewer}\\3D Viewer};
+% Row 3
+\node[mod, text width=2.6cm] (authn) at (-2.8,-4.8) {M\ref*{mAuthn}\\Authentication};
+\node[mod] (authz) at (0.4,-4.8) {M\ref*{mAuthz}\\Authorization Rules};
+\node[svc, dashed] (handoff) at (4.0,-4.8) {M\ref*{mHandoff}\\Handoff Documents};
+\node[svc] (import) at (7.6,-4.8) {M\ref*{mModelImport}\\Model Import};
+\node[svc] (compliance) at (11.0,-4.8) {M\ref*{mCompliance}\\Compliance Check};
+\node[svc] (metrics) at (14.4,-4.8) {M\ref*{mMetrics}\\Performance Metrics};
+% Row 4
+\node[svc] (search) at (3.6,-7.2) {M\ref*{mSearch}\\Search};
+\node[mod] (step) at (6.6,-7.2) {M\ref*{mStep}\\STEP Parsing};
+\node[svc] (library) at (10.0,-7.2) {M\ref*{mModelLibrary}\\Model Library};
+\node[mod] (solver) at (14.6,-7.2) {M\ref*{mSolver}\\Structural Solver};
+\node[svc] (matprops) at (18.0,-7.2) {M\ref*{mMatProps}\\Material Properties};
+% Row 5
+\node[svc] (members) at (0.2,-9.6) {M\ref*{mMembers}\\Member Registry};
+\node[svc] (content) at (3.6,-9.6) {M\ref*{mContent}\\Repository Content};
+\node[svc] (ruleset) at (12.6,-9.6) {M\ref*{mRuleSet}\\Rule Set};
+\node[svc] (tests) at (18.0,-9.6) {M\ref*{mTestRecords}\\Material Test Records};
+% Row 6: Persistence spans the modules that use it
+\node[mod, minimum width=20.4cm] (persist) at (9.1,-11.8) {M\ref*{mPersist}\\Persistence};
+\begin{scope}[on background layer]
+% Web App and access control
+\draw[use] (web) -- (brk);
+\draw[use] (web.west) -| (authn.north);
+\draw[use] (web.east) -| (viewer.north);
+\draw[use] ([yshift=2mm]brk.west) -| (authz.north);
+\path (1.95,0) coordinate (q);
+\draw[use] ([yshift=-2mm]brk.west) -| (q |- persist.north);
+\draw[use] (authn.south) |- (members.west);
+\path ([xshift=0.2cm]authz.south) coordinate (p);
+\draw[use] (p) -- (p |- members.north);
+% Repository
+\path ([xshift=-0.2cm]search.south) coordinate (p);
+\draw[use] (p) -- (p |- content.north);
+\draw[use] ([xshift=-1cm]library.south) -- ++(0,-0.6) -| ([xshift=0.8cm]content.north);
+% Models and analysis
+\path ([xshift=-0.8cm]import.south) coordinate (p);
+\draw[use] (p) -- (p |- step.north);
+\path ([xshift=1.2cm]import.south) coordinate (p);
+\draw[use] (p) -- (p |- library.north);
+\path ([xshift=-0.8cm]compliance.south) coordinate (p);
+\draw[use] (p) -- (p |- library.north);
+\path ([xshift=1cm]compliance.south) coordinate (p);
+\draw[use] (p) -- (p |- ruleset.north);
+\draw[use] ([xshift=-1cm]metrics.south) -- ++(0,-0.6) -| ([xshift=1cm]library.north);
+\path ([xshift=0.2cm]metrics.south) coordinate (p);
+\draw[use] (p) -- (p |- solver.north);
+\draw[use] (metrics.east) -| (matprops.north);
+\draw[use] (matprops) -- (tests);
+% Persistence
+\foreach \m in {members, content, ruleset, tests}
+  \draw[use] (\m.south) -- (\m.south |- persist.north);
+\path ([xshift=0.8cm]library.south) coordinate (p);
+\draw[use] (p) -- (p |- persist.north);
+\end{scope}
+\end{tikzpicture}%
+}
+\caption{Use hierarchy among modules. Shaded modules are services that register with, and use, the Toolbox Broker (\mref{mBroker}); the Broker does not use them. All modules use the Hardware-Hiding Module (\mref{mHH}). The uses of the Handoff Documents Module (\mref{mHandoff}), drawn dashed, are listed in the text.}
 \label{FigUH}
 \end{figure}
 
@@ -451,61 +911,167 @@ arrows in the diagram typically correspond to the presence of import statement.}
 
 \section{User Interfaces} \label{SecUI}
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
+The detailed design of the user interface, provided by the Web App Layout Module (\mref{mWebApp}) and the 3D Viewer Module (\mref{mViewer}), will be developed in stages and refined as feedback is collected from club members. As such, the specific screen designs are not included in this document, in line with \acref{acUI}, which anticipates that the layout will change based on user feedback.
+
+The interface design is based on the member needs and feature priorities gathered in the Stakeholder Interview Report (CD-Fall) document, a member survey and stakeholder interviews summarized in SRS P.7. It will be evaluated and refined through the Usability Testing (CD-Winter) document in the winter, which will document the tasks, results, and changes from each round of testing. Throughout this iteration, the interface will remain consistent with the SRS and Hazard Analysis. In particular, it must work in all four supported desktop browsers (NFR-SYS-1), show the assumptions behind each estimate (FR-PA-4), let members confirm an imported model and see its units (SR-MA-1, SR-MA-2), ask for confirmation before stored content is changed (SR-KR-2), show the competition year of the rules used (SR-RC-1), and display a clear error message when an operation fails (SR-KR-5, SR-PA-1).
 
 \section{Design of Communication Protocols} \label{SecComm}
 
-\wss{If there is communication between hardware and software, it may be necessary to explain the design of the communication protocol.  This section should be filled in with NA if it is not appropriate for a given project.}
+The Troitsky Toolbox has no custom hardware, so there is no hardware--software protocol to design. Its main communication protocol is the one between the user interface and the services, which all pass through the Toolbox Broker (\mref{mBroker}) so that no service depends directly on another. Members' browsers communicate with the Toolbox only over an encrypted connection.
 
-N/A. The Troitsky Toolbox is a web application with no custom hardware
-components, so there is no hardware-software communication protocol to design.
-
+The Broker protocol has four steps:
+\begin{enumerate}
+\item \textbf{Register:} When the system starts, each service registers with the Broker and lists the operations it provides. A new tool is added by registering it, without changing the Broker or any existing service.
+\item \textbf{Authorize:} Each request names an operation and carries the identity of the signed-in member, attached by the Web App Layout Module (\mref{mWebApp}). The Broker checks the request with the Authorization Rules Module (\mref{mAuthz}) and rejects it if the member's role and team do not permit the operation.
+\item \textbf{Route:} The Broker forwards an authorized request to the service that registered the operation, and returns that service's response to the requester. Services also use this step to request data from one another, such as \mref{mMetrics} requesting material properties from \mref{mMatProps}.
+\item \textbf{Respond or fail safely:} If no service provides the operation, or the service does not respond in time, the Broker returns an error message instead of a response, so the failure of one service does not affect the others. The Broker logs every request it handles, with the member, operation, time, and outcome.
+\end{enumerate}
 
 \section{Database Design} \label{SecDB}
 
-\wss{If a database is a significant component of the project, the database
-design should be summarized here.  This section should be filled in with NA if
-it is not appropriate for a given project.}
+The Toolbox stores all club data in a Microsoft SQL Server database, accessed only through the Persistence Module (\mref{mPersist}). Following the rule that each data structure is implemented in only one module, every entity is owned by exactly one module, which provides the only access programs for it. Other modules read or change an entity by calling its owning module through the Toolbox Broker (\mref{mBroker}), never by querying its tables directly. Figure~\ref{FigER} shows the main entities and their relationships, and Table~\ref{TblDB} lists each entity, its key attributes, and the module that owns it.
+
+The design follows three further decisions:
+\begin{itemize}
+\item \textbf{Member accounts:} Members and roles are stored in the standard user and role tables of ASP.NET Core Identity, extended with the club's own fields, such as account status. Each member has exactly one role, and team assignments are stored separately for each competition year.
+\item \textbf{Stored files:} Uploaded files, such as STEP models, documents, and exported PDFs, are stored by the Persistence Module, and each entity that has a file holds a reference to it. Where file contents are kept is a secret of the Persistence Module (\acref{acDB}).
+\item \textbf{Backups:} The database and stored files are backed up at least every 7 days to a platform separate from the hosting server.
+\end{itemize}
+
+Material properties, analysis results, and compliance results are not stored. They are computed on request from the stored test results, models, and rule sets, so they always reflect the current data. Each material property is computed from identifiable test results, so it can still be traced to the tests behind it.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}p{0.54\textwidth} >{\raggedright\arraybackslash}p{0.14\textwidth}}
+\caption{Database Entities} \label{TblDB}\\
+\toprule
+\textbf{Entity} & \textbf{Key attributes} & \textbf{Owner}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Entity} & \textbf{Key attributes} & \textbf{Owner}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Member & Identity user fields (name, email, password hash), account status & \mref{mMembers}\\
+Role & Identity role: general member, team member, team captain, club executive, or software subteam maintainer & \mref{mMembers}\\
+Team & Name, competition year & \mref{mMembers}\\
+Team Assignment & Member, team, competition year; at most one team per member per year & \mref{mMembers}\\
+Executive Position & Title, current holder, designated successor & \mref{mMembers}\\
+Request Log & Requesting member, operation, time, whether the request succeeded & \mref{mBroker}\\
+Repository Item & Title, category from the fixed list, year, team, tags, uploader, archived flag, file reference & \mref{mContent}\\
+Bridge Model & Team, competition year, current or past design, repository item holding its STEP file, extracted dimensions and mass & \mref{mModelLibrary}\\
+Model Member / Joint & The members and joints identified in a bridge model, with their positions and dimensions & \mref{mModelLibrary}\\
+Rule Set & Competition year, whether it is the active rule set & \mref{mRuleSet}\\
+Rule & Constrained property, allowed value or range, unit, whether it must be checked manually & \mref{mRuleSet}\\
+Material Batch & Material, supplier, competition year & \mref{mTestRecords}\\
+Test Result & Batch, test type, specimen dimensions, applied load, grain orientation for wood, date, tester, invalid flag and reason & \mref{mTestRecords}\\
+Handoff Template & Executive position or team lead role, required fields & \mref{mHandoff}\\
+Exit Document & Template, author, competition year, status (draft, review, or published), content, repository item once published & \mref{mHandoff}\\
+Role Record & Executive position, responsibilities, key contacts, yearly timeline & \mref{mHandoff}\\
+\end{longtable}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  ent/.style={draw, text width=2.8cm, minimum height=0.8cm, align=center, font=\small},
+  rel/.style={thick},
+  m/.style={font=\footnotesize, inner sep=1.5pt}
+]
+% Access control (M5)
+\node[ent] (log) at (0,0) {Request Log};
+\node[ent] (role) at (4.2,0) {Role};
+\node[ent] (member) at (0,-2) {Member};
+\node[ent] (assign) at (4.2,-2) {Team\\Assignment};
+\node[ent] (team) at (8.4,-2) {Team};
+\node[ent] (position) at (0,-4) {Executive Position};
+% Repository and models (M6, M8)
+\node[ent] (item) at (12.6,0) {Repository Item};
+\node[ent] (model) at (12.6,-2) {Bridge Model};
+\node[ent] (geom) at (12.6,-4) {Model Member\\/ Joint};
+% Handoff (M14)
+\node[ent] (exit) at (17.6,0) {Exit Document};
+\node[ent] (template) at (17.6,-2) {Handoff Template};
+\node[ent] (record) at (4.2,-4) {Role Record};
+% Rules (M10)
+\node[ent] (ruleset) at (0,-6.2) {Rule Set};
+\node[ent] (rule) at (4.2,-6.2) {Rule};
+% Materials (M12, M13)
+\node[ent] (batch) at (8.4,-6.2) {Material Batch};
+\node[ent] (test) at (17.6,-6.2) {Test Result};
+% Relationships: 1 and * mark the multiplicity at each end
+\draw[rel] (role) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (member);
+\draw[rel] (member) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (log);
+\draw[rel] (member) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (assign);
+\draw[rel] (assign) -- node[m,pos=0.2,above]{*} node[m,pos=0.8,above]{1} (team);
+\draw[rel] (member) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (position);
+\draw[rel] (team) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (model);
+\draw[rel] (model) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{1} (item);
+\draw[rel] (model) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (geom);
+\draw[rel] (item) -- node[m,pos=0.2,above]{1} node[m,pos=0.75,above]{0..1} (exit);
+\draw[rel] (template) -- node[m,pos=0.2,right]{1} node[m,pos=0.8,right]{*} (exit);
+\draw[rel] (position) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{1} (record);
+\draw[rel] (ruleset) -- node[m,pos=0.2,above]{1} node[m,pos=0.8,above]{*} (rule);
+\draw[rel] (batch) -- node[m,pos=0.1,above]{1} node[m,pos=0.9,above]{*} (test);
+\end{tikzpicture}%
+}
+\caption{Main entities of the database and their relationships. A 1 or * at each end of a line gives how many of that entity take part in the relationship.}
+\label{FigER}
+\end{figure}
 
 \section{Timeline} \label{SecTimeline}
 
-\wss{Schedule of tasks and who is responsible}
+Table~\ref{TblTimeline} gives the schedule for implementing Revision 0, which covers the modules needed for a working end-to-end system by the Revision 0 demonstrations (February 1--12, 2027). Work is assigned by the team roles in SRS P.1, and each task is tracked as an issue on the team's \href{https://github.com/users/JackEaston4/projects/3/views/2}{GitHub KanBan}.
 
-\wss{You can point to GitHub if this information is included there}
+\begin{table}[H]
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}p{0.4\textwidth} >{\raggedright\arraybackslash}p{0.15\textwidth} >{\raggedright\arraybackslash}p{0.13\textwidth}}
+\toprule
+\textbf{Modules} & \textbf{Work} & \textbf{Assignee} & \textbf{Due Date}\\
+\midrule
+\mref{mModelImport}, \mref{mStep} & STEP model import (Proof of Concept) & Mason & 04/12/2026\\
+\mref{mHH}, \mref{mBroker}, \mref{mPersist} & System foundation: deployment, database, and Broker & Jack, Mason & 08/01/2027\\
+\mref{mAuthz}, \mref{mMembers}, \mref{mAuthn} & Access control: sign-in, roles, and team permissions & Jack, Mason & 12/01/2027\\
+\mref{mContent}, \mref{mModelLibrary}, \mref{mSearch} & Knowledge Repository and model storage & Jack, Mason & 15/01/2027\\
+\mref{mWebApp}, \mref{mViewer} & User interface and 3D model display & Pedro, Michael & 15/01/2027\\
+All & Integration, testing per the VnV Plan, and the Revision 0 demonstration & Team (Michael leads testing) & 01/02/2027\\
+\bottomrule
+\end{tabular}
+\caption{Implementation timeline for Revision 0}
+\label{TblTimeline}
+\end{table}
+
+The analysis, rules, materials, and handoff modules (\mref{mMetrics}, \mref{mRuleSet}, \mref{mCompliance}, \mref{mTestRecords}, \mref{mMatProps}, \mref{mHandoff}, and \mref{mSolver}) will be scheduled after Revision 0, in time for the final submission on March 31, 2027.
 
 \section{Generative AI Use Disclosure} \label{SecAI}
 
-\wss{ChatGPT (version 5) was used to brainstorm ideas for the template for this disclose section.}
-
 \subsection{AI Tools Used}
 
-\wss{Give the name of the AI tool(s) used and the version.}
+Claude Opus 5.5 (Anthropic), used through Claude Code, was the only generative AI tool used in preparing this document.
 
 \subsection{How and Where Used}
 
-\wss{Explain what the tool(s) were used for.  Examples include: brainstorming,
-explaining a technical concept, reviewing the document, generating or modifying
-text, generating or modifying diagrams, identifying errors or omissions or
-inconsistencies.}
-
-\wss{For each of the uses, identify which parts of the document were affected.}
-
-\wss{You do not need to report every interaction, but you should disclose the 
-uses that materially contributed to your work}
+The tool materially contributed to the document in the following ways:
+\begin{itemize}
+\item \textbf{Preliminary section mapping:} mapping transcripts of team meetings, GitHub issues, team decisions, and the SRS, Hazard Analysis, and Development Plan to the sections of this document. The tool identified the discussion points and design decisions relevant to each section, which set the structure of the anticipated and unlikely changes (Section \ref{SecChange}), the connection between requirements and design (Section \ref{SecConnection}), the traceability matrices (Section \ref{SecTM}), and the user interface, communication protocol, database, and timeline sections (Sections \ref{SecUI} to \ref{SecTimeline}).
+\item \textbf{Initial text:} turning this mapping into initial text for those sections, which team members then reviewed, revised, and iterated.
+\item \textbf{Revising existing text:} supported revising the Introduction and the abbreviations in the Reference Material.
+\item \textbf{Assisting with the module decomposition:} helping ideate the secrets and services of the modules in Section \ref{SecMD} based on previous documents.
+\item \textbf{Reviewing the document:} checking the module decomposition against the SRS and Hazard Analysis, which identified secrets shared between modules that were then separated, and checking the document against the course design checklist and lecture expectations, which led to correcting module types and removing implementation details that were too low-level.
+\item \textbf{Identifying inconsistencies:} cross-checking that every requirement named in Section \ref{SecConnection} maps to the same module in Table~\ref{TblRT}.
+\item \textbf{Generating diagrams:} assisting in the formatting and generation of the use hierarchy (Figure~\ref{FigUH}) and the database entity diagram (Figure~\ref{FigER}) as \LaTeX{} drawings based on document content.
+\end{itemize}
 
 \subsection{Verification of AI-Generated Content}
 
-\wss{\begin{itemize}
-    \item Describe how the team checked AI-generated or AI-assisted material
-    before including it in the document.
-    \item In particular, verify factual claims, technical assertions,
-    requirements, calculations, references, and other information for which an
-    AI system may produce incorrect or fabricated results.
-    \item \textbf{The team is responsible for the accuracy, completeness,
-consistency, and appropriateness of the submitted document, regardless of
-whether material was generated by a human or an AI system.}
-\end{itemize}}
+The team checked all AI-assisted material before including it in the document:
+\begin{itemize}
+\item Every section was reviewed and revised by a team member before it was committed, and the module decomposition was reviewed through a pull request before being merged.
+\item Requirement identifiers, component names, module mappings, and technology choices were checked against the SRS, Hazard Analysis, and Development Plan. Statements that could not be traced to a project document, such as the database entities and timeline assignments, were confirmed by the team before being kept.
+\item The document was built after each change to confirm that all cross-references resolve and that the diagrams and tables are readable.
+\end{itemize}
+
+The team is responsible for the accuracy, completeness, consistency, and appropriateness of this document, regardless of whether material was generated by a team member or an AI system.
 
 \newpage{}
 
