@@ -37,9 +37,41 @@ period from the start of term (September 8, 2026) to that date.
 
 \section{Demo Plans}
 
-\wss{What is your feasibility risk?}
+\subsection*{Feasibility Risk}
 
-\wss{What will you be demonstrating}
+The feasibility risk is whether the Toolbox can read a bridge's 3D CAD model
+(a STEP file), display it in the browser, and extract usable measurements from
+it.
+
+This is the most complex single feature in the Toolbox, and the planned rule
+compliance and bridge performance tools depend on the data it extracts. If it
+is not achievable, those tools need a different source of bridge data.
+
+Connecting the Toolbox's many independent tools is not treated as a POC risk,
+since most tools are simple on their own; bridge visualization and data
+extraction is the individually most complex part, so it is the focus of the
+POC.
+
+\subsection*{What Will Be Demonstrated}
+
+A live demonstration of running code, showing that a bridge model can go from a
+CAD file to a viewable, measured model in the Toolbox:
+\begin{itemize}
+\item A member uploads a bridge model exported from CAD.
+\item The Toolbox checks that the file is a readable model, and rejects
+  unreadable files with a message saying why.
+\item The model is displayed in 3D, and the member can rotate and zoom it to
+  confirm it was read correctly.
+\item The Toolbox shows basic measurements taken from the model, such as its
+  dimensions and estimated mass, and how long the model took to load.
+\end{itemize}
+
+The POC is not a minimum viable product. It shows that this pipeline works, so
+the analysis tools that depend on it can be built on top of it.
+
+If the demo shows that model extraction is not achievable, the team will change
+the scope to an alternate feature that avoids the technical limitation, as
+described in the Development Plan.
 
 \section{Team Meeting Attendance}
 
@@ -58,10 +90,15 @@ Jack Easton & 15\\
 \end{tabular}
 \end{table}
 
+Each team meeting is recorded as a GitHub issue with the \texttt{meeting}
+label, an attendance checklist and an agenda.
+
 Counts are taken from the attendance checklists of the 15 \texttt{Team Meeting}
-issues (\#5, \#30, \#51, \#87, \#96, \#120, \#149, \#182, \#221, \#224, \#237,
-\#284, \#287, \#292, \#310). At the meeting of October 28 (\#221), one member joined
-late and online; this is counted as attended.
+issues (\#5, \#30, \#51, \#87, \#96, \#120, \#149, \#182, \#221, \#224, \#237, \#284,
+\#287, \#292, \#310).
+
+At the meeting of October 28 (\#221), one member joined late and online; this
+is counted as attended.
 
 \section{Supervisor/Stakeholder Meeting Attendance}
 
