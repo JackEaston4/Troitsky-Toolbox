@@ -12,8 +12,6 @@
 \definecolor{primary}{HTML}{1E3A8A}
 \definecolor{subaccent}{HTML}{334155}
 \definecolor{rowtint}{HTML}{F8FAFC}
-\definecolor{commentbg}{HTML}{FEF9C3}
-\definecolor{commentborder}{HTML}{CA8A04}
 
 \hypersetup{
   colorlinks=true,
@@ -24,7 +22,6 @@
 
 \newcommand{\progname}{Troitsky Toolbox}
 \newcommand{\authname}{Troitsky Toolbox Team}
-\newcommand{\wss}[1]{\par\medskip\noindent\fcolorbox{commentborder}{commentbg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\small\textbf{Template Note:} #1}}\par\medskip}
 
 \setlength{\parskip}{0.45em}
 \setlength{\parindent}{0pt}
@@ -52,12 +49,14 @@
 \section*{Revision History}
 \addcontentsline{toc}{section}{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm} p{2.2cm} X}
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule
 \textbf{Date} & \textbf{Version} & \textbf{Notes} \\
 \midrule
-Date 1 & 1.0 & Notes \\
-Date 2 & 1.1 & Notes \\
+2026-11-18 & 1.1 & Updated the MIS layout and began replacing the generic template with the project module hierarchy. \\
+2026-11-19 & 1.2 & Expanded and revised the MIS to align it with the Module Guide. \\
+2026-11-19 & 1.3 & Merged updates from \texttt{main} into the branch. \\
+2026-11-19 & 1.4 & Removed remaining template comments, clarified wording, and made other small MIS fixes. \\
 \bottomrule
 \end{tabularx}
 
@@ -67,8 +66,6 @@ Date 2 & 1.1 & Notes \\
 \addcontentsline{toc}{section}{Symbols, Abbreviations and Acronyms}
 
 See SRS Documentation \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/pdfs/SRS/SRS.pdf}{here}.
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
 
 \newpage
 
@@ -83,19 +80,17 @@ See SRS Documentation \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob
 The following document details the Module Interface Specifications (MIS) for the Troitsky Toolbox,
 a suite of services for the McMaster Troitsky Club, which fields teams to build bridges in the
 national Troitsky competition. The prime service of this toolbox is the analysis of a bridge model.
-The analysis draws upon materials testing results uploaded to the system in another service. Two other 
-auxiliary services exist to facilitate club operations. The former is the knowledge repository to upload,
+The analysis draws upon materials testing results uploaded to the system in another service. Two auxiliary
+services also exist to facilitate club operations. The former is the knowledge repository to upload,
 search for, preview and download documents. The latter is a login and role-based access control (RBAC) service,
 which prevents unauthorized access of documents or use of services. This is necessary because the toolbox
-will be accessible by a publicly-accessible website hosted on a web server.
+will be available through a public website hosted on a web server.
 
 Complementary documents include the System Requirement Specifications
 and Module Guide. The full documentation and implementation can be
 found \href{https://github.com/JackEaston4/Troitsky-Toolbox}{here}.
 
 \section{Notation}
-
-\wss{You should describe your notation. You can use what is below as a starting point.}
 
 The structure of the MIS for modules comes from Hoffman and Strooper (1995),
 with the addition that template modules have been adapted from
@@ -193,28 +188,28 @@ The following table is taken directly from the Module Guide document for this pr
 \midrule
 
 
-{Hardware-Hiding Module} & ~ \\
+{Hardware-Hiding Module} & M1: Hardware-Hiding Module \\
 \midrule
-\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & Web App Layout Module\\
-& Toolbox Broker Module\\
-& Authorization Rules Module\\
-& Member Registry Module\\
-& Repository Content Module\\
-& Model Import Module\\
-& Model Library Module\\
-& Performance Metrics Module\\
-& Rule Set Module\\
-& Compliance Check Module\\
-& Material Test Records Module\\
-& Material Properties Module\\
-& Handoff Documents Module\\
+\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & M2: Web App Layout Module\\
+& M3: Toolbox Broker Module\\
+& M4: Authorization Rules Module\\
+& M5: Member Registry Module\\
+& M6: Repository Content Module\\
+& M7: Model Import Module\\
+& M8: Model Library Module\\
+& M9: Performance Metrics Module\\
+& M10: Rule Set Module\\
+& M11: Compliance Check Module\\
+& M12: Material Test Records Module\\
+& M13: Material Properties Module\\
+& M14: Handoff Documents Module\\
 \midrule
-\multirow{6}{0.3\textwidth}{Software Decision Module} & Authentication Module\\
-& Persistence Module\\
-& Search Module\\
-& STEP Parsing Module\\
-& Structural Solver Module\\
-& 3D Viewer Module\\
+\multirow{6}{0.3\textwidth}{Software Decision Module} & M15: Authentication Module\\
+& M16: Persistence Module\\
+& M17: Search Module\\
+& M18: STEP Parsing Module\\
+& M19: Structural Solver Module\\
+& M20: 3D Viewer Module\\
 \bottomrule
 
 
@@ -301,8 +296,6 @@ None.
 \newpage
 
 \section{MIS of Web App Layout Module} \label{mWebApp}
-
-\wss{Use labels for cross-referencing}
 
 \subsection{Module}
 \texttt{WebLayout}
@@ -434,8 +427,6 @@ Additional browser-dependent local functions exist as required by the client run
 
 \section{MIS of Toolbox Broker Module} \label{mBroker}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{ToolboxBroker}
 
@@ -515,8 +506,6 @@ None.
 
 \section{MIS of Authorization Rules Module} \label{mAuthz}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{AuthRules}
 
@@ -525,6 +514,7 @@ Determine whether a member may perform a requested operation and whether a membe
 \subsection{Uses}
 \begin{itemize}
   \item \hyperref[mMembers]{Member Registry Module (M5)}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
 \end{itemize}
 
 \subsection{Syntax}
@@ -591,8 +581,6 @@ The permission table is backed by the Persistence Module (M16) in production and
 \newpage
 
 \section{MIS of Member Registry Module} \label{mMembers}
-
-\wss{Use labels for cross-referencing. You can reference SRS labels or external hyperlinks.}
 
 \subsection{Module}
 \texttt{MemberRegistry}
@@ -827,8 +815,6 @@ None.
 
 \section{MIS of Repository Content Module} \label{mContent}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{RepoContents}
 
@@ -982,8 +968,6 @@ None.
 
 \section{MIS of Model Import Module} \label{mModelImport}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{ModelImport}
 
@@ -992,7 +976,6 @@ Import a bridge model from a STEP file, identify its members and joints, export 
 \subsection{Uses}
 \begin{itemize}
   \item \hyperref[mStep]{STEP Parsing Module (M18)}
-  \item \hyperref[mModelLibrary]{Model Library Module (M8)}
 \end{itemize}
 
 \subsection{Syntax}
@@ -1061,8 +1044,6 @@ Exceptions are not raised directly; status and error messages are returned as pa
 
 \section{MIS of Model Library Module} \label{mModelLibrary}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{ModelLibrary}
 
@@ -1070,7 +1051,6 @@ Store bridge models, record each team's current-year models with the most recent
 
 \subsection{Uses}
 \begin{itemize}
-  \item \hyperref[mContent]{Repository Content Module (M6)}
   \item \hyperref[mPersist]{Persistence Module (M16)}
 \end{itemize}
 
@@ -1160,8 +1140,6 @@ None.
 
 \section{MIS of Performance Metrics Module} \label{mMetrics}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{PerfMet}
 
@@ -1169,7 +1147,6 @@ Estimate failure load and failure location, compute load-to-mass ratio, report t
 
 \subsection{Uses}
 \begin{itemize}
-  \item \hyperref[mModelLibrary]{Model Library Module (M8)}
   \item \hyperref[mSolver]{Structural Solver Module (M19)}
   \item \hyperref[mMatProps]{Material Properties Module (M13)}
 \end{itemize}
@@ -1413,8 +1390,6 @@ None.
 
 \section{MIS of Compliance Check Module} \label{mCompliance}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{ComplianceCheck}
 
@@ -1422,7 +1397,6 @@ Evaluate a model against the rule set of a competition year. Display the rules t
 
 \subsection{Uses}
 \begin{itemize}
-  \item \hyperref[mModelLibrary]{Model Library Module (M8)}
   \item \hyperref[mRuleSet]{Rule Set Module (M10)}
 \end{itemize}
 
@@ -1471,8 +1445,6 @@ None.
 \newpage
 
 \section{MIS of Material Test Records Module} \label{mTestRecords}
-
-\wss{Use labels for cross-referencing}
 
 \subsection{Module}
 \texttt{MatlsTestRecords}
@@ -1591,8 +1563,6 @@ None.
 
 \section{MIS of Material Properties Module} \label{mMatProps}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{MatlsProp}
 
@@ -1637,8 +1607,6 @@ None.
   \item exception: no accepted tests, calculation error
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to have a state transition. In this case a state transition can only occur if the module is changing the state of another module. Modules rarely have both a transition and an output.}
-
 \subsubsection{Local Functions}
 
 \textbf{\texttt{getElastic\allowbreak Modulus(tests)}}:
@@ -1659,8 +1627,6 @@ None.
 
 \section{MIS of Handoff Documents Module} \label{mHandoff}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{HandDoc}
 
@@ -1670,7 +1636,6 @@ Provide an exit-document template for each executive position and team lead. Let
 \begin{itemize}
   \item \hyperref[mMembers]{Member Registry Module (M5)}
   \item \hyperref[mContent]{Repository Content Module (M6)}
-  \item \hyperref[mSearch]{Search Module (M17)}
   \item \hyperref[mModelLibrary]{Model Library Module (M8)}
   \item \hyperref[mRuleSet]{Rule Set Module (M10)}
   \item \hyperref[mTestRecords]{Material Test Records Module (M12)}
@@ -1821,8 +1786,6 @@ Executive positions, their current holders, and the team-lead roles are read fro
 
 \section{MIS of Authentication Module} \label{mAuthn}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{Auth}
 
@@ -1860,7 +1823,7 @@ None.
 \end{itemize}
 
 \subsubsection{Environment Variables}
-\wss{This section is not necessary for all modules. Its purpose is to capture when the module has external interaction with the environment.}
+None.
 
 \subsubsection{Assumptions}
 \begin{itemize}
@@ -1932,15 +1895,13 @@ None.
 
 \section{MIS of Persistence Module} \label{mPersist}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{Persistence}
 
 Store, retrieve, and archive the records and stored files of all other modules, keeping them complete and consistent when several members use the system at once. Long-term means persisting beyond a single transient session with the web server. The state structures shown in other modules are held through this module.
 
 \subsection{Uses}
-\hyperref[mHH]{Hardware-Hiding Module (M1)} only.
+None.
 
 \subsection{Syntax}
 
@@ -2056,8 +2017,6 @@ None.
 
 \section{MIS of Search Module} \label{mSearch}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{Search}
 
@@ -2111,15 +2070,13 @@ None.
 
 \section{MIS of STEP Parsing Module} \label{mStep}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{StepParser}
 
 Read STEP files and provide their raw geometry and metadata. Identifying the members and joints of a bridge is done by the Model Import Module (\hyperref[mModelImport]{M7}), not by this module.
 
 \subsection{Uses}
-\hyperref[mHH]{Hardware-Hiding Module (M1)} only.
+None.
 
 \subsection{Syntax}
 
@@ -2162,15 +2119,13 @@ None.
 
 \section{MIS of Structural Solver Module} \label{mSolver}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{StructSolver}
 
 Compute the internal forces and stresses in each member of a bridge model, from the model's members, joints, supports, and applied loads and the material properties supplied to it.
 
 \subsection{Uses}
-\hyperref[mHH]{Hardware-Hiding Module (M1)} only.
+None.
 
 \subsection{Syntax}
 
@@ -2213,15 +2168,13 @@ None.
 
 \section{MIS of 3D Viewer Module} \label{mViewer}
 
-\wss{Use labels for cross-referencing}
-
 \subsection{Module}
 \texttt{Viewer3D}
 
 Display a model in an interactive three-dimensional view, with its units and a scale reference, for users to manually inspect, and highlight elements of the displayed model.
 
 \subsection{Uses}
-\hyperref[mHH]{Hardware-Hiding Module (M1)} only.
+None.
 
 \subsection{Syntax}
 
@@ -2294,14 +2247,10 @@ Gemini (version 3)
 Advisory and formatting only.
 
 \subsection{Verification of AI-Generated Content}
-\wss{Describe how the team checked AI-generated or AI-assisted material before including it in the document. Verify factual claims, technical assertions, requirements, calculations, references, and other information. The team is responsible for the accuracy, completeness, consistency, and appropriateness of the submitted document.}
-
 All advice was critically evaluated and all factual claims within the advice were verified before the advice was used.
 
 \newpage
 \section{Reflection}
-
-\wss{Not required for CAS 741 projects}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
