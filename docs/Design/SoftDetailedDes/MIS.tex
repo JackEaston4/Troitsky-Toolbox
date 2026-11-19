@@ -158,17 +158,25 @@ The following types are used in more than one module, or are returned across mod
   \item \texttt{Rule} $=$ $\text{Tuple}\langle \mathbb{S}, \mathbb{S}, \mathbb{R} \mid \bot, \mathbb{R} \mid \bot, \mathbb{S}, \mathbb{B} \rangle$: name, constrained model property, allowed minimum and maximum, unit, and manual flag.
   \item \texttt{RuleResult} $=$ $\text{Tuple}\langle \mathbb{S}, \{\text{Pass}, \text{Fail}, \text{Manual}\}, \mathbb{R} \mid \bot, \text{Tuple}\langle \mathbb{R}, \mathbb{R} \rangle \mid \bot \rangle$: the outcome of one rule check.
   \item \texttt{ElementResult} $=$ $\text{Tuple}\langle \mathbb{N}, \mathbb{R}, \mathbb{R} \rangle$: the member identifier, axial force, and stress of one element.
-  \item \texttt{Solid}: the raw geometry of one solid body in a STEP file. \texttt{StepGeometry}: the list of \texttt{Solid}s, the overall dimensions (three reals), the mass, and the metadata (a list of string pairs).
-  \item \texttt{Formula}: a metric expression over element results. \texttt{Metric}: a validated \texttt{Formula}.
+  \item \texttt{Solid}: the raw geometry of one solid body in a STEP file.
+  \item \texttt{StepGeometry}: the list of \texttt{Solid}s, the overall dimensions (three reals), the mass, and the metadata (a list of string pairs).
+  \item \texttt{Formula}: a metric expression over element results. 
+  \item \texttt{Metric}: a validated \texttt{Formula}.
+  \item \texttt{Category}: an object representing a file's category.
   \item \texttt{Estimate}$\langle T \rangle$ $=$ $\text{Tuple}\langle T, \text{List}\langle \mathbb{S} \rangle, \text{List}\langle \mathbb{S} \rangle \rangle$: a value with its assumptions and limitations.
   \item \texttt{Location} $=$ $\text{Tuple}\langle \mathbb{N}, \text{Tuple}\langle \mathbb{R}, \mathbb{R}, \mathbb{R} \rangle \rangle$: a member identifier and a point in model coordinates.
   \item \texttt{HandoffTemplate}: the required fields of one document role, each with a minimum length.
-  \item \texttt{Record}: an instance of a database entity, with its owner key and archived flag. \texttt{EntityName}: one entity of the database table in the Module Guide.
-  \item \texttt{Id}: an opaque identifier issued by the Persistence Module (M16). \texttt{FileRef}: an opaque reference to a stored file, issued by the Persistence Module (M16).
-  \item \texttt{Preview}: a browser-displayable rendering of a file. \texttt{View}: a rendered three-dimensional view of a \texttt{Model}. \texttt{HtmlElement}: an element of a rendered page.
+  \item \texttt{Record}: an instance of a database entity, with its owner key and archived flag.
+  \item \texttt{EntityName}: one entity of the database table in the Module Guide.
+  \item \texttt{Id}: an opaque identifier issued by the Persistence Module (M16).
+  \item  \texttt{FileRef}: an opaque reference to a stored file, issued by the Persistence Module (M16).
+  \item \texttt{Preview}: a browser-displayable rendering of a file.
+  \item \texttt{HtmlElement}: an element of a rendered page.
   \item \texttt{HtmlInput} $=$ $\text{Tuple}\langle \texttt{HtmlElement}, \mathbb{S} \rangle$: an input element of a rendered page, with the value entered in it.
-  \item \texttt{ItemMetadata}: the title, category, year, team, and tags of a repository item. \texttt{RepositoryItem}: an \texttt{ItemMetadata}, the uploader, an archived flag, and a reference to the item's file in the Persistence Module (M16).
-  \item \texttt{Service}: a set of operation names with their handlers, registered with the Toolbox Broker (M3). \texttt{Request}, \texttt{Response}: payloads routed by the Toolbox Broker.
+  \item \texttt{ItemMetadata}: the title, category, year, team, and tags of a repository item. 
+  \item \texttt{RepositoryItem}: an \texttt{ItemMetadata}, the uploader, an archived flag, and a reference to the item's file in the Persistence Module (M16).
+  \item \texttt{Service}: a set of operation names with their handlers, registered with the Toolbox Broker (M3). 
+  \item \texttt{Request}, \texttt{Response}: payloads routed by the Toolbox Broker.
   \item \texttt{LogEntry} $=$ $\text{Tuple}\langle \texttt{Member}, \mathbb{S}, \text{time}, \mathbb{B} \rangle$: the member, operation, time, and success flag of one routed request.
 \end{itemize}
 
@@ -846,10 +854,14 @@ None.
 \texttt{editFile} & \texttt{fileId}: $\mathbb{N}$, \texttt{part}: $\mathbb{S}$, \texttt{contents}: $\mathbb{S}$ & --- & Item not found, part not found, contents invalid \\
 \texttt{editMetadata} & \texttt{fileId}: $\mathbb{N}$, \texttt{metadata}: ItemMetadata & --- & Item not found, missing title, invalid category, missing year \\
 \texttt{archiveItem} & \texttt{fileId}: $\mathbb{N}$ & --- & Item not found \\
-\texttt{getFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{item}: RepositoryItem & Item not found, storage unavailable \\
+\texttt{getFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{item}: RepositoryItem & Item not found \\
 \texttt{previewFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{preview}: Preview & Item not found, not previewable \\
 \texttt{downloadFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{download}: File & Item not found, storage unavailable \\
 \texttt{listItems} & \texttt{includeArchived}: $\mathbb{B}$ (optional, default false) & \texttt{items}: $\text{List}\langle \text{RepositoryItem} \rangle$ & Storage unavailable \\
+\texttt{addCategory} & \textt{categoryName}: $\mathbb{S}$ & category: Category & storage unavailable, name not unique \\
+\texttt{editCategory} & \texttt{category}: Category, \texttt{name}: $\mathbb{S}$ & - & Category not found \\
+\texttt{deleteCategory} & \texttt{category}: Category & --- & Category not found, Category non-empty \\
+\texttt{getCategoryList} & --- & \texttt{listCategories}: $\text{List}\langle\text{Category}\rangle$ & --- \\
 \bottomrule
 \end{tabularx}
 
@@ -858,12 +870,10 @@ None.
 \subsubsection{State Variables}
 \begin{itemize}
   \item \texttt{fileDict}: $\text{Dict}\langle \mathbb{N}, \text{RepositoryItem} \rangle$ --- identifier-to-item lookup. The contents of each item's file are held by the Persistence Module (M16) and are referenced from the item, not kept in this module.
+  \item \texttt{categories}: $\text{List}\langle \text{Category} \rangle$ --- the list of current categories
 \end{itemize}
 
-Types used by this module (not exported as state):
-\begin{itemize}
-  \item \texttt{Category}: one value from the fixed category list % TODO: fixed category list not specified in SRS/MG
-\end{itemize}
+
 The types \texttt{ItemMetadata} and \texttt{RepositoryItem} are defined in the Derived Types subsection of the Notation.
 
 \subsubsection{Environment Variables}
@@ -913,7 +923,7 @@ None.
 \begin{itemize}
   \item transition: none
   \item output: $\texttt{fileDict[fileId]}$, including archived items
-  \item exception: item not found, storage unavailable
+  \item exception: item not found
 \end{itemize}
 
 \textbf{\texttt{previewFile(fileId)}}:
@@ -935,6 +945,34 @@ None.
   \item transition: none
   \item output: a copy of the items in \texttt{fileDict}. Archived items are omitted unless \texttt{includeArchived} is true (default false)
   \item exception: storage unavailable
+\end{itemize}
+
+\textbf{\texttt{addCategory(categoryName)}}
+\begin{itemize}
+  \item transition: create \texttt{new Category(name)} and \textbf{add} it to $\texttt{categories}$
+  \item output: the category created
+  \item exception: storage unavailable, name not unique (category names must be unique)
+\end{itemize}
+
+\textbf{\texttt{editCategory(category, categoryName)}}
+\begin{itemize}
+  \item transition: $\text{category}.\text{name} := \text{categoryName}$
+  \item output: none
+  \item exception: category not found
+\end{itemize}
+
+\textbf{\texttt{deleteCategory(category, categoryName)}}
+\begin{itemize}
+  \item transition: \textbf{remove} category from $\texttt{categories}$
+  \item output: none
+  \item exception: category not found, category not empty (i.e. at least one document has this category. Only categories with no documents may be deleted).
+\end{itemize}
+
+\textbf{\texttt{getCategories}()}
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of the list $\texttt{categorires}$
+  \item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -1340,10 +1378,24 @@ None.
   \item exception: manual rule
 \end{itemize}
 
-\textbf{\texttt{getProperty(rule)}}, \textbf{\texttt{getName(rule)}}, \textbf{\texttt{getUnit(rule)}}:
+\textbf{\texttt{getProperty(rule)}}:
 \begin{itemize}
   \item transition: none
-  \item output: the constrained property, name, or unit of \texttt{rule}
+  \item output: the constrained property of \texttt{rule}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getName(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the name of \texttt{rule}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getUnit(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the unit of \texttt{rule}
   \item exception: none
 \end{itemize}
 
@@ -2048,7 +2100,7 @@ None.
 \textbf{\texttt{search(keyword, category, year, team, tag)}}:
 \begin{itemize}
   \item transition: none
-  \item output: from the items returned by \texttt{listItems} of the Repository Content Module (M6), with archived items excluded, the items for which \texttt{matches} holds for \texttt{keyword} and for every filter that was supplied. Filters that were not supplied do not restrict the result
+  \item output: from the items returned by \texttt{listItems} of the Repository Content Module (M6), with archived items excluded, the items for which \texttt{matches} holds for \texttt{keyword} and for every filter that was supplied. Filters that were not supplied do not restrict the result. The items are sorted in the ordered by latest edit time, from latest to earliest.
   \item exception: search timeout (if the search cannot finish within \texttt{MaxSearchTime}, no results are returned and the member is told that the search timed out; partial results are not returned), storage unavailable (raised by the Repository Content Module)
 \end{itemize}
 
@@ -2201,6 +2253,11 @@ Display a model in an interactive three-dimensional view, with its units and a s
 \begin{itemize}
   \item The member's rotate, zoom, and pan inputs to the 3D view
   \item The rendered 3D view shown to the member
+\end{itemize}
+
+Types used in this module (not exported as state):
+\begin{itemize}
+  \item \texttt{View}: a rendered three-dimensional view of a \texttt{Model}.
 \end{itemize}
 
 \subsubsection{Assumptions}
