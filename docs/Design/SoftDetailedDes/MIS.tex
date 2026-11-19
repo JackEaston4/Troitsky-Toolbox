@@ -2302,33 +2302,27 @@ graduate attribute of Problem Analysis and Design.
 \subsection{Team}
 \begin{enumerate}
 
-  \item Majority of design decisions related to user benefit or specific user requirements were determined through the primary member elicitation survey conducted, and constant communication with the Troitsky club. As one of the team's members, Pedro, is also an experience Troitsky member, 
-  several components that would require domain knowledge were easily understood and integrated, allowing design decision to stem from primary user needs. As the project is also focusing on integration Troitsky Toolbox support into the club's operation, through a specified subteam, the team has been highly integrated with the club's current operations. 
-  Any design decision focused on roles, competition specifications, material testing support, stored data and exit documentation was directly in compliance and off of user needs.
+  \item The majority of design decisions related to user benefit or specific user requirements were determined through the primary member elicitation survey and constant communication with the Troitsky club. As one of the team's members, Pedro, is also an experienced Troitsky member, 
+  several components that would require domain knowledge were easily understood and integrated, allowing design decisions to stem from primary user needs. As the project is also focusing on integrating Troitsky Toolbox support into the club's operation, through a specified subteam, the team has been highly integrated with the club's current operations. 
+  Any design decision focused on roles, competition specifications, material testing support, stored data and exit documentation was based directly on user needs.
   
-  \item There were no major changes that had to be made, but more discussion surround specific design decision were brought up that will potentially further require changes to past documents. The full implementation of a coach role and the support that is required for that will need to be added into the past docs, a change that was understood through the Fall CD. 
-  There was also a change/discussion on what sign-in system the product will use, primarily debating between going through McMaster SSO and an internal account system. Changes regarding this decision will be made once discussion with the TA and Professor has been had, checking if the team is able to use the McMaster SSO feasibly within this project.
+  \item There were no major changes that had to be made, but discussions surrounding specific design decisions were brought up that may require further changes to past documents. The full implementation of a coach role and the support that is required for that will need to be added into the past docs, a change that was understood through the Fall CD. 
+  There was also a discussion on which sign-in system the product will use, primarily debating between going through McMaster SSO and an internal account system. Changes regarding this decision will be made once the team has discussed it with the TA and professor, to check whether the team is able to use the McMaster SSO feasibly within this project.
   
-  \item Structural analysis; currently we are relying on standardized dependencies to predict the estimated load and failure points of a given model and the main goal is that it is consistently inaccurate (i.e, good models get a high estimated load relative to poorer models, but the actual estimated load may not be close to how.) A custom modelling software built using numerical analysis would be ideal for estimating load but it is just not within the scope of this project to do it within the given time constraint. 
-  We are also heavily limited in our testing due to the development period only following one competition year. With unlimited time, the team would be able to iterate off of the product once already used and understood by members.
+  \item Structural analysis; currently we are relying on standardized dependencies to predict the estimated load and failure points of a given model and the main goal is that it is consistent, even if inaccurate (i.e., good models get a high estimated load relative to poorer models, but the actual estimated load may not be close to the actual failure load). A custom modelling software built using numerical analysis would be ideal for estimating load but it is just not within the scope of this project to do it within the given time constraint. 
+  We are also heavily limited in our testing due to the development period spanning only one competition year. With unlimited time, the team would be able to iterate on the product once already used and understood by members.
   
-  \item One design solution we considered was to have the majority of the application ran locally, essentially it would be a downloaded application rather than a web app, however the friction to download and set up the app along with the fact that we would still have to host the data on a server somewhere made us decide a webapp was a better route.
-  A completely different design route we almost went was the in depth modelling route; instead of building a database, transition documentation, materials properties manager, we would just build them a custom simulator using numerical analysis that would be more accurate than commercial modeling softwares FEA at estimating the load of troitsky bridges, however it seemed like too large of a task that also doesn't align with the needs of the stakeholders (Information centralization and carry over, club communication and coordination, talked about more in depth in the interview report CD)
-  One final design solution we almost made was to make the app open source to other schools, however we really wanted to address the club structure and needs of the McMaster team which made this design solution unfeasible.
+  \item One design solution we considered was to have the majority of the application run locally, essentially it would be a downloaded application rather than a web app; however, the friction to download and set up the app along with the fact that we would still have to host the data on a server somewhere made us decide a web app was a better route.
+  A completely different design route we almost took was the in-depth modelling route; instead of building a database, transition documentation, materials properties manager, we would just build them a custom simulator using numerical analysis that would be more accurate than commercial modelling software's FEA at estimating the load of Troitsky bridges; however, it seemed like too large of a task that also doesn't align with the needs of the stakeholders (information centralization and carry over, club communication and coordination, talked about more in depth in the interview report CD).
+  One final design solution we considered was to make the app open source to other schools; however, we really wanted to address the club structure and needs of the McMaster team which made this design solution unfeasible.
 
 \end{enumerate}
 
 \subsection{Pedro Azevedo}
 \begin{enumerate}
-  \item In writing these deliverables discussion with the team felt primarily strong. As we have settled into a more polished development flow, working collaboratively has been easier than ever. The team's use of specialized kanban boards and tags, allowed for work to be done early as all members understood their assignments.
-  \item The primary pain point experience in this deliverable was the decomposition of our system into proper modules. As out project is a toolbox, servicing many components of the club operation, the decomposition was very lengthy and at times felt trivial for specific components.
-  Certain sections there was uncertainty in the granularity of the breakdown, specifically in how individual a secret had to be within each module. 
-\end{enumerate}
-
-\subsection{Michael Roberts}
-\begin{enumerate}
-  \item I thought of how this would be implemented low-level and did it with time to spare.
-  \item Motivation --- sometimes I got distracted while writing this large document. Eventually I committed as it got later into the night.
+  \item In writing these deliverables, discussion within the team felt strong. As we have settled into a more polished development flow, working collaboratively has been easier than ever. The team's use of specialized Kanban boards and tags allowed for work to be done early as all members understood their assignments.
+  \item The primary pain point experienced in this deliverable was the decomposition of our system into proper modules. As our project is a toolbox, servicing many components of the club's operations, the decomposition was very lengthy and at times felt trivial for specific components.
+  In certain sections, there was uncertainty about the granularity of the breakdown, specifically how individual a secret had to be within each module. 
 \end{enumerate}
 
 \subsection{Michael Roberts}
@@ -2339,7 +2333,7 @@ graduate attribute of Problem Analysis and Design.
 
 \subsection{Mason Azzopardi}
 \begin{enumerate}
-  \item I think what went best during this document was the early work delegation we did. Everyone knew their parts and was able to get some work done before each meeting, we were able to create consistent action items that streamlined the process and eliminated our need to rush at the end of this deliverable.
+  \item I think what went best during this document was the early work delegation we did. Everyone knew their parts and was able to get some work done before each meeting; we were able to create consistent action items that streamlined the process and eliminated our need to rush at the end of this deliverable.
   \item Consistency between the MG and the MIS was a bit of a pain point for this deliverable. They were being worked on in parallel which meant a lot of revision had to be done to both as we were writing them to ensure they were accurate to each other.
 \end{enumerate}
 
