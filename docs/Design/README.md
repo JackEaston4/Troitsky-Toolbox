@@ -1,8 +1,15 @@
 # Design Documentation
 
-The folders and files for this folder are as follows:
+The design of the Troitsky Toolbox is documented in two parts, following the
+information-hiding approach of Parnas. The Module Guide sets out the modular
+structure of the system, and the Module Interface Specification gives the
+interface of each module in that structure. Both use the same module names
+and numbering (M1 to M20), and both build on the requirements in the
+[SRS](../SRS/).
 
-- SoftArchitecture
- - MG.tex -- the module guide. Traces each module back to the Software Requirements Specification, summarizes the functionality of each module, state's each module's implementation platform, and illustrates how the modules relate to one another
-- SoftDetailedDes
-  - MIS.tex -- the module interface specification. Low-level design of each module.
+| Document | Folder | Main file | Report |
+|---|---|---|---|
+| Module Guide (MG) | [SoftArchitecture/](SoftArchitecture/) | `MG.tex` | [MG.pdf](https://jackeaston4.github.io/Troitsky-Toolbox/Design/SoftArchitecture/MG.pdf) |
+| Module Interface Specification (MIS) | [SoftDetailedDes/](SoftDetailedDes/) | `MIS.tex` | [MIS.pdf](https://jackeaston4.github.io/Troitsky-Toolbox/Design/SoftDetailedDes/MIS.pdf) |
+
+Further information is provided within the README of each folder.
