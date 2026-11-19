@@ -292,11 +292,17 @@ graduate attribute of Problem Analysis and Design.
   \item What are the limitations of your solution?  Put another way, given
   unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
 
-  Structural analysis; currently we are relying on standardized dependencies to predict the estimated load and failure points of a given model and the main goal is that it is consistently inaccurate (i.e, good models get a high estimated load relative to poorer models, but the actual estimated load)
+  Structural analysis; currently we are relying on standardized dependencies to predict the estimated load and failure points of a given model and the main goal is that it is consistently inaccurate (i.e, good models get a high estimated load relative to poorer models, but the actual estimated load may not be close to how.) A custom modelling software built using numerical analysis would be ideal for estimating load but it is just not within the scope of this project to do it within the given time constraint.
+
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
   (LO\_Explores)
+
+  One design solution we considered was to have the majority of the application ran locally, essentially it would be a downloaded application rather than a web app, however the friction to download and set up the app along with the fact that we would still have to host the data on a server somewhere made us decide a webapp was a better route.
+  A completely different design route we almost went was the in depth modelling route; instead of building a database, transition documentation, materials properties manager, we would just build them a custom simulator using numerical analysis that would be more accurate than commercial modeling softwares FEA at estimating the load of troitsky bridges, however it seemed like too large of a task that also doesn't align with the needs of the stakeholders (Information centralization and carry over, club communication and coordination, talked about more in depth in the interview report CD)
+  One final design solution we almost made was to make the app open source to other schools, however we really wanted to address the club structure and needs of the McMaster team which made this design solution unfeasible.
+
   \item (After you have implemented another team's module, which means this
   isn't filled in until after the original deadline). What did you learn by
   implementing another team's module? Were all the details you needed in the
