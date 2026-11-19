@@ -1,53 +1,69 @@
-\documentclass[11pt, a4paper]{article}
-\usepackage[a4paper, margin=2.2cm]{geometry}
+\documentclass[12pt, titlepage]{article}
 
-\usepackage{amsmath, amssymb}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{longtable}
-\usepackage{multirow}
-\usepackage[table]{xcolor}
+\usepackage{amsmath, mathtools}
+
+\usepackage[round]{natbib}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{colortbl}
 \usepackage{hyperref}
-
-\definecolor{primary}{HTML}{1E3A8A}
-\definecolor{subaccent}{HTML}{334155}
-\definecolor{rowtint}{HTML}{F8FAFC}
+\usepackage{longtable}
+\usepackage{xfrac}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[section]{placeins}
+\usepackage{caption}
+\usepackage{fullpage}
 
 \hypersetup{
-  colorlinks=true,
-  linkcolor=primary,
-  citecolor=primary,
-  urlcolor=primary
+bookmarks=true,     % show bookmarks bar?
+colorlinks=true,       % false: boxed links; true: colored links
+linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+citecolor=blue,      % color of links to bibliography
+filecolor=magenta,  % color of file links
+urlcolor=cyan          % color of external links
 }
 
-\newcommand{\progname}{Troitsky Toolbox}
-\newcommand{\authname}{Troitsky Toolbox Team}
+\usepackage{array}
 
-\setlength{\parskip}{0.45em}
-\setlength{\parindent}{0pt}
+\input{../../Comments.text}
+\input{../../Common.text}
+
+% Long \texttt identifiers in the 12pt layout: allow line breaks after . , ( and _
+% inside \texttt (no hyphen is inserted), and let TeX stretch spaces a little
+% before it lets a line run into the margin.
+\setlength{\emergencystretch}{3em}
+\NewCommandCopy{\origtexttt}{\texttt}
+\ExplSyntaxOn
+\tl_new:N \l__mis_tt_tl
+\RenewDocumentCommand{\texttt}{m}
+  {
+    \tl_set:Nn \l__mis_tt_tl {#1}
+    \tl_replace_all:Nnn \l__mis_tt_tl {.} {.\allowbreak}
+    \tl_replace_all:Nnn \l__mis_tt_tl {,} {,\allowbreak}
+    \tl_replace_all:Nnn \l__mis_tt_tl {(} {(\allowbreak}
+    \tl_replace_all:Nnn \l__mis_tt_tl {\_} {\_\allowbreak}
+    \exp_args:NV \origtexttt \l__mis_tt_tl
+  }
+\ExplSyntaxOff
 
 \begin{document}
 
-\begin{titlepage}
-  \centering
-  \vspace*{3.5cm}
-  {\Large\color{subaccent}\textsc{Software Design Documentation}\par}
-  \vspace{0.6cm}
-  {\Huge\bfseries\color{primary} Module Interface Specification\\[0.3em] for \progname\par}
-  \vspace{1.2cm}
-  \rule{0.4\textwidth}{1pt}
-  \vspace{1.2cm}
-  {\large\textbf{Author:} \authname\par}
-  \vspace{0.4cm}
-  {\large\textbf{Date:} \today\par}
-  \vfill
-  {\small\color{subaccent} McMaster Troitsky Club --- Bridge Analysis \& Knowledge Repository System\par}
-\end{titlepage}
+\title{Module Interface Specification for \progname{}}
+
+\author{\authname}
+
+\date{\today}
+
+\maketitle
 
 \pagenumbering{roman}
 
-\section*{Revision History}
-\addcontentsline{toc}{section}{Revision History}
+\section{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule
@@ -63,8 +79,7 @@
 
 \newpage
 
-\section*{Symbols, Abbreviations and Acronyms}
-\addcontentsline{toc}{section}{Symbols, Abbreviations and Acronyms}
+\section{Symbols, Abbreviations and Acronyms}
 
 See SRS Documentation \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/pdfs/SRS/SRS.pdf}{here}.
 
@@ -93,10 +108,10 @@ found \href{https://github.com/JackEaston4/Troitsky-Toolbox}{here}.
 
 \section{Notation}
 
-The structure of the MIS for modules comes from Hoffman and Strooper (1995),
+The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
-Ghezzi et al. (2003). The mathematical notation comes from Chapter 3 of
-Hoffman and Strooper (1995). For instance, the symbol $:=$ is used for a
+\citet{GhezziEtAl2003}. The mathematical notation comes from Chapter 3 of
+\citet{HoffmanAndStrooper1995}. For instance, the symbol $:=$ is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
 \Rightarrow r_1 \mid c_2 \Rightarrow r_2 \mid \dots \mid c_n \Rightarrow r_n )$.
 
@@ -2238,6 +2253,13 @@ None.
 
 
 \newpage
+
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliographystyle {plainnat}
+\bibliography {../../../refs/References}
+
+\newpage
 \appendix
 \section{Generative AI Use Disclosure}
 
@@ -2255,6 +2277,8 @@ All advice was critically evaluated and all factual claims within the advice wer
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
+
+\input{../../Reflection.text}
 
 \begin{enumerate}
   \item What went well while writing this deliverable?
