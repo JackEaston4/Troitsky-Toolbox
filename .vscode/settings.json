@@ -25,10 +25,14 @@
         "**/VnVPlan.aux": true,
         "**/VnVPlan.log": true,
         "**/VnVPlan.gz": true,
-        "**/VnVPlan.out": true
-    },
-    "cSpell.words": [
-        "Anonymization",
-        "scoresheet"
-    ]
+        "**/VnVPlan.out": true,
+        "**/MG.aux": true,
+        "**/MG.log": true,
+        "**/MG.gz": true,
+        "**/MG.out": true,
+        "**/MIS.aux": true,
+        "**/MIS.log": true,
+        "**/MIS.gz": true,
+        "**/MIS.out": true
+    }
 }

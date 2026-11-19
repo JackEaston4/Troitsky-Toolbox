@@ -1,70 +1,71 @@
-\documentclass[12pt, titlepage]{article}
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, margin=2.2cm]{geometry}
 
-\usepackage{amsmath, mathtools}
-
-\usepackage[round]{natbib}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{colortbl}
-\usepackage{xr}
-\usepackage{hyperref}
-\usepackage{longtable}
-\usepackage{xfrac}
-\usepackage{tabularx}
-\usepackage{float}
-\usepackage{siunitx}
+\usepackage{amsmath, amssymb}
 \usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{multirow}
-\usepackage[section]{placeins}
-\usepackage{caption}
-\usepackage{fullpage}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+
+\definecolor{primary}{HTML}{1E3A8A}
+\definecolor{subaccent}{HTML}{334155}
+\definecolor{rowtint}{HTML}{F8FAFC}
 
 \hypersetup{
-bookmarks=true,     % show bookmarks bar?
-colorlinks=true,       % false: boxed links; true: colored links
-linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-citecolor=blue,      % color of links to bibliography
-filecolor=magenta,  % color of file links
-urlcolor=cyan          % color of external links
+  colorlinks=true,
+  linkcolor=primary,
+  citecolor=primary,
+  urlcolor=primary
 }
 
-\usepackage{array}
+\newcommand{\progname}{Troitsky Toolbox}
+\newcommand{\authname}{Troitsky Toolbox Team}
 
-\externaldocument{../../SRS/SRS}
-
-\input{../../Comments.text}
-\input{../../Common.text}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
-\title{Module Interface Specification for \progname{}}
-
-\author{\authname}
-
-\date{\today}
-
-\maketitle
+\begin{titlepage}
+  \centering
+  \vspace*{3.5cm}
+  {\Large\color{subaccent}\textsc{Software Design Documentation}\par}
+  \vspace{0.6cm}
+  {\Huge\bfseries\color{primary} Module Interface Specification\\[0.3em] for \progname\par}
+  \vspace{1.2cm}
+  \rule{0.4\textwidth}{1pt}
+  \vspace{1.2cm}
+  {\large\textbf{Author:} \authname\par}
+  \vspace{0.4cm}
+  {\large\textbf{Date:} \today\par}
+  \vfill
+  {\small\color{subaccent} McMaster Troitsky Club --- Bridge Analysis \& Knowledge Repository System\par}
+\end{titlepage}
 
 \pagenumbering{roman}
 
-\section{Revision History}
+\section*{Revision History}
+\addcontentsline{toc}{section}{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\toprule
+\textbf{Date} & \textbf{Version} & \textbf{Notes} \\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2026-11-18 & 1.1 & Updated the MIS layout and began replacing the generic template with the project module hierarchy. \\
+2026-11-19 & 1.2 & Expanded and revised the MIS to align it with the Module Guide. \\
+2026-11-19 & 1.3 & Merged updates from \texttt{main} into the branch. \\
+2026-11-19 & 1.4 & Removed remaining template comments, clarified wording, and made other small MIS fixes. \\
 \bottomrule
 \end{tabularx}
 
-~\newpage
+\newpage
 
-\section{Symbols, Abbreviations and Acronyms}
+\section*{Symbols, Abbreviations and Acronyms}
+\addcontentsline{toc}{section}{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+See SRS Documentation \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/pdfs/SRS/SRS.pdf}{here}.
 
 \newpage
 
@@ -76,49 +77,104 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications (MIS) for the Troitsky Toolbox,
+a suite of services for the McMaster Troitsky Club, which fields teams to build bridges in the
+national Troitsky competition. The prime service of this toolbox is the analysis of a bridge model.
+The analysis draws upon materials testing results uploaded to the system in another service. Two auxiliary
+services also exist to facilitate club operations. The former is the knowledge repository to upload,
+search for, preview and download documents. The latter is a login and role-based access control (RBAC) service,
+which prevents unauthorized access of documents or use of services. This is necessary because the toolbox
+will be available through a public website hosted on a web server.
 
 Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+and Module Guide. The full documentation and implementation can be
+found \href{https://github.com/JackEaston4/Troitsky-Toolbox}{here}.
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
+The structure of the MIS for modules comes from Hoffman and Strooper (1995),
 with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
+Ghezzi et al. (2003). The mathematical notation comes from Chapter 3 of
+Hoffman and Strooper (1995). For instance, the symbol $:=$ is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
+\Rightarrow r_1 \mid c_2 \Rightarrow r_2 \mid \dots \mid c_n \Rightarrow r_n )$.
 
-The following table summarizes the primitive data types used by \progname. 
+The following table summarizes the primitive data types used by \progname.
 
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
-\noindent 
-\begin{tabular}{l l p{7.5cm}} 
-\toprule 
-\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Data Type} & \textbf{Notation} & \textbf{Description} \\
 \midrule
-character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+character & char & a single symbol or digit \\
+integer & $\mathbb{Z}$ & a number without a fractional component in $(-\infty, \infty)$ \\
+natural number & $\mathbb{N}$ & a number without a fractional component in $[1, \infty)$ \\
+real & $\mathbb{R}$ & any number in $(-\infty, \infty)$ \\
+string & $\mathbb{S}$ & an ordered array of characters (e.g., a string) \\
+boolean & $\mathbb{B}$ & a logical truth value (\textit{true} or \textit{false}) \\
+list & $\text{List}\langle E \rangle$ & a mutable ordered collection of elements of type $E$ \\
+file & File & a file on a machine \\
+dictionary & $\text{Dict}\langle K, V \rangle$ & a key-value lookup. Keys are of immutable type $K$, values are of type $V$ \\
+ip address & IP & an Internet Protocol address $W.X.Y.Z$, $0 \le W,X,Y,Z \le 255$, $W,X,Y,Z \in \mathbb{Z}$ \\
+set & $\text{Set}\langle E \rangle$ & an unordered collection of objects of immutable type $E$ \\
+tuple & $\text{Tuple}\langle E_1, E_2, \dots, E_n \rangle$ & an ordered immutable collection. The $n$th element is of type $E_n$. \\
 \bottomrule
-\end{tabular} 
+\end{tabularx}
 \end{center}
 
-\noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
+The specification of \progname\ uses some derived data types: sequences, strings, and
 tuples. Sequences are lists filled with elements of the same data type. Strings
 are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
+different types. In addition, \progname\ uses functions, which
 are defined by the data types of their inputs and outputs. Local functions are
 described by giving their type signature followed by their specification.
+
+\subsection*{Derived Types Used by the Module Specifications}
+The following types are used in more than one module, or are returned across module boundaries. Types that a single module defines for itself are defined in that module.
+\begin{itemize}
+  \item \texttt{UserAccount}: an opaque identifier of a member account, issued by the Member Registry Module (M5).
+  \item \texttt{Member} $=$ \texttt{UserAccount}: the identity of the member making a request, supplied by the Authentication Module (M15).
+  \item \texttt{UserInfo}: the profile information of an account.
+  \item \texttt{Role}: a club role, as named in the Module Guide.
+  \item \texttt{Position}: the name of an executive position, as owned by the Member Registry Module (M5).
+  \item \texttt{Team}: an opaque identifier of a team.
+  \item \texttt{Session}: an opaque identifier of a browser session, issued by the Authentication Module (M15).
+  \item \texttt{Model}: a bridge model with its unique identifier \texttt{id}: $\mathbb{N}$ (assigned by the Model Library Module (M8) on upload), its \texttt{Element}s (members and joints), its \texttt{team}, its competition \texttt{year}, an \texttt{isCurrent} flag (true until the season ends), and its \texttt{units}.
+  \item \texttt{Element}: a member or joint of a \texttt{Model}.
+  \item \texttt{Units}: the unit system of a \texttt{Model}.
+  \item \texttt{Batch} $=$ $\text{Tuple}\langle \mathbb{S}, \mathbb{S}, \mathbb{N} \rangle$: a material batch, giving its material, supplier, and year.
+  \item \texttt{MaterialSelection} $=$ $\text{Tuple}\langle \mathbb{S}, \mathbb{N}, \texttt{Batch} \mid \bot \rangle$: a material, a competition year, and an optional batch.
+  \item \texttt{MaterialProperties} $=$ $\text{Tuple}\langle \mathbb{S}, \mathbb{N}, \texttt{Batch} \mid \bot, \mathbb{R}, \mathbb{R}, \text{List}\langle \mathbb{N} \rangle \rangle$: the material, year, batch, elastic modulus, elastic strength, and the identifiers of the accepted tests used.
+  \item \texttt{TestEntry}: the fields of a material test as entered: test type, material, supplier, year, specimen dimensions with units, applied load with unit, grain orientation (or $\bot$), date, and tester.
+  \item \texttt{TestRecord}: a stored \texttt{TestEntry} in base units, with its \texttt{testId}, \texttt{batch}, invalidity flag, and invalid reason.
+  \item \texttt{RowError} $=$ $\text{Tuple}\langle \mathbb{N}, \mathbb{S}, \mathbb{S} \rangle$: the row number, field name, and reason of a rejected import row.
+  \item \texttt{Summary} $=$ $\text{Tuple}\langle \mathbb{N}, \mathbb{N}, \mathbb{R}, \mathbb{R} \rangle$: a competition year, a count, a mean, and a standard deviation.
+  \item \texttt{Rule} $=$ $\text{Tuple}\langle \mathbb{S}, \mathbb{S}, \mathbb{R} \mid \bot, \mathbb{R} \mid \bot, \mathbb{S}, \mathbb{B} \rangle$: name, constrained model property, allowed minimum and maximum, unit, and manual flag.
+  \item \texttt{RuleResult} $=$ $\text{Tuple}\langle \mathbb{S}, \{\text{Pass}, \text{Fail}, \text{Manual}\}, \mathbb{R} \mid \bot, \text{Tuple}\langle \mathbb{R}, \mathbb{R} \rangle \mid \bot \rangle$: the outcome of one rule check.
+  \item \texttt{ElementResult} $=$ $\text{Tuple}\langle \mathbb{N}, \mathbb{R}, \mathbb{R} \rangle$: the member identifier, axial force, and stress of one element.
+  \item \texttt{Solid}: the raw geometry of one solid body in a STEP file.
+  \item \texttt{StepGeometry}: the list of \texttt{Solid}s, the overall dimensions (three reals), the mass, and the metadata (a list of string pairs).
+  \item \texttt{Formula}: a metric expression over element results. 
+  \item \texttt{Metric}: a validated \texttt{Formula}.
+  \item \texttt{Category}: an object representing a file's category.
+  \item \texttt{Estimate}$\langle T \rangle$ $=$ $\text{Tuple}\langle T, \text{List}\langle \mathbb{S} \rangle, \text{List}\langle \mathbb{S} \rangle \rangle$: a value with its assumptions and limitations.
+  \item \texttt{Location} $=$ $\text{Tuple}\langle \mathbb{N}, \text{Tuple}\langle \mathbb{R}, \mathbb{R}, \mathbb{R} \rangle \rangle$: a member identifier and a point in model coordinates.
+  \item \texttt{HandoffTemplate}: the required fields of one document role, each with a minimum length.
+  \item \texttt{Record}: an instance of a database entity, with its owner key and archived flag.
+  \item \texttt{EntityName}: one entity of the database table in the Module Guide.
+  \item \texttt{Id}: an opaque identifier issued by the Persistence Module (M16).
+  \item  \texttt{FileRef}: an opaque reference to a stored file, issued by the Persistence Module (M16).
+  \item \texttt{Preview}: a browser-displayable rendering of a file.
+  \item \texttt{HtmlElement}: an element of a rendered page.
+  \item \texttt{HtmlInput} $=$ $\text{Tuple}\langle \texttt{HtmlElement}, \mathbb{S} \rangle$: an input element of a rendered page, with the value entered in it.
+  \item \texttt{ItemMetadata}: the title, category, year, team, and tags of a repository item. 
+  \item \texttt{RepositoryItem}: an \texttt{ItemMetadata}, the uploader, an archived flag, and a reference to the item's file in the Persistence Module (M16).
+  \item \texttt{Service}: a set of operation names with their handlers, registered with the Toolbox Broker (M3). 
+  \item \texttt{Request}, \texttt{Response}: payloads routed by the Toolbox Broker.
+  \item \texttt{LogEntry} $=$ $\text{Tuple}\langle \texttt{Member}, \mathbb{S}, \text{time}, \mathbb{B} \rangle$: the member, operation, time, and success flag of one routed request.
+\end{itemize}
+
 
 \section{Module Decomposition}
 
@@ -131,183 +187,2093 @@ The following table is taken directly from the Module Guide document for this pr
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding} & ~ \\
-\midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+{Hardware-Hiding Module} & M1: Hardware-Hiding Module \\
 \midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{13}{0.3\textwidth}{Behaviour-Hiding Module} & M2: Web App Layout Module\\
+& M3: Toolbox Broker Module\\
+& M4: Authorization Rules Module\\
+& M5: Member Registry Module\\
+& M6: Repository Content Module\\
+& M7: Model Import Module\\
+& M8: Model Library Module\\
+& M9: Performance Metrics Module\\
+& M10: Rule Set Module\\
+& M11: Compliance Check Module\\
+& M12: Material Test Records Module\\
+& M13: Material Properties Module\\
+& M14: Handoff Documents Module\\
+\midrule
+\multirow{6}{0.3\textwidth}{Software Decision Module} & M15: Authentication Module\\
+& M16: Persistence Module\\
+& M17: Search Module\\
+& M18: STEP Parsing Module\\
+& M19: Structural Solver Module\\
+& M20: 3D Viewer Module\\
 \bottomrule
+
 
 \end{tabular}
 \caption{Module Hierarchy}
 \label{TblMH}
 \end{table}
 
+Every module implicitly uses the \hyperref[mHH]{Hardware-Hiding Module (M1)}. The Uses subsection of each module lists only its other dependencies, following the uses hierarchy in the Module Guide.
 \newpage
-~\newpage
-
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Hardware-Hiding Module} \label{mHH}
 
 \subsection{Module}
+\texttt{HardwareHide}
 
-\wss{Short name for the module}
+Integrate directly with the hardware.
 
 \subsection{Uses}
-
+None.
 
 \subsection{Syntax}
+Note that this project is a software project, not a hardware project. As a result,
+all functions approximate hardware functions and exact names, inner workings and 
+architectures are almost certainly different.
 
 \subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{HttpEndpoint}: $\mathbb{S}$ = \texttt{HttpEndpoint (deployment-defined address)} --- the Hypertext Transfer Protocol (HTTP) uniform resource locator (URL) of the application
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
+\begin{tabularx}{\textwidth}{p{2.7cm} p{4.2cm} p{2.8cm} X}
+\toprule
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\wss{accessProg} & - & - & - \\
-\hline
-\end{tabular}
-\end{center}
+\midrule
+\texttt{connect} & \texttt{ipAddress}: IP & --- & Connection Failed \\
+\texttt{disconnect} & \texttt{ipAddress}: IP & --- & Disconnection Failed \\
+\texttt{isConnected} & \texttt{ipAddress}: IP & \texttt{connected}: $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+  \item \texttt{devicesConnected}: $\text{Dict}\langle \text{IP}, \mathbb{B} \rangle$ --- the devices actively connected to the system
+\end{itemize}
 
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+None.
 
 \subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+\begin{itemize}
+  \item The hardware supports a network connection that can be opened to and closed from a device.
+  \item The module is initialized before any access program is called.
+\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\textbf{\texttt{connect(ipAddress: IP)}}:
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+  \item transition: $\texttt{devicesConnected[ipAddress]} := \textit{true}$, over an encrypted connection
+  \item output: none
+  \item exception: connection failed
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\textbf{\texttt{disconnect(ipAddress: IP)}}:
+\begin{itemize}
+  \item transition: $\texttt{devicesConnected[ipAddress]} := \textit{false}$
+  \item output: none
+  \item exception: disconnection failed
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\textbf{\texttt{isConnected(ipAddress: IP)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{devicesConnected[ipAddress]}$, defaulting to \textit{false}
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of Web App Layout Module} \label{mWebApp}
+
+\subsection{Module}
+\texttt{WebLayout}
+
+Detect user input, display output to the user, and manage the signed-in member's session.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mBroker]{Toolbox Broker Module (M3)}
+  \item \hyperref[mAuthn]{Authentication Module (M15)}
+  \item \hyperref[mViewer]{3D Viewer Module (M20)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{SessionTimeout}: $\mathbb{R} = 30$ --- the period of inactivity, in minutes, after which a member's session ends
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{4cm} p{4cm} p{2.3cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{displayLandingPage} & --- & --- & Server error, connection error \\
+\texttt{startSession} & \texttt{member}: Member & --- & --- \\
+\texttt{endSession} & --- & --- & --- \\
+\texttt{forwardInputs} & --- & --- & Server error, connection error \\
+\texttt{displayAlerts} & --- & --- & Server error, connection error, service unavailable \\
+\texttt{displayOutput} & \texttt{HtmlElement}, \texttt{value}: $\mathbb{S}$ & --- & Server error, connection error \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{member}: Member or \textit{null} --- the identity of the member signed in to the current session; \textit{null} when no member is signed in
+  \item \texttt{lastActivity}: $\mathbb{R}$ --- the time, in minutes, of the member's most recent input
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item The HTML inputs (e.g., button clicks, text entered)
+  \item The HTML output (e.g., the HTML text, HTML updates)
+  \item The server clock
+\end{itemize}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The user's browsers can display an HTML5 document and handle common inputs the document facilitates. This assumption is reasonable because every modern browser has this capability.
+  \item The member's identity is supplied by the Authentication Module (M15) after a successful sign-in.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+Please note a rough sketch will be given in lieu of the actual implementation as implementation
+varies by browser and device hardware. This is acceptable because this is an external component.
+These functions do not exist directly; however, they summarize external activity.
+
+\textbf{\texttt{displayLandingPage()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the public landing page is shown to the visitor; no sign-in is required
+  \item exception: server error, connection error
+\end{itemize}
+
+\textbf{\texttt{startSession(member)}}:
+\begin{itemize}
+  \item transition: \texttt{member} is recorded as the session's member, and \texttt{lastActivity} := current time
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{endSession()}}:
+\begin{itemize}
+  \item transition: \texttt{member} := \textit{null}; the session ends on the server, so the next request requires signing in again
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{forwardInputs()}}:
+\begin{itemize}
+  \item transition: if no member is signed in or \texttt{isExpired()} holds, call \texttt{endSession()} and show the sign-in page. Otherwise, for each input from \texttt{getInput()}: if the input belongs to the sign-in form, pass it to the Authentication Module (M15) and not to the Broker; if it is untransferable, ignore it; otherwise send \texttt{toRequest(hi)} to the Toolbox Broker with the member's identity, and show the response by \texttt{displayOutput} on the element that gave the input. Finally, \texttt{lastActivity} := current time
+  \item output: none
+  \item exception: server error, connection error
+\end{itemize}
+
+\textbf{\texttt{displayOutput(h, value: $\mathbb{S}$)}}:
+\begin{itemize}
+  \item transition: \texttt{value} is applied to the HTML element
+  \item output: none
+  \item exception: server error, connection error
+\end{itemize}
+
+\textbf{\texttt{displayAlerts()}}:
+\begin{itemize}
+  \item transition: obtain the alerts for \texttt{member} from the Handoff Documents Module (M14) through the Toolbox Broker (operation \texttt{getAlerts}), and show each alert in the alert area of the member's page
+  \item output: none
+  \item exception: server error, connection error, service unavailable
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\textbf{\texttt{getInput()}}:
+\begin{itemize}
+  \item transition: poll each input-supporting element if any new input was given by the user
+  \item output: a list of 2-tuples: $(h: \text{HtmlElement}, \text{value}: \mathbb{S})$
+  \item exception: server error, connection error
+\end{itemize}
+
+\textbf{\texttt{toRequest(hi: HtmlInput)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the input as a request carrying the member's identity
+  \item exception: none (an untransferable input is ignored; it is not logged here, because logging belongs to the Toolbox Broker)
+\end{itemize}
+
+\textbf{\texttt{isExpired()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\mathbb{B}$ --- true if the time since \texttt{lastActivity} exceeds \texttt{SessionTimeout}
+  \item exception: none
+\end{itemize}
+
+Additional browser-dependent local functions exist as required by the client runtime.
 
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\section{MIS of Toolbox Broker Module} \label{mBroker}
+
+\subsection{Module}
+\texttt{ToolboxBroker}
+
+Facilitate service-based architecture, keeping services separate and making the creation of new services easy. Route each request to the service that provides its operation, after checking that the requesting member may make it, and log every request.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mAuthz]{Authorization Rules Module (M4)}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+Each service provides a \texttt{Service} when it registers: the names of the operations it provides, and a handler that answers a request for any of them. Callers name the operation they want and never the service that provides it.
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{MaxBrokerOverhead}: $\mathbb{R} = 100$ --- the maximum time, in milliseconds, that the Broker may add to the response time of a routed request
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.2cm} p{4.6cm} p{2.6cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{registerService} & \texttt{service}: Service & --- & --- \\
+\texttt{goToService} & \texttt{member}: Member, \texttt{operation}: $\mathbb{S}$, \texttt{request}: Request & \texttt{response}: Response & Operation not found, service unavailable, not authorized \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{providers}: $\text{Dict}\langle \mathbb{S}, \text{Service} \rangle$ --- maps each registered operation name to the service that provides it
+  \item \texttt{log}: $\text{List}\langle \text{LogEntry} \rangle$ --- the record of each request handled, holding the requesting member, the operation, the time, and whether the request succeeded; entries are stored through the Persistence Module (M16)
+\end{itemize}
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{registerService(service)}}:
+\begin{itemize}
+  \item transition: for each operation name \texttt{op} that \texttt{service} provides, \texttt{providers[op]} := \texttt{service}
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{goToService(member, operation, request)}}:
+\begin{itemize}
+  \item transition: if \texttt{isAllowed(member, operation)} does not hold, call \texttt{log(member, operation,}\allowbreak\ \texttt{false)} and raise \textit{NotAuthorized}. Otherwise, if \texttt{operation} has no entry in \texttt{providers}, call \texttt{log(member, operation,}\allowbreak\ \texttt{false)} and raise \textit{OperationNotFound}. Otherwise, pass \texttt{request} to the service in \texttt{providers[operation]}; if that service does not respond, call \texttt{log(member, operation,}\allowbreak\ \texttt{false)} and raise \textit{ServiceUnavailable}; if it responds, remove from the response each \texttt{Model} that \texttt{canView(member, model)} of the Authorization Rules Module (M4) does not permit; if the response is a single model that is not permitted, call \texttt{log(member, operation,}\allowbreak\ \texttt{false)} and raise \textit{NotAuthorized}; otherwise call \texttt{log(member, operation, true)}
+  \item output: the response returned by the providing service, without any model the member may not view
+  \item exception: \textit{OperationNotFound} (no registered service provides \texttt{operation}); \textit{ServiceUnavailable} (the providing service does not respond); \textit{NotAuthorized} (\texttt{member} may not perform \texttt{operation}, or the response is a model \texttt{member} may not view)
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{isAllowed(member, operation)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\mathbb{B}$ --- true if \texttt{getPermitted(member, operation)} of the Authorization Rules Module (M4) returns true
+  \item exception: none (if the check cannot be completed, return \textit{false})
+\end{itemize}
+
+\textbf{\texttt{log(member, operation, succeeded: $\mathbb{B}$)}}:
+\begin{itemize}
+  \item transition: append $(\text{member}, \text{operation}, \text{currentTimestamp}, \text{succeeded})$ to \texttt{log}, and store the entry through the Persistence Module (M16)
+  \item output: none
+  \item exception: none
+\end{itemize}
 
 \newpage
 
-\newpage{}
+\section{MIS of Authorization Rules Module} \label{mAuthz}
 
-\section{Appendix --- Generative AI Use Disclosure}
+\subsection{Module}
+\texttt{AuthRules}
 
-\wss{ChatGPT (version 5) was used to brainstorm ideas for the template for this disclose section.}
+Determine whether a member may perform a requested operation and whether a member may view a bridge model, and modify the operations each role-team combination may perform.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mMembers]{Member Registry Module (M5)}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3cm} p{4.8cm} p{2.6cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{getPermitted} & \texttt{member}: Member, \texttt{operation}: $\mathbb{S}$ & \texttt{permitted}: $\mathbb{B}$ & --- \\
+\texttt{setPermitted} & \texttt{role}: Role, \texttt{team}: Team, \texttt{operation}: $\mathbb{S}$, \texttt{permitted}: $\mathbb{B}$ & --- & Role or team not valid \\
+\texttt{canView} & \texttt{member}: Member, \texttt{model}: Model & \texttt{viewable}: $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{permitDict}: $\text{Dict}\langle \text{Tuple}\langle \text{Role}, \text{Team}, \mathbb{S} \rangle, \mathbb{B} \rangle$ --- lookup mapping a role, a team, and an operation to permission status; \textit{Team} may be empty for a member on no team
+\end{itemize}
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+The permission table is backed by the Persistence Module (M16) in production and is modeled here as a dictionary for concise transition notation. A member's role and team are not stored in this module: they are obtained from the Member Registry Module (M5) on every call, so a change of role takes effect by the member's next request. A combination with no entry is not permitted.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{getPermitted(member, operation)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: obtain the role and team of \texttt{member} for the current competition year from the Member Registry Module (M5); return \texttt{permitDict[(role, team, operation)]} if it has an entry, and \textit{false} otherwise
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{setPermitted(role, team, operation, isPermitted)}}:
+\begin{itemize}
+  \item transition: $\texttt{permitDict[(role, team, operation)]} := \texttt{isPermitted}$
+  \item output: none
+  \item exception: role or team not valid (\texttt{isRole(role)} or \texttt{isTeam(team)} of the Member Registry Module (M5) does not hold)
+\end{itemize}
+
+\textbf{\texttt{canView(member, model)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: true if \texttt{model} is a past design, that is, \texttt{model}.\texttt{isCurrent} is false; otherwise true if \texttt{member} holds the club executive role, or the team of \texttt{member} for the current competition year equals $\texttt{model}.\text{team}$, where role and team are given by \texttt{roleAndTeam(member)}; otherwise false. Former members who are not on the team for the current year are not permitted.
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{roleAndTeam(member)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\text{Tuple}\langle \text{Role}, \text{Team} \rangle$ --- the role of \texttt{member}, as given by \texttt{getRole(member)} of the Member Registry Module (M5), and the team of \texttt{member} for the current competition year, as given by \texttt{getTeam(member, getCurrentYear())} of the Member Registry Module (M5)
+  \item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Member Registry Module} \label{mMembers}
+
+\subsection{Module}
+\texttt{MemberRegistry}
+
+Retrieve and update a user's role, team, and account profile information, store their credentials, and deactivate accounts.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{4.1cm} p{4.2cm} p{2.5cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{getRole} & \texttt{user}: UserAccount & \texttt{role}: Role & User not found \\
+\texttt{getTeam} & \texttt{user}: UserAccount, \texttt{year}: $\mathbb{N}$ & \texttt{team}: Team & User not found \\
+\texttt{setRole} & \texttt{user}: UserAccount, \texttt{role}: Role & --- & User not found \\
+\texttt{setTeam} & \texttt{user}: UserAccount, \texttt{team}: Team, \texttt{year}: $\mathbb{N}$ & --- & User not found \\
+\texttt{addUser} & \texttt{role}: Role, \texttt{info}: UserInfo & \texttt{user}: UserAccount & Email already registered \\
+\texttt{updateUserInfo} & \texttt{user}: UserAccount, \texttt{info}: UserInfo & --- & User not found \\
+\texttt{getUserInfo} & \texttt{user}: UserAccount & \texttt{info}: UserInfo & User not found \\
+\texttt{deactivateUser} & \texttt{user}: UserAccount & --- & User not found, User critical \\
+\texttt{getCredential} & \texttt{email}: $\mathbb{S}$ & \texttt{credential}: Credential & No account with email \\
+\texttt{setCredential} & \texttt{user}: UserAccount, \texttt{passwordHash}: $\mathbb{S}$ & --- & User not found \\
+\texttt{assign\allowbreak ExecutivePosition} & \texttt{position}: Position, \texttt{holder}: UserAccount & --- & User not found \\
+\texttt{setSuccessor} & \texttt{position}: Position, \texttt{successor}: UserAccount & --- & Position not found, User not found \\
+\texttt{getHolder} & \texttt{position}: Position & \texttt{holder}: UserAccount & Position not found \\
+\texttt{getPositionOf} & \texttt{user}: UserAccount & \texttt{position}: Position (\textit{null} if none) & User not found \\
+\texttt{getCurrentYear} & --- & \texttt{year}: $\mathbb{N}$ & --- \\
+\texttt{setCurrentYear} & \texttt{year}: $\mathbb{N}$ & --- & --- \\
+\texttt{addMandatoryRole} & \texttt{role}: Role & --- & Role not found \\
+\texttt{removeMandatoryRole} & \texttt{role}: Role & --- & Role not found \\
+\texttt{isMandatoryRole} & \texttt{role}: Role & \texttt{isMandatory}: $\mathbb{B}$ & Role not found \\
+\texttt{isRole} & \texttt{role}: Role & $\mathbb{B}$ & --- \\
+\texttt{isTeam} & \texttt{team}: Team & $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{members}: $\text{Dict}\langle \text{UserAccount}, \text{Tuple}\langle \text{Role}, \text{UserInfo}, \mathbb{S}, \mathbb{B} \rangle \rangle$ --- for each account, its role, profile information, password hash (\textit{null} until set), and active status
+  \item \texttt{teams}: $\text{Dict}\langle \text{Tuple}\langle \text{UserAccount}, \mathbb{N} \rangle, \text{Team} \rangle$ --- the team each account is assigned to in each competition year, at most one per year
+  \item \texttt{executivePositions}: $\text{Dict}\langle \text{Position}, \text{Tuple}\langle \text{UserAccount}, \text{UserAccount} \rangle \rangle$ --- for each executive position, its current holder and designated successor (each \textit{null} until set)
+  \item \texttt{mandatoryRoles}: $\text{Set}\langle \text{Role} \rangle$ --- the roles that must always be held by an account
+  \item \texttt{currentYear}: $\mathbb{N}$ --- the current competition year, used to look up each account's team. % TODO: who may set the current year is not specified in MG
+\end{itemize}
+
+Derived type: $\texttt{Credential} = \text{Tuple}\langle \text{UserAccount}, \mathbb{S}, \mathbb{B} \rangle$, giving the account, its password hash, and its active status.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The state above is held by the \hyperref[mPersist]{Persistence Module (M16)}.
+  \item The module is initialized before any access program is called.
+  \item Methods may return \textit{null} when optional fields are unset.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{getRole(user: UserAccount)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{members[user]}.\text{role}$
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{getTeam(user: UserAccount, year: $\mathbb{N}$)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{teams[(user, year)]}$
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{getCurrentYear()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{currentYear}$
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{setCurrentYear(year: $\mathbb{N}$)}}:
+\begin{itemize}
+  \item transition: $\texttt{currentYear} := \texttt{year}$
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{setRole(user: UserAccount, role: Role)}}:
+\begin{itemize}
+  \item transition: $\texttt{members[user]}.\text{role} := \texttt{role}$
+  \item output: none
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{setTeam(user: UserAccount, team: Team, year: $\mathbb{N}$)}}:
+\begin{itemize}
+  \item transition: $\texttt{teams[(user, year)]} := \texttt{team}$ (\textit{null} removes the assignment for that year)
+  \item output: none
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{addUser(role: Role, info: UserInfo)}}:
+\begin{itemize}
+  \item transition:
+  \begin{itemize}
+    \item $\texttt{user} := \text{new UserAccount}$
+    \item $\texttt{members[user]} := (\texttt{role}, \texttt{info}, \textit{null}, \textit{true})$
+  \end{itemize}
+  \item output: \texttt{user}
+  \item exception: an account with \texttt{info}.email already exists
+\end{itemize}
+
+\textbf{\texttt{updateUserInfo(user: UserAccount, info: UserInfo)}}:
+\begin{itemize}
+  \item transition: $\texttt{members[user]}.\text{info} := \texttt{info}$
+  \item output: none
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{getUserInfo(user: UserAccount)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{members[user]}.\text{info}$
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{deactivateUser(user: UserAccount)}}:
+\begin{itemize}
+  \item transition: $\texttt{members[user]}.\text{isActive} := \textit{false}$; the account and its history are kept
+  \item output: none
+  \item exception: user not found; user critical (\texttt{isCritical(user)} holds)
+\end{itemize}
+
+\textbf{\texttt{getCredential(email: $\mathbb{S}$)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the $\texttt{Credential}$ $(u, \texttt{members[u]}.\text{passwordHash}, \texttt{members[u]}.\text{isActive})$ for the account $u$ whose \texttt{info}.email equals \texttt{email}
+  \item exception: no account with email
+\end{itemize}
+
+\textbf{\texttt{setCredential(user: UserAccount, passwordHash: $\mathbb{S}$)}}:
+\begin{itemize}
+  \item transition: $\texttt{members[user]}.\text{passwordHash} := \texttt{passwordHash}$
+  \item output: none
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{getHolder(position: Position)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{executivePositions[position]}.\text{holder}$
+  \item exception: position not found
+\end{itemize}
+
+\textbf{\texttt{getPositionOf(user: UserAccount)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the position $p$ with $\texttt{executivePositions[p]}.\text{holder} = \texttt{user}$, or \textit{null} if \texttt{user} holds none
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{assignExecutivePosition(position: Position, holder: UserAccount)}}:
+\begin{itemize}
+  \item transition: $\texttt{executivePositions[position]}.\text{holder} := \texttt{holder}$
+  \item output: none
+  \item exception: user not found
+\end{itemize}
+
+\textbf{\texttt{setSuccessor(position: Position, successor: UserAccount)}}:
+\begin{itemize}
+  \item transition: $\texttt{executivePositions[position]}.\text{successor} := \texttt{successor}$
+  \item output: none
+  \item exception: position not found; user not found
+\end{itemize}
+
+\textbf{\texttt{addMandatoryRole(role: Role)}}:
+\begin{itemize}
+  \item transition: \textbf{add} \texttt{role} to \texttt{mandatoryRoles}
+  \item output: none
+  \item exception: role not found
+\end{itemize}
+
+\textbf{\texttt{removeMandatoryRole(role: Role)}}:
+\begin{itemize}
+  \item transition: \textbf{remove} \texttt{role} from \texttt{mandatoryRoles}
+  \item output: none
+  \item exception: role not found
+\end{itemize}
+
+\textbf{\texttt{isMandatoryRole(role: Role)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{role} \in \texttt{mandatoryRoles}$
+  \item exception: role not found
+\end{itemize}
+
+\textbf{\texttt{isRole(role: Role)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\mathbb{B}$ --- true if \texttt{role} is one of the club roles named in the Module Guide
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{isTeam(team: Team)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\mathbb{B}$ --- true if \texttt{team} is assigned to at least one account in some competition year in \texttt{teams}
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{isCritical(user: UserAccount)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: true if the role of \texttt{user} is in \texttt{mandatoryRoles} and no other account holds that role, or if \texttt{user} is the holder of an executive position that has no successor
+  \item exception: user not found
+\end{itemize}
+
+\newpage
+
+\section{MIS of Repository Content Module} \label{mContent}
+
+\subsection{Module}
+\texttt{RepoContents}
+
+Let users add files to the knowledge repository with their metadata, edit the contents or metadata of stored items, archive items, preview and download them, and list stored items for search.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.8cm} p{4.4cm} p{3.8cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{addFile} & \texttt{user}: UserAccount, \texttt{file}: File, \texttt{metadata}: ItemMetadata & \texttt{fileId}: $\mathbb{N}$ & Missing title, invalid category, missing year, storage unavailable \\
+\texttt{updateFile} & \texttt{fileId}: $\mathbb{N}$, \texttt{file}: File & --- & Item not found, invalid file, storage unavailable \\
+\texttt{editFile} & \texttt{fileId}: $\mathbb{N}$, \texttt{part}: $\mathbb{S}$, \texttt{contents}: $\mathbb{S}$ & --- & Item not found, part not found, contents invalid \\
+\texttt{editMetadata} & \texttt{fileId}: $\mathbb{N}$, \texttt{metadata}: ItemMetadata & --- & Item not found, missing title, invalid category, missing year \\
+\texttt{archiveItem} & \texttt{fileId}: $\mathbb{N}$ & --- & Item not found \\
+\texttt{getFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{item}: RepositoryItem & Item not found \\
+\texttt{previewFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{preview}: Preview & Item not found, not previewable \\
+\texttt{downloadFile} & \texttt{fileId}: $\mathbb{N}$ & \texttt{download}: File & Item not found, storage unavailable \\
+\texttt{listItems} & \texttt{includeArchived}: $\mathbb{B}$ (optional, default false) & \texttt{items}: $\text{List}\langle \text{RepositoryItem} \rangle$ & Storage unavailable \\
+\texttt{addCategory} & \texttt{categoryName}: $\mathbb{S}$ & category: Category & storage unavailable, name not unique \\
+\texttt{editCategory} & \texttt{category}: Category, \texttt{name}: $\mathbb{S}$ & - & Category not found \\
+\texttt{deleteCategory} & \texttt{category}: Category & --- & Category not found, Category non-empty \\
+\texttt{getCategoryList} & --- & \texttt{listCategories}: $\text{List}\langle\text{Category}\rangle$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{fileDict}: $\text{Dict}\langle \mathbb{N}, \text{RepositoryItem} \rangle$ --- identifier-to-item lookup. The contents of each item's file are held by the Persistence Module (M16) and are referenced from the item, not kept in this module.
+  \item \texttt{categories}: $\text{List}\langle \text{Category} \rangle$ --- the list of current categories
+\end{itemize}
+
+
+The types \texttt{ItemMetadata} and \texttt{RepositoryItem} are defined in the Derived Types subsection of the Notation.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{addFile(user, file, metadata)}}:
+\begin{itemize}
+  \item transition: reject the request if \texttt{metadata} has no title, a category that is not in the fixed list, or no year. Otherwise store the contents of \texttt{file} through the Persistence Module (M16), generate a new unique \texttt{fileId}, and set $\texttt{fileDict[fileId]}$ to a \texttt{RepositoryItem} with \texttt{metadata}, uploader \texttt{user}, archived flag false, and the file reference
+  \item output: \texttt{fileId}
+  \item exception: missing title, invalid category, missing year, storage unavailable (if the file cannot be stored, nothing is recorded)
+\end{itemize}
+
+\textbf{\texttt{updateFile(fileId, file)}}:
+\begin{itemize}
+  \item transition: replace the stored contents of $\texttt{fileDict[fileId]}$ with \texttt{file}; the metadata is unchanged
+  \item output: none
+  \item exception: item not found, invalid file, storage unavailable
+\end{itemize}
+
+\textbf{\texttt{editFile(fileId, part, contents)}}:
+\begin{itemize}
+  \item transition: replace section \texttt{part} of the stored contents of $\texttt{fileDict[fileId]}$ with \texttt{contents}
+  \item output: none
+  \item exception: item not found, part not found, contents invalid
+\end{itemize}
+
+\textbf{\texttt{editMetadata(fileId, metadata)}}:
+\begin{itemize}
+  \item transition: apply the same checks as \texttt{addFile} to \texttt{metadata}, then replace the metadata of $\texttt{fileDict[fileId]}$
+  \item output: none
+  \item exception: item not found, missing title, invalid category, missing year
+\end{itemize}
+
+\textbf{\texttt{archiveItem(fileId)}}:
+\begin{itemize}
+  \item transition: $\texttt{fileDict[fileId].archived} := \text{true}$. The item and its file are kept and are not deleted
+  \item output: none
+  \item exception: item not found
+\end{itemize}
+
+\textbf{\texttt{getFile(fileId)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{fileDict[fileId]}$, including archived items
+  \item exception: item not found
+\end{itemize}
+
+\textbf{\texttt{previewFile(fileId)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a \texttt{Preview} of the item's stored file, when \texttt{isPreviewable}($\texttt{fileDict[fileId]}$) holds
+  \item exception: item not found, not previewable
+\end{itemize}
+
+\textbf{\texttt{downloadFile(fileId)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the stored file of $\texttt{fileDict[fileId]}$ with its original name
+  \item exception: item not found, storage unavailable
+\end{itemize}
+
+\textbf{\texttt{listItems(includeArchived)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of the items in \texttt{fileDict}. Archived items are omitted unless \texttt{includeArchived} is true (default false)
+  \item exception: storage unavailable
+\end{itemize}
+
+\textbf{\texttt{addCategory(categoryName)}}
+\begin{itemize}
+  \item transition: create \texttt{new Category(name)} and \textbf{add} it to $\texttt{categories}$
+  \item output: the category created
+  \item exception: storage unavailable, name not unique (category names must be unique)
+\end{itemize}
+
+\textbf{\texttt{editCategory(category, categoryName)}}
+\begin{itemize}
+  \item transition: $\text{category}.\text{name} := \text{categoryName}$
+  \item output: none
+  \item exception: category not found
+\end{itemize}
+
+\textbf{\texttt{deleteCategory(category, categoryName)}}
+\begin{itemize}
+  \item transition: \textbf{remove} category from $\texttt{categories}$
+  \item output: none
+  \item exception: category not found, category not empty (i.e. at least one document has this category. Only categories with no documents may be deleted).
+\end{itemize}
+
+\textbf{\texttt{getCategories}()}
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of the list $\texttt{categorires}$
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+\textbf{\texttt{isPreviewable(item)}}: returns true when the file type of \texttt{item} is one that can be previewed in the browser (FR-KR-4).
+
+\newpage
+
+\section{MIS of Model Import Module} \label{mModelImport}
+
+\subsection{Module}
+\texttt{ModelImport}
+
+Import a bridge model from a STEP file, identify its members and joints, export a model as a STEP file, and summarize an imported model into a document.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mStep]{STEP Parsing Module (M18)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{Analysis\allowbreak Timeout}: $\mathbb{R} = 30$ --- % MA_TIMEOUT has no SRS value; uses valMaxModelLoadTime for now (team decision)
+  the maximum time, in seconds, that processing of a model may take before it is stopped
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.2cm} p{3.8cm} p{3.6cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{importModel} & \texttt{modelFile}: File & $\text{Tuple}\langle \text{Model}, \mathbb{S} \rangle$ & --- \\
+\texttt{summarizeModel} & \texttt{model}: Model & \texttt{summaryDoc}: File & --- \\
+\texttt{exportModel} & \texttt{model}: Model & \texttt{stepFile}: File & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+Exceptions are not raised directly; status and error messages are returned as part of the output tuple. Member and joint identification follows the club's export conventions, which are a secret of this module.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{importModel(modelFile)}}:
+\begin{itemize}
+  \item transition: obtain the \texttt{StepGeometry} of \texttt{modelFile} from the STEP Parsing Module (M18); identify the members and joints of the bridge with \texttt{identifyMembersAndJoints(geometry)}; create a new \texttt{Model} instance holding them, with \texttt{id} not yet assigned (the Model Library Module assigns it on upload). If processing has not finished within \texttt{Analysis\allowbreak Timeout}, stop processing
+  \item output: $(\texttt{model}, \text{``success''})$ if successful, or $(\textit{null}, \text{errorMessage})$ otherwise; the error message states why the file was rejected (not a valid STEP file, no geometry, or processing stopped after \texttt{Analysis\allowbreak Timeout})
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{summarizeModel(model)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a file summarizing the imported model: its units, its dimensions and mass, and its members and joints, so that the member can confirm the model was read correctly
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{exportModel(model)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a STEP file (\texttt{.stp} or \texttt{.step}) representing \texttt{model}, which the member can download
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{identifyMembersAndJoints(geometry: StepGeometry)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the members and joints of the bridge, each with its position and dimensions, as identified from \texttt{geometry} by the club's export conventions; if no member or joint can be identified, the output indicates that the file contains no geometry
+  \item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Model Library Module} \label{mModelLibrary}
+
+\subsection{Module}
+\texttt{ModelLibrary}
+
+Store bridge models, record each team's current-year models with the most recent one as its current model, keep past designs from earlier competition years, and end a season by moving the current models into the past designs.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.4cm} p{4cm} p{4.2cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{uploadModel} & \texttt{model}: Model, \texttt{team}: Team & --- & Model invalid, storage unavailable \\
+\texttt{getCurrentModel} & \texttt{team}: Team & \texttt{model}: Model & No current model \\
+\texttt{getRecentModels} & \texttt{team}: Team & \texttt{models}: $\text{List}\langle \text{Model} \rangle$ & --- \\
+\texttt{getArchivedModels} & \texttt{year}: $\mathbb{N}$, \texttt{team}: Team & \texttt{models}: $\text{List}\langle \text{Model} \rangle$ & --- \\
+\texttt{endSeason} & --- & --- & Storage unavailable \\
+\texttt{hasModel} & \texttt{modelId}: $\mathbb{N}$ & $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{currentModels}: $\text{Dict}\langle \text{Team}, \text{List}\langle \text{Model} \rangle \rangle$ --- the models uploaded by each team in the current competition year, in upload order. The last element is the team's current model
+  \item \texttt{pastModels}: $\text{List}\langle \text{Model} \rangle$ --- the models of earlier competition years, each keeping its competition year and team
+\end{itemize}
+
+Access to these models is decided by the Authorization Rules Module (\texttt{canView}). The Toolbox Broker applies \texttt{canView} to each model in a response before returning that response, so a member never receives a model they may not view. This module does not enforce access itself.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{uploadModel(model, team)}}:
+\begin{itemize}
+  \item transition: \textbf{assign} \texttt{model} a new unique \texttt{id}; then \textbf{append} \texttt{model} to \texttt{currentModels[team]}
+  \item output: none
+  \item exception: model invalid (no extracted data), storage unavailable
+\end{itemize}
+
+\textbf{\texttt{getCurrentModel(team)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \textbf{last element} of \texttt{currentModels[team]}
+  \item exception: no current model (the list for \texttt{team} is empty)
+\end{itemize}
+
+\textbf{\texttt{getRecentModels(team)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of \texttt{currentModels[team]} (empty if the team has none)
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getArchivedModels(year, team)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of the models in \texttt{pastModels} whose competition year equals \texttt{year} and whose team equals \texttt{team}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{endSeason()}}:
+\begin{itemize}
+  \item transition: for each team, move every model in \texttt{currentModels} to \texttt{pastModels}, keeping its team and competition year and setting its \texttt{isCurrent} flag to false; then clear \texttt{currentModels}. The transition is all-or-nothing: if storage fails, no model is moved
+  \item output: none
+  \item exception: storage unavailable
+\end{itemize}
+
+\textbf{\texttt{hasModel(modelId: $\mathbb{N}$)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: true if a stored model, current or past, has \texttt{id} equal to \texttt{modelId}; otherwise false
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of Performance Metrics Module} \label{mMetrics}
+
+\subsection{Module}
+\texttt{PerfMet}
+
+Estimate failure load and failure location, compute load-to-mass ratio, report the assumptions and limitations of each estimate, and evaluate custom performance metrics.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mSolver]{Structural Solver Module (M19)}
+  \item \hyperref[mMatProps]{Material Properties Module (M13)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{5.5cm} p{4.0cm} p{3.2cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{getEstimatedFailureLoad} & \texttt{model}: Model, \texttt{selection}: MaterialSelection & \texttt{estimate}: Estimate$\langle \mathbb{R} \rangle$ & Invalid model, no material properties, invalid result \\
+\texttt{getEstimatedFailureLocation} & \texttt{model}: Model, \texttt{selection}: MaterialSelection & \texttt{estimate}: Estimate$\langle \text{Location} \rangle$ & Invalid model, no material properties, invalid result \\
+\texttt{getLoadToMassRatio} & \texttt{model}: Model, \texttt{selection}: MaterialSelection & \texttt{estimate}: Estimate$\langle \mathbb{R} \rangle$ & Invalid model, no material properties, invalid result \\
+\texttt{createNewMetric} & \texttt{formula}: Formula & \texttt{metric}: Metric & Invalid formula \\
+\texttt{getCustomMetricResult} & \texttt{model}: Model, \texttt{metric}: Metric, \texttt{selection}: MaterialSelection & \texttt{estimate}: Estimate$\langle \mathbb{R} \rangle$ & Invalid model, no material properties, invalid result \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None. This module is a stateless library.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{getEstimatedFailureLoad(model, selection)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the estimate $\texttt{f}$ with the assumptions and limitations that apply to it, where \texttt{props} is the result of \texttt{getProperties(selection.material, selection.year, selection.batch)} of the Material Properties Module (M13), \texttt{analyze(model, props)} is the result of the Structural Solver Module (M19), and \texttt{f} is the failure load derived from that result
+  \item exception: no material properties, invalid result
+\end{itemize}
+
+\textbf{\texttt{getEstimatedFailureLocation(model, selection)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{estimate} := (\texttt{location}, \texttt{assumptions}, \texttt{limitations}), where \texttt{location} is the member and point of \texttt{model} at which failure is estimated to start, derived from the same analysis result as \texttt{getEstimatedFailureLoad}
+  \item exception: invalid model, no material properties, invalid result
+\end{itemize}
+
+\textbf{\texttt{getLoadToMassRatio(model, selection)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{estimate} := (\texttt{f} / \texttt{m}, \texttt{assumptions}, \texttt{limitations}), where \texttt{f} is the failure load estimate of \texttt{model} for \texttt{selection} and \texttt{m} is the mass extracted from \texttt{model}
+  \item exception: invalid model, no material properties, invalid result
+\end{itemize}
+
+\textbf{\texttt{createNewMetric(formula)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a \texttt{Metric} object built from \texttt{formula}; the module does not retain it
+  \item exception: invalid formula
+\end{itemize}
+
+\textbf{\texttt{getCustomMetricResult(model, metric, selection)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{estimate} := (\texttt{evaluateMetric(metric, results)}, \texttt{assumptions}, \texttt{limitations}), where \texttt{results} is the result of \texttt{analyze(model, props)} from the Structural Solver Module (M19) and \texttt{props} is the result of \texttt{getProperties(selection.material, selection.year, selection.batch)} from the Material Properties Module (M13)
+  \item exception: invalid model, no material properties, invalid result
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{evaluateMetric(metric, results)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the value of \texttt{metric} computed from the element results \texttt{results}
+  \item exception: invalid result
+\end{itemize}
+
+\newpage
+
+\section{MIS of Rule Set Module} \label{mRuleSet}
+
+\subsection{Module}
+\texttt{RuleSet}
+
+Store the competition rule set for each year. Import a year's rules, create, edit, and delete individual rules, and mark rules that cannot be checked from geometry as manual checks.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.7cm} p{6.3cm} p{2.6cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{importRules} & \texttt{year}: $\mathbb{N}$, \texttt{file}: File & --- & Invalid file, rule set exists \\
+\texttt{addRule} & \texttt{year}: $\mathbb{N}$, \texttt{name}: $\mathbb{S}$, \texttt{property}: $\mathbb{S}$, \texttt{minVal}: $\mathbb{R}$, \texttt{maxVal}: $\mathbb{R}$, \texttt{unit}: $\mathbb{S}$, \texttt{isManual}: $\mathbb{B}$ & \texttt{rule}: Rule & Rule set not found, invalid bounds \\
+\texttt{editRule} & \texttt{rule}: Rule, \texttt{name}: $\mathbb{S}$, \texttt{property}: $\mathbb{S}$, \texttt{minVal}: $\mathbb{R}$, \texttt{maxVal}: $\mathbb{R}$, \texttt{unit}: $\mathbb{S}$, \texttt{isManual}: $\mathbb{B}$ & --- & Rule not found, invalid bounds \\
+\texttt{deleteRule} & \texttt{rule}: Rule & --- & Rule not found \\
+\texttt{setActiveYear} & \texttt{year}: $\mathbb{N}$ & --- & Rule set not found \\
+\texttt{getActiveYear} & --- & \texttt{year}: $\mathbb{N}$ & --- \\
+\texttt{getYears} & --- & $\text{List}\langle \mathbb{N} \rangle$ & --- \\
+\texttt{getRules} & \texttt{year}: $\mathbb{N}$ & $\text{List}\langle \text{Rule} \rangle$ & Rule set not found \\
+\texttt{isManual} & \texttt{rule}: Rule & $\mathbb{B}$ & --- \\
+\texttt{getBounds} & \texttt{rule}: Rule & $\text{Tuple}\langle \mathbb{R}, \mathbb{R} \rangle$ & Manual rule \\
+\texttt{getProperty} & \texttt{rule}: Rule & $\mathbb{S}$ & --- \\
+\texttt{getName} & \texttt{rule}: Rule & $\mathbb{S}$ & --- \\
+\texttt{getUnit} & \texttt{rule}: Rule & $\mathbb{S}$ & --- \\
+\texttt{hasRuleSet} & \texttt{year}: $\mathbb{N}$ & $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{ruleSets}: $\text{Dict}\langle \mathbb{N}, \text{List}\langle \text{Rule} \rangle \rangle$ --- the rules of each competition year
+  \item \texttt{activeYear}: $\mathbb{N}$ --- the competition year whose rule set is active
+\end{itemize}
+
+Each \texttt{Rule} records its name, the model property it constrains, its allowed range $[\texttt{minVal}, \texttt{maxVal}]$, its unit, and whether it is a manual check. The range is not used for manual checks.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{importRules(year, file)}}:
+\begin{itemize}
+  \item transition: \textbf{parse} \texttt{file} into a list of rules and set $\texttt{ruleSets}[\texttt{year}]$ to that list, \textbf{storing} it through the Persistence Module (M16); if a rule set already exists for \texttt{year}, nothing is changed
+  \item output: none
+  \item exception: invalid file, rule set exists
+\end{itemize}
+
+\textbf{\texttt{addRule(year, name, property, minVal, maxVal, unit, isManual)}}:
+\begin{itemize}
+  \item transition: create \texttt{new Rule(name, property, minVal, maxVal, unit, isManual)} and \textbf{add} it to $\texttt{ruleSets}[\texttt{year}]$; \texttt{minVal} and \texttt{maxVal} are required only when \texttt{isManual} is \textit{false}
+  \item output: the new \texttt{Rule} object
+  \item exception: rule set not found, invalid bounds
+\end{itemize}
+
+\textbf{\texttt{editRule(rule, name, property, minVal, maxVal, unit, isManual)}}:
+\begin{itemize}
+  \item transition: update \texttt{rule} with the new values
+  \item output: none
+  \item exception: rule not found, invalid bounds
+\end{itemize}
+
+\textbf{\texttt{deleteRule(rule)}}:
+\begin{itemize}
+  \item transition: \textbf{delete} \texttt{rule} from its rule set
+  \item output: none
+  \item exception: rule not found
+\end{itemize}
+
+\textbf{\texttt{setActiveYear(year)}}:
+\begin{itemize}
+  \item transition: $\texttt{activeYear} := \texttt{year}$
+  \item output: none
+  \item exception: rule set not found
+\end{itemize}
+
+\textbf{\texttt{getActiveYear()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{activeYear}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getYears()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the years for which a rule set exists
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getRules(year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of $\texttt{ruleSets}[\texttt{year}]$
+  \item exception: rule set not found
+\end{itemize}
+
+\textbf{\texttt{isManual(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \textit{true} if \texttt{rule} must be checked manually, otherwise \textit{false}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getBounds(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $(\texttt{minVal}, \texttt{maxVal})$ of \texttt{rule}
+  \item exception: manual rule
+\end{itemize}
+
+\textbf{\texttt{getProperty(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the constrained property of \texttt{rule}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getName(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the name of \texttt{rule}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getUnit(rule)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the unit of \texttt{rule}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{hasRuleSet(year: $\mathbb{N}$)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: true if \texttt{ruleSets} has an entry for \texttt{year}; otherwise false
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of Compliance Check Module} \label{mCompliance}
+
+\subsection{Module}
+\texttt{ComplianceCheck}
+
+Evaluate a model against the rule set of a competition year. Display the rules that pass, the rules that fail, and the rules that need manual checks in addition to the year of the competition rules used.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mRuleSet]{Rule Set Module (M10)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.9cm} p{4.2cm} p{4.8cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{evaluateRules} & \texttt{model}: Model, \texttt{year}: $\mathbb{N}$ & $\text{Tuple}\langle \text{List}\langle \text{RuleResult} \rangle, \mathbb{N} \rangle$ & Invalid model, rule set not found, property missing from model \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{evaluateRules(model, year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $(\texttt{results}, \texttt{year})$, where \texttt{results} is built in the order of \texttt{RuleSet.getRules(year)}; for each \texttt{rule}:
+  \begin{itemize}
+    \item if \texttt{RuleSet.isManual(rule)}, set $\texttt{status} := \textit{Manual}$, $\texttt{measured} := \bot$, $\texttt{allowed} := \bot$
+    \item otherwise, obtain $(\texttt{min}, \texttt{max}) := \texttt{RuleSet.getBounds(rule)}$, obtain $\texttt{measured}$ as the value of \texttt{RuleSet.getProperty(rule)} in \texttt{model}, set $\texttt{allowed} := (\texttt{min}, \texttt{max})$, and set $\texttt{status} := \textit{Pass}$ if $\texttt{min} \le \texttt{measured} \le \texttt{max}$, otherwise $\textit{Fail}$
+    \item append $(\texttt{RuleSet.getName(rule)}, \texttt{status}, \texttt{measured}, \texttt{allowed})$ to the results
+  \end{itemize}
+  \item exception: invalid model, rule set not found, property missing from model
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of Material Test Records Module} \label{mTestRecords}
+
+\subsection{Module}
+\texttt{MatlsTestRecords}
+
+Record material test results entered through a form or imported in bulk, convert values to base units, require grain orientation for wood, reject incomplete, impossible, or unitless records and identify the rows at fault, let executives mark results as invalid without deleting them, compare results against previous years, and export records to CSV.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{4.2cm} p{4.7cm} p{3.2cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{addTest} & \texttt{entry}: TestEntry & \texttt{testId}: $\mathbb{N}$ & Incomplete record, impossible value, missing grain orientation, missing unit \\
+\texttt{importTests} & \texttt{file}: File & \texttt{rowErrors}: $\text{List}\langle \text{RowError} \rangle$ & Unsupported file, invalid template \\
+\texttt{markInvalid} & \texttt{testId}: $\mathbb{N}$, \texttt{reason}: $\mathbb{S}$ & --- & Test not found, missing reason \\
+\texttt{getAcceptedTests} & \texttt{material}: $\mathbb{S}$, \texttt{year}: $\mathbb{N}$ & $\text{List}\langle \text{TestRecord} \rangle$ & --- \\
+\texttt{getHistoricalSummary} & \texttt{material}: $\mathbb{S}$, \texttt{testType}: $\mathbb{S}$, \texttt{year}: $\mathbb{N}$ & $\text{List}\langle \text{Summary} \rangle$ & --- \\
+\texttt{exportTests} & --- & \texttt{file}: File & Export failed \\
+\texttt{hasTest} & \texttt{testId}: $\mathbb{N}$ & $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{batches}: $\text{List}\langle \text{Batch} \rangle$ --- the material batches, each identified by its material, supplier, and competition year
+  \item \texttt{materialsTests}: $\text{List}\langle \text{TestRecord} \rangle$ --- the stored test results
+\end{itemize}
+
+Each \texttt{TestRecord} has a unique \texttt{testId}, the \texttt{batch} it belongs to, its values in base units, its grain orientation (required for wood), an invalid flag, and an invalid reason.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{addTest(entry)}}:
+\begin{itemize}
+  \item transition: \textbf{validate} \texttt{entry} and \textbf{convert} its values to base units; find the \texttt{Batch} in \texttt{batches} matching its material, supplier, and year, or \textbf{add} a new one; \textbf{add} a new \texttt{TestRecord} with a new \texttt{testId} and $\texttt{isInvalid} := \textit{false}$ to \texttt{materialsTests}
+  \item output: \texttt{testId} of the new record
+  \item exception: incomplete record, impossible value, missing grain orientation, missing unit
+\end{itemize}
+
+\textbf{\texttt{importTests(file)}}:
+\begin{itemize}
+  \item transition: \textbf{parse} each row of \texttt{file} and \textbf{validate} it; if \texttt{rowErrors} is empty, \textbf{add} every row to \texttt{materialsTests} as in \texttt{addTest}; otherwise store nothing
+  \item output: \texttt{rowErrors}, a list of $(\texttt{row}, \texttt{field}, \texttt{reason})$ for each rejected row; empty when every row was imported
+  \item exception: unsupported file, invalid template
+\end{itemize}
+
+\textbf{\texttt{markInvalid(testId, reason)}}:
+\begin{itemize}
+  \item transition: the \texttt{TestRecord} with \texttt{testId} has $\texttt{isInvalid} := \textit{true}$ and $\texttt{invalidReason} := \texttt{reason}$
+  \item output: none
+  \item exception: test not found, missing reason
+\end{itemize}
+
+\textbf{\texttt{getAcceptedTests(material, year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a copy of the \texttt{TestRecord} entries in \texttt{materialsTests} whose batch has the given \texttt{material} and \texttt{year} and whose \texttt{isInvalid} is \textit{false}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getHistoricalSummary(material, testType, year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: for each competition year $y < \texttt{year}$ that has accepted tests of \texttt{material} and \texttt{testType}, a \texttt{Summary} $(y, \texttt{count}, \texttt{mean}, \texttt{stdDev})$ of the applied load of those tests
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{exportTests()}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a CSV file of all stored \texttt{TestRecord} entries in base units, including the invalid flag and reason
+  \item exception: export failed
+\end{itemize}
+
+\textbf{\texttt{hasTest(testId: $\mathbb{N}$)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: true if a stored test record in \texttt{materialsTests} has identifier \texttt{testId}; otherwise false
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{validateEntry(entry)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a list of $(\texttt{field}, \texttt{reason})$ for each required field that is missing, each unit that is missing, each physically impossible value (such as a negative dimension or load), and, for wood, a missing grain orientation; empty when \texttt{entry} is valid
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{toBaseUnits(entry)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{entry} with its dimensions and loads converted to base units
+  \item exception: missing unit
+\end{itemize}
+
+\newpage
+
+\section{MIS of Material Properties Module} \label{mMatProps}
+
+\subsection{Module}
+\texttt{MatlsProp}
+
+Derive material properties from the accepted \texttt{TestRecord} entries defined in Section~\ref{mTestRecords}, for a material, year, or batch, and keep a trace from each property to the tests it was computed from.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mTestRecords]{Material Test Records Module (M12)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.2cm} p{5.0cm} p{3.4cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{getProperties} & \texttt{material}: $\mathbb{S}$, \texttt{year}: $\mathbb{N}$, \texttt{batch}: Batch (optional) & \texttt{props}: MaterialProperties & No accepted tests, calculation error \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None. This module operates as a stateless library.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{getProperties(material, year, batch)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{props} := (\texttt{material}, \texttt{year}, \texttt{batch}, \texttt{E}, \texttt{S}, \texttt{sources}), where \texttt{tests} is the result of \texttt{getAcceptedTests(material, year)} from the Material Test Records Module (M12), restricted to \texttt{batch} when it is given; \texttt{E} := \texttt{getElastic\allowbreak Modulus(tests)}; \texttt{S} := \texttt{getElastic\allowbreak Strength(tests)}; and \texttt{sources} is the list of \texttt{testId} values of \texttt{tests}. The result is returned and not stored.
+  \item exception: no accepted tests, calculation error
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{getElastic\allowbreak Modulus(tests)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: calculated elastic modulus ($\mathbb{R}$) from \texttt{tests}
+  \item exception: calculation error
+\end{itemize}
+
+\textbf{\texttt{getElastic\allowbreak Strength(tests)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: calculated elastic strength ($\mathbb{R}$) from \texttt{tests}
+  \item exception: calculation error
+\end{itemize}
+
+\newpage
+
+\section{MIS of Handoff Documents Module} \label{mHandoff}
+
+\subsection{Module}
+\texttt{HandDoc}
+
+Provide an exit-document template for each executive position and team lead. Let members create, save, and submit exit documents for review, let executives publish them to the repository, maintain role records, and report which documents are outstanding.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mMembers]{Member Registry Module (M5)}
+  \item \hyperref[mContent]{Repository Content Module (M6)}
+  \item \hyperref[mModelLibrary]{Model Library Module (M8)}
+  \item \hyperref[mRuleSet]{Rule Set Module (M10)}
+  \item \hyperref[mTestRecords]{Material Test Records Module (M12)}
+  \item \hyperref[mPersist]{Persistence Module (M16)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.6cm} p{4.4cm} p{2.6cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{createDoc} & \texttt{user}: UserAccount, \texttt{year}: $\mathbb{N}$ & \texttt{doc}: ExitDocument & No template for role, document exists \\
+\texttt{getDoc} & \texttt{user}: UserAccount, \texttt{year}: $\mathbb{N}$ & \texttt{doc}: ExitDocument & Document not found \\
+\texttt{saveDraft} & \texttt{user}: UserAccount, \texttt{year}: $\mathbb{N}$, \texttt{content}: DocContent & --- & Document not found, document not editable \\
+\texttt{submitDoc} & \texttt{user}: UserAccount, \texttt{year}: $\mathbb{N}$ & --- & Document not found, document not editable, document invalid, reference not found \\
+\texttt{publishDoc} & \texttt{user}: UserAccount, \texttt{year}: $\mathbb{N}$ & \texttt{fileId}: $\mathbb{N}$ & Document not found, document not in review, storage unavailable \\
+\texttt{updateRoleRecord} & \texttt{user}: UserAccount, \texttt{position}: Position, \texttt{record}: RoleRecord & --- & Position not found, not current holder \\
+\texttt{getRoleRecord} & \texttt{position}: Position & \texttt{record}: RoleRecord & Position not found \\
+\texttt{moveRoleRecord} & \texttt{fromPosition}: Position, \texttt{toPosition}: Position & --- & Position not found \\
+\texttt{getOutstanding} & \texttt{year}: $\mathbb{N}$ & \texttt{roles}: $\text{List}\langle \text{DocRole} \rangle$ & --- \\
+\texttt{getAlerts} & \texttt{member}: Member & \texttt{alerts}: $\text{List}\langle \text{Alert} \rangle$ & --- \\
+\texttt{exportDocPDF} & \texttt{role}: DocRole, \texttt{year}: $\mathbb{N}$ & \texttt{pdf}: File & Document not found, document not published \\
+\texttt{exportRolePDF} & \texttt{position}: Position & \texttt{pdf}: File & Position not found \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{templates}: $\text{Dict}\langle \text{DocRole}, \text{HandoffTemplate} \rangle$ --- the template for each executive position and team-lead role, with its required fields
+  \item \texttt{exitDocs}: $\text{Dict}\langle \text{DocRole} \times \mathbb{N}, \text{ExitDocument} \rangle$ --- one exit document per document role per competition year
+  \item \texttt{roleRecords}: $\text{Dict}\langle \text{Position}, \text{RoleRecord} \rangle$ --- the role record of each executive position
+\end{itemize}
+
+Types used by this module (not exported as state):
+\begin{itemize}
+  \item \texttt{DocRole}: an executive position or a team-lead role, for which one exit document is written each year
+  \item \texttt{ExitDocument}: the template, author, competition year, status (one of Draft, Review, or Published), content, and, once published, the \texttt{fileId} of its repository item
+  \item \texttt{DocContent}: the values entered for the fields of a template
+  \item \texttt{RoleRecord}: the responsibilities, key contacts, and yearly timeline of a position
+  \item \texttt{Alert}: a recipient and a message prompting an action
+\end{itemize}
+
+Outstanding documents are not stored. They are derived from \texttt{templates} and \texttt{exitDocs} when requested.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+Executive positions, their current holders, and the team-lead roles are read from the Member Registry Module (M5). The current competition year is obtained from the Member Registry Module (M5) through \texttt{getCurrentYear}.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{createDoc(user, year)}}:
+\begin{itemize}
+  \item transition: let $r$ be the \texttt{DocRole} of \texttt{user} (see \texttt{docRoleOf}). If $\texttt{exitDocs[(r, year)]}$ does not exist, set it to a new \texttt{ExitDocument} with template $\texttt{templates[r]}$, author \texttt{user}, competition year \texttt{year}, status Draft, and empty content
+  \item output: $\texttt{exitDocs[(r, year)]}$
+  \item exception: no template for role (\texttt{templates[r]} does not exist), document exists
+\end{itemize}
+
+\textbf{\texttt{getDoc(user, year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{exitDocs[(docRoleOf(user), year)]}$
+  \item exception: document not found
+\end{itemize}
+
+\textbf{\texttt{saveDraft(user, year, content)}}:
+\begin{itemize}
+  \item transition: $\texttt{exitDocs[(docRoleOf(user), year)].content} := \texttt{content}$. No validation is performed at this step
+  \item output: none
+  \item exception: document not found, document not editable (status is not Draft)
+\end{itemize}
+
+\textbf{\texttt{submitDoc(user, year)}}:
+\begin{itemize}
+  \item transition: check the content against \texttt{templates[docRoleOf(user)]}: every required field must be present and meet its minimum length, and the content must not contain credentials or passwords. Then check that every bridge model it refers to (by its \texttt{id}) is found by \texttt{hasModel} of the Model Library Module (M8), every test result it refers to is found by \texttt{hasTest} of the Material Test Records Module (M12), and every rule set it refers to is found by \texttt{hasRuleSet} of the Rule Set Module (M10). If all checks pass, set the status to Review
+  \item output: none
+  \item exception: document not found, document not editable, document invalid (a check on the content fails), reference not found (a referenced model, test result, or rule set does not exist)
+\end{itemize}
+
+\textbf{\texttt{publishDoc(user, year)}}: available to executives only (enforced by the Authorization Rules Module, M4, through the Broker).
+\begin{itemize}
+  \item transition: store a file rendering the content of the document, with its title, category, and year, through the Repository Content Module (M6) \texttt{addFile}. When M6 acknowledges that the file was stored, set the status to Published and record the returned \texttt{fileId} in the document
+  \item output: \texttt{fileId}
+  \item exception: document not found, document not in review, storage unavailable (no acknowledgement; the status remains Review)
+\end{itemize}
+
+\textbf{\texttt{updateRoleRecord(user, position, record)}}:
+\begin{itemize}
+  \item transition: if \texttt{user} is the current holder of \texttt{position} (as returned by \texttt{getHolder(position)} of the Member Registry Module), set $\texttt{roleRecords[position]} := \texttt{record}$
+  \item output: none
+  \item exception: position not found, not current holder
+\end{itemize}
+
+\textbf{\texttt{getRoleRecord(position)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{roleRecords[position]}$
+  \item exception: position not found
+\end{itemize}
+
+\textbf{\texttt{moveRoleRecord(fromPosition, toPosition)}}:
+\begin{itemize}
+  \item transition: copy the responsibilities, key contacts, and timeline of the record of \texttt{fromPosition} into the record of \texttt{toPosition}, appending the timeline. The record of \texttt{fromPosition} is retained, not deleted. This supports renamed, inherited, and split roles
+  \item output: none
+  \item exception: position not found (either position)
+\end{itemize}
+
+\textbf{\texttt{getOutstanding(year)}}: available to executives only (enforced by the Authorization Rules Module, M4, through the Broker).
+\begin{itemize}
+  \item transition: none
+  \item output: the \texttt{DocRole}s $r$ for which $\texttt{exitDocs[(r, year)]}$ does not exist or has status Draft
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getAlerts(member)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: for each \texttt{DocRole} held by \texttt{member} (given by \texttt{docRoleOf(member)}) whose document for the current competition year does not exist or has status Draft, an alert prompting its completion. If \texttt{member} is an executive, one further alert listing the outstanding document roles from \texttt{getOutstanding}
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{exportDocPDF(role, year)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a PDF rendering of $\texttt{exitDocs[(role, year)]}$
+  \item exception: document not found, document not published
+\end{itemize}
+
+\textbf{\texttt{exportRolePDF(position)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a PDF rendering of $\texttt{roleRecords[position]}$
+  \item exception: position not found
+\end{itemize}
+
+\subsubsection{Local Functions}
+\textbf{\texttt{docRoleOf(user)}}: returns the \texttt{DocRole} held by \texttt{user}, which is the executive position they hold or their team-lead role, determined from \texttt{getPositionOf(user)} and \texttt{getRole(user)} of the Member Registry Module (M5). Undefined if \texttt{user} holds neither.
+
+\newpage
+
+\section{MIS of Authentication Module} \label{mAuthn}
+
+\subsection{Module}
+\texttt{Auth}
+
+Log in and log out users on a session, retrieve the current user and role of a session, enforce the password policy, and allow users to change or recover forgotten passwords.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mMembers]{Member Registry Module (M5)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{3.4cm} p{4.6cm} p{3.1cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{logIn} & \texttt{email}: $\mathbb{S}$, \texttt{password}: $\mathbb{S}$, \texttt{session}: Session & \texttt{success}: $\mathbb{B}$ & --- \\
+\texttt{logOut} & \texttt{session}: Session & --- & --- \\
+\texttt{getCurrentUser} & \texttt{session}: Session & \texttt{user}: UserAccount & --- \\
+\texttt{getCurrentRole} & \texttt{session}: Session & \texttt{role}: Role & No user signed in on session \\
+\texttt{changePassword} & \texttt{user}: UserAccount, \texttt{password}: $\mathbb{S}$ & --- & User not found, invalid password \\
+\texttt{recoverAccount} & \texttt{email}: $\mathbb{S}$ & --- & User not found \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{currentUser}: $\text{Dict}\langle \text{Session}, \text{UserAccount} \rangle$ --- the account signed in on each session
+\end{itemize}
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The module is initialized before any access program is called.
+  \item This module stores no credentials. Credentials are verified and stored through the \hyperref[mMembers]{Member Registry Module (M5)}.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{logIn(email, password, session)}}:
+\begin{itemize}
+  \item transition: let $c := \texttt{getCredential(email)}$ from the Member Registry Module. If $c \ne \textit{null}$ \textbf{and} $c$ is active \textbf{and} $c$'s password hash equals $\texttt{hash(password)}$, set $\texttt{currentUser[session]} := c$'s user
+  \item output: boolean indicating whether login was successful (\textit{false} if no account has that email)
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{logOut(session)}}:
+\begin{itemize}
+  \item transition: $\texttt{currentUser[session]} := \textit{null}$
+  \item output: none
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{getCurrentUser(session)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: \texttt{currentUser[session]}
+  \item exception: none (on error, log out the session and return \textit{null})
+\end{itemize}
+
+\textbf{\texttt{getCurrentRole(session)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the role of \texttt{currentUser[session]}, as returned by \texttt{getRole} in the Member Registry Module
+  \item exception: no user signed in on session
+\end{itemize}
+
+\textbf{\texttt{changePassword(user, password)}}:
+\begin{itemize}
+  \item transition: if $\texttt{isStrongPassword(password)}$, store $\texttt{hash(password)}$ as the password hash of \texttt{user} through \texttt{setCredential} in the Member Registry Module
+  \item output: none
+  \item exception: user not found; invalid password (\texttt{isStrongPassword(password)} does not hold)
+\end{itemize}
+
+\textbf{\texttt{recoverAccount(email)}}:
+\begin{itemize}
+  \item transition: send a password-reset authentication link to \texttt{email} that prompts an automatic password reset and logs the user out
+  \item output: none
+  \item exception: user not found (no account has that email)
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\textbf{\texttt{hash(password)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: salted one-way hash of \texttt{password} ($\mathbb{S}$)
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{isStrongPassword(password)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: boolean $\mathbb{B}$ indicating whether \texttt{password} satisfies industry-standard strength criteria
+  \item exception: none
+\end{itemize}
+
+\newpage
+
+\section{MIS of Persistence Module} \label{mPersist}
+
+\subsection{Module}
+\texttt{Persistence}
+
+Store, retrieve, and archive the records and stored files of all other modules, keeping them complete and consistent when several members use the system at once. Long-term means persisting beyond a single transient session with the web server. The state structures shown in other modules are held through this module.
+
+\subsection{Uses}
+None.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{BackupInterval}: $\mathbb{N}$ = 7 days --- the maximum time between backups of the stored records and files
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.9cm} p{3.9cm} p{3.2cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{storeRecord} & \texttt{entity}: EntityName, \texttt{record}: Record & \texttt{recordId}: Id & Record not storable \\
+\texttt{retrieveRecord} & \texttt{entity}: EntityName, \texttt{recordId}: Id & \texttt{record}: Record & Record not found \\
+\texttt{retrieveRecords} & \texttt{entity}: EntityName, \texttt{ownerId}: Id & \texttt{records}: $\text{List}\langle \text{Record} \rangle$ & --- \\
+\texttt{updateRecord} & \texttt{entity}: EntityName, \texttt{recordId}: Id, \texttt{record}: Record & --- & Record not found, Record not storable \\
+\texttt{archiveRecord} & \texttt{entity}: EntityName, \texttt{recordId}: Id & --- & Record not found \\
+\texttt{storeFile} & \texttt{file}: File & \texttt{fileRef}: FileRef & File not storable \\
+\texttt{retrieveFile} & \texttt{fileRef}: FileRef & \texttt{file}: File & File not found \\
+\texttt{archiveFile} & \texttt{fileRef}: FileRef & --- & File not found \\
+\texttt{backup} & --- & \texttt{success}: $\mathbb{B}$ & --- \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{records}: $\text{Dict}\langle \text{Tuple}\langle \text{EntityName}, \text{Id} \rangle, \text{Record} \rangle$ --- the stored records of every entity; each record carries its owner key and an archived flag
+  \item \texttt{files}: $\text{Dict}\langle \text{FileRef}, \text{Tuple}\langle \text{File}, \mathbb{B} \rangle \rangle$ --- the stored files, each with its archived flag
+\end{itemize}
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The module is initialized before any access program is called.
+  \item Each access program takes effect completely or not at all, and concurrent calls take effect in some serial order, so a record or file is never left partly written.
+  \item Only the module that owns an entity calls the access programs for it; the programs act on the entity named by their arguments.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{storeRecord(entity: EntityName, record: Record)}}:
+\begin{itemize}
+  \item transition: $\texttt{recordId} := \text{a new identifier}$; $\texttt{records[(entity, recordId)]} := \texttt{record}$, with its archived flag set to \textit{false}
+  \item output: \texttt{recordId}
+  \item exception: record not storable
+\end{itemize}
+
+\textbf{\texttt{retrieveRecord(entity: EntityName, recordId: Id)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: $\texttt{records[(entity, recordId)]}$
+  \item exception: record not found
+\end{itemize}
+
+\textbf{\texttt{retrieveRecords(entity: EntityName, ownerId: Id)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the records of \texttt{entity} whose owner key is \texttt{ownerId}, including archived records (each shows its archived flag)
+  \item exception: none
+\end{itemize}
+
+\textbf{\texttt{updateRecord(entity: EntityName, recordId: Id, record: Record)}}:
+\begin{itemize}
+  \item transition: $\texttt{records[(entity, recordId)]} := \texttt{record}$, keeping the archived flag already stored
+  \item output: none
+  \item exception: record not found; record not storable
+\end{itemize}
+
+\textbf{\texttt{archiveRecord(entity: EntityName, recordId: Id)}}:
+\begin{itemize}
+  \item transition: set the archived flag of $\texttt{records[(entity, recordId)]}$ to \textit{true}; the record is kept and remains retrievable
+  \item output: none
+  \item exception: record not found
+\end{itemize}
+
+\textbf{\texttt{storeFile(file: File)}}:
+\begin{itemize}
+  \item transition: $\texttt{fileRef} := \text{a new file reference}$; $\texttt{files[fileRef]} := (\texttt{file}, \textit{false})$
+  \item output: \texttt{fileRef}
+  \item exception: file not storable
+\end{itemize}
+
+\textbf{\texttt{retrieveFile(fileRef: FileRef)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: the file $\texttt{files[fileRef]}$, archived or not
+  \item exception: file not found
+\end{itemize}
+
+\textbf{\texttt{archiveFile(fileRef: FileRef)}}:
+\begin{itemize}
+  \item transition: set the archived flag of $\texttt{files[fileRef]}$ to \textit{true}; the file is kept and remains retrievable
+  \item output: none
+  \item exception: file not found
+\end{itemize}
+
+\textbf{\texttt{backup()}}:
+\begin{itemize}
+  \item transition: copy all records and files to a backup platform separate from the hosting server
+  \item output: boolean indicating whether the backup was successful
+  \item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of Search Module} \label{mSearch}
+
+\subsection{Module}
+\texttt{Search}
+
+Return the stored repository items that match a keyword search, filtered by category, year, team, or tag, within the maximum search time.
+
+\subsection{Uses}
+\begin{itemize}
+  \item \hyperref[mContent]{Repository Content Module (M6)}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{MaxSearchTime}: $\mathbb{R} = 2$ --- the maximum search time in seconds
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.7cm} p{5.5cm} p{4.2cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{search} & \texttt{keyword}: $\mathbb{S}$, \texttt{category}: $\mathbb{S}$ (optional), \texttt{year}: $\mathbb{N}$ (optional), \texttt{team}: Team (optional), \texttt{tag}: $\mathbb{S}$ (optional) & \texttt{items}: $\text{List}\langle \text{RepositoryItem} \rangle$ & Search timeout, storage unavailable \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{search(keyword, category, year, team, tag)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: from the items returned by \texttt{listItems} of the Repository Content Module (M6), with archived items excluded, the items for which \texttt{matches} holds for \texttt{keyword} and for every filter that was supplied. Filters that were not supplied do not restrict the result. The items are sorted in the ordered by latest edit time, from latest to earliest.
+  \item exception: search timeout (if the search cannot finish within \texttt{MaxSearchTime}, no results are returned and the member is told that the search timed out; partial results are not returned), storage unavailable (raised by the Repository Content Module)
+\end{itemize}
+
+\subsubsection{Local Functions}
+\textbf{\texttt{matches(item, keyword, category, year, team, tag)}}: returns true when \texttt{keyword} occurs in the title or metadata of \texttt{item} and, for each supplied filter, the item has that category, year, team, or tag.
+
+\newpage
+
+\section{MIS of STEP Parsing Module} \label{mStep}
+
+\subsection{Module}
+\texttt{StepParser}
+
+Read STEP files and provide their raw geometry and metadata. Identifying the members and joints of a bridge is done by the Model Import Module (\hyperref[mModelImport]{M7}), not by this module.
+
+\subsection{Uses}
+None.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.7cm} p{3.6cm} p{4.0cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{parse} & \texttt{file}: File & \texttt{geometry}: StepGeometry & Invalid file, no geometry \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{parse(file)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a \texttt{StepGeometry} built from \texttt{file}, containing its raw solids, its overall dimensions, its mass, and the metadata recorded in the file
+  \item exception: invalid file, no geometry
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of Structural Solver Module} \label{mSolver}
+
+\subsection{Module}
+\texttt{StructSolver}
+
+Compute the internal forces and stresses in each member of a bridge model, from the model's members, joints, supports, and applied loads and the material properties supplied to it.
+
+\subsection{Uses}
+None.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None.
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.6cm} p{5.2cm} p{4.4cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{analyze} & \texttt{model}: Model, \texttt{props}: MaterialProperties & \texttt{results}: $\text{List}\langle \text{ElementResult} \rangle$ & Invalid model, invalid material properties, analysis failure \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None. This module operates as a stateless pass-through.
+
+\subsubsection{Environment Variables}
+None.
+
+\subsubsection{Assumptions}
+None.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{analyze(model, props)}}:
+\begin{itemize}
+  \item transition: none
+  \item output: a structural analysis of \texttt{model} using the material properties \texttt{props}, returning one \texttt{ElementResult} $(\texttt{memberId}, \texttt{force}, \texttt{stress})$ for each member of \texttt{model}, where \texttt{force} is the internal force and \texttt{stress} is the stress in that member
+  \item exception: invalid model, invalid material properties, analysis failure
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+
+\section{MIS of 3D Viewer Module} \label{mViewer}
+
+\subsection{Module}
+\texttt{Viewer3D}
+
+Display a model in an interactive three-dimensional view, with its units and a scale reference, for users to manually inspect, and highlight elements of the displayed model.
+
+\subsection{Uses}
+None.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+\begin{itemize}
+  \item \texttt{MaxModelLoadTime}: $\mathbb{R} = 30$ --- the maximum time, in seconds, to display the 3D view of a typical club bridge model after upload or selection
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+\begin{tabularx}{\textwidth}{p{2.9cm} p{3.6cm} p{3.2cm} X}
+\toprule
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\midrule
+\texttt{display3d} & \texttt{model}: Model & \texttt{view3d}: View & Invalid model \\
+\texttt{highlight} & \texttt{elements}: $\text{Set}\langle \text{Element} \rangle$ & --- & Element not in displayed model \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item \texttt{model}: Model or \textit{null} --- the model currently displayed; \textit{null} when none is displayed
+  \item \texttt{units}: Units --- the unit system of the displayed model
+  \item \texttt{highlighted}: $\text{Set}\langle \text{Element} \rangle$ --- the members and joints of the displayed model currently highlighted
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item The member's rotate, zoom, and pan inputs to the 3D view
+  \item The rendered 3D view shown to the member
+\end{itemize}
+
+Types used in this module (not exported as state):
+\begin{itemize}
+  \item \texttt{View}: a rendered three-dimensional view of a \texttt{Model}.
+\end{itemize}
+
+\subsubsection{Assumptions}
+The member's browser can display an interactive three-dimensional view.
+
+\subsubsection{Access Routine Semantics}
+
+\textbf{\texttt{display3d(model)}}:
+\begin{itemize}
+  \item transition: if \texttt{model} is valid, \texttt{model} := \texttt{model}; \texttt{units} := the unit system of \texttt{model}; \texttt{highlighted} := $\emptyset$. The view shows the units and a scale reference
+  \item output: \texttt{view3d}, the rendered 3D view of \texttt{model} with its units and scale reference
+  \item exception: invalid model
+\end{itemize}
+
+\textbf{\texttt{highlight(elements)}}:
+\begin{itemize}
+  \item transition: \texttt{highlighted} := \texttt{elements}; the view shows these elements highlighted (an empty set removes all highlights)
+  \item output: none
+  \item exception: element not in displayed model (an element of \texttt{elements} is not a member or joint of \texttt{model})
+\end{itemize}
+
+\subsubsection{Local Functions}
+None.
+
+
+\newpage
+\appendix
+\section{Generative AI Use Disclosure}
 
 \subsection{AI Tools Used}
-
-\wss{Give the name of the AI tool(s) used and the version.}
+Gemini (version 3)
 
 \subsection{How and Where Used}
-
-\wss{Explain what the tool(s) were used for.  Examples include: brainstorming,
-explaining a technical concept, reviewing the document, generating or modifying
-text, generating or modifying diagrams, identifying errors or omissions or
-inconsistencies.}
-
-\wss{For each of the uses, identify which parts of the document were affected.}
-
-\wss{You do not need to report every interaction, but you should disclose the 
-uses that materially contributed to your work}
+Advisory and formatting only.
 
 \subsection{Verification of AI-Generated Content}
+All advice was critically evaluated and all factual claims within the advice were verified before the advice was used.
 
-\wss{\begin{itemize}
-    \item Describe how the team checked AI-generated or AI-assisted material
-    before including it in the document.
-    \item In particular, verify factual claims, technical assertions,
-    requirements, calculations, references, and other information for which an
-    AI system may produce incorrect or fabricated results.
-    \item \textbf{The team is responsible for the accuracy, completeness,
-consistency, and appropriateness of the submitted document, regardless of
-whether material was generated by a human or an AI system.}
-\end{itemize}}
-
-\newpage{}
-
-\section{Appendix --- Reflection}
-
-\wss{Not required for CAS 741 projects}
+\newpage
+\section{Reflection}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
-\input{../../Reflection.text}
-
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which of your design decisions stemmed from speaking to your client(s)
-  or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
-  \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
-  \item (After you have implemented another team's module, which means this
-  isn't filled in until after the original deadline). What did you learn by
-  implementing another team's module? Were all the details you needed in the
-  documentation, or did you need to make assumptions, or ask the other team
-  questions?  If your team also had another team implement one of your modules,
-  what was this experience like?  Are there things in your documentation you
-  could have changed to make the process go more smoothly for when an
-  ``outsider'' completes some of the implementation?
+  \item What went well while writing this deliverable?
+  \item What pain points did you experience during this deliverable, and how did you resolve them?
+  \item Which of your design decisions stemmed from speaking to your client(s) or a proxy (e.g., your peers, stakeholders, potential users)? For those that were not, why, and where did they come from?
+  \item While creating the design doc, what parts of your other documents (e.g., requirements, hazard analysis, etc.), if any, needed to be changed, and why?
+  \item What are the limitations of your solution? Put another way, given unlimited resources, what could you do to make the project better? (\texttt{LO\_ProbSolutions})
+  \item Give a brief overview of other design solutions you considered. What are the benefits and tradeoffs of those other designs compared with the chosen design? From all the potential options, why did you select the documented design? (\texttt{LO\_Explores})
+  \item (After you have implemented another team's module, which means this isn't filled in until after the original deadline). What did you learn by implementing another team's module? Were all the details you needed in the documentation, or did you need to make assumptions, or ask the other team questions? If your team also had another team implement one of your modules, what was this experience like? Are there things in your documentation you could have changed to make the process go more smoothly for when an ``outsider'' completes some of the implementation?
 
-  Your reflection should be about concepts learned in your SE education, such as modular decomposition, cohesion, coupling, information hiding, etc.  You should critique the quality and utility of the specification you received.
-
-  You should create a PR for your implemented module.  A link to the PR should be part of your reflection.
-
+  Your reflection should be about concepts learned in your SE education, such as modular decomposition, cohesion, coupling, information hiding, etc. You should critique the quality and utility of the specification you received. You should create a PR for your implemented module, and a link to the PR should be part of your reflection.
 \end{enumerate}
+
+\subsection{Michael}
+\begin{itemize}
+  \item I thought of how this would be implemented low-level and did it with time to spare.
+  \item Motivation --- sometimes I got distracted while writing this large document. Eventually I committed as it got later into the night.
+  \item None. The earlier documents were well designed to facilitate the production of this one.
+  \item With unlimited resources, we could use premier external libraries instead of the free versions that will ultimately be used. Also, a premier firewall would be installed to prevent any attack.
+  \item Another design I considered was stateful objects instead of delegating to databases. (While state variables are used, they are illustrative.) While this may make a slight speedup during runtime, storage and durability could be a nightmare if JSON was used in lieu of a database. Also, RBAC was considered being scrapped because most people are trustworthy anyway, but security is worthwhile due to the occasional malicious outsider. Lastly, I chose that materials tests are initially valid because the vast, vast majority will be.
+\end{itemize}
 
 \end{document}
