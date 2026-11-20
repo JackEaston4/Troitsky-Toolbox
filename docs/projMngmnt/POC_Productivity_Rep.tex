@@ -32,14 +32,46 @@ the report.}
 \url{https://github.com/JackEaston4/Troitsky-Toolbox}
 
 \noindent Data in this report was collected from the repository's \texttt{main}
-branch, issue tracker and pull requests on November 16, 2026, covering the
+branch, issue tracker and pull requests on November 19, 2026, covering the
 period from the start of term (September 8, 2026) to that date.
 
 \section{Demo Plans}
 
-\wss{What is your feasibility risk?}
+\subsection*{Feasibility Risk}
 
-\wss{What will you be demonstrating}
+The feasibility risk is whether the Toolbox can read a bridge's 3D CAD model
+(a STEP file), display it in the browser, and extract usable measurements from
+it.
+
+This is the most complex single feature in the Toolbox, and the planned rule
+compliance and bridge performance tools depend on the data it extracts. If it
+is not achievable, those tools need a different source of bridge data.
+
+Connecting the Toolbox's many independent tools is not treated as a POC risk,
+since most tools are simple on their own; bridge visualization and data
+extraction is the individually most complex part, so it is the focus of the
+POC.
+
+\subsection*{What Will Be Demonstrated}
+
+A live demonstration of running code, showing that a bridge model can go from a
+CAD file to a viewable, measured model in the Toolbox:
+\begin{itemize}
+\item A member uploads a bridge model exported from CAD.
+\item The Toolbox checks that the file is a readable model, and rejects
+  unreadable files with a message saying why.
+\item The model is displayed in 3D, and the member can rotate and zoom it to
+  confirm it was read correctly.
+\item The Toolbox shows basic measurements taken from the model, such as its
+  dimensions and estimated mass, and how long the model took to load.
+\end{itemize}
+
+The POC is not a minimum viable product. It shows that this pipeline works, so
+the analysis tools that depend on it can be built on top of it.
+
+If the demo shows that model extraction is not achievable, the team will change
+the scope to an alternate feature that avoids the technical limitation, as
+described in the Development Plan.
 
 \section{Team Meeting Attendance}
 
@@ -49,19 +81,24 @@ period from the start of term (September 8, 2026) to that date.
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & 14\\
-Pedro Azevedo & 14\\
-Mason Azzopardi & 14\\
-Michael Roberts & 12\\
-Jack Easton & 14\\
+Total & 15\\
+Pedro Azevedo & 15\\
+Mason Azzopardi & 15\\
+Michael Roberts & 13\\
+Jack Easton & 15\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Counts are taken from the attendance checklists of the 14 \texttt{Team Meeting}
-issues (\#5, \#30, \#51, \#87, \#96, \#120, \#149, \#182, \#221, \#224, \#237,
-\#284, \#287, \#292). At the meeting of October 28 (\#221), one member joined
-late and online; this is counted as attended.
+Each team meeting is recorded as a GitHub issue with the \texttt{meeting}
+label, an attendance checklist and an agenda.
+
+Counts are taken from the attendance checklists of the 15 \texttt{Team Meeting}
+issues (\#5, \#30, \#51, \#87, \#96, \#120, \#149, \#182, \#221, \#224, \#237, \#284,
+\#287, \#292, \#310).
+
+At the meeting of October 28 (\#221), one member joined late and online; this
+is counted as attended.
 
 \section{Supervisor/Stakeholder Meeting Attendance}
 
@@ -150,17 +187,17 @@ was held outside the allocated TA meeting time because of the TA's schedule.
 \begin{tabular}[b]{@{}l@{}}\textbf{Lines}\\\textbf{Deleted}\end{tabular} &
 \begin{tabular}[b]{@{}l@{}}\textbf{Pull}\\\textbf{Requests}\end{tabular}\\
 \midrule
-Total & 273 & 100\% & 10052 & 6296 & 94\\
-Pedro Azevedo & 100 & 36.6\% & 3953 & 3759 & 33\\
-Mason Azzopardi & 89 & 32.6\% & 2188 & 925 & 32\\
-Michael Roberts & 35 & 12.8\% & 1407 & 492 & 14\\
-Jack Easton & 49 & 17.9\% & 2504 & 1120 & 15\\
+Total & 340 & 100\% & 16745 & 12061 & 106\\
+Pedro Azevedo & 125 & 36.8\% & 5519 & 7073 & 38\\
+Mason Azzopardi & 101 & 29.7\% & 3586 & 1439 & 36\\
+Michael Roberts & 49 & 14.4\% & 4511 & 2077 & 17\\
+Jack Easton & 65 & 19.1\% & 3129 & 1472 & 15\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Commits are non-merge commits on \texttt{main}; the 113 merge commits
-are excluded. A further 92 commits made by the
+Commits are non-merge commits on \texttt{main}; the 139 merge commits
+are excluded. A further 100 commits made by the
 \texttt{github-actions[bot]} account, which regenerates the PDFs, are excluded.
 Lines added and deleted exclude binary files and the initial commit that
 imported the course template (11354 lines). Pull requests count every pull
@@ -174,16 +211,16 @@ request opened (open, merged and closed).
 \toprule
 \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
 \midrule
-Pedro Azevedo & 29 & 28 \\
-Mason Azzopardi & 75 & 21 \\
-Michael Roberts & 43 & 21 \\
-Jack Easton & 31 & 31 \\
+Pedro Azevedo & 33 & 30 \\
+Mason Azzopardi & 81 & 21 \\
+Michael Roberts & 44 & 38 \\
+Jack Easton & 32 & 40 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 A further 17 issues were authored by other teams' peer reviewers. Of the closed
-issues, 25 have no assignee and are not counted in the Assigned column.
+issues, 30 have no assignee and are not counted in the Assigned column.
 
 \section{CICD via GitHub Actions}
 
@@ -197,12 +234,16 @@ the repository for TA review.
 
 \section{Custom Documents (CDs)}
 
-The course repository records the team's CDs as a
-User/\allowbreak Stakeholder/\allowbreak Client Interview Report (Fall) and a Usability Report
-(Winter).
+The chosen CDs for the project are the Interview Report (Fall) and 
+a Usability Report (Winter). Both will be kept moving forward, matching 
+the project requirements. The CDs are linked in the project READMEs and 
+contained in docs/CDs.
 
-\wss{Should the CDs be modified now that the team knows more about the
-project?}
+The CDs were split given the connection and required proximity and 
+communication with the Troitsky club. Since Pedro Azevedo is a competing 
+member and executive in Troitsky, he has served as the primarily lead for 
+Fall CD (Interviews). Other members served to help analyze interview findings, 
+help take notes during the interview and help write and review the report.
 
 \section{Team Charter Trigger Items}
 
@@ -213,17 +254,13 @@ The only properly triggered item is listed below:
   contents.
 \end{itemize}
 
-\wss{Provide a list of any violations of the triggers.  If the team wishes, the
-violations can be summarized on aggregate, instead of naming specific team
-members.}
-
-\wss{Provide a plan to address the violations.  This could include revising the
-triggers, if they are found to be too weak, strong or ambiguous.}
+There was no major infractions that would require next steps, the triggered item 
+was for the sake of all members benefit.
 
 \section{Additional Productivity Metrics}
 
-\wss{If your team has additional metrics of productivity, please feel free to
-add them to this report.  If not, please explicitly state that there are no additional
-metrics.}
+No other additional project metrics. Since the project also entails integration with the McMaster Troitsky Club, 
+there is work done that is not as clearly documented, but will be present and valuable to the project's success.
+
 
 \end{document}
