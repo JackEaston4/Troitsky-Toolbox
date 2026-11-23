@@ -25,6 +25,18 @@
         "**/VnVPlan.aux": true,
         "**/VnVPlan.log": true,
         "**/VnVPlan.gz": true,
-        "**/VnVPlan.out": true
+        "**/VnVPlan.out": true,
+        "**/MG.aux": true,
+        "**/MG.log": true,
+        "**/MG.gz": true,
+        "**/MG.out": true,
+        "**/MIS.aux": true,
+        "**/MIS.log": true,
+        "**/MIS.gz": true,
+        "**/MIS.out": true,
+        "**/POC_Productivity_Rep.aux": true,
+        "**/POC_Productivity_Rep.log": true,
+        "**/POC_Productivity_Rep.gz": true,
+        "**/POC_Productivity_Rep.out": true
     }
 }

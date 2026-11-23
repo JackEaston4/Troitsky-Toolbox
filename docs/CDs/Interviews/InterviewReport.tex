@@ -1,0 +1,552 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage[round]{natbib}
+
+\title{Stakeholder Interview Report\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../../Comments.text}
+\input{../../Common.text}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\tabcolsep}{4pt}
+\newcommand{\rid}[1]{\mbox{#1}}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+11/10/2026 & Pedro Azevedo & Template created for report \\
+11/14/2026 & Pedro Azevedo \& Mason Azzopardi & Interviews complete \\
+11/14/2026 & Pedro Azevedo & Raw results aggregated and included (.csv) \\
+11/15/2026 & Pedro Azevedo & Stakeholder interview report complete \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+\tableofcontents
+\listoftables
+\newpage
+
+% =====================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Purpose}
+
+The purpose of the interviews was to collect specified and verifiably valid feedback from the 
+users with the most experience in the club. With the base of the project identified, outlined 
+in the SRS, the interviews provided proper guiding information about the prioritization and 
+further specification of services~\citep{TroitskySRS}. Product information 
+that is related to or benefits from input of experienced members, or executive-specific 
+requirements will be addressed through the interviews. There will also be discussion 
+regarding the available data for testing, specifically data that has more records or 
+background stored from current experienced members. The analysis breaks down the results 
+of the interview into applicable findings, linked to specific system functions, or general 
+product specifications, relating to club operations.
+
+\subsection{Relation to Other Documents}
+
+This interview was outlined and described in the VnV Plan Custom Documents section~\citep{TroitskyVnVPlan}. 
+The prior elicitation provides data to contrast against the interview, ensuring that experienced member 
+results are not overly biased. The interviews will also provide the most information regarding the role 
+requirements, supporting user group descriptions in the SRS~\citep{TroitskySRS}.
+
+% =====================================================================
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Interview Format}
+The Fall CD interviews will be semi-structured, with questions tailored
+primarily to experienced members, and additionally to specific roles.
+Interviews will be around 10--15 minutes long, and conducted with 2--3
+participants at a time, allowing for both discussion and individual responses.
+
+The interview guide is intended to be flexible allowing for experienced members
+to direct the discussion to areas they feel are important, while still ensuring
+that core concerns are addressed. As many of the interviewed members will be a
+part of many of these user groups, certain interviews will cover multiple
+question sets.
+
+\subsection{Participant Selection and Recruitment}
+
+The selection process was primarily focused on targeting more experienced members, while covering a diversity of 
+roles, specifically across coaching and executive space. From there the selection focused on member availability 
+and scheduling, resulting in 3 interview sessions, each with 2--3 participants, totalling 8 interviewed members. 
+The scheduling was done through When2Meet, where all users were able to fill out their availability, then the 
+team was able to select times that had groups of people and required members available.
+
+\subsection{Session Procedure and Roles}
+
+The interviews followed a simple set-up process where the interview parameters and ethics considerations outlined 
+below were presented to the participants. As described, the semi-structured nature of the interview questions and sections 
+served almost as checkpoints throughout the interview, allowing for deviation and discussion among team members and 
+Troitsky participants. For each of the interview blocks, there were always 2 team members present, where 1 served as the 
+main interviewer, asking the main questions and remaining attentive to the participants. The other member served as a 
+more concrete notetaker, filling in the empathy map sections roughly, but primarily working on the interview record Excel template. 
+The Excel template served both as a mid-interview note-taking system and to create standardized exports to store the 
+interview records as CSV files.
+
+\subsection{Ethics and Anonymization}
+
+These interviews will be anonymized to ensure user privacy and aggregated into usable results for the 
+toolbox development process, while collecting information about the participant's experience and role 
+for result categorization. No names will be recorded, only information regarding the background of 
+the members, and transcripts will be anonymized before being reported in the repository.
+
+\subsection{Analysis Method}
+
+These semi-structured interviews will help outline expectations and prioritization of services from 
+knowledgeable members, requiring some preprocessing and sorting of the results, specifically 
+utilizing empathy maps and role-categorized findings. Utilizing an aggregated empathy map helps to group the 
+findings from the results specifically into more concrete actionable groups, helping infer the highest and 
+lowest priority items within the app. These consolidated findings will be vital in checking any assumptions 
+made in the SRS with experienced club members. The analysis focuses on determining the highest priority and 
+largest gaps within the club, specifically noted by their more experienced members. This was also done by breaking 
+down the themes of the interviews, where the participants decided to focus, and analyzing the importance 
+or associated project considerations that may arise. It also consolidated the data that users presented 
+as available to host on the service.
+
+For both themes and action items, priority was assigned based on the impact on the project and the number of participants 
+that discussed or requested the given item. A theme or action item is \textbf{High} priority when it is supported by 6 or more of the 8 participants, 
+\textbf{Medium} when supported by 4--5 participants or by a majority of the role group it concerns, and 
+\textbf{Low} otherwise. Stretch goals are counted only by the participants who asked for the feature: 
+\textbf{High} for 3 or more, \textbf{Medium} for 2, and \textbf{Low} for 1. Each stretch goal is also given a 
+scope relating to the SRS, either describing the existing requirements it would extend or providing detail to the changes 
+it would make.
+
+% =====================================================================
+\section{Interview Questions}
+\label{sec:questions}
+
+\begin{table}[H]
+\centering
+\caption{Interview questions by stakeholder group}
+\label{tab:questions}
+\small
+\begin{tabularx}{\textwidth}{L{0.9cm} Y}
+\toprule
+\textbf{ID} & \textbf{Question} \\
+\midrule
+\multicolumn{2}{l}{\textit{All participants, general questions}} \\
+G1 & What is your role in the club, and how many years have you been involved? \\
+G2 & Which tools do your teams use to design, analyze, and store their bridges? \\
+G3 & What were the largest challenges you faced when you first joined the club? \\
+\midrule
+\multicolumn{2}{l}{\textit{Executives and coaches}} \\
+E1 & What information regarding the club administration is most important to consolidate? \\
+E2 & When you first became an executive or coach, what were your largest difficulties? \\
+E3 & How would you like to see the software sub team integrated into the club administration? \\
+\midrule
+\multicolumn{2}{l}{\textit{Team captains and experienced members}} \\
+C1 & What tool have you found is the most accurate and useful in predicting your bridge's performance? \\
+C2 & How close to a model estimate do you expect your bridge's performance to be, including uncertainties? \\
+C3 & What are the most common reasons for bridge failures in your experience? \\
+C4 & Does the club have models and recorded failure loads of past bridges that could be used to test the Toolbox? \\
+\midrule
+\multicolumn{2}{l}{\textit{Closing, all participants}} \\
+CL1 & Is there anything about the club's information or tools that we did not ask about? \\
+CL2 & Are there any items that you feel are important to include in the Toolbox that we have not discussed? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Participants}
+\label{sec:participants}
+
+\begin{table}[H]
+\centering
+\caption{Participants}
+\label{tab:participants}
+\small
+\begin{tabularx}{\textwidth}{L{1.3cm} Y L{1.6cm} L{3.4cm}}
+\toprule
+\textbf{ID} & \textbf{Role(s)} & \textbf{Years in club} & \textbf{Role group(s)} \\
+\midrule
+S1-P1 & Executive (Co-chair), participant & 5 & Executive, Competitor \\
+S1-P2 & Executive (Event Coordinator) & 4 & Executive \\
+S2-P1 & Executive (Event Coordinator), participant & 4 & Executive, Competitor \\
+S2-P2 & Coach (Structural) & 3 & Coach \\
+S2-P3 & Coach (Manufacturing) & 3 & Coach \\
+S3-P1 & Executive (Co-chair), Coach (Logistics) & 3 & Executive, Coach \\
+S3-P2 & General member, participant & 5 & Competitor \\
+S3-P3 & Executive (Finance Director), Team Captain & 6 & Executive, Competitor \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Interview Sessions}
+\label{sec:sessions}
+
+\begin{table}[H]
+\centering
+\caption{Interview sessions}
+\label{tab:sessions}
+\small
+\begin{tabularx}{\textwidth}{@{}L{1.2cm} L{1.6cm} L{2.05cm} L{1.9cm} L{1.75cm} Y@{}}
+\toprule
+\textbf{Session} & \textbf{Date} & \textbf{Participants} & \textbf{Interviewer} & \textbf{Notetaker} & \textbf{Question sets} \\
+\midrule
+S1 & 2026-11-12 & S1-P1, S1-P2 & Pedro Azevedo & Mason Azzopardi & G, E, C (no C4 answers), CL \\
+S2 & 2026-11-13 & S2-P1, S2-P2, S2-P3 & Pedro Azevedo & Mason Azzopardi & G, E, C, CL \\
+S3 & 2026-11-14 & S3-P1, S3-P2, S3-P3 & Pedro Azevedo & Mason Azzopardi & G, E (not S3-P2), C, CL \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Analysis}
+\label{sec:analysis}
+
+\subsection{Empathy Map}
+\label{sec:empathy}
+
+The notes from all three sessions were sorted into a single empathy map
+(Table~\ref{tab:empathy}).
+
+\begin{table}[H]
+\centering
+\caption{Aggregated empathy map}
+\label{tab:empathy}
+\small
+\begin{tabularx}{\textwidth}{YY}
+\toprule
+\textbf{Says} & \textbf{Thinks} \\
+\midrule
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item ``No information from previous years'' (S1-P2, G3); no documentation,
+        photo archive, or technique guides (S3-P2, G3)
+  \item Model estimates ``are not ever accurate, comes down to build quality''
+        (S2-P1, C2); last year's estimate was off by 1750~lbs (S1-P1, C2)
+  \item Above all, wants a collection of designs and models that work
+        (S2-P3, CL2)
+  \item The software subteam should not be a separate, isolated team
+        (S2-P3, E3)
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item Knowledge lost between years is the main barrier for new members and
+        new executives (7/8, G3)
+  \item Bridges fail from manufacturing quality, torsion and joints more than
+        from design (7/8, C3)
+  \item Model estimates are for comparing and optimizing designs, not for
+        predicting the ultimate load (S1-P2, S2-P1, S3-P3)
+  \item Uncertainty comes mainly from material data and 3D effects
+        (S3-P1, S3-P2, S3-P3)
+\end{itemize}
+\\
+\midrule
+\textbf{Does} & \textbf{Feels} \\
+\midrule
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item Models in Autodesk Inventor; analyzes with SAP2000, hand calculations
+        and Excel (G2, all sessions)
+  \item Stores files in MS Teams, Google Drive, or on personal laptops
+        (S1-P1, S1-P2, S2-P1, S3-P1)
+  \item Estimates load by intuition or conservative guesses
+        (S2-P2, S2-P3, S3-P3)
+  \item Executives and coaches gather event logistics, sponsor contacts and
+        cost information without past records (S1-P1, S1-P2, S2-P1, S2-P3)
+\end{itemize}
+&
+\begin{itemize}[leftmargin=*, nosep, before=\vspace{-0.6\baselineskip}]
+  \item Frustrated by wasted effort and preventable failures (S1-P1, S1-P2)
+  \item Uncertain about responsibilities in the new coach roles
+        (S2-P2, S2-P3)
+  \item Low confidence in performance predictions (S2-P1, S2-P3, S3-P3)
+  \item Invested in the Toolbox lasting beyond this year (S3-P1, S3-P3)
+\end{itemize}
+\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Themes}
+\label{sec:themes}
+
+The empathy map entries were grouped into the themes in Table~\ref{tab:themes}. The priority of each theme is given in the table, 
+reflecting the number of participants that discussed the theme. While T7 is at the bottom of the list, primarily because the coach role 
+was only discussed with current coaches, it is one of the most important for implementing the core project goals, supporting all the 
+roles within the club. 
+
+\begin{table}[H]
+\centering
+\caption{Themes identified across sessions}
+\label{tab:themes}
+\small
+\begin{tabularx}{\textwidth}{@{}L{0.6cm} L{3.1cm} L{3.0cm} Y L{1.6cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Theme} & \textbf{Participants} & \textbf{SRS links} & \textbf{Priority} \\
+\midrule
+T1 & Knowledge lost between years & All except S2-P2 (G3) & \rid{FR-KR-3}, \rid{FR-MA-5}, S.2.7 & High (7/8) \\
+T2 & Administrative information centralization: timeline, logistics, sponsors, costs & S1-P1, S1-P2, S2-P1, S2-P3 & \rid{FR-KT-1}, \rid{FR-KT-3} & Medium (4/8) \\
+T3 & Team coordination: tasks, deadlines, milestones & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & None (Section~\ref{sec:stretch}) & Medium (5/8) \\
+T4 & Accepted low trust in failure load prediction & S1-P1, S1-P2, S2-P1, S2-P3, S3-P2, S3-P3 & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} & High (6/8) \\
+T5 & Failures from manufacturing, torsion and joints & S1-P1, S1-P2, S2-P1, S2-P2, S3-P1, S3-P2, S3-P3 & \rid{FR-KR-2}, \rid{FR-MA-5}, S.2.6 & High (7/8) \\
+T6 & Software subteam integrated with the club, not separate & S1-P1, S1-P2, S2-P1, S2-P2, S2-P3, S3-P1, S3-P3 & \rid{NFR-SYS-4} & High (7/8) \\
+T7 & Coach role not yet defined & S2-P2, S2-P3 & \rid{FR-AC-2}, \rid{FR-KT-1}, \rid{FR-KT-3} & Medium (2/3 coaches) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{itemize}
+
+      \item \textbf{T1 --- Knowledge Loss} \newline 
+      The focus on knowledge loss was primarily a concern for all members when discussing their difficulties 
+      in finding reference material and design decision help, especially causing issues or misplaced effort 
+      in their first years. The more experienced members discussed having much of their data, but that, if not collected, 
+      that data itself may be lost. There was also discussion about smaller competition information or discoveries 
+      needing recording, to ensure they are transferred to the next year, even something as small as choice of floss.
+
+      \item \textbf{T2 --- Administrative Information Centralization} \newline
+      Among executive members, there was much discussion, both about issues faced in the past and benefits that 
+      Troitsky Toolbox could supply, focusing on the centralization of, and access to, administrative information. 
+      This would entail simplifying the transition between years, reducing the learning curve or potential issues that arise 
+      from a lack of knowledge and about the timeline structure relating to executive tasks.
+
+      \item \textbf{T3 --- Team Coordination} \newline 
+      Many participants discussed how there is a concentration of issues due to a lack of coordination between team members, from 
+      coaches and executives to team captains, and even from club presidents/co-chairs to executives. These communication 
+      issues create gaps in understanding between members, leading to missed tasks and unequal work/participation among participants. 
+      The primary solution to this gap relates to stretch goal SG-2.
+
+      \item \textbf{T4 --- Model Prediction Load Estimate} \newline
+      A primary theme amongst the interviews was the reorientation of how the ultimate load model estimate is perceived and discussed. 
+      When approached with the question about model accuracy, the majority of participants noted that the estimate provided by modelling services 
+      is always used to assess bridge design quality and general model weight to ultimate load performance. This changes how the model 
+      analysis is perceived, shifting the focus from true accuracy to consistency and proper weak point identification. The ultimate load 
+      prediction no longer has to match that of external software, but provide a general assessment of the model's quality, especially when 
+      reviewing stored designs.
+
+      \item \textbf{T5 --- Production and Manufacturing Complications} \newline
+      Participants noted that the primary cause of failure or issues in their first years competing arose from misunderstanding or 
+      lack of knowledge about manufacturing. This places more importance on the provision of proper tutorials and manufacturing information/support 
+      within the service.
+
+      \item \textbf{T6 --- Software Subteam Integration} \newline
+      All executives responded that the software subteam should be fully integrated with the club and executives, attending all meetings 
+      and being generally involved in the club beyond just the software side. This was noted to be vital to ensuring that the software developed 
+      serves the club and member needs specifically, not diverting due to a lack of communication between the teams.
+
+      \item \textbf{T7 --- Coach Role Definition} \newline
+      The coaching structure and positions are new this year, and both interviewed coaches in S2 described their responsibilities as undefined (E2). 
+      Both coaches discussed a lack of definition in the role, both in how each role differs and how to operate within the role, such as 
+      the level of initiative to take in helping teams. The SRS does not yet account for coaches, so features and descriptions for other roles, like executive roles, should be carried 
+      over and/or adapted for coach specific permissions.
+      
+
+
+\end{itemize}
+
+
+\subsection{Role-Based Analysis}
+\label{sec:roles}
+
+Participants were grouped by role, using their answers to G1
+(Table~\ref{tab:roles}). Several participants hold more than one role, so the
+groups overlap.
+
+\begin{table}[H]
+\centering
+\caption{Concerns by role group}
+\label{tab:roles}
+\small
+\begin{tabularx}{\textwidth}{L{2.0cm} L{2.9cm} Y L{2.2cm}}
+\toprule
+\textbf{Role group} & \textbf{Participants} & \textbf{Main concerns} & \textbf{Themes} \\
+\midrule
+Executives (5) & S1-P1, S1-P2, S2-P1, S3-P1, S3-P3 & Yearly timeline, event logistics, sponsor contacts, cost history; splitting work and keeping teams on track & T2, T3, T6 \\
+Coaches (3) & S2-P2, S2-P3, S3-P1 & Unclear responsibilities in a new structure; past score sheets, material sheets and sourcing contacts; manufacturing and joint guidance & T5, T7 \\
+Competitors (4) & S1-P1, S2-P1, S3-P2, S3-P3 & Past designs with outcomes; reliability of estimates; manufacturing quality & T1, T4, T5 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A further breakdown is provided below, looking to isolate the concerns between the roles, ensuring that prioritization does not favour one 
+user base too heavily. While there was an overlap of roles, coaches and executives were generally separate, with only one co-chair also serving 
+a new role, created this year, as a logistics coach. The standard competitor role breakdown was not further broken down, as the main concerns 
+associated with being a regular competitor are discussed in Section~\ref{sec:themes}.
+
+\begin{itemize}
+
+      \item \textbf{Executives} \newline Information consolidation is a general priority, taken from both  
+      the executives that asked for administrative knowledge to be carried over year-to-year and another two 
+      who focused on past bridge data and standardized analysis. Four described event logistics
+      or keeping teams on track as their main difficulty on taking the role, even directly suggesting one 
+      of the considered stretch goals, a ticket assignment, calendar integration, for task assignment and progress 
+      assessment. All five want the software subteam to work closely with the executive team (E3).
+
+      \item \textbf{Coaches} \newline Both coaches in S2 have never coached before and have described their 
+      role responsibilities as unclear, lacking any past documentation or record of what the role has entailed. 
+      The SRS will need to integrate the coach role, also providing support on exit documentation and other implemented 
+      role services.
+
+\end{itemize}
+
+\subsection{Project Action Items \& Changes}
+\label{sec:impact}
+
+From the assessed themes a more concise list of changes has been extracted, focusing on changes to existing features 
+or requirements, where the requests are still clearly within scope. Some of the findings have a looser connection to the 
+requirements but require more changes in general project direction or a shift in project understanding from the team's 
+perspective.
+
+\begin{table}[H]
+\centering
+\caption{Impact on Requirements and Action}
+\label{tab:impact}
+\small
+\begin{tabularx}{\textwidth}{@{}Y L{2.5cm} L{3.2cm} L{1.4cm}@{}}
+\toprule
+\textbf{Finding} & \textbf{Affected ID} & \textbf{Proposed action} & \textbf{Priority} \\
+\midrule
+Outcome of past designs wanted, more complete dataset (T1, T5) & \rid{FR-KR-2}, \rid{FR-MA-5} & Add score, failure load and failure location metadata & High (7/8) \\
+Estimates trusted only as relative values (T4), change of estimate focus & \rid{FR-PA-1}, \rid{FR-PA-4}, \rid{NFR-PA-1} & Project direction change, focus on model precision & High (6/8) \\
+Expanded administrative knowledge retention (T2) & \rid{FR-KT-3} & Expanded exit documentation & Medium (4/8) \\
+No coach role in the system (T7) & \rid{FR-AC-2} & Add coach role & Medium (2/3 coaches) \\
+Coach handover missing (T7) & \rid{FR-KT-1}, \rid{FR-KT-3} & Extend to coach positions & Medium (2/3 coaches) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Stretch Goals from Interview Requests}
+\label{sec:stretch}
+
+The stretch goals in Table~\ref{tab:stretch} list established features or project components 
+that the participants noted as being beneficial or taken from the discussed themes. 
+The requests were given an ID, similar to SRS requirements, and linked to the existing SRS requirements they affect.
+
+
+\begin{table}[H]
+\centering
+\caption{Stretch goals from interview requests}
+\label{tab:stretch}
+\small
+\begin{tabularx}{\textwidth}{@{}L{0.8cm} Y L{3.3cm} L{1.3cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Request} & \textbf{Scope (SRS)} & \textbf{Priority} \\
+\midrule
+SG-1 & Club calendar of the yearly timeline and events, connection to external calendar services & Extends \rid{FR-KT-3} & High \\
+SG-2 & Organization (Executive and Team) task management: task assignment, task progress checking, coach input, linked to club calendar (S.2) & New, no requirement (T3) & Medium \\
+SG-3 & Model warnings for when model metric/features are near competition limits & Extends \rid{FR-RC-3}, \rid{FR-RC-4} & Low \\
+SG-4 & Mock scoresheet, UI change for scoring prediction & Extends \rid{FR-PA-2}, \rid{FR-RC-3} & Low \\
+SG-5 & FEA, Interactive structural calculations: (member forces, component deflections, design failure points) & Excluded by G.6 (advanced modelling), \rid{NFR-PA-3} & Medium \\
+SG-6 & Joint library, maybe focusing on connection design strength. & Extends \rid{FR-KR-2}, \rid{FR-KR-3} & Low \\
+SG-7 & Analysis and rules checklists for first-time members & New, no requirement (survey feature H) & Low \\
+SG-8 & Showcase of recent designs on the landing page, improved club visibility & Extends \rid{FR-WS-1} & Low \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Available Data for Testing}
+\label{sec:test-data}
+
+Recorded failure loads exist only for recent years, primarily for the years that 
+current experienced members have been involved in, with records older than about
+three years never being consolidated anywhere (S3-P1). There were also individuals that
+offered their team's CAD models from past years, with some even mentioning crushing videos, 
+helping provide failure information (S2-P2). Competition technical data and recorded items 
+such as videos, past score sheets, and the ultimate loads written on kept bridges are also 
+available (S3-P2). Three participants did not know of usable data (S2-P1, S2-P3, S3-P3), 
+further validating the lack of current consolidation ability. The models collected through 
+these members will be utilized as reference model analysis files, relying on their recorded 
+performance as a general measure of accuracy.
+
+% =====================================================================
+\section{Limitations}
+\label{sec:limitations}
+
+The primary limitation for the interview process surrounded the sample size, considering only 8 members were interviewed. 
+While in terms of the full club member count, hovering around 55 members, the count more so reflects a proper sample of 
+experienced and more critical project roles, ensuring that coaches, team captains and executives were all reflected.
+
+The interviewer bias was primarily geared towards experienced members, primarily with a lack of representation for new members. 
+This selection was intentional due to the inability for new members to recognize club requirements or potential failings 
+of other competition years. New members may also obscure results, providing information from non-experts in the subject.
+
+% =====================================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{\protect\numberline{}References}
+\bibliographystyle{plainnat}
+\bibliography{../../../refs/References}
+
+\newpage
+\appendix
+
+\section{Raw Data: Interview Transcripts}
+\label{app:transcripts}
+
+The notes below are reformatted from the interview records, one per session.
+IDs match the participant tags used in Section~\ref{sec:analysis}.
+
+\subsection{Session S1}
+\label{app:s1}
+Source record: \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/InterviewRecords/InterviewRecord_Group1.csv}{\texttt{InterviewRecord\_Group1.csv}}.
+
+\input{InterviewRecords/InterviewRecord_Group1.text}
+
+\subsection{Session S2}
+\label{app:s2}
+Source record: \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/InterviewRecords/InterviewRecord_Group2.csv}{\texttt{InterviewRecord\_Group2.csv}}.
+
+\input{InterviewRecords/InterviewRecord_Group2.text}
+
+\subsection{Session S3}
+\label{app:s3}
+Source record: \href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/docs/CDs/Interviews/InterviewRecords/InterviewRecord_Group3.csv}{\texttt{InterviewRecord\_Group3.csv}}.
+
+\input{InterviewRecords/InterviewRecord_Group3.text}
+
+
+\section{Use of Generative AI}
+\label{app:ai}
+
+\subsection{AI Tools Used}
+
+AI tools that were used were standard LLMs, including Claude, Gemini and ChatGPT. 
+Primarily using Opus 5.5 for general formatting and grammar checking throughout the document.
+
+\subsection{How and Where Used}
+
+AI tools were primarily used to assist in these areas:
+\begin{enumerate}
+      \item Report Template: AI was used to generate the template for the interview report, helping match the look of other documents.
+      \item Formatting: help with LaTeX formatting, building, and layout (tables, lists, and section structure) across the document.
+      \item Linking: adding and fixing internal references and labels between sections
+      \item Content Review: checking for consistencies in terminology, grammar, and spelling across the document.
+\end{enumerate}
+
+\subsection{Verification of AI-Generated Content}
+
+The team followed the same policy for AI use that the Development Plan sets
+for AI-generated code, used in the SRS as well, ensuring that every developer 
+thoroughly reviews all AI-generated content before creating a pull request and does not submit any 
+content that was not understood and verified individually.
+
+\begin{itemize}
+  \item Each team member reviewed any AI-assisted changes to their own
+  sections before opening a pull request, ensuring that content is complete and to the standard of the team.
+  \item Pull requests were reviewed by at least one other team member before merging, with a specified reviewer set up discussed beforehand.
+\end{itemize}
+
+\end{document}

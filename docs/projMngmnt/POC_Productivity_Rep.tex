@@ -22,55 +22,82 @@ This document summarizes the contributions of each team member up to the POC
 Demo.  The time period of interest is the time between the beginning of the term
 and the POC demo.
 
-\wss{Please do not delete sections or modify the table formats.  Standardization
-helps the instructors and TAs to review these documents. You may add sections to
-the report.}
+\noindent \textbf{Project URL: }
+\url{https://github.com/JackEaston4/Troitsky-Toolbox}
 
-\wss{Remove the instructor guidelines/comments in the final version.}
-
-\wss{Fill in the requested information, like project url, TA name, supervisor name, etc.}
+\noindent Data in this report was collected from the repository's \texttt{main}
+branch, issue tracker and pull requests on November 19, 2026, covering the
+period from the start of term (September 8, 2026) to that date.
 
 \section{Demo Plans}
 
-\wss{What is your feasibility risk?}
+\subsection*{Feasibility Risk}
 
-\wss{What will you be demonstrating}
+The feasibility risk is whether the Toolbox can read a bridge's 3D CAD model
+(a STEP file), display it in the browser, and extract usable measurements from
+it.
+
+This is the most complex single feature in the Toolbox, and the planned rule
+compliance and bridge performance tools depend on the data it extracts. If it
+is not achievable, those tools need a different source of bridge data.
+
+Connecting the Toolbox's many independent tools is not treated as a POC risk,
+since most tools are simple on their own; bridge visualization and data
+extraction is the individually most complex part, so it is the focus of the
+POC.
+
+\subsection*{What Will Be Demonstrated}
+
+A live demonstration of running code, showing that a bridge model can go from a
+CAD file to a viewable, measured model in the Toolbox:
+\begin{itemize}
+\item A member uploads a bridge model exported from CAD.
+\item The Toolbox checks that the file is a readable model, and rejects
+  unreadable files with a message saying why.
+\item The model is displayed in 3D, and the member can rotate and zoom it to
+  confirm it was read correctly.
+\item The Toolbox shows basic measurements taken from the model, such as its
+  dimensions and estimated mass, and how long the model took to load.
+\end{itemize}
+
+The POC is not a minimum viable product. It shows that this pipeline works, so
+the analysis tools that depend on it can be built on top of it.
+
+If the demo shows that model extraction is not achievable, the team will change
+the scope to an alternate feature that avoids the technical limitation, as
+described in the Development Plan.
 
 \section{Team Meeting Attendance}
 
-\wss{For each team member how many team meetings have they attended over the
-time period of interest.  This number should be determined from the meeting
-issues in the team's repo.  The first entry in the table should be the total
-number of team meetings held by the team.}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 15\\
+Pedro Azevedo & 15\\
+Mason Azzopardi & 15\\
+Michael Roberts & 13\\
+Jack Easton & 15\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
+Each team meeting is recorded as a GitHub issue with the \texttt{meeting}
+label, an attendance checklist and an agenda.
+
+Counts are taken from the attendance checklists of the 15 \texttt{Team Meeting}
+issues (\#5, \#30, \#51, \#87, \#96, \#120, \#149, \#182, \#221, \#224, \#237, \#284,
+\#287, \#292, \#310).
+
+At the meeting of October 28 (\#221), one member joined late and online; this
+is counted as attended.
 
 \section{Supervisor/Stakeholder Meeting Attendance}
 
-\wss{For each team member how many supervisor/stakeholder team meetings have
-they attended over the time period of interest.  This number should be determined
-from the supervisor meeting issues in the team's repo.  The first entry in the
-table should be the total number of supervisor and team meetings held by the
-team.  If there is no supervisor, there will usually be meetings with
-stakeholders (potential users) that can serve a similar purpose.}
-
-\noindent \textbf{Supervisor's Name: } [fill in this information]
+\noindent \textbf{Supervisor's Name: } Isabella Vescio (Troitsky Club
+Co-President)
 
 \begin{table}[H]
 \centering
@@ -78,30 +105,22 @@ stakeholders (potential users) that can serve a similar purpose.}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 3\\
+Pedro Azevedo & 3\\
+Mason Azzopardi & 3\\
+Michael Roberts & 0\\
+Jack Easton & 0\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
+The repository has no supervisor meeting issues for this period. The counts
+above are the three stakeholder interview sessions held with Troitsky Club
+members for the Fall Custom Document (November 12, 13 and 14, 2026), as recorded
+in the sessions table of the interview report. Each session was run by one
+interviewer and one notetaker.
 
 \section{Lecture Attendance}
-
-\wss{For each team member how many lectures have they attended over the time
-period of interest.  This number should be determined from the lecture issues in
-the team's repo. You can find the number of lectures in the time period of
-interest by looking at the
-\href{https://calendar.google.com/calendar/u/0/embed?src=rnboqiaki1k2la7rpu3bn0um58@group.calendar.google.com&ctz=America/Toronto}
-{Google calendar} for the capstone course. The first entry in the
-table should be the total number of lectures held for the class during the period of interest.}
-
-\wss{NOTE: There will be approximately 13 lectures between the start of class
-and the POC demos}
 
 \begin{table}[H]
 \centering
@@ -109,25 +128,27 @@ and the POC demos}
 \toprule
 \textbf{Student} & \textbf{Lectures}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 11\\
+Pedro Azevedo & 1\\
+Mason Azzopardi & 1\\
+Michael Roberts & 5\\
+Jack Easton & 5\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the lecture attendance can be provided here.}
+The total is the number of lectures on the course calendar between the start
+of class and the POC demos (September 9, 10, 16, 17, 21, 23, 24 and 28, October
+5 and 21, and November 2), excluding TRON sessions and tutorials. Lecture issues
+exist for 5 of these lectures (September 24 and 28, October 5 and 21, November
+2; issues \#31, \#63, \#95, \#207, \#229), and the counts above are taken from
+their attendance checklists. Issue \#64 duplicates the September 28 lecture and
+is not counted separately.
 
 \section{TA Document Discussion Attendance}
 
-\wss{For each team member how many of the informal document discussion meetings
-with the TA were attended over the time period of interest. The first row is the
-total number of discussion meetings scheduled by the TA with the team.}
-
-\noindent \textbf{TA's Name: } [fill in this information]
+\noindent \textbf{TA's Name: } Mohamad Mirhoseininejad (initial TA), Melvin
+Mokhtari (from October 30, 2026)
 
 \begin{table}[H]
 \centering
@@ -135,63 +156,58 @@ total number of discussion meetings scheduled by the TA with the team.}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 4\\
+Pedro Azevedo & 3\\
+Mason Azzopardi & 4\\
+Michael Roberts & 4\\
+Jack Easton & 4\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the attendance can be provided here.}
+Counts are taken from the four \texttt{TA Meeting} issues (\#10, September 23;
+\#99, October 8; \#223, October 30; \#286, November 11). The October 30 meeting
+was held outside the allocated TA meeting time because of the TA's schedule.
 
 \section{Commits, Lines Added and Lines Deleted, Pull Requests}
 
-\wss{For each team member how many commits to the main branch have been made
-over the time period of interest.  The total is the total number of commits for
-the entire team since the beginning of the term.  The percentage is the
-percentage of the total commits made by each team member.}
-
-\wss{There are also columns for lines added and lines deleted to give a sense of
-the magnitude of each team member's contributions.  Note that these numbers can
-be somewhat misleading, as a team member who does refactoring may have high
-numbers in both columns, while a team member who implements a large new feature
-may have a high number of lines added, but few lines deleted.  As for all commit
-information, these numbers will be interpreted with care.}
-
-\wss{The pull requests column counts the number of pull requests created by each
-team member.  This is a measure of how many contributions were made in branches,
-which may not be reflected in the commit counts for the main branch.}
-
 \begin{table}[H]
 \centering
-\begin{tabular}{lllllll}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llllll}
 \toprule
-\textbf{Student} & \textbf{Commits} & \textbf{Percent} & \textbf{Lines Added} &
-\textbf{Lines Deleted} & \textbf{Pull Requests}\\
+\textbf{Student} & \textbf{Commits} & \textbf{Percent} &
+\begin{tabular}[b]{@{}l@{}}\textbf{Lines}\\\textbf{Added}\end{tabular} &
+\begin{tabular}[b]{@{}l@{}}\textbf{Lines}\\\textbf{Deleted}\end{tabular} &
+\begin{tabular}[b]{@{}l@{}}\textbf{Pull}\\\textbf{Requests}\end{tabular}\\
 \midrule
-Total & Num & 100\% & total added & total deleted & total PRs\\
-Name 1 & Num & \% & num & num & num\\
-Name 2 & Num & \% & num & num & num\\
-Name 3 & Num & \% & num & num & num\\
-Name 4 & Num & \% & num & num & num\\
-Name 5 & Num & \% & num & num & num\\
+Total & 340 & 100\% & 16745 & 12061 & 106\\
+Pedro Azevedo & 125 & 36.8\% & 5519 & 7073 & 38\\
+Mason Azzopardi & 101 & 29.7\% & 3586 & 1439 & 36\\
+Michael Roberts & 49 & 14.4\% & 4511 & 2077 & 17\\
+Jack Easton & 65 & 19.1\% & 3129 & 1472 & 15\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.  For
-instance, if a team member has more commits to unmerged branches, these numbers
-can be provided here.  If multiple people contribute to a commit, git allows for
-multi-author commits.}
+Commits are non-merge commits on \texttt{main}; the 139 merge commits
+are excluded. A further 100 commits made by the
+\texttt{github-actions[bot]} account, which regenerates the PDFs, are excluded.
+Lines added and deleted exclude binary files and the initial commit that
+imported the course template (11354 lines). Pull requests count every pull
+request opened (open, merged and closed).
+
+There is a significant discrepancy between members in commits to \texttt{main},
+as well as in lines added, lines deleted and pull requests. However, this should
+not be regarded as evidence against the fact that each team member
+has done their fair share. The discrepancy comes from Pedro Azevedo
+deleting the unused CDs and reformatting the SRS LaTeX template to match the other documents, as well as
+his work collecting and aggregating interview information.
+Mason has also used AI-assisted formatting, which added to his line counts. Jack created this repository, made many of the initial
+commits, and has handled much of the creation of components within the repository. Michael's increased line contributions come from a large
+formatting commit to the MIS, which was later adjusted, and from extensive work on the MIS revisions.
 
 \section{Issue Tracker}
-
-\wss{For each team member how many issues have they authored (including open and
-closed issues (O+C)) and how many have they been assigned (only counting closed
-issues (C only)) over the time period of interest.}
 
 \begin{table}[H]
 \centering
@@ -199,53 +215,68 @@ issues (C only)) over the time period of interest.}
 \toprule
 \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
 \midrule
-Name 1 & Num & Num \\
-Name 2 & Num & Num \\
-Name 3 & Num & Num \\
-Name 4 & Num & Num \\
-Name 5 & Num & Num \\
+Pedro Azevedo & 33 & 30 \\
+Mason Azzopardi & 81 & 21 \\
+Michael Roberts & 44 & 38 \\
+Jack Easton & 32 & 40 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
+A further 17 issues were authored by other teams' peer reviewers. Of the closed
+issues, 30 have no assignee and are not counted in the Assigned column.
+
+This metric is fair across the board. Mason created all the SRS issues for the group,
+while Michael created the milestones and an issue for each stage. However, the assignments
+are equitable with only minor deviations. This can be explained by granularity, because sometimes
+multiple related tasks are combined into one issue.
 
 \section{CICD via GitHub Actions}
 
-\wss{Say how CICD technology is used and will be used in your project.}
+The repository uses one GitHub Actions workflow,
+\href{https://github.com/JackEaston4/Troitsky-Toolbox/blob/main/.github/workflows/latex-pages.yml}{\texttt{latex-pages.yml}}.
+On every push and pull request to \texttt{main} that changes the documentation,
+it compiles the changed LaTeX documents and commits the generated PDFs back to
+the repository for TA review.
 
-\wss{Provide links to your CICD yaml files}
+Continuous Integration/Continuous Delivery (CI/CD) has been used extensively in this project and will continue to be
+used to support the project's success. All code is merged into the \texttt{main} branch
+after peer review to ensure quality. Manual review by an uninvolved developer (or extensive group-wide review when the entire group is involved)
+augments our quality assurance process, ensuring that all changes to production improve its quality. Once a 
+version of \texttt{main} is release-ready, all future versions of \texttt{main} must be release-ready as well.
+
+To avoid duplicate work, developers have been assigning themselves to the corresponding issue before commencing work on the task. GitHub's project management
+features have been used extensively, ensuring that related work stays aligned and that work is distributed smoothly.
 
 \section{Custom Documents (CDs)}
 
-\wss{What is the plan (as documented in TeamComposition.csv) for the team's
-CDs?  Should the CDs be modified now that the team knows more about the
-project?}
+The chosen CDs for the project are an Interview Report (Fall) and
+a Usability Report (Winter). Both will be kept moving forward, as they match
+the project requirements. The CDs are linked in the project READMEs and
+stored in \texttt{docs/CDs}.
+
+The CD work was divided based on members' connections to the Troitsky Club, since
+the CDs require close contact and communication with the club. Since Pedro Azevedo is a competing
+member and an executive of the Troitsky Club, he has served as the primary lead for
+the Fall CD (Interviews). Other members helped analyze the interview findings,
+take notes during the interviews, and write and review the report.
 
 \section{Team Charter Trigger Items}
 
-\wss{Provide a summary of the quantified triggers identified in the team's
-charter.}
+The only properly triggered item is listed below:
+\begin{itemize}
+\item Approaching a deliverable, a single missed scheduled meeting must be
+  replaced with a supporting meeting or a direct discussion of the meeting
+  contents.
+\end{itemize}
 
-\wss{Provide a list of any violations of the triggers.  If the team wishes, the
-violations can be summarized on aggregate, instead of naming specific team
-members.}
-
-\wss{Provide a plan to address the violations.  This could include revising the
-triggers, if they are found to be too weak, strong or ambiguous.}
+There were no major infractions that would require next steps; the triggered item
+was for the benefit of all members.
 
 \section{Additional Productivity Metrics}
 
-\wss{If your team has additional metrics of productivity, please feel free to
-add them to this report.  If not, please explicitly state that there are no additional
-metrics.}
+There are no additional productivity metrics. Since the project also involves integration with the McMaster Troitsky Club,
+some of the work done is less clearly documented, but it is still valuable to the project's success.
 
-\wss{Additional metrics can include things like code reviews done, pull requests
-created, count of joining meetings late, count of number of times contributions
-had to be corrected, number of internal deadlines missed, test cases written, etc.}
-
-\wss{We are looking for data on these metrics, not just a list of additional
-metrics the team is planning on tracking.  However, if all you have is a plan,
-please share it here.}
 
 \end{document}

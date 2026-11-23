@@ -15,6 +15,9 @@ with current and future model files (E.4). CSV and Excel data files are both tab
 \item \textbf{Back-end Programming language:} C\# on .NET.
 \\ \textbf {Rationale:} \termfirst{linq}{LINQ} availability and ease of use, and the ease of maintainability by future \term{software-subteam}{software subteam} members.
 
+\item \textbf{Front-end framework:} Blazor on ASP.NET Core, using reusable Razor components.
+\\ \textbf {Rationale:} Components are written in C\#, the same language as the back-end, so they can share code and be maintained by the same \term{software-subteam}{software subteam} members. Razor components can be tested with bUnit, and Blazor's JavaScript interop allows browser libraries such as three.js to be used for the 3D model viewer.
+
 \item \textbf{Testing, Linting and Coding Standard:} xUnit/bUnit + Coverlet for coverage, \texttt{dotnet format}, Standard .NET coding conventions
 \\ \textbf {Rationale:} xUnit and Coverlet are widely documented; bUnit, running on top of xUnit, supports the 
 testing of Blazor components. \texttt{dotnet format} ships with the .NET SDK and can work with config files to integrate with the .NET compiler.
