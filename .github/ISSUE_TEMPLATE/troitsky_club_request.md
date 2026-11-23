@@ -1,5 +1,5 @@
 ---
-name: Troitsky Club
+name: Troitsky Club Request/Issue
 about: Request, question, or feedback from the McMaster Troitsky Club (supervisor or members).
 title: 'Troitsky Club - short description'
 labels: ['troitsky club']
