@@ -1,170 +1,62 @@
 @page "/"
+@* Troitsky Toolbox POC: one page, two panes (ModelExplorer / Viewer3D + ModelSummaryPanel).
+   #353/#351/#352/#354, FR-MA-2/3, NFR-MA-2/3, SR-MA-1/2, M2, M8, M20. Only the selected model's
+   id and the viewer's latest result live here; everything else is owned by the child
+   components, which talk to IModelLibrary (M8) and the stepViewer.js / modelUpload.js modules
+   directly over HTTP rather than the Blazor circuit. *@
 @rendermode InteractiveServer
-@implements IAsyncDisposable
-@inject IJSRuntime JS
-@inject IOptions<ModelAnalysisOptions> Options
-@inject IWebHostEnvironment Env
 
-<PageTitle>Model Viewer · Troitsky Toolbox</PageTitle>
+<PageTitle>Troitsky Toolbox</PageTitle>
 
 <header class="tt-header">
-    <h1>Model Viewer</h1>
-    <span class="tt-sub">Troitsky Toolbox · Model Analysis proof of concept</span>
+    <h1>Troitsky Toolbox</h1>
 </header>
 
 <div class="tt-layout">
-    <section class="tt-viewer-col">
-        <div class="tt-toolbar">
-            <label class="tt-file">
-                <input type="file" accept=".stp,.step" @ref="_fileInput" />
-            </label>
-            <button class="tt-btn tt-primary" @onclick="LoadFile" disabled="@_busy">Load file</button>
+    <ModelExplorer SelectedId="_selected?.Id" OnSelect="HandleSelect" />
 
-            @if (_samples.Count > 0)
+    <div class="tt-main-col">
+        <Viewer3D Model="_selected" OnResultChanged="HandleResult" />
+
+        <aside class="tt-panel">
+            @if (_selected is null)
             {
-                <span class="tt-sep">or sample</span>
-                <select @bind="_sample" disabled="@_busy">
-                    @foreach (var s in _samples)
-                    {
-                        <option value="@s">@s</option>
-                    }
-                </select>
-                <button class="tt-btn" @onclick="LoadSample" disabled="@_busy">Load sample</button>
+                <p class="tt-muted">Select a model to see its measurements.</p>
             }
-        </div>
-
-        <div class="tt-viewer" @ref="_host">
-            @if (_busy)
+            else if (_result is ViewerResult.Failure failure)
             {
-                <div class="tt-overlay"><div class="tt-spinner"></div>@_status</div>
+                <div class="tt-error" role="alert">
+                    <strong>File could not be loaded</strong>
+                    <p>@failure.Message</p>
+                </div>
             }
-            else if (_result is not ViewerResult.Success)
+            else if (_result is ViewerResult.Success success)
             {
-                <div class="tt-overlay tt-hint">Load a STEP (.stp / .step) model to view it.</div>
+                <ModelSummaryPanel Model="_selected" Measurements="success.Measurements" />
             }
-        </div>
-
-        @if (_result is ViewerResult.Success)
-        {
-            <div class="tt-viewbar">
-                <span>Drag to rotate · Scroll to zoom · Right-drag to pan</span>
-                <span class="tt-grow"></span>
-                <label><input type="checkbox" checked="@_showBounds" @onchange="e => Toggle(bounds: (bool)e.Value!)" /> Bounding box</label>
-                <label><input type="checkbox" checked="@_showEdges" @onchange="e => Toggle(edges: (bool)e.Value!)" /> Edges</label>
-                <label><input type="checkbox" checked="@_showGrid" @onchange="e => Toggle(grid: (bool)e.Value!)" /> Grid</label>
-                <button class="tt-btn tt-small" @onclick="ResetView">Reset view</button>
-            </div>
-        }
-    </section>
-
-    <aside class="tt-panel">
-        @if (_result is ViewerResult.Failure failure)
-        {
-            <div class="tt-error" role="alert">
-                <strong>File rejected</strong>
-                <p>@failure.Message</p>
-            </div>
-        }
-        else if (_result is ViewerResult.Success success)
-        {
-            <ModelSummaryPanel Inspection="success.Inspection" Measurements="success.Measurements" Timings="success.Timings"
-                               MaxLoadSeconds="MaxModelLoadSeconds" />
-        }
-        else
-        {
-            <p class="tt-muted">The model's measurements will appear here.</p>
-        }
-    </aside>
+            else
+            {
+                <p class="tt-muted">Loading…</p>
+            }
+        </aside>
+    </div>
 </div>
 
 @code {
-    /// <summary>MAX_MODEL_LOAD_TIME from SRS A.1 (NFR-MA-2).</summary>
-    private const double MaxModelLoadSeconds = 30;
-
-    private ElementReference _host;
-    private ElementReference _fileInput;
-    private IJSObjectReference? _viewer;
-    private DotNetObjectReference<ModelViewer>? _self;
-
-    private List<string> _samples = [];
-    private string? _sample;
-    private bool _busy;
-    private string _status = "";
+    private StoredModel? _selected;
     private ViewerResult? _result;
-    private bool _showBounds = true, _showEdges = true, _showGrid = true;
 
-    protected override void OnInitialized()
+    private Task HandleSelect(StoredModel model)
     {
-        _samples = ModelEndpoints.SampleFiles(Options.Value, Env).Select(Path.GetFileName).ToList()!;
-        _sample = _samples.FirstOrDefault();
+        if (_selected?.Id == model.Id) return Task.CompletedTask;
+        _selected = model;
+        _result = null;
+        return Task.CompletedTask;
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private Task HandleResult(ViewerResult? result)
     {
-        if (!firstRender) return;
-        _viewer = await JS.InvokeAsync<IJSObjectReference>("import", "./js/stepViewer.js");
-        _self = DotNetObjectReference.Create(this);
-        await _viewer.InvokeVoidAsync("init", _host, _self);
-    }
-
-    [JSInvokable]
-    public Task ReportStatus(string message) => InvokeAsync(() =>
-    {
-        _status = message;
-        StateHasChanged();
-    });
-
-    private Task LoadFile() => Run(v => v.InvokeAsync<ViewerInteropResult>("loadFromInput", _host, _fileInput));
-
-    private Task LoadSample() => _sample is null ? Task.CompletedTask
-        : Run(v => v.InvokeAsync<ViewerInteropResult>("loadSample", _host, _sample));
-
-    private async Task Run(Func<IJSObjectReference, ValueTask<ViewerInteropResult>> load)
-    {
-        if (_viewer is null) return;
-        _busy = true;
-        _status = "Reading file…";
-        try
-        {
-            var response = await load(_viewer);
-            _result = response?.ToViewerResult() ?? new ViewerResult.Failure("The viewer returned no result.");
-        }
-        catch (JSException ex)
-        {
-            _result = new ViewerResult.Failure(ex.Message);
-        }
-        finally
-        {
-            _busy = false;
-        }
-        _showBounds = _showEdges = _showGrid = true;
-    }
-
-    private async Task Toggle(bool? bounds = null, bool? edges = null, bool? grid = null)
-    {
-        _showBounds = bounds ?? _showBounds;
-        _showEdges = edges ?? _showEdges;
-        _showGrid = grid ?? _showGrid;
-        if (_viewer is not null)
-            await _viewer.InvokeVoidAsync("setView", _host, new { bounds = _showBounds, edges = _showEdges, grid = _showGrid });
-    }
-
-    private async Task ResetView()
-    {
-        if (_viewer is not null) await _viewer.InvokeVoidAsync("setView", _host, new { reset = true });
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_viewer is not null)
-        {
-            try
-            {
-                await _viewer.InvokeVoidAsync("dispose", _host);
-                await _viewer.DisposeAsync();
-            }
-            catch (JSDisconnectedException) { }
-        }
-        _self?.Dispose();
+        _result = result;
+        return Task.CompletedTask;
     }
 }

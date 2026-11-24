@@ -1,0 +1,170 @@
+@* VS Code–style flat model list (#353, FR-KR-1, FR-KR-2, M8). Gets its data from IModelLibrary
+   (M8, injected) and uploads through wwwroot/js/modelUpload.js, which sends the file bytes over
+   plain HTTP (XHR, for upload progress) rather than the Blazor SignalR circuit. *@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+@inject IModelLibrary Library
+@inject IOptions<ModelAnalysisOptions> Options
+
+<div class="tt-explorer">
+    <div class="tt-explorer-header">
+        <span class="tt-explorer-title">Models</span>
+        <label for="tt-upload-input" class="tt-icon-btn" title="Upload a .stp or .step file" aria-label="Upload a .stp or .step file">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M8 10.5V2.5M8 2.5 4.8 5.7M8 2.5l3.2 3.2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2.5 11v1.5A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V11" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </label>
+        <input id="tt-upload-input" type="file" accept=".stp,.step" class="tt-hidden-input"
+               @ref="_fileInput" @onchange="HandleFileChosen" />
+    </div>
+
+    @if (_uploadPercent is { } pct)
+    {
+        <div class="tt-upload-progress"><div class="tt-upload-progress-bar" style="width:@(pct)%"></div></div>
+    }
+    @if (_uploadError is { } err)
+    {
+        <p class="tt-upload-error" role="alert">@err</p>
+    }
+    @if (_alreadyStoredNote is { } note)
+    {
+        <p class="tt-muted tt-small tt-explorer-note">@note</p>
+    }
+
+    @if (_models.Count == 0)
+    {
+        <p class="tt-explorer-empty">Upload a .stp or .step file</p>
+    }
+    else
+    {
+        <ul class="tt-explorer-list" tabindex="0" @onkeydown="HandleKeyDown" @ref="_listRef">
+            @foreach (var m in _models)
+            {
+                var model = m;
+                var isSelected = model.Id == SelectedId;
+                <li class="tt-explorer-row @(isSelected ? "tt-selected" : "")"
+                    title="@Tooltip(model)"
+                    @onclick="() => Select(model)">
+                    <svg class="tt-file-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <path d="M3.5 1.5h6l3 3v10h-9z" stroke-linejoin="round" />
+                        <path d="M9.5 1.5v3h3" stroke-linejoin="round" />
+                    </svg>
+                    <span class="tt-file-name">@model.FileName</span>
+                    <a class="tt-row-download" href="@($"/api/models/{model.Id}/content?download=1")"
+                       title="Download @model.FileName" @onclick:stopPropagation="true">
+                        <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4">
+                            <path d="M8 2v7.5M5 7l3 3 3-3" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M3 12.5h10" stroke-linecap="round" />
+                        </svg>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    [Parameter] public Guid? SelectedId { get; set; }
+    [Parameter] public EventCallback<StoredModel> OnSelect { get; set; }
+
+    private ElementReference _fileInput;
+    private ElementReference _listRef;
+    private DotNetObjectReference<ModelExplorer>? _self;
+    private IJSObjectReference? _uploadModule;
+
+    private List<StoredModel> _models = [];
+    private int? _uploadPercent;
+    private string? _uploadError;
+    private string? _alreadyStoredNote;
+
+    protected override async Task OnInitializedAsync() => await Refresh();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        _uploadModule = await JS.InvokeAsync<IJSObjectReference>("import", "./js/modelUpload.js");
+        _self = DotNetObjectReference.Create(this);
+    }
+
+    private async Task Refresh()
+    {
+        // IModelLibrary.ListModelsAsync already sorts A–Z, case-insensitive.
+        _models = (await Library.ListModelsAsync()).ToList();
+    }
+
+    private async Task Select(StoredModel model) => await OnSelect.InvokeAsync(model);
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (_models.Count == 0) return;
+        var index = _models.FindIndex(m => m.Id == SelectedId);
+
+        switch (e.Key)
+        {
+            case "ArrowDown":
+                index = Math.Min(_models.Count - 1, index + 1);
+                await Select(_models[index]);
+                break;
+            case "ArrowUp":
+                index = index <= 0 ? 0 : index - 1;
+                await Select(_models[index]);
+                break;
+            case "Enter":
+                if (index >= 0) await Select(_models[index]);
+                break;
+        }
+    }
+
+    private async Task HandleFileChosen(ChangeEventArgs _)
+    {
+        if (_uploadModule is null || _self is null) return;
+        _uploadError = null;
+        _alreadyStoredNote = null;
+        _uploadPercent = 0;
+        await _uploadModule.InvokeVoidAsync("upload", _fileInput, _self, Options.Value.MaxUploadBytes);
+    }
+
+    /// <summary>Raw shape reported by modelUpload.js on completion.</summary>
+    public sealed record UploadDoneResult(
+        bool Ok, Guid? Id, string? FileName, long? SizeBytes, DateTimeOffset? UploadedAt,
+        bool? AlreadyStored, string? Message);
+
+    [JSInvokable]
+    public Task ReportUploadProgress(int percent) => InvokeAsync(() =>
+    {
+        _uploadPercent = percent;
+        StateHasChanged();
+    });
+
+    [JSInvokable]
+    public async Task ReportUploadDone(UploadDoneResult result)
+    {
+        _uploadPercent = null;
+        if (!result.Ok)
+        {
+            _uploadError = result.Message ?? "Upload failed.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        await Refresh();
+        var model = result.Id is { } id ? _models.FirstOrDefault(m => m.Id == id) : null;
+        _alreadyStoredNote = result.AlreadyStored == true ? "Already stored." : null;
+        if (model is not null) await Select(model);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private static string Tooltip(StoredModel m) =>
+        $"{FormatSize(m.SizeBytes)} · {m.UploadedAt.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}";
+
+    private static string FormatSize(long bytes) => bytes < 1024 * 1024
+        ? $"{(bytes / 1024.0).ToString("N0", CultureInfo.InvariantCulture)} KB"
+        : $"{(bytes / 1024.0 / 1024.0).ToString("N1", CultureInfo.InvariantCulture)} MB";
+
+    public ValueTask DisposeAsync()
+    {
+        _self?.Dispose();
+        return _uploadModule?.DisposeAsync() ?? ValueTask.CompletedTask;
+    }
+}

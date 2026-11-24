@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TroitskyToolbox.ModelAnalysis\TroitskyToolbox.ModelAnalysis.csproj" />
+    <ProjectReference Include="..\TroitskyToolbox.Storage\TroitskyToolbox.Storage.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

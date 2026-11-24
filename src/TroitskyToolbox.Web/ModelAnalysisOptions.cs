@@ -15,7 +15,11 @@ public sealed class ModelAnalysisOptions
     [Range(1, int.MaxValue, ErrorMessage = "TimeoutSeconds must be greater than zero.")]
     public int TimeoutSeconds { get; set; } = 120;
 
-    /// <summary>Folder of sample STEP files offered on the page, relative to the content root.</summary>
+    /// <summary>Folder of sample STEP files used to seed the library on first run, relative to the content root.</summary>
     [Required(ErrorMessage = "SampleFolder must not be empty.")]
     public string SampleFolder { get; set; } = "../sample_step_files";
+
+    /// <summary>Folder stored models live in (FR-KR-1), relative to the content root. M16.</summary>
+    [Required(ErrorMessage = "StorageRoot must not be empty.")]
+    public string StorageRoot { get; set; } = "App_Data/models";
 }
