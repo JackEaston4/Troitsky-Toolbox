@@ -1,0 +1,192 @@
+@* 3D viewer (FR-MA-2, SR-MA-2, M20, #351) wrapping wwwroot/js/stepViewer.js. Loads the selected
+   model's bytes by URL (never over the Blazor circuit). The clickable view cube (#351) is drawn by
+   stepViewer.js in the top-right corner; this toolbar holds Iso (reset) and the bounding-box/edges/grid
+   toggles kept from #354's clean-up. *@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<section class="tt-main">
+    <div class="tt-viewer-header">
+        @if (Model is not null)
+        {
+            <h2 class="tt-viewer-filename">@Model.FileName</h2>
+            <span class="tt-muted">@FormatSize(Model.SizeBytes) · @Model.UploadedAt.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</span>
+            <a class="tt-btn tt-small" href="@($"/api/models/{Model.Id}/content?download=1")">Download</a>
+        }
+        else
+        {
+            <h2 class="tt-viewer-filename tt-muted">No model selected</h2>
+        }
+    </div>
+
+    <div class="tt-viewer-wrap">
+        <div class="tt-viewer" @ref="_host"></div>
+
+        <div class="tt-viewer-toolbar">
+            <button class="tt-iso-btn" title="Isometric / reset" @onclick='() => Reset()'>Iso</button>
+
+            <div class="tt-toggle-group" title="Drag to rotate · Scroll to zoom · Right-drag to pan">
+                <button class="tt-toggle-btn" aria-pressed="@(_showBounds ? "true" : "false")" title="Bounding box" @onclick="() => Toggle(bounds: !_showBounds)">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.2">
+                        <rect x="2.5" y="2.5" width="11" height="11" stroke-dasharray="2.2 1.6" />
+                    </svg>
+                </button>
+                <button class="tt-toggle-btn" aria-pressed="@(_showEdges ? "true" : "false")" title="Edges" @onclick="() => Toggle(edges: !_showEdges)">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.3">
+                        <path d="M2 11 7 3l3 6 4-3" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="tt-toggle-btn" aria-pressed="@(_showGrid ? "true" : "false")" title="Grid" @onclick="() => Toggle(grid: !_showGrid)">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.1">
+                        <path d="M2 5.5h12M2 10.5h12M5.5 2v12M10.5 2v12" />
+                        <rect x="2" y="2" width="12" height="12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        @if (_busy)
+        {
+            <div class="tt-overlay"><div class="tt-spinner"></div>@_status</div>
+        }
+        else if (Model is null)
+        {
+            <div class="tt-overlay tt-hint">Select a model to view it.</div>
+        }
+        else if (_result is ViewerResult.Failure failure)
+        {
+            <div class="tt-overlay tt-error-overlay" role="alert">@failure.Message</div>
+        }
+    </div>
+
+    @if (_result is ViewerResult.Success { Timings: { } t })
+    {
+        <p class="tt-muted tt-status-line">Loaded in @((t.TotalMs / 1000).ToString("N1", CultureInfo.InvariantCulture)) s</p>
+    }
+</section>
+
+@code {
+    [Parameter] public StoredModel? Model { get; set; }
+    [Parameter] public EventCallback<ViewerResult?> OnResultChanged { get; set; }
+
+    private ElementReference _host;
+    private IJSObjectReference? _viewer;
+    private DotNetObjectReference<Viewer3D>? _self;
+    private bool _viewerReady;
+    private bool _busy;
+    private string _status = "";
+    private ViewerResult? _result;
+    private bool _showBounds = true, _showEdges = true, _showGrid = true;
+    private Guid? _loadedModelId;
+    private int _loadToken;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        _viewer = await JS.InvokeAsync<IJSObjectReference>("import", "./js/stepViewer.js");
+        _self = DotNetObjectReference.Create(this);
+        await _viewer.InvokeVoidAsync("init", _host, _self);
+        _viewerReady = true;
+        await MaybeLoad();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_viewerReady) await MaybeLoad();
+    }
+
+    private async Task MaybeLoad()
+    {
+        if (Model is null)
+        {
+            if (_loadedModelId is not null && _viewer is not null)
+            {
+                _loadToken++;
+                await _viewer.InvokeVoidAsync("clear", _host);
+                _loadedModelId = null;
+                _result = null;
+                await OnResultChanged.InvokeAsync(null);
+                StateHasChanged();
+            }
+            return;
+        }
+
+        if (Model.Id == _loadedModelId) return;
+        _loadedModelId = Model.Id;
+        await LoadAsync(Model);
+    }
+
+    private async Task LoadAsync(StoredModel model)
+    {
+        var token = ++_loadToken;
+        _busy = true;
+        _status = "Starting…";
+        _result = null;
+        StateHasChanged();
+
+        try
+        {
+            var url = $"/api/models/{model.Id}/content";
+            var response = await _viewer!.InvokeAsync<ViewerInteropResult>("loadModel", _host, new { name = model.FileName, url });
+            if (token != _loadToken) return; // superseded by a newer selection
+
+            var viewerResult = response.ToViewerResult();
+            if (viewerResult is null) return; // aborted; keep whatever is currently shown
+
+            _result = viewerResult;
+            _showBounds = _showEdges = _showGrid = true;
+            await _viewer!.InvokeVoidAsync("setView", _host, new { bounds = true, edges = true, grid = true });
+            await OnResultChanged.InvokeAsync(_result);
+        }
+        catch (JSException ex)
+        {
+            if (token != _loadToken) return;
+            _result = new ViewerResult.Failure(ex.Message);
+            await OnResultChanged.InvokeAsync(_result);
+        }
+        finally
+        {
+            if (token == _loadToken) _busy = false;
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable]
+    public Task ReportStatus(string message) => InvokeAsync(() =>
+    {
+        _status = message;
+        StateHasChanged();
+    });
+
+    private async Task Reset()
+    {
+        if (_viewer is not null) await _viewer.InvokeVoidAsync("snapView", _host, "iso");
+    }
+
+    private async Task Toggle(bool? bounds = null, bool? edges = null, bool? grid = null)
+    {
+        _showBounds = bounds ?? _showBounds;
+        _showEdges = edges ?? _showEdges;
+        _showGrid = grid ?? _showGrid;
+        if (_viewer is not null)
+            await _viewer.InvokeVoidAsync("setView", _host, new { bounds = _showBounds, edges = _showEdges, grid = _showGrid });
+    }
+
+    private static string FormatSize(long bytes) => bytes < 1024 * 1024
+        ? $"{(bytes / 1024.0).ToString("N0", CultureInfo.InvariantCulture)} KB"
+        : $"{(bytes / 1024.0 / 1024.0).ToString("N1", CultureInfo.InvariantCulture)} MB";
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_viewer is not null)
+        {
+            try
+            {
+                await _viewer.InvokeVoidAsync("dispose", _host);
+                await _viewer.DisposeAsync();
+            }
+            catch (JSDisconnectedException) { }
+        }
+        _self?.Dispose();
+    }
+}

@@ -1,0 +1,62 @@
+@page "/"
+@* Troitsky Toolbox POC: one page, two panes (ModelExplorer / Viewer3D + ModelSummaryPanel).
+   #353/#351/#352/#354, FR-MA-2/3, NFR-MA-2/3, SR-MA-1/2, M2, M8, M20. Only the selected model's
+   id and the viewer's latest result live here; everything else is owned by the child
+   components, which talk to IModelLibrary (M8) and the stepViewer.js / modelUpload.js modules
+   directly over HTTP rather than the Blazor circuit. *@
+@rendermode InteractiveServer
+
+<PageTitle>Troitsky Toolbox</PageTitle>
+
+<header class="tt-header">
+    <h1>Troitsky Toolbox</h1>
+</header>
+
+<div class="tt-layout">
+    <ModelExplorer SelectedId="_selected?.Id" OnSelect="HandleSelect" />
+
+    <div class="tt-main-col">
+        <Viewer3D Model="_selected" OnResultChanged="HandleResult" />
+
+        <aside class="tt-panel">
+            @if (_selected is null)
+            {
+                <p class="tt-muted">Select a model to see its measurements.</p>
+            }
+            else if (_result is ViewerResult.Failure failure)
+            {
+                <div class="tt-error" role="alert">
+                    <strong>File could not be loaded</strong>
+                    <p>@failure.Message</p>
+                </div>
+            }
+            else if (_result is ViewerResult.Success success)
+            {
+                <ModelSummaryPanel Model="_selected" Measurements="success.Measurements" />
+            }
+            else
+            {
+                <p class="tt-muted">Loading…</p>
+            }
+        </aside>
+    </div>
+</div>
+
+@code {
+    private StoredModel? _selected;
+    private ViewerResult? _result;
+
+    private Task HandleSelect(StoredModel model)
+    {
+        if (_selected?.Id == model.Id) return Task.CompletedTask;
+        _selected = model;
+        _result = null;
+        return Task.CompletedTask;
+    }
+
+    private Task HandleResult(ViewerResult? result)
+    {
+        _result = result;
+        return Task.CompletedTask;
+    }
+}

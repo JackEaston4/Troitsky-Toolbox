@@ -1,0 +1,65 @@
+@* Output metrics (#352, FR-MA-3, NFR-MA-3). Trimmed to the mockup's values, each tagged so
+   it's obvious what the app measured vs. what the member typed vs. what it calculated:
+   Dimensions/Volume/Surface area = From model, Density = Set by you (or From file until
+   edited), Mass = Calculated. Centre of mass, solids/faces, surface types, source units,
+   mesh stats and the load-time table were removed per the issue; load time is kept as one
+   line in Viewer3D's status bar instead (NFR-MA-2 evidence). *@
+
+<div class="tt-summary">
+    <h3>Dimensions <span class="tt-unit">mm</span> <span class="tt-tag tt-tag-model">From model</span></h3>
+    <table class="tt-table">
+        <tr><th>X</th><td>@Mm(Measurements.Size[0])</td></tr>
+        <tr><th>Y</th><td>@Mm(Measurements.Size[1])</td></tr>
+        <tr><th>Z</th><td>@Mm(Measurements.Size[2])</td></tr>
+    </table>
+    <p class="tt-note">Measured from the 3D mesh, accuracy ±0.5 mm (NFR-MA-3).</p>
+
+    <h3>Volume and mass</h3>
+    <table class="tt-table">
+        <tr><th>Volume <span class="tt-tag tt-tag-model">From model</span></th><td>@N(Measurements.VolumeMm3 / 1000, 2) cm³</td></tr>
+        <tr><th>Surface area <span class="tt-tag tt-tag-model">From model</span></th><td>@N(Measurements.SurfaceAreaMm2 / 100, 2) cm²</td></tr>
+        <tr>
+            <th>Density <span class="tt-tag @(IsFromFile ? "tt-tag-file" : "tt-tag-you")">@(IsFromFile ? "From file" : "Set by you")</span></th>
+            <td><input class="tt-num" type="number" step="0.01" min="0" @bind="Density" @bind:event="oninput" /> g/cm³</td>
+        </tr>
+        <tr>
+            <th>Mass <span class="tt-tag tt-tag-calc">Calculated</span></th>
+            <td><strong>@(Density is > 0 ? $"{N(Measurements.VolumeMm3 / 1000 * Density.Value, 2)} g" : "—")</strong></td>
+        </tr>
+    </table>
+
+    @if (!Measurements.Closed)
+    {
+        <p class="tt-warn">The surface is not closed, so volume and mass may be wrong.</p>
+    }
+
+    <p class="tt-tag-legend">
+        <span class="tt-tag tt-tag-model">From model</span> measured from the mesh ·
+        <span class="tt-tag tt-tag-you">Set by you</span> typed in ·
+        <span class="tt-tag tt-tag-calc">Calculated</span> computed from the above
+    </p>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public required StoredModel Model { get; set; }
+    [Parameter, EditorRequired] public required MeshMeasurements Measurements { get; set; }
+
+    private double? Density { get; set; }
+    private Guid? _densitySourceId;
+
+    /// <summary>True while the density still equals the value stored in the file (not yet edited).</summary>
+    private bool IsFromFile => Model.Inspection.DensityGPerCm3 is { } fileDensity && Density == fileDensity;
+
+    protected override void OnParametersSet()
+    {
+        // Reset the density only when a different model is loaded, not on every re-render.
+        if (_densitySourceId != Model.Id)
+        {
+            _densitySourceId = Model.Id;
+            Density = Model.Inspection.DensityGPerCm3;
+        }
+    }
+
+    private static string N(double v, int digits) => v.ToString("N" + digits, CultureInfo.InvariantCulture);
+    private static string Mm(double v) => N(Math.Abs(v) < 0.005 ? 0 : v, 2);
+}
