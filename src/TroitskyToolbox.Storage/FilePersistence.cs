@@ -22,7 +22,7 @@ public sealed class FilePersistence(string storageRoot) : IPersistence
         Directory.CreateDirectory(StorageRoot);
         if (!File.Exists(_indexPath)) return [];
 
-        await using var stream = File.OpenRead(_indexPath);
+        await using FileStream stream = File.OpenRead(_indexPath);
         var models = await JsonSerializer.DeserializeAsync<List<StoredModel>>(stream, JsonOptions, ct);
         return models ?? [];
     }
@@ -33,9 +33,11 @@ public sealed class FilePersistence(string storageRoot) : IPersistence
         await _writeLock.WaitAsync(ct);
         try
         {
-            var tempPath = Path.Combine(StorageRoot, $"{Guid.NewGuid():N}.index.tmp");
-            await using (var stream = File.Create(tempPath))
+            string tempPath = Path.Combine(StorageRoot, $"{Guid.NewGuid():N}.index.tmp");
+            await using (FileStream stream = File.Create(tempPath))
+            {
                 await JsonSerializer.SerializeAsync(stream, models, JsonOptions, ct);
+            }
             File.Move(tempPath, _indexPath, overwrite: true);
         }
         finally
@@ -50,19 +52,23 @@ public sealed class FilePersistence(string storageRoot) : IPersistence
         return Path.Combine(StorageRoot, $"{Guid.NewGuid():N}.upload.tmp");
     }
 
-    public void CommitContent(string tempPath, Guid id) =>
+    public void CommitContent(string tempPath, Guid id)
+    {
         File.Move(tempPath, ContentPath(id), overwrite: false);
+    }
 
     public void DeleteTempFile(string tempPath)
     {
         try { File.Delete(tempPath); }
+        // File already deleted; no need to resurrect and redelete
         catch (IOException) { }
+        // Temp files need not be deleted
         catch (UnauthorizedAccessException) { }
     }
 
     public Task<Stream?> OpenContentAsync(Guid id, CancellationToken ct = default)
     {
-        var path = ContentPath(id);
+        string path = ContentPath(id);
         if (!File.Exists(path)) return Task.FromResult<Stream?>(null);
         return Task.FromResult<Stream?>(File.OpenRead(path));
     }

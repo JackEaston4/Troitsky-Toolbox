@@ -7,6 +7,7 @@ namespace TroitskyToolbox.Web.Endpoints;
 /// <summary>HTTP API for the model library (FR-KR-1, FR-KR-2): upload, list, download.</summary>
 public static class ModelEndpoints
 {
+    private const int BPerMb = 1_048_576; // 1024 * 1024
     public static void MapModelEndpoints(this IEndpointRouteBuilder app)
     {
         var api = app.MapGroup("/api");
@@ -58,7 +59,7 @@ public static class ModelEndpoints
         : new { id = m.Id, fileName = m.FileName, sizeBytes = m.SizeBytes, uploadedAt = m.UploadedAt, alreadyStored = alreadyStored.Value };
 
     private static IResult TooLarge(ModelAnalysisOptions opts) =>
-        Problem(new StepError(StepErrorKind.TooLarge, $"The file is larger than the {opts.MaxUploadBytes / (1024 * 1024)} MB limit."));
+        Problem(new StepError(StepErrorKind.TooLarge, $"The file is larger than the {opts.MaxUploadBytes / BPerMb} MB limit."));
 
     private static IResult Problem(StepError error) => Results.Json(
         new { kind = error.Kind.ToString(), message = error.Message },

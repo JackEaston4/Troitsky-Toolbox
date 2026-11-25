@@ -1,42 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
 namespace TroitskyToolbox.ModelAnalysis;
-
-/// <summary>A typed parameter such as <c>LENGTH_MEASURE(1.0)</c>, or one part of a complex entity.</summary>
-public sealed record StepTyped(string Name, IReadOnlyList<object?> Args);
-
-/// <summary>A reference to another entity instance, written <c>#123</c>.</summary>
-public readonly record struct StepRef(int Id);
-
-/// <summary>An enumeration value, written <c>.MILLI.</c>.</summary>
-public readonly record struct StepEnum(string Value);
-
-/// <summary>
-/// One entity instance from the DATA section. A simple instance has a single part
-/// (<c>#1=CARTESIAN_POINT(...)</c>); a complex instance has several
-/// (<c>#2=(LENGTH_UNIT() NAMED_UNIT(*) SI_UNIT(.MILLI.,.METRE.))</c>).
-/// </summary>
-public sealed record StepEntity(int Id, IReadOnlyList<StepTyped> Parts)
-{
-    public bool Is(string type) => Parts.Any(p => p.Name == type);
-
-    public StepTyped? Part(string type) => Parts.FirstOrDefault(p => p.Name == type);
-}
-
-/// <summary>The parsed contents of a STEP Part 21 file.</summary>
-public sealed class StepDocument
-{
-    public required IReadOnlyList<object?> FileName { get; init; }
-    public required IReadOnlyList<object?> FileSchema { get; init; }
-    public required IReadOnlyDictionary<int, StepEntity> Entities { get; init; }
-
-    public StepEntity? Get(object? value) =>
-        value is StepRef r && Entities.TryGetValue(r.Id, out var e) ? e : null;
-}
-
-public sealed class StepFormatException(string message) : Exception(message);
-
 /// <summary>
 /// A minimal reader for ISO 10303-21 (STEP Part 21) exchange files. It reads the
 /// header and the entity instances of the DATA section into a generic tree; it does
@@ -45,61 +11,105 @@ public sealed class StepFormatException(string message) : Exception(message);
 /// </summary>
 public static class StepParser
 {
-    public const string Magic = "ISO-10303-21;";
-    public const string EndMagic = "END-ISO-10303-21;";
+    /// <summary>
+    /// The line that opens a STEP file
+    /// </summary>
+    public const string StepOpener = "ISO-10303-21;";
+    /// <summary>
+    /// The line that closes a STEP file
+    /// </summary>
+    public const string StepCloser = "END-ISO-10303-21";
+    /// <summary>
+    /// The line that opens the header section
+    /// </summary>
+    private const string HeaderOpener = "HEADER";
+    /// <summary>
+    /// The line that opens the data section
+    /// </summary>
+    private const string DataOpener = "DATA";
+    /// <summary>
+    /// The line that closes a section
+    /// </summary>
+    private const string SectionCloser = "ENDSEC";
+    /// <summary>
+    /// Check after processing this number of lines for a cancellation request
+    /// </summary>
+    private const int CancelCheckEvery = 4096;
+    /// <summary>
+    /// Maximum string length (anything greater is truncated)
+    /// </summary>
+    private const int MaxStringLength = 60;
+    /// <summary>
+    /// Display for closer STEP file
+    /// </summary>
+    public static readonly string StepCloserDisplay = StepCloser;
+
+    enum StepSection { None, Header, Data, End }
 
     public static StepDocument Parse(string text, CancellationToken ct = default)
     {
-        var statements = SplitStatements(StripComments(text), ct);
+       
+        List<string> statements = SplitStatements(StripComments(text), ct);
 
         IReadOnlyList<object?> fileName = [];
         IReadOnlyList<object?> fileSchema = [];
         var entities = new Dictionary<int, StepEntity>();
-        var section = "";
+        var section = StepSection.None;
+        
 
-        foreach (var stmt in statements)
+        foreach (string stmt in statements)
         {
             ct.ThrowIfCancellationRequested();
-            var s = stmt.Trim();
+            string s = stmt.Trim();
             if (s.Length == 0) continue;
 
             switch (s)
             {
-                case "ISO-10303-21": continue;
-                case "END-ISO-10303-21": section = "END"; continue;
-                case "HEADER": section = "HEADER"; continue;
-                case "DATA": section = "DATA"; continue;
-                case "ENDSEC": section = ""; continue;
+                case StepOpener: continue;
+                case StepCloser: section = StepSection.End; continue;
+                case HeaderOpener: section = StepSection.Header; continue;
+                case DataOpener: section = StepSection.Data; continue;
+                case SectionCloser: section = StepSection.None; continue;
             }
-            if (s.StartsWith("DATA(", StringComparison.Ordinal)) { section = "DATA"; continue; }
+            if (s.StartsWith("DATA(", StringComparison.Ordinal)) { section = StepSection.Data; continue; }
 
-            if (section == "HEADER")
+            if (section == StepSection.Header)
             {
-                var typed = new Reader(s).ReadTyped();
+                StepTyped typed = new Reader(s).ReadTyped();
                 if (typed.Name == "FILE_NAME") fileName = typed.Args;
                 else if (typed.Name == "FILE_SCHEMA") fileSchema = typed.Args;
             }
-            else if (section == "DATA")
+            else if (section == StepSection.Data)
             {
-                var eq = s.IndexOf('=');
-                if (s[0] != '#' || eq < 0)
-                    throw new StepFormatException($"Malformed entity instance: '{Truncate(s)}'");
-                if (!int.TryParse(s.AsSpan(1, eq - 1).Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out var id))
-                    throw new StepFormatException($"Malformed entity id: '{Truncate(s)}'");
+                int eqIdx = s.IndexOf('=');
 
-                var reader = new Reader(s[(eq + 1)..]);
-                var parts = reader.PeekChar() == '(' ? reader.ReadComplex() : [reader.ReadTyped()];
-                entities[id] = new StepEntity(id, parts);
+                if (s[0] != '#' || eqIdx == -1)
+                {
+                    throw new StepFormatException($"Malformed entity instance: '{Truncate(s)}'");
+                }
+                    
+
+                if (!int.TryParse(s.AsSpan(1, eqIdx - 1).Trim(), NumberStyles.None, CultureInfo.InvariantCulture, out var entityId))
+                {
+                    throw new StepFormatException($"Malformed entity id: '{Truncate(s)}'");
+                }
+                    
+                var reader = new Reader(s[(eqIdx + 1)..]);
+                List<StepTyped> parts = reader.PeekChar() == '(' ? reader.ReadComplex() : [reader.ReadTyped()];
+                entities[entityId] = new StepEntity(entityId, parts);
             }
         }
 
-        if (section != "END")
-            throw new StepFormatException("The file ends before END-ISO-10303-21; (it may be truncated).");
+        if (section != StepSection.End)
+        {
+            throw new StepFormatException($"The file ends before {StepCloserDisplay}; it may be truncated.");
+        }
+            
 
         return new StepDocument { FileName = fileName, FileSchema = fileSchema, Entities = entities };
     }
 
-    private static string Truncate(string s) => s.Length > 60 ? s[..60] + "…" : s;
+    private static string Truncate(string s) => s.Length > MaxStringLength ? s[..MaxStringLength] + "…" : s;
 
     /// <summary>Removes /* ... */ comments that are outside string literals.</summary>
     private static string StripComments(string text)
@@ -108,7 +118,7 @@ public static class StepParser
         var inString = false;
         for (var i = 0; i < text.Length; i++)
         {
-            var c = text[i];
+            char c = text[i];
             if (inString)
             {
                 sb.Append(c);
@@ -119,9 +129,10 @@ public static class StepParser
                 inString = true;
                 sb.Append(c);
             }
+            // Test for /*, begin of comment
             else if (c == '/' && i + 1 < text.Length && text[i + 1] == '*')
             {
-                var end = text.IndexOf("*/", i + 2, StringComparison.Ordinal);
+                int end = text.IndexOf("*/", i + 2, StringComparison.Ordinal);
                 if (end < 0) throw new StepFormatException("Unterminated comment (the file may be truncated).");
                 i = end + 1;
             }
@@ -142,28 +153,38 @@ public static class StepParser
         var inString = false;
         for (var i = 0; i < text.Length; i++)
         {
-            var c = text[i];
+            char c = text[i];
             if (c == '\'') inString = !inString;
             else if (c == ';' && !inString)
             {
                 result.Add(text[start..i]);
                 start = i + 1;
-                if ((result.Count & 0xFFF) == 0) ct.ThrowIfCancellationRequested();
+                if ((result.Count % CancelCheckEvery) == 0) ct.ThrowIfCancellationRequested();
             }
         }
         if (text[start..].Trim().Length > 0)
+        {
             throw new StepFormatException("The file ends in the middle of a statement (it may be truncated).");
+        }
+            
         return result;
     }
 
     /// <summary>Recursive-descent reader for one statement's parameter syntax.</summary>
     private sealed class Reader(string s)
     {
+        /// <summary>
+        /// Position in string
+        /// </summary>
         private int _pos;
+        /// <summary>
+        /// Non-numeric characters that may be in a valid double
+        /// </summary>
+        private static readonly char[] OtherDoubleChars = { '+', '-', 'e', 'E', '.' };
 
         public char PeekChar()
         {
-            SkipWs();
+            SkipWhitespace();
             return _pos < s.Length ? s[_pos] : '\0';
         }
 
@@ -190,45 +211,58 @@ public static class StepParser
             while (true)
             {
                 items.Add(ReadValue());
-                var c = PeekChar();
+                char c = PeekChar();
                 _pos++;
                 if (c == ')') return items;
-                if (c != ',') throw Error("Expected ',' or ')'");
+                if (c != ',')
+                {
+                    ThrowStepError($"Expected ',' or ')'. Got {c}");
+                }
             }
         }
 
         private object? ReadValue()
         {
-            var c = PeekChar();
+            char c = PeekChar();
             switch (c)
             {
-                case '$': _pos++; return null;
-                case '*': _pos++; return "*";
+                case '$':
+                    {
+                        _pos++;
+                        return null;
+                    }
+                case '*':
+                    {
+                        _pos++;
+                        return "*";
+                    }
                 case '(': return ReadList();
                 case '\'': return ReadString();
                 case '#':
                     {
                         _pos++;
-                        var start = _pos;
+                        int start = _pos;
                         while (_pos < s.Length && char.IsAsciiDigit(s[_pos])) _pos++;
                         return new StepRef(int.Parse(s.AsSpan(start, _pos - start), CultureInfo.InvariantCulture));
                     }
+                    
                 case '.':
                     {
-                        var end = s.IndexOf('.', _pos + 1);
-                        if (end < 0) throw Error("Unterminated enumeration");
-                        var v = s[(_pos + 1)..end];
+                        int end = s.IndexOf('.', _pos + 1);
+                        if (end == -1) ThrowStepError("Unterminated enumeration");
+                        string v = s[(_pos + 1)..end];
                         _pos = end + 1;
-                        return new StepEnum(v);
-                    }
+                        return new StepUnitEnum(v);
+                    } 
                 case '"':
                     {
-                        var end = s.IndexOf('"', _pos + 1);
-                        if (end < 0) throw Error("Unterminated binary");
-                        var v = s[(_pos + 1)..end];
+                        int end = s.IndexOf('"', _pos + 1);
+                        if (end < 0) ThrowStepError("Unterminated binary");
+                        string v = s[(_pos + 1)..end];
                         _pos = end + 1;
                         return v;
                     }
+                    
             }
             if (char.IsAsciiLetter(c) || c == '_') return ReadTyped();
             return ReadNumber();
@@ -240,48 +274,62 @@ public static class StepParser
             var sb = new StringBuilder();
             while (_pos < s.Length)
             {
-                var c = s[_pos++];
+                char c = s[_pos++];
                 if (c == '\'')
                 {
-                    if (_pos < s.Length && s[_pos] == '\'') { sb.Append('\''); _pos++; }
+                    if (_pos < s.Length && s[_pos] == '\'')
+                    { 
+                        sb.Append('\'');
+                        _pos++;
+                    }
                     else return sb.ToString();
                 }
                 else sb.Append(c);
             }
-            throw Error("Unterminated string");
+            ThrowStepError("Unterminated string");
+            // Never reaches here
+            return string.Empty;
         }
 
         private double ReadNumber()
         {
-            var start = _pos;
-            while (_pos < s.Length && (char.IsAsciiDigit(s[_pos]) || s[_pos] is '+' or '-' or '.' or 'E' or 'e')) _pos++;
-            var token = s[start.._pos];
-            if (!double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out var v))
-                throw Error($"Invalid number '{token}'");
-            return v;
+            int start = _pos;
+            while (_pos < s.Length && (char.IsAsciiDigit(s[_pos]) || OtherDoubleChars.Contains(s[_pos]))) _pos++;
+            string token = s[start.._pos];
+            if (!double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out var d))
+            {
+                ThrowStepError($"Invalid number '{token}'");
+            }  
+            return d;
         }
 
         private string ReadKeyword()
         {
-            SkipWs();
-            var start = _pos;
+            SkipWhitespace();
+            int start = _pos;
             while (_pos < s.Length && (char.IsAsciiLetterOrDigit(s[_pos]) || s[_pos] is '_' or '!')) _pos++;
-            if (_pos == start) throw Error("Expected keyword");
+            if (_pos == start) ThrowStepError("Expected keyword");
             return s[start.._pos];
         }
 
         private void Expect(char c)
         {
-            if (PeekChar() != c) throw Error($"Expected '{c}'");
+            if (PeekChar() != c) ThrowStepError($"Expected '{c}'");
             _pos++;
         }
 
-        private void SkipWs()
+        private void SkipWhitespace()
         {
             while (_pos < s.Length && char.IsWhiteSpace(s[_pos])) _pos++;
         }
 
-        private StepFormatException Error(string msg) =>
-            new($"{msg} at position {_pos} in '{(s.Length > 60 ? s[..60] + "…" : s)}'");
+        [DoesNotReturn]
+        private void ThrowStepError(string msg)
+        {
+            throw new($"{msg} at position {_pos} in '{Truncate(s)}'");
+        }
+            
+
+
     }
 }
