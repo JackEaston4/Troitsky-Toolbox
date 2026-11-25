@@ -10,7 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddCircuitOptions(o => o.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(3));
 
-var modelSection = builder.Configuration.GetSection(ModelAnalysisOptions.Section);
+IConfigurationSection modelSection = builder.Configuration.GetSection(ModelAnalysisOptions.Section);
 builder.Services.AddOptions<ModelAnalysisOptions>()
     .Bind(modelSection)
     .ValidateDataAnnotations()
@@ -25,16 +25,16 @@ builder.Services.AddSingleton<IModelImport, ModelImport>();
 // M16 persistence + M8 model library (FR-KR-1, FR-KR-2, FR-MA-4 partial).
 builder.Services.AddSingleton<IPersistence>(sp =>
 {
-    var env = sp.GetRequiredService<IWebHostEnvironment>();
-    var opts = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<ModelAnalysisOptions>>().Value;
-    var root = Path.GetFullPath(Path.Combine(env.ContentRootPath, opts.StorageRoot));
+    IWebHostEnvironment env = sp.GetRequiredService<IWebHostEnvironment>();
+    ModelAnalysisOptions opts = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<ModelAnalysisOptions>>().Value;
+    string root = Path.GetFullPath(Path.Combine(env.ContentRootPath, opts.StorageRoot));
     return new FilePersistence(root);
 });
 builder.Services.AddSingleton(sp =>
 {
-    var env = sp.GetRequiredService<IWebHostEnvironment>();
-    var opts = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<ModelAnalysisOptions>>().Value;
-    var sampleFolder = Path.GetFullPath(Path.Combine(env.ContentRootPath, opts.SampleFolder));
+    IWebHostEnvironment env = sp.GetRequiredService<IWebHostEnvironment>();
+    ModelAnalysisOptions opts = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<ModelAnalysisOptions>>().Value;
+    string sampleFolder = Path.GetFullPath(Path.Combine(env.ContentRootPath, opts.SampleFolder));
     return new ModelLibrary(
         sp.GetRequiredService<IPersistence>(),
         sp.GetRequiredService<IModelImport>(),
@@ -44,7 +44,7 @@ builder.Services.AddSingleton(sp =>
 });
 builder.Services.AddSingleton<IModelLibrary>(sp => sp.GetRequiredService<ModelLibrary>());
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Loads index.json (or seeds it from SampleFolder if empty) once at startup.
 await app.Services.GetRequiredService<ModelLibrary>().InitializeAsync();

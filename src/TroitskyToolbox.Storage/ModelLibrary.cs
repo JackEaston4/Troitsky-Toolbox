@@ -20,6 +20,15 @@ public sealed class ModelLibrary(
     private readonly SemaphoreSlim _mutationLock = new(1, 1);
     private volatile IReadOnlyList<StoredModel> _models = [];
     private bool _initialized;
+    /// <summary>
+    /// Maximum upload in bytes
+    /// </summary>
+    private const int MaxUploadBytes = 81920;
+    // Use binary MB
+    /// <summary>
+    /// Bytes (B) per Megabyte (MB)
+    /// </summary>
+    private const int BPerMb = 1_048_576; // 1024 * 1024
 
     /// <summary>
     /// Loads <c>index.json</c> and, if it was empty, seeds every top-level <c>.stp</c>/<c>.step</c>
@@ -42,31 +51,62 @@ public sealed class ModelLibrary(
 
         if (_models.Count == 0 && sampleFolder is not null && Directory.Exists(sampleFolder))
         {
-            var samples = Directory.EnumerateFiles(sampleFolder)
+            IEnumerable<string> samples = Directory.EnumerateFiles(sampleFolder)
                 .Where(f => Path.GetExtension(f).ToLowerInvariant() is ".stp" or ".step")
                 .OrderBy(f => f, StringComparer.OrdinalIgnoreCase);
-            foreach (var path in samples)
+            foreach (string path in samples)
             {
-                await using var stream = File.OpenRead(path);
+                await using FileStream stream = File.OpenRead(path);
                 await UploadModelAsync(stream, Path.GetFileName(path), ct);
             }
         }
     }
 
-    public Task<IReadOnlyList<StoredModel>> ListModelsAsync(CancellationToken ct = default) =>
-        Task.FromResult<IReadOnlyList<StoredModel>>(
-            _models.OrderBy(m => m.FileName, StringComparer.OrdinalIgnoreCase).ToList());
-
-    public Task<StoredModel?> GetModelAsync(Guid id, CancellationToken ct = default) =>
-        Task.FromResult(_models.FirstOrDefault(m => m.Id == id));
-
-    public Task<Stream?> OpenContentAsync(Guid id, CancellationToken ct = default) =>
-        persistence.OpenContentAsync(id, ct);
-
-    public async Task<UploadResult> UploadModelAsync(Stream content, string fileName, CancellationToken ct = default)
+    /// <summary>
+    /// List the models, ordered by file name
+    /// </summary>
+    /// <param name="ct">The cancellation token</param>
+    /// <returns></returns>
+    public Task<IReadOnlyList<StoredModel>> ListModelsAsync(CancellationToken ct = default)
     {
-        fileName = Path.GetFileName(fileName);
-        var tempPath = persistence.CreateTempFilePath();
+        return Task.FromResult<IReadOnlyList<StoredModel>>(
+            _models.OrderBy(m => m.FileName, StringComparer.OrdinalIgnoreCase).ToList());
+    }
+        
+
+    /// <summary>
+    /// Get the model, or null
+    /// </summary>
+    /// <param name="id">The globally unique identifier</param>
+    /// <param name="ct">The cancellation token</param>
+    /// <returns></returns>
+    public Task<StoredModel?> GetModelAsync(Guid id, CancellationToken ct = default)
+    {
+        return Task.FromResult(_models.FirstOrDefault(m => m.Id == id));
+    }
+
+    /// <summary>
+    /// Open the committed content for <paramref name="id"/>, or null if not found
+    /// </summary>
+    /// <param name="id">The globally unique identifier</param>
+    /// <param name="ct">The cancellation token</param>
+    /// <returns>The opened file</returns>
+    public Task<Stream?> OpenContentAsync(Guid id, CancellationToken ct = default)
+    {
+        return persistence.OpenContentAsync(id, ct);
+    }
+
+    /// <summary>
+    /// Upload a model
+    /// </summary>
+    /// <param name="content">The model, in the form of an opened file</param>
+    /// <param name="filePath">The file's path</param>
+    /// <param name="ct">The cancellation token</param>
+    /// <returns>The outcome of the attempted model upload</returns>
+    public async Task<UploadResult> UploadModelAsync(Stream content, string filePath, CancellationToken ct = default)
+    {
+        string fileName = Path.GetFileName(filePath);
+        string tempPath = persistence.CreateTempFilePath();
         long sizeBytes;
         string sha256;
         try
@@ -77,7 +117,7 @@ public sealed class ModelLibrary(
         {
             persistence.DeleteTempFile(tempPath);
             return new UploadResult.Failure(new StepError(StepErrorKind.TooLarge,
-                $"The file is larger than the {maxUploadBytes / (1024 * 1024)} MB limit."));
+                $"The file is larger than the {maxUploadBytes / (BPerMb)} MB limit."));
         }
         catch
         {
@@ -101,14 +141,14 @@ public sealed class ModelLibrary(
             throw;
         }
 
-        var validation = await import.ValidateAsync(bytes, fileName, maxUploadBytes, validationTimeout, ct);
+        StepInspectionResult validation = await import.ValidateAsync(bytes, filePath, maxUploadBytes, validationTimeout, ct);
         if (validation is StepInspectionResult.Failure failure)
         {
             persistence.DeleteTempFile(tempPath);
             return new UploadResult.Failure(failure.Error);
         }
 
-        var existing = _models.FirstOrDefault(m => m.Sha256 == sha256);
+        StoredModel? existing = _models.FirstOrDefault(m => m.Sha256 == sha256);
         if (existing is not null)
         {
             persistence.DeleteTempFile(tempPath);
@@ -117,13 +157,13 @@ public sealed class ModelLibrary(
 
         var inspection = ((StepInspectionResult.Success)validation).Inspection;
         var id = Guid.NewGuid();
-        var model = new StoredModel(id, fileName, sizeBytes, sha256, DateTimeOffset.UtcNow, inspection);
+        var model = new StoredModel(id, filePath, sizeBytes, sha256, DateTimeOffset.UtcNow, inspection);
 
         await _mutationLock.WaitAsync(ct);
         try
         {
             // Re-check for a duplicate written by a concurrent upload while we were validating.
-            var raced = _models.FirstOrDefault(m => m.Sha256 == sha256);
+            StoredModel? raced = _models.FirstOrDefault(m => m.Sha256 == sha256);
             if (raced is not null)
             {
                 persistence.DeleteTempFile(tempPath);
@@ -131,7 +171,7 @@ public sealed class ModelLibrary(
             }
 
             persistence.CommitContent(tempPath, id);
-            var updated = _models.Append(model).ToList();
+            List<StoredModel> updated = [.. _models, model];
             await persistence.SaveIndexAsync(updated, ct);
             _models = updated;
         }
@@ -144,14 +184,14 @@ public sealed class ModelLibrary(
     }
 
     /// <summary>Streams the request body to a temp file while hashing it, enforcing
-    /// <paramref name="maxUploadBytes"/> as it goes (so a hostile Content-Length header can't
+    /// <see cref="MaxUploadBytes" /> as it goes (so a hostile Content-Length header can't
     /// bypass the limit).</summary>
     private async Task<(long SizeBytes, string Sha256)> StreamToTempFileAsync(
         Stream content, string tempPath, CancellationToken ct)
     {
         using var hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         long size = 0;
-        var buffer = new byte[81920];
+        var buffer = new byte[MaxUploadBytes];
         await using (var tempStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
         {
             int read;

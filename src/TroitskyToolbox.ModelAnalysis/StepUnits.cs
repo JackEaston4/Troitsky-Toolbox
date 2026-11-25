@@ -12,10 +12,10 @@ public static class StepUnits
         ["MILLI"] = 1e-3, ["MICRO"] = 1e-6, ["NANO"] = 1e-9, ["PICO"] = 1e-12,
     };
 
-    private static readonly Dictionary<string, string> PrefixNames = new()
-    {
-        ["KILO"] = "kilo", ["CENTI"] = "centi", ["MILLI"] = "milli", ["MICRO"] = "micro", ["DECI"] = "deci",
-    };
+    /// <summary>
+    /// Number of milimetres per m
+    /// </summary>
+    private static readonly double MmPerM = 1 / SiPrefix["MILLI"];
 
     /// <summary>
     /// Name of the length unit of the geometry context used by the solid model
@@ -23,17 +23,19 @@ public static class StepUnits
     /// </summary>
     public static string? GeometryLengthUnit(StepDocument doc)
     {
-        var context = GeometryContext(doc);
-        var units = context?.Part("GLOBAL_UNIT_ASSIGNED_CONTEXT")?.Args.ElementAtOrDefault(0) as IReadOnlyList<object?>;
-        var length = units?.Select(doc.Get).FirstOrDefault(u => u is not null && u.Is("LENGTH_UNIT"));
+        StepEntity? context = GeometryContext(doc);
+        var units = (IReadOnlyList<object?>?) context?.Part("GLOBAL_UNIT_ASSIGNED_CONTEXT")?.Args.ElementAtOrDefault(0);
+        StepEntity? length = units?.Select(doc.Get).FirstOrDefault(u => u is not null && u.Is("LENGTH_UNIT"));
         if (length is null) return null;
 
-        if (length.Part("SI_UNIT") is { } si)
+        StepTyped? siUnit = length.Part("SI_UNIT");
+
+        if (siUnit != null)
         {
-            var prefix = (si.Args.ElementAtOrDefault(0) as StepEnum?)?.Value;
-            return (prefix is null ? "" : PrefixNames.GetValueOrDefault(prefix, prefix.ToLowerInvariant())) + "metre";
+            var prefix = (siUnit.Args.ElementAtOrDefault(0) as StepUnitEnum?)?.Value;
+            return (prefix?.ToLowerInvariant()) + "metre";
         }
-        return length.Part("CONVERSION_BASED_UNIT")?.Args.ElementAtOrDefault(0) as string;
+        return (string?) length.Part("CONVERSION_BASED_UNIT")?.Args.ElementAtOrDefault(0);
     }
 
     /// <summary>
@@ -44,13 +46,16 @@ public static class StepUnits
     {
         foreach (var e in doc.Entities.Values)
         {
-            var item = e.Part("MEASURE_REPRESENTATION_ITEM");
+            StepTyped? item = e.Part("MEASURE_REPRESENTATION_ITEM");
             if (item?.Args.ElementAtOrDefault(0) is not string name ||
                 !name.Contains("density", StringComparison.OrdinalIgnoreCase))
+            {
                 continue;
+            }
 
-            var value = MeasureValue(item.Args.ElementAtOrDefault(1));
-            var unit = doc.Get(item.Args.ElementAtOrDefault(2)) ?? doc.Get(e.Part("MEASURE_WITH_UNIT")?.Args.ElementAtOrDefault(1));
+            double? value = MeasureValue(item.Args.ElementAtOrDefault(1));
+            StepEntity? unit = doc.Get(item.Args.ElementAtOrDefault(2)) ?? 
+                doc.Get(e.Part("MEASURE_WITH_UNIT")?.Args.ElementAtOrDefault(1));
             if (value is null || unit?.Part("DERIVED_UNIT") is not { } derived) continue;
 
             // Express the unit in g and mm, then check it is mass¹·length⁻³.
@@ -58,12 +63,18 @@ public static class StepUnits
             var ok = true;
             foreach (var elementRef in derived.Args.ElementAtOrDefault(0) as IReadOnlyList<object?> ?? [])
             {
-                var element = doc.Get(elementRef)?.Part("DERIVED_UNIT_ELEMENT");
+                StepTyped? element = doc.Get(elementRef)?.Part("DERIVED_UNIT_ELEMENT");
                 if (element?.Args.ElementAtOrDefault(1) is not double exp) { ok = false; break; }
-                var (dim, f) = Resolve(doc, doc.Get(element.Args.ElementAtOrDefault(0)), depth: 0);
+                Tuple<Dim, double> resolution = Resolve(doc, doc.Get(element.Args.ElementAtOrDefault(0)), depth: 0);
+                Dim dim = resolution.Item1;
+                double f = resolution.Item2;
                 if (dim == Dim.Mass) massExp += exp;
                 else if (dim == Dim.Length) lengthExp += exp;
-                else { ok = false; break; }
+                else 
+                {
+                    ok = false;
+                    break; 
+                }
                 factor *= Math.Pow(f, exp);
             }
             if (!ok || massExp != 1 || lengthExp != -3) continue;
@@ -88,37 +99,39 @@ public static class StepUnits
     }
 
     /// <summary>Returns the dimension of a unit and its size in base units (mm for length, g for mass).</summary>
-    private static (Dim, double) Resolve(StepDocument doc, StepEntity? unit, int depth)
+    private static Tuple<Dim, double> Resolve(StepDocument doc, StepEntity? unit, int depth)
     {
-        if (unit is null || depth > 8) return (Dim.Other, 1);
+        if (unit is null || depth > 8) return new Tuple<Dim, double>(Dim.Other, 1);
 
         if (unit.Part("SI_UNIT") is { } si)
         {
-            var prefix = (si.Args.ElementAtOrDefault(0) as StepEnum?)?.Value;
-            var p = prefix is null ? 1 : SiPrefix.GetValueOrDefault(prefix, 1);
-            return ((si.Args.ElementAtOrDefault(1) as StepEnum?)?.Value switch
+            string? prefix = (si.Args.ElementAtOrDefault(0) as StepUnitEnum?)?.Value;
+            double p = prefix is null ? 1 : SiPrefix.GetValueOrDefault(prefix, 1);
+            return ((si.Args.ElementAtOrDefault(1) as StepUnitEnum?)?.Value switch
             {
-                "METRE" => (Dim.Length, p * 1000),
-                "GRAM" => (Dim.Mass, p),
-                _ => (Dim.Other, p),
+                "METRE" => new Tuple<Dim, double>(Dim.Length, p * MmPerM),
+                "GRAM" => new Tuple<Dim, double>(Dim.Mass, p),
+                _ => new Tuple<Dim, double>(Dim.Other, p),
             });
         }
 
         if (unit.Part("CONVERSION_BASED_UNIT") is { } conv && doc.Get(conv.Args.ElementAtOrDefault(1)) is { } mwu)
         {
-            var part = mwu.Parts.FirstOrDefault(x => x.Name.EndsWith("MEASURE_WITH_UNIT", StringComparison.Ordinal));
-            var value = MeasureValue(part?.Args.ElementAtOrDefault(0));
-            var (dim, f) = Resolve(doc, doc.Get(part?.Args.ElementAtOrDefault(1)), depth + 1);
-            return (dim, (value ?? 1) * f);
+            StepTyped? part = mwu.Parts.FirstOrDefault(x => x.Name.EndsWith("MEASURE_WITH_UNIT", StringComparison.Ordinal));
+            double? value = MeasureValue(part?.Args.ElementAtOrDefault(0));
+            Tuple<Dim, double> resolution = Resolve(doc, doc.Get(part?.Args.ElementAtOrDefault(1)), depth + 1);
+            Dim dim = resolution.Item1;
+            double f = resolution.Item2;
+            return new Tuple<Dim, double>(dim, (value ?? 1) * f);
         }
 
-        return (Dim.Other, 1);
+        return new Tuple<Dim, double>(Dim.Other, 1);
     }
 
-    private static double? MeasureValue(object? v) => v switch
+    private static double? MeasureValue(object? v)
     {
-        double d => d,
-        StepTyped { Args.Count: > 0 } t when t.Args[0] is double d => d,
-        _ => null,
-    };
+        if (v is double d) return d;
+        if (v is StepTyped st && st.Args.Count > 0 && st.Args[0] is double firstVal) return firstVal;
+        return null;
+    }
 }
