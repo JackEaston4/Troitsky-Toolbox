@@ -46,8 +46,16 @@ builder.Services.AddSingleton<IModelLibrary>(sp => sp.GetRequiredService<ModelLi
 
 WebApplication app = builder.Build();
 
-// Loads index.json (or seeds it from SampleFolder if empty) once at startup.
-await app.Services.GetRequiredService<ModelLibrary>().InitializeAsync();
+// Loads index.json, then syncs any new sample-folder files in every time (FR-MA-4 partial).
+RefreshResult startupRefresh = await app.Services.GetRequiredService<ModelLibrary>().InitializeAsync();
+ILogger<Program> startupLogger = app.Services.GetRequiredService<ILogger<Program>>();
+startupLogger.LogInformation(
+    "Sample folder sync at startup: added {Added}, already stored {AlreadyStored}, failed {FailedCount}",
+    startupRefresh.Added, startupRefresh.AlreadyStored, startupRefresh.Failed.Count);
+foreach (RefreshFailure failure in startupRefresh.Failed)
+{
+    startupLogger.LogWarning("Sample file '{FileName}' failed to import: {Message}", failure.FileName, failure.Message);
+}
 
 if (!app.Environment.IsDevelopment())
 {

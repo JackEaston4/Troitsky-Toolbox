@@ -5,10 +5,11 @@ namespace TroitskyToolbox.Storage;
 
 /// <inheritdoc cref="IModelLibrary"/>
 /// <remarks>
-/// Loads the index once at startup (<see cref="InitializeAsync"/>), seeding it from a sample
-/// folder when empty so the list is never blank (FR-MA-4 partial). The in-memory list and the
-/// index file are only ever mutated together, under <see cref="_mutationLock"/>, so uploads
-/// can't race each other (SR-MA-3, M8/M16).
+/// Loads the index once at startup (<see cref="InitializeAsync"/>), then syncs new files from the
+/// sample folder every start (and again on demand via <see cref="RefreshAsync"/>, the explorer's
+/// refresh button) so the list is never blank and never stale (FR-MA-4 partial). The in-memory
+/// list and the index file are only ever mutated together, under <see cref="_mutationLock"/>, so
+/// uploads can't race each other (SR-MA-3, M8/M16).
 /// </remarks>
 public sealed class ModelLibrary(
     IPersistence persistence,
@@ -31,35 +32,80 @@ public sealed class ModelLibrary(
     private const int BPerMb = 1_048_576; // 1024 * 1024
 
     /// <summary>
-    /// Loads <c>index.json</c> and, if it was empty, seeds every top-level <c>.stp</c>/<c>.step</c>
-    /// file (case-insensitive) in the sample folder (FR-MA-4 partial). Call once at startup.
+    /// Loads <c>index.json</c>, then always syncs from the sample folder via
+    /// <see cref="RefreshAsync"/> (FR-MA-4 partial) so newly dropped sample files show up without
+    /// a manual upload. Call once at startup; the caller may log the returned summary.
     /// </summary>
-    public async Task InitializeAsync(CancellationToken ct = default)
+    public async Task<RefreshResult> InitializeAsync(CancellationToken ct = default)
     {
-        if (_initialized) return;
-        await _mutationLock.WaitAsync(ct);
-        try
+        if (!_initialized)
         {
-            if (_initialized) return;
-            _models = await persistence.LoadIndexAsync(ct);
-            _initialized = true;
-        }
-        finally
-        {
-            _mutationLock.Release();
-        }
-
-        if (_models.Count == 0 && sampleFolder is not null && Directory.Exists(sampleFolder))
-        {
-            IEnumerable<string> samples = Directory.EnumerateFiles(sampleFolder)
-                .Where(f => Path.GetExtension(f).ToLowerInvariant() is ".stp" or ".step")
-                .OrderBy(f => f, StringComparer.OrdinalIgnoreCase);
-            foreach (string path in samples)
+            await _mutationLock.WaitAsync(ct);
+            try
             {
-                await using FileStream stream = File.OpenRead(path);
-                await UploadModelAsync(stream, Path.GetFileName(path), ct);
+                if (!_initialized)
+                {
+                    _models = await persistence.LoadIndexAsync(ct);
+                    _initialized = true;
+                }
+            }
+            finally
+            {
+                _mutationLock.Release();
             }
         }
+
+        return await RefreshAsync(ct);
+    }
+
+    /// <inheritdoc cref="IModelLibrary.RefreshAsync"/>
+    public async Task<RefreshResult> RefreshAsync(CancellationToken ct = default)
+    {
+        if (sampleFolder is null || !Directory.Exists(sampleFolder))
+        {
+            return new RefreshResult(0, 0, []);
+        }
+
+        IEnumerable<string> samples = Directory.EnumerateFiles(sampleFolder)
+            .Where(f => Path.GetExtension(f).ToLowerInvariant() is ".stp" or ".step")
+            .OrderBy(f => f, StringComparer.OrdinalIgnoreCase);
+
+        int added = 0;
+        int alreadyStored = 0;
+        List<RefreshFailure> failed = [];
+
+        // UploadModelAsync takes _mutationLock itself per call, so the lock is never held across
+        // the whole sync — a concurrent explicit upload can interleave safely.
+        foreach (string path in samples)
+        {
+            string fileName = Path.GetFileName(path);
+            UploadResult result;
+            try
+            {
+                await using FileStream stream = File.OpenRead(path);
+                result = await UploadModelAsync(stream, fileName, ct);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                failed.Add(new RefreshFailure(fileName, ex.Message));
+                continue;
+            }
+
+            switch (result)
+            {
+                case UploadResult.Success { AlreadyStored: true }:
+                    alreadyStored++;
+                    break;
+                case UploadResult.Success:
+                    added++;
+                    break;
+                case UploadResult.Failure failure:
+                    failed.Add(new RefreshFailure(fileName, failure.Error.Message));
+                    break;
+            }
+        }
+
+        return new RefreshResult(added, alreadyStored, failed);
     }
 
     /// <summary>

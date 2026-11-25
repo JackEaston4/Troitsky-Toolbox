@@ -15,15 +15,15 @@ Proof of Concept scope. Design modules will be added with the Design Document.
 | SR-MA-2 Units and scale reference | Grid and labelled axis indicator in `stepViewer.js`; units in `ModelSummaryPanel.razor` |
 | SR-MA-3 Processing timeout | `ModelImport.cs` (`TimeoutSeconds` watchdog), `Endpoints/ModelEndpoints.cs` (408), `TroitskyToolbox.Storage/ModelLibrary.cs` / `FilePersistence.cs` (serialized writes so concurrent uploads can't corrupt `index.json`) |
 | FR-KR-1 Data storage | `TroitskyToolbox.Storage/StoredModel.cs`, `IPersistence.cs`/`FilePersistence.cs` (`<guid>.step` + `index.json`), `ModelAnalysisOptions.cs` (`StorageRoot`) |
-| FR-KR-2 Content upload | `TroitskyToolbox.Storage/IModelLibrary.cs`/`ModelLibrary.cs` (stream + hash + validate + commit), `Endpoints/ModelEndpoints.cs` (`POST /api/models`), `wwwroot/js/modelUpload.js`, `Components/ModelExplorer.razor` |
+| FR-KR-2 Content upload | `TroitskyToolbox.Storage/IModelLibrary.cs`/`ModelLibrary.cs` (stream + hash + validate + commit, `RefreshAsync` sample-folder sync), `Endpoints/ModelEndpoints.cs` (`POST /api/models`), `wwwroot/js/modelUpload.js`, `Components/ModelExplorer.razor` (upload + refresh button) |
 | FR-KR-4 View and download (**partial**: no preview of other file types) | `Endpoints/ModelEndpoints.cs` (`GET /api/models/{id}/content`, `?download=1` attachment with original file name), `wwwroot/js/stepViewer.js` (in-browser 3D view), `Components/Viewer3D.razor` (Download button) |
-| FR-MA-4 Current model storage (**partial**: no team scoping) | `TroitskyToolbox.Storage/ModelLibrary.cs` (seeds and stores every model for the single shared library; no user/team field on `StoredModel`) |
+| FR-MA-4 Current model storage (**partial**: no team scoping) | `TroitskyToolbox.Storage/ModelLibrary.cs` (`RefreshAsync` syncs new sample-folder files on every start and on demand; stores every model for the single shared library; no user/team field on `StoredModel`) |
 
 ## Issue → file mapping
 
 | Issue | Change | Code |
 |---|---|---|
-| #353 Model explorer view | Flat, VS Code–style file list replacing the sample table | `Components/ModelExplorer.razor`, `wwwroot/js/modelUpload.js` |
+| #353 Model explorer view | Flat, VS Code–style file list replacing the sample table; refresh button syncs new sample-folder files on demand (also runs on every start) | `Components/ModelExplorer.razor`, `wwwroot/js/modelUpload.js`, `TroitskyToolbox.Storage/ModelLibrary.cs` (`RefreshAsync`) |
 | #352 Change output metrics | Panel cut to the mockup's values, each tagged From model / Set by you / Calculated; load time moved to a status line | `Components/ModelSummaryPanel.razor`, `Components/Viewer3D.razor` |
 | #351 Snapping to views | Clickable view cube (six faces, click = view from that side) + Iso; camera-looks-in `snapView` convention; labelled axis indicator | `Components/Viewer3D.razor`, `wwwroot/js/stepViewer.js` (`buildViewCube`, `snapView`) |
 | #354 General UI clean-up | Subtitle/hint text removed, icon toolbars, consistent `tt-` styling | `Components/Pages/ModelViewer.razor`, `Components/Viewer3D.razor`, `Components/ModelExplorer.razor`, `wwwroot/app.css` |

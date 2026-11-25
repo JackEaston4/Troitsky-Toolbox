@@ -20,4 +20,14 @@ public interface IModelLibrary
 
     /// <summary>Opens the stored bytes for <paramref name="id"/>, or null if unknown. Caller disposes.</summary>
     Task<Stream?> OpenContentAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>
+    /// Imports any top-level <c>.stp</c>/<c>.step</c> file from the sample folder that isn't
+    /// already stored (FR-KR-1, FR-KR-2). Each file goes through the same validate-then-dedupe
+    /// path as <see cref="UploadModelAsync"/>; a validation failure is reported in the result,
+    /// not thrown, and does not stop the rest of the sync. Returns all zeros if the sample
+    /// folder doesn't exist. Runs once automatically on startup and again on demand (the
+    /// explorer's refresh button).
+    /// </summary>
+    Task<RefreshResult> RefreshAsync(CancellationToken ct = default);
 }

@@ -9,6 +9,13 @@
 <div class="tt-explorer">
     <div class="tt-explorer-header">
         <span class="tt-explorer-title">Models</span>
+        <button type="button" class="tt-icon-btn @(_refreshing ? "tt-spinning" : "")" title="Refresh from sample folder"
+                aria-label="Refresh from sample folder" disabled="@_refreshing" @onclick="HandleRefresh">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M2.5 8a5.5 5.5 0 0 1 9.62-3.6M13.5 8a5.5 5.5 0 0 1-9.62 3.6" stroke-linecap="round" />
+                <path d="M12.3 1.8v3.1h-3.1M3.7 14.2v-3.1h3.1" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
         <label for="tt-upload-input" class="tt-icon-btn" title="Upload a .stp or .step file" aria-label="Upload a .stp or .step file">
             <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4">
                 <path d="M8 10.5V2.5M8 2.5 4.8 5.7M8 2.5l3.2 3.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -30,6 +37,19 @@
     @if (_alreadyStoredNote is { } note)
     {
         <p class="tt-muted tt-small tt-explorer-note">@note</p>
+    }
+    @if (_refreshStatus is { } rstatus)
+    {
+        <p class="tt-muted tt-small tt-explorer-note">@rstatus</p>
+    }
+    @if (_refreshFailures is { Count: > 0 } failures)
+    {
+        <ul class="tt-upload-error tt-refresh-failures" role="alert">
+            @foreach (var f in failures)
+            {
+                <li>'@f.FileName' — @f.Message</li>
+            }
+        </ul>
     }
 
     @if (_models.Count == 0)
@@ -77,6 +97,9 @@
     private int? _uploadPercent;
     private string? _uploadError;
     private string? _alreadyStoredNote;
+    private bool _refreshing;
+    private string? _refreshStatus;
+    private List<RefreshFailure>? _refreshFailures;
 
     protected override async Task OnInitializedAsync() => await Refresh();
 
@@ -94,6 +117,36 @@
     }
 
     private async Task Select(StoredModel model) => await OnSelect.InvokeAsync(model);
+
+    /// <summary>Imports new sample-folder files via <see cref="IModelLibrary.RefreshAsync"/>
+    /// (#353), reloads the list, and reports a short status. The current selection's id is
+    /// unchanged, so the parent page (which no-ops on an unchanged id) doesn't reload the
+    /// viewer.</summary>
+    private async Task HandleRefresh()
+    {
+        if (_refreshing) return;
+        _refreshing = true;
+        _refreshStatus = null;
+        _refreshFailures = null;
+        _uploadError = null;
+        _alreadyStoredNote = null;
+        await InvokeAsync(StateHasChanged);
+
+        try
+        {
+            RefreshResult result = await Library.RefreshAsync();
+            await Refresh();
+            _refreshStatus = result.Added > 0
+                ? $"Added {result.Added} file{(result.Added == 1 ? "" : "s")}."
+                : "No new files.";
+            _refreshFailures = result.Failed.Count > 0 ? result.Failed.ToList() : null;
+        }
+        finally
+        {
+            _refreshing = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
 
     private async Task HandleKeyDown(KeyboardEventArgs e)
     {

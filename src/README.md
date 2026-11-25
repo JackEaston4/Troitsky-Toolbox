@@ -24,9 +24,11 @@ each model is `<guid>.step`, and `App_Data/models/index.json` holds one JSON rec
 (file name, size, SHA-256, upload time, and the parsed `StepInspection` metadata). `App_Data/`
 is gitignored (`src/.gitignore`).
 
-On first run, if the index is empty, every `.stp`/`.step` file in `sample_step_files/` is
-seeded into storage automatically, so the list is never empty. **To reset the library**, stop
-the app and delete `TroitskyToolbox.Web/App_Data/`; it is recreated (and reseeded) on the next run.
+On every start, every `.stp`/`.step` file in `sample_step_files/` that isn't already stored
+(by SHA-256) is synced into storage automatically, so the list is never empty and new sample
+files show up without a manual upload. The **refresh** icon button next to Upload in the
+explorer header reruns the same sync on demand. **To reset the library**, stop the app and
+delete `TroitskyToolbox.Web/App_Data/`; it is recreated (and reseeded) on the next run.
 
 ## Folders
 
@@ -34,18 +36,18 @@ the app and delete `TroitskyToolbox.Web/App_Data/`; it is recreated (and reseede
 |---|---|
 | [TroitskyToolbox.slnx](TroitskyToolbox.slnx) | Solution file: `ModelAnalysis`, `Storage`, `Web` |
 | [TroitskyToolbox.ModelAnalysis/](TroitskyToolbox.ModelAnalysis/) | Server-side STEP module, no web or storage dependencies. `StepParser.cs` reads ISO 10303-21 files. `StepTypes.cs` defines `StepInspection`/`StepError`. `IModelImport`/`ModelImport.cs` (**M7**): extension, size-limit and timeout checks and the member-facing rejection message. `IStepParser`/`StepParserService.cs` (**M18**): header check, parse, geometry check, and metadata (product name, units, density, face/solid counts). `StepUnits.cs` resolves units and stored material density. |
-| [TroitskyToolbox.Storage/](TroitskyToolbox.Storage/) | New project. `StoredModel.cs`: the stored-model record and `UploadResult`. `IModelLibrary`/`ModelLibrary.cs` (**M8**): list/get/upload/open, seeding from the sample folder, duplicate-by-hash detection. `IPersistence`/`FilePersistence.cs` (**M16**): the `<guid>.step` files + `index.json`, written through a temp file + atomic rename behind one `SemaphoreSlim`. |
+| [TroitskyToolbox.Storage/](TroitskyToolbox.Storage/) | New project. `StoredModel.cs`: the stored-model record and `UploadResult`. `RefreshResult.cs`: the `RefreshResult`/`RefreshFailure` records returned by the sample-folder sync. `IModelLibrary`/`ModelLibrary.cs` (**M8**): list/get/upload/open, `RefreshAsync` syncing the sample folder (run at startup and on demand), duplicate-by-hash detection. `IPersistence`/`FilePersistence.cs` (**M16**): the `<guid>.step` files + `index.json`, written through a temp file + atomic rename behind one `SemaphoreSlim`. |
 | [TroitskyToolbox.Web/](TroitskyToolbox.Web/) | Blazor Web App (interactive server) (**M2**) |
 | `TroitskyToolbox.Web/Endpoints/ModelEndpoints.cs` | `POST /api/models`, `GET /api/models`, `GET /api/models/{id}/content` |
 | `TroitskyToolbox.Web/Components/Pages/ModelViewer.razor` | The page at `/`; holds only the selected model id and the latest viewer result |
-| `TroitskyToolbox.Web/Components/ModelExplorer.razor` | VS Code–style flat file list + upload (**M8**, **#353**) |
+| `TroitskyToolbox.Web/Components/ModelExplorer.razor` | VS Code–style flat file list + upload + refresh (**M8**, **#353**) |
 | `TroitskyToolbox.Web/Components/Viewer3D.razor` | 3D viewer pane: header, axis/Iso toolbar, display toggles, status line (**M20**, **#351**) |
 | `TroitskyToolbox.Web/Components/ModelSummaryPanel.razor` | Trimmed metrics panel: dimensions, volume/mass, tagged From model / Set by you / Calculated (**#352**) |
 | `TroitskyToolbox.Web/wwwroot/js/stepViewer.js` | Tessellates with occt-import-js, renders with three.js; `loadModel`/`clear`/`snapView`/`setView`/`dispose` (**M20**) |
 | `TroitskyToolbox.Web/wwwroot/js/stepMeasure.js` | Mesh measurements: bounding box, volume, surface area, centroid, closed check |
 | `TroitskyToolbox.Web/wwwroot/js/modelUpload.js` | XHR upload with progress, used by `ModelExplorer.razor` (**#353**) |
 | `TroitskyToolbox.Web/wwwroot/lib/` | Vendored, pinned libraries: occt-import-js 0.0.23 (LGPL-2.1) and three.js 0.170.0 (MIT) |
-| [sample_step_files/](sample_step_files/) | Sample models used to seed the library on first run |
+| [sample_step_files/](sample_step_files/) | Sample models synced into storage on every start and via the explorer's refresh button |
 
 ## HTTP API
 
