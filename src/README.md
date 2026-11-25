@@ -39,9 +39,9 @@ the app and delete `TroitskyToolbox.Web/App_Data/`; it is recreated (and reseede
 | `TroitskyToolbox.Web/Endpoints/ModelEndpoints.cs` | `POST /api/models`, `GET /api/models`, `GET /api/models/{id}/content` |
 | `TroitskyToolbox.Web/Components/Pages/ModelViewer.razor` | The page at `/`; holds only the selected model id and the latest viewer result |
 | `TroitskyToolbox.Web/Components/ModelExplorer.razor` | VS Code–style flat file list + upload (**M8**, **#353**) |
-| `TroitskyToolbox.Web/Components/Viewer3D.razor` | 3D viewer pane: header, Iso/display-toggle toolbar under the view cube, status line (**M20**, **#351**) |
+| `TroitskyToolbox.Web/Components/Viewer3D.razor` | 3D viewer pane: header, axis/Iso toolbar, display toggles, status line (**M20**, **#351**) |
 | `TroitskyToolbox.Web/Components/ModelSummaryPanel.razor` | Trimmed metrics panel: dimensions, volume/mass, tagged From model / Set by you / Calculated (**#352**) |
-| `TroitskyToolbox.Web/wwwroot/js/stepViewer.js` | Tessellates with occt-import-js, renders with three.js; `loadModel`/`clear`/`snapView`/`setView`/`dispose`; view cube and axis indicator (**M20**, **#351**) |
+| `TroitskyToolbox.Web/wwwroot/js/stepViewer.js` | Tessellates with occt-import-js, renders with three.js; `loadModel`/`clear`/`snapView`/`setView`/`dispose` (**M20**) |
 | `TroitskyToolbox.Web/wwwroot/js/stepMeasure.js` | Mesh measurements: bounding box, volume, surface area, centroid, closed check |
 | `TroitskyToolbox.Web/wwwroot/js/modelUpload.js` | XHR upload with progress, used by `ModelExplorer.razor` (**#353**) |
 | `TroitskyToolbox.Web/wwwroot/lib/` | Vendored, pinned libraries: occt-import-js 0.0.23 (LGPL-2.1) and three.js 0.170.0 (MIT) |
@@ -90,20 +90,14 @@ In the `ModelAnalysis` section of `appsettings.json`:
 
 ## Viewer controls
 
-A clickable **view cube** sits in the top-right corner of the 3D view (about 100 px; FR-MA-2, #351).
-Its six faces are labelled **+X −X +Y −Y +Z −Z**. Clicking a face views the model **from that side**:
-clicking +Z puts the camera on the +Z side, looking back along −Z. The camera moves over about 300 ms
-and frames the model. A face under the pointer is highlighted in the accent colour and shows a
-"View from +Z" tooltip. The cube turns with the camera, and dragging on it does not orbit the model.
-
-**Iso** sits under the cube and resets to the default isometric frame. Icon toggles below it turn the
-bounding box, edges and grid on or off. A labelled X/Y/Z triad in the viewer's bottom-left corner
-rotates with the camera so the current orientation is always clear.
-
-Under the hood, `snapView(host, axis)` takes the direction the camera **looks in** ("+z" sits on the
-−Z side looking toward +Z). The cube maps each face to the opposite look direction (face +Z →
-`snapView('-z')`). Screen "up" is +Y for the X/Z views (matching the grid's XZ plane) and switches to
-+Z for the ±Y views, so the orbit controls don't flip when the camera looks exactly along their up axis.
+The toolbar overlaid on the 3D view has six axis-snap buttons (**+X −X +Y −Y +Z −Z**) plus
+**Iso**. Each button names the direction **the camera looks in** — "+Z" moves the camera to
+the −Z side, looking along +Z — and animates the camera over about 300 ms to frame the model
+from that direction. Screen "up" is +Y for the X/Z views (matching the grid's XZ plane) and
+switches to +Z for the ±Y views, so the orbit controls don't flip when the camera looks exactly
+along their up axis. Icon toggles next to the axis grid turn the bounding box, edges and grid
+on or off. A labelled X/Y/Z triad in the viewer's bottom-left corner rotates with the camera so
+the current orientation is always clear.
 
 ## Proof of Concept findings
 
