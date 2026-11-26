@@ -42,7 +42,7 @@ delete `TroitskyToolbox.Web/App_Data/`; it is recreated (and reseeded) on the ne
 | `TroitskyToolbox.Web/Components/Pages/ModelViewer.razor` | The page at `/`; holds only the selected model id and the latest viewer result |
 | `TroitskyToolbox.Web/Components/ModelExplorer.razor` | VS Code–style flat file list + upload + refresh (**M8**, **#353**) |
 | `TroitskyToolbox.Web/Components/Viewer3D.razor` | 3D viewer pane: header, axis/Iso toolbar, display toggles, status line (**M20**, **#351**) |
-| `TroitskyToolbox.Web/Components/ModelSummaryPanel.razor` | Trimmed metrics panel: dimensions, volume/mass, tagged From model / Set by you / Calculated (**#352**) |
+| `TroitskyToolbox.Web/Components/ModelSummaryPanel.razor` | Trimmed metrics panel: dimensions, volume, surface area, editable density and mass (**#352**) |
 | `TroitskyToolbox.Web/wwwroot/js/stepViewer.js` | Tessellates with occt-import-js, renders with three.js; `loadModel`/`clear`/`snapView`/`setView`/`dispose` (**M20**) |
 | `TroitskyToolbox.Web/wwwroot/js/stepMeasure.js` | Mesh measurements: bounding box, volume, surface area, centroid, closed check |
 | `TroitskyToolbox.Web/wwwroot/js/modelUpload.js` | XHR upload with progress, used by `ModelExplorer.razor` (**#353**) |
