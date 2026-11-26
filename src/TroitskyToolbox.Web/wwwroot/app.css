@@ -189,13 +189,3 @@ button.tt-icon-btn:disabled:hover { background: none; color: var(--tt-muted); }
 .tt-warn { color: #8a5a00; background: #fff6e0; padding: 0.5rem; border-radius: 4px; font-size: 0.85rem; margin: 0.6rem 0 0; }
 .tt-error { background: #fdecea; border: 1px solid #f4b4ad; color: #8c1d18; padding: 0.75rem; border-radius: 6px; }
 .tt-error p { margin: 0.35rem 0 0; }
-
-/* Tags (#352): small pills so it's obvious what's measured / typed / calculated. */
-.tt-tag {
-    display: inline-block; font-size: 0.68rem; font-weight: 600; text-transform: none;
-    letter-spacing: 0; padding: 0.05rem 0.4rem; border-radius: 999px; vertical-align: middle;
-    background: var(--tt-soft); color: var(--tt-muted); border: 1px solid var(--tt-line);
-}
-.tt-tag-calc { background: var(--tt-accent-soft); color: var(--tt-accent); border-color: var(--tt-accent-soft); }
-.tt-tag-legend { margin-top: 1rem; font-size: 0.78rem; color: var(--tt-muted); }
-.tt-tag-legend .tt-tag { margin-right: 0.15rem; }

@@ -24,7 +24,7 @@ Proof of Concept scope. Design modules will be added with the Design Document.
 | Issue | Change | Code |
 |---|---|---|
 | #353 Model explorer view | Flat, VS Code–style file list replacing the sample table; refresh button syncs new sample-folder files on demand (also runs on every start) | `Components/ModelExplorer.razor`, `wwwroot/js/modelUpload.js`, `TroitskyToolbox.Storage/ModelLibrary.cs` (`RefreshAsync`) |
-| #352 Change output metrics | Panel cut to the mockup's values, each tagged From model / Set by you / Calculated; load time moved to a status line | `Components/ModelSummaryPanel.razor`, `Components/Viewer3D.razor` |
+| #352 Change output metrics | Panel cut to the mockup's values (dimensions, volume, surface area, density, mass); load time moved to a status line | `Components/ModelSummaryPanel.razor`, `Components/Viewer3D.razor` |
 | #351 Snapping to views | Clickable view cube (six faces, click = view from that side) + Iso; camera-looks-in `snapView` convention; labelled axis indicator | `Components/Viewer3D.razor`, `wwwroot/js/stepViewer.js` (`buildViewCube`, `snapView`) |
 | #354 General UI clean-up | Subtitle/hint text removed, icon toolbars, consistent `tt-` styling | `Components/Pages/ModelViewer.razor`, `Components/Viewer3D.razor`, `Components/ModelExplorer.razor`, `wwwroot/app.css` |
 
