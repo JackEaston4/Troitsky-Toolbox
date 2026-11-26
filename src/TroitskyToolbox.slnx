@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="TroitskyToolbox.ModelAnalysis/TroitskyToolbox.ModelAnalysis.csproj" />
+  <Project Path="TroitskyToolbox.Storage/TroitskyToolbox.Storage.csproj" />
+  <Project Path="TroitskyToolbox.Web/TroitskyToolbox.Web.csproj" />
+</Solution>
